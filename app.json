@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "13-Day Stories",
+    "slug": "13-day-stories",
+    "scheme": "stories",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#12091A"
+    },
+    "plugins": [],
+    "ios": {
+      "supportsTablet": false
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#12091A"
+      },
+      "package": "com.mistergoomba.x13daystories"
+    },
+    "web": {
+      "bundler": "metro",
+      "backgroundColor": "#12091A"
+    },
+    "extra": {
+      "easterEgg": false,
+      "eas": {
+        "projectId": "734f146e-d299-491d-b97a-2c765a24c294"
+      }
+    }
+  }
+}
