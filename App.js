@@ -91,13 +91,23 @@ function AppContent() {
               selectedDay={selectedDay}
               setSelectedDay={setSelectedDay}
               setCurrentView={setCurrentView}
+              scrollViewRef={scrollViewRef}
+            />
+          ) : currentView === 'Day' ? (
+            <DayScreenContent
+              setCurrentView={setCurrentView}
+              setSelectedDay={setSelectedDay}
             />
           ) : (
             <CurrentComponent setCurrentView={setCurrentView} />
           )}
         </ScrollView>
       )}
-      <SimpleBottomToolbar currentView={currentView} setCurrentView={setCurrentView} />
+      <SimpleBottomToolbar
+        currentView={currentView}
+        setCurrentView={setCurrentView}
+        setSelectedDay={setSelectedDay}
+      />
     </View>
   );
 }

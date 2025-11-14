@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Card from '../components/Card';
 import SectionHeader from '../components/SectionHeader';
+import HoroscopeSection from '../components/HoroscopeSection';
+import MayanCalendarExplanation from '../components/MayanCalendarExplanation';
+import EnergyOfTheDay from '../components/EnergyOfTheDay';
+import MeditationSection from '../components/MeditationSection';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
 import {
@@ -14,33 +18,75 @@ import {
   getImageSource,
 } from '../utils/mayanCalendar';
 
-// Component to render day detail view (same structure as TODAY screen)
-function DayDetailView({ dayNumber, onBack, setSelectedDay }) {
+// Component to render day detail view (story chapter only)
+function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef }) {
   const insets = useSafeAreaInsets();
   const today = getTodayMayanDate();
   const dayData = getDayData(dayNumber);
-  const horoscopeImage = getImageSource(dayNumber, 'horoscope');
   const storyPrimaryImage = getImageSource(dayNumber, 'story_primary');
   const storyWide1Image = getImageSource(dayNumber, 'story_wide_1');
   const storyWide2Image = getImageSource(dayNumber, 'story_wide_2');
+  const horoscopeImage = getImageSource(dayNumber, 'horoscope');
+  const affirmationImage = getImageSource(dayNumber, 'affirmation');
 
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
 
-  // Navigation logic
-  const canGoPrevious = dayNumber > 1;
-  const canGoNext = dayNumber < 13 && dayNumber < today.day; // Can't go to future days
-
-  const handlePrevious = () => {
-    if (canGoPrevious) {
-      setSelectedDay(dayNumber - 1);
+  // Scroll to top helper function
+  const scrollToTop = () => {
+    if (scrollViewRef?.current) {
+      scrollViewRef.current.scrollTo({ y: 0, animated: true });
     }
   };
 
-  const handleNext = () => {
-    if (canGoNext) {
-      setSelectedDay(dayNumber + 1);
-    }
+  // Render day navigation buttons (previous, index, next)
+  const renderDayNavigation = () => {
+    const canGoPrevious = dayNumber > 1;
+    const canGoNext = dayNumber < 13 && isDayAvailable(dayNumber + 1);
+
+    return (
+      <View style={styles.dayNavigationContainer}>
+        <Pressable
+          style={[styles.dayNavButton, !canGoPrevious && styles.dayNavButtonDisabled]}
+          onPress={() => {
+            if (canGoPrevious) {
+              setSelectedDay(dayNumber - 1);
+              scrollToTop();
+            }
+          }}
+          disabled={!canGoPrevious}
+        >
+          <Text
+            style={[styles.dayNavButtonText, !canGoPrevious && styles.dayNavButtonTextDisabled]}
+          >
+            Day {dayNumber - 1}
+          </Text>
+        </Pressable>
+        <Pressable
+          style={styles.dayNavButton}
+          onPress={() => {
+            onBack();
+            scrollToTop();
+          }}
+        >
+          <Text style={styles.dayNavButtonText}>Index</Text>
+        </Pressable>
+        <Pressable
+          style={[styles.dayNavButton, !canGoNext && styles.dayNavButtonDisabled]}
+          onPress={() => {
+            if (canGoNext) {
+              setSelectedDay(dayNumber + 1);
+              scrollToTop();
+            }
+          }}
+          disabled={!canGoNext}
+        >
+          <Text style={[styles.dayNavButtonText, !canGoNext && styles.dayNavButtonTextDisabled]}>
+            Day {dayNumber + 1}
+          </Text>
+        </Pressable>
+      </View>
+    );
   };
 
   if (!dayData) {
@@ -48,13 +94,11 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay }) {
       <View style={[styles.content, { paddingBottom: bottomPadding }]}>
         <Text style={styles.errorText}>Unable to load chapter data</Text>
         <Pressable style={styles.backButton} onPress={onBack}>
-          <Text style={styles.backButtonText}>Back to Index</Text>
+          <Text style={styles.backButtonText}>Back to Journey</Text>
         </Pressable>
       </View>
     );
   }
-
-  const { horoscope, energy_of_the_day } = dayData;
 
   // Split chapter text by paragraphs (\n\n)
   const paragraphs = dayData.chapter.split(/\n\n/).filter((p) => p.trim().length > 0);
@@ -78,7 +122,7 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay }) {
             key={`img-wide-1`}
             source={storyWide1Image}
             style={styles.storyWideImage}
-            resizeMode="contain"
+            resizeMode='contain'
           />
         );
       }
@@ -90,7 +134,7 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay }) {
             key={`img-wide-2`}
             source={storyWide2Image}
             style={styles.storyWideImage}
-            resizeMode="contain"
+            resizeMode='contain'
           />
         );
       }
@@ -101,57 +145,64 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay }) {
 
   return (
     <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-      {/* Navigation Header */}
-      <View style={styles.navigationHeader}>
-        <Pressable style={styles.backButton} onPress={onBack}>
-          <Text style={styles.backButtonText}>← Back</Text>
+      {/* Top Day Navigation */}
+      <View style={[styles.dayNavigationContainer, { marginTop: 0, marginBottom: 24 }]}>
+        <Pressable
+          style={[styles.dayNavButton, dayNumber <= 1 && styles.dayNavButtonDisabled]}
+          onPress={() => {
+            if (dayNumber > 1) {
+              setSelectedDay(dayNumber - 1);
+              scrollToTop();
+            }
+          }}
+          disabled={dayNumber <= 1}
+        >
+          <Text
+            style={[styles.dayNavButtonText, dayNumber <= 1 && styles.dayNavButtonTextDisabled]}
+          >
+            Day {dayNumber - 1}
+          </Text>
         </Pressable>
-
-        {/* Navigation Arrows */}
-        <View style={styles.arrowContainer}>
-          <Pressable
-            style={[styles.arrowButton, !canGoPrevious && styles.arrowButtonDisabled]}
-            onPress={handlePrevious}
-            disabled={!canGoPrevious}
+        <Pressable
+          style={styles.dayNavButton}
+          onPress={() => {
+            onBack();
+            scrollToTop();
+          }}
+        >
+          <Text style={styles.dayNavButtonText}>Index</Text>
+        </Pressable>
+        <Pressable
+          style={[
+            styles.dayNavButton,
+            (dayNumber >= 13 || !isDayAvailable(dayNumber + 1)) && styles.dayNavButtonDisabled,
+          ]}
+          onPress={() => {
+            if (dayNumber < 13 && isDayAvailable(dayNumber + 1)) {
+              setSelectedDay(dayNumber + 1);
+              scrollToTop();
+            }
+          }}
+          disabled={dayNumber >= 13 || !isDayAvailable(dayNumber + 1)}
+        >
+          <Text
+            style={[
+              styles.dayNavButtonText,
+              (dayNumber >= 13 || !isDayAvailable(dayNumber + 1)) &&
+                styles.dayNavButtonTextDisabled,
+            ]}
           >
-            <Text style={[styles.arrowText, !canGoPrevious && styles.arrowTextDisabled]}>←</Text>
-          </Pressable>
-
-          <Text style={[styles.dayIndicator, { marginHorizontal: 16 }]}>Day {dayNumber}</Text>
-
-          <Pressable
-            style={[styles.arrowButton, !canGoNext && styles.arrowButtonDisabled]}
-            onPress={handleNext}
-            disabled={!canGoNext}
-          >
-            <Text style={[styles.arrowText, !canGoNext && styles.arrowTextDisabled]}>→</Text>
-          </Pressable>
-        </View>
+            Day {dayNumber + 1}
+          </Text>
+        </Pressable>
       </View>
-
-      {/* Horoscope Image */}
-      {horoscopeImage && (
-        <Image source={horoscopeImage} style={styles.horoscopeImage} resizeMode="contain" />
-      )}
-
-      {/* Horoscope Text */}
-      <Card>
-        <Text style={styles.horoscopeText}>{horoscope}</Text>
-      </Card>
-
-      {/* Separator */}
-      <View style={styles.separator} />
 
       {/* Chapter Header */}
       <Text style={styles.chapterTitle}>Chapter {dayNumber}</Text>
 
       {/* Story Primary Image */}
       {storyPrimaryImage && (
-        <Image
-          source={storyPrimaryImage}
-          style={styles.storyPrimaryImage}
-          resizeMode="contain"
-        />
+        <Image source={storyPrimaryImage} style={styles.storyPrimaryImage} resizeMode='contain' />
       )}
 
       {/* Chapter Text with Inline Images */}
@@ -162,80 +213,44 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay }) {
       {/* Separator */}
       <View style={styles.separator} />
 
-      {/* Mayan Calendar Explanation */}
-      <Card>
-        <Text style={styles.explanationText}>
-          The energies and stories presented here are based on the Mayan calendar, a sacred
-          timekeeping system that has guided indigenous communities for thousands of years. Each day
-          carries unique combinations of number and nawal (day sign) energies that offer insight,
-          guidance, and reflection.
-        </Text>
-      </Card>
+      {/* Horoscope Section */}
+      {dayData && (
+        <>
+          <HoroscopeSection horoscopeImage={horoscopeImage} horoscopeText={dayData.horoscope} />
 
-      {/* Energy of the Day Section */}
-      <Card>
-        <Text style={styles.energySectionTitle}>Energy of the Day</Text>
+          {/* Separator */}
+          <View style={styles.separator} />
 
-        {/* Number Energy */}
-        <View style={styles.energyBlock}>
-          <Text style={styles.energyTitle}>
-            {dayData.number}: {energy_of_the_day.number.title}
-          </Text>
-          <Text style={styles.energyContent}>{energy_of_the_day.number.content}</Text>
-          <View style={styles.keywordsContainer}>
-            {energy_of_the_day.number.keywords.map((keyword, index) => (
-              <View key={index} style={styles.keywordTag}>
-                <Text style={styles.keywordText}>{keyword}</Text>
-              </View>
-            ))}
-          </View>
-        </View>
+          {/* Mayan Calendar Explanation */}
+          <MayanCalendarExplanation />
 
-        {/* Nawal Energy */}
-        <View style={styles.energyBlock}>
-          <Text style={styles.energyTitle}>
-            {dayData.nawal}: {energy_of_the_day.nawal.title}
-          </Text>
-          <Text style={styles.energyContent}>{energy_of_the_day.nawal.content}</Text>
-          <View style={styles.keywordsContainer}>
-            {energy_of_the_day.nawal.keywords.map((keyword, index) => (
-              <View key={index} style={styles.keywordTag}>
-                <Text style={styles.keywordText}>{keyword}</Text>
-              </View>
-            ))}
-          </View>
-        </View>
+          {/* Energy of the Day Section */}
+          <EnergyOfTheDay dayData={dayData} energyOfTheDay={dayData.energy_of_the_day} />
 
-        {/* Combined Energy */}
-        <View style={styles.energyBlock}>
-          <Text style={styles.energyTitle}>
-            {dayData.number} {dayData.nawal}: {energy_of_the_day.combined_energy.title}
-          </Text>
-          <Text style={styles.energyContent}>{energy_of_the_day.combined_energy.content}</Text>
-          {energy_of_the_day.combined_energy.notes && (
-            <View style={styles.notesContainer}>
-              {energy_of_the_day.combined_energy.notes.map((note, index) => (
-                <View key={index} style={styles.noteItem}>
-                  <Text style={styles.noteBullet}>•</Text>
-                  <Text style={styles.noteText}>{note}</Text>
-                </View>
-              ))}
-            </View>
-          )}
-        </View>
-      </Card>
+          {/* Separator */}
+          <View style={styles.separator} />
 
-      {/* Bottom Link - Back to Index Only */}
-      <View style={styles.navigationContainer}>
-        <Pressable style={styles.navLink} onPress={onBack}>
-          <Text style={styles.navLinkText}>Back to Index</Text>
-        </Pressable>
-      </View>
+          {/* Meditation Section */}
+          <MeditationSection
+            affirmationImage={affirmationImage}
+            meditationText={dayData.meditation}
+            dayNumber={dayNumber}
+          />
+        </>
+      )}
+
+      {/* Bottom Day Navigation */}
+      {renderDayNavigation()}
     </View>
   );
 }
 
-export default function IndexScreenContent({ selectedDay, setSelectedDay, setCurrentView }) {
+export default function IndexScreenContent({
+  selectedDay,
+  setSelectedDay,
+  setCurrentView,
+  scrollViewRef,
+}) {
   const insets = useSafeAreaInsets();
   const today = getTodayMayanDate();
   const trecenaData = getTrecenaData();
@@ -245,6 +260,14 @@ export default function IndexScreenContent({ selectedDay, setSelectedDay, setCur
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
 
+  // Default to Chapter 8 on initial load if no day is selected
+  useEffect(() => {
+    if (selectedDay === null && setSelectedDay) {
+      setSelectedDay(8);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run on mount - intentionally not including selectedDay in deps
+
   // If a day is selected, show detail view
   if (selectedDay !== null) {
     return (
@@ -252,6 +275,7 @@ export default function IndexScreenContent({ selectedDay, setSelectedDay, setCur
         dayNumber={selectedDay}
         onBack={() => setSelectedDay(null)}
         setSelectedDay={setSelectedDay}
+        scrollViewRef={scrollViewRef}
       />
     );
   }
@@ -259,7 +283,7 @@ export default function IndexScreenContent({ selectedDay, setSelectedDay, setCur
   // List view
   return (
     <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-      <SectionHeader title="Index" />
+      <SectionHeader title='Journey' />
 
       <Card>
         <Text style={styles.trecenaTitle}>{trecenaData.trecena} Trecena</Text>
@@ -272,7 +296,7 @@ export default function IndexScreenContent({ selectedDay, setSelectedDay, setCur
         <Text
           style={styles.prologueText}
           numberOfLines={prologueExpanded ? undefined : 2}
-          ellipsizeMode="tail"
+          ellipsizeMode='tail'
         >
           {trecenaData.prologue}
         </Text>
@@ -280,9 +304,7 @@ export default function IndexScreenContent({ selectedDay, setSelectedDay, setCur
           style={styles.readMoreButton}
           onPress={() => setPrologueExpanded(!prologueExpanded)}
         >
-          <Text style={styles.readMoreText}>
-            {prologueExpanded ? 'Read less' : 'Read more'}
-          </Text>
+          <Text style={styles.readMoreText}>{prologueExpanded ? 'Read less' : 'Read more'}</Text>
         </Pressable>
       </Card>
 
@@ -460,17 +482,6 @@ const styles = StyleSheet.create({
     minWidth: 60,
     textAlign: 'center',
   },
-  horoscopeImage: {
-    width: '100%',
-    height: 400,
-    marginBottom: 16,
-    borderRadius: 8,
-  },
-  horoscopeText: {
-    ...type.body,
-    color: colors.text,
-    lineHeight: 24,
-  },
   separator: {
     height: 1,
     backgroundColor: colors.border,
@@ -511,65 +522,6 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     fontStyle: 'italic',
   },
-  energySectionTitle: {
-    ...type.subtitle,
-    color: colors.text,
-    fontWeight: '700',
-    marginBottom: 20,
-    fontSize: 20,
-  },
-  energyBlock: {
-    marginBottom: 24,
-  },
-  energyTitle: {
-    ...type.subtitle,
-    color: colors.text,
-    fontWeight: '700',
-    marginBottom: 12,
-  },
-  energyContent: {
-    ...type.body,
-    color: colors.text,
-    lineHeight: 24,
-    marginBottom: 16,
-  },
-  keywordsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  keywordTag: {
-    backgroundColor: colors.accent2,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
-    marginRight: 8,
-    marginBottom: 8,
-  },
-  keywordText: {
-    ...type.caption,
-    color: colors.text,
-    fontSize: 12,
-  },
-  notesContainer: {
-    marginTop: 12,
-  },
-  noteItem: {
-    flexDirection: 'row',
-    marginBottom: 8,
-    paddingLeft: 4,
-  },
-  noteBullet: {
-    ...type.body,
-    color: colors.accent,
-    marginRight: 8,
-    fontSize: 16,
-  },
-  noteText: {
-    ...type.body,
-    color: colors.text,
-    flex: 1,
-    lineHeight: 24,
-  },
   navigationContainer: {
     marginTop: 24,
   },
@@ -586,6 +538,35 @@ const styles = StyleSheet.create({
     color: colors.text,
     fontWeight: '600',
   },
+  dayNavigationContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 24,
+    marginBottom: 24,
+  },
+  dayNavButton: {
+    flex: 1,
+    backgroundColor: colors.accent2,
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.accent,
+    alignItems: 'center',
+    marginHorizontal: 6,
+  },
+  dayNavButtonDisabled: {
+    backgroundColor: 'rgba(255,255,255,0.05)',
+    borderColor: 'rgba(255,255,255,0.1)',
+    opacity: 0.5,
+  },
+  dayNavButtonText: {
+    ...type.subtitle,
+    color: colors.text,
+    fontWeight: '600',
+  },
+  dayNavButtonTextDisabled: {
+    color: colors.textDim,
+  },
   errorText: {
     ...type.body,
     color: colors.textDim,
@@ -593,4 +574,3 @@ const styles = StyleSheet.create({
     marginTop: 32,
   },
 });
-

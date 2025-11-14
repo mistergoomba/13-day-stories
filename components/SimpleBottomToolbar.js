@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, Text, Pressable, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
+import Svg, { Path, Circle } from 'react-native-svg';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
 
-export default function SimpleBottomToolbar({ currentView, setCurrentView }) {
+export default function SimpleBottomToolbar({ currentView, setCurrentView, setSelectedDay }) {
   const insets = useSafeAreaInsets();
 
   const handleHome = () => {
@@ -23,7 +25,11 @@ export default function SimpleBottomToolbar({ currentView, setCurrentView }) {
   };
 
   const handleIndex = () => {
-    console.log('Index button pressed');
+    console.log('Journey button pressed');
+    // Set to Chapter 8 when navigating to Journey from toolbar
+    if (setSelectedDay) {
+      setSelectedDay(8);
+    }
     setCurrentView('Index');
   };
 
@@ -34,63 +40,165 @@ export default function SimpleBottomToolbar({ currentView, setCurrentView }) {
 
   return (
     <View style={[styles.container, { paddingBottom: insets.bottom }]}>
+      <LinearGradient
+        colors={['transparent', colors.bg]}
+        style={styles.gradient}
+        pointerEvents='none'
+      />
       <View style={styles.toolbar}>
         {/* Home */}
         <Pressable
-          style={[styles.button, currentView === 'Home' && styles.activeButton]}
+          style={[styles.tabButton, currentView === 'Home' && styles.activeTabButton]}
           onPress={handleHome}
         >
-          <Text
-            style={[styles.buttonLabel, currentView === 'Home' && styles.activeButtonLabel]}
-          >
-            Home
-          </Text>
+          <View style={styles.iconContainer}>
+            <Svg width={24} height={24} viewBox='0 0 24 24' fill='none'>
+              <Path
+                d='M3 11L12 3L21 11V20H14V14H10V20H3V11Z'
+                stroke={currentView === 'Home' ? 'currentColor' : '#FFFFFF'}
+                strokeWidth={2}
+                strokeLinejoin='round'
+              />
+            </Svg>
+            {currentView === 'Home' && <Text style={styles.iconLabel}>home</Text>}
+          </View>
         </Pressable>
 
         {/* Meditation */}
         <Pressable
-          style={[styles.button, currentView === 'Meditation' && styles.activeButton]}
+          style={[styles.tabButton, currentView === 'Meditation' && styles.activeTabButton]}
           onPress={handleMeditation}
         >
-          <Text
-            style={[styles.buttonLabel, currentView === 'Meditation' && styles.activeButtonLabel]}
-          >
-            Meditate
-          </Text>
+          <View style={styles.iconContainer}>
+            <Svg width={24} height={24} viewBox='0 0 24 24' fill='none'>
+              <Circle
+                cx={12}
+                cy={6}
+                r={3}
+                stroke={currentView === 'Meditation' ? 'currentColor' : '#FFFFFF'}
+                strokeWidth={2}
+              />
+              <Path
+                d='M6 18C7 16 9 14 12 14C15 14 17 16 18 18'
+                stroke={currentView === 'Meditation' ? 'currentColor' : '#FFFFFF'}
+                strokeWidth={2}
+                strokeLinecap='round'
+              />
+              <Path
+                d='M9 21L6 18'
+                stroke={currentView === 'Meditation' ? 'currentColor' : '#FFFFFF'}
+                strokeWidth={2}
+                strokeLinecap='round'
+              />
+              <Path
+                d='M15 21L18 18'
+                stroke={currentView === 'Meditation' ? 'currentColor' : '#FFFFFF'}
+                strokeWidth={2}
+                strokeLinecap='round'
+              />
+            </Svg>
+            {currentView === 'Meditation' && <Text style={styles.iconLabel}>meditate</Text>}
+          </View>
         </Pressable>
 
-        {/* Today - Big center button */}
+        {/* Today - Big center tab */}
         <Pressable
-          style={[styles.todayButton, currentView === 'Day' && styles.activeTodayButton]}
+          style={[
+            styles.todayTabButton,
+            currentView !== 'Day' && { backgroundColor: colors.bg },
+            currentView === 'Day' && styles.activeTabButton,
+          ]}
           onPress={handleToday}
         >
-          <Text style={[styles.todayLabel, currentView === 'Day' && styles.activeTodayLabel]}>
-            TODAY
-          </Text>
+          <View style={styles.iconContainer}>
+            <Svg width={32} height={32} viewBox='0 0 24 24' fill='none'>
+              <Circle
+                cx={12}
+                cy={10}
+                r={6}
+                stroke={currentView === 'Day' ? 'currentColor' : '#FFFFFF'}
+                strokeWidth={2}
+              />
+              <Path
+                d='M6 20H18'
+                stroke={currentView === 'Day' ? 'currentColor' : '#FFFFFF'}
+                strokeWidth={2}
+                strokeLinecap='round'
+              />
+              <Path
+                d='M8 16H16'
+                stroke={currentView === 'Day' ? 'currentColor' : '#FFFFFF'}
+                strokeWidth={2}
+                strokeLinecap='round'
+              />
+            </Svg>
+            <Text
+              style={[
+                styles.iconLabel,
+                { color: currentView === 'Day' ? 'currentColor' : '#FFFFFF' },
+              ]}
+            >
+              today
+            </Text>
+          </View>
         </Pressable>
 
-        {/* Index */}
+        {/* Journey */}
         <Pressable
-          style={[styles.button, currentView === 'Index' && styles.activeButton]}
+          style={[styles.tabButton, currentView === 'Index' && styles.activeTabButton]}
           onPress={handleIndex}
         >
-          <Text
-            style={[styles.buttonLabel, currentView === 'Index' && styles.activeButtonLabel]}
-          >
-            Index
-          </Text>
+          <View style={styles.iconContainer}>
+            <Svg width={24} height={24} viewBox='0 0 24 24' fill='none'>
+              {/* Left page, angled */}
+              <Path
+                d='M4 12.5L11.5 14V22L4 21.5V12.5Z'
+                stroke={currentView === 'Index' ? 'currentColor' : '#FFFFFF'}
+                strokeWidth={2}
+                strokeLinejoin='round'
+              />
+              {/* Right page, angled */}
+              <Path
+                d='M20 12.5L12.5 14V22L20 21.5V12.5Z'
+                stroke={currentView === 'Index' ? 'currentColor' : '#FFFFFF'}
+                strokeWidth={2}
+                strokeLinejoin='round'
+              />
+              {/* Heart floating above the book */}
+              <Path
+                d='M8 3C8 1.7 9.1 0.6 10.5 0.6C11.2 0.6 11.9 1 12.3 1.6C12.7 1 13.4 0.6 14.1 0.6C15.5 0.6 16.6 1.7 16.6 3C16.6 5.2 14.7 6.8 12.3 8.4C9.9 6.8 8 5.2 8 3Z'
+                stroke={currentView === 'Index' ? 'currentColor' : '#FFFFFF'}
+                strokeWidth={2}
+                strokeLinejoin='round'
+              />
+            </Svg>
+            {currentView === 'Index' && <Text style={styles.iconLabel}>journey</Text>}
+          </View>
         </Pressable>
 
         {/* Settings */}
         <Pressable
-          style={[styles.button, currentView === 'Settings' && styles.activeButton]}
+          style={[styles.tabButton, currentView === 'Settings' && styles.activeTabButton]}
           onPress={handleSettings}
         >
-          <Text
-            style={[styles.buttonLabel, currentView === 'Settings' && styles.activeButtonLabel]}
-          >
-            Settings
-          </Text>
+          <View style={styles.iconContainer}>
+            <Svg width={24} height={24} viewBox='0 0 24 24' fill='none'>
+              <Circle
+                cx={14}
+                cy={12}
+                r={3}
+                stroke={currentView === 'Settings' ? 'currentColor' : '#FFFFFF'}
+                strokeWidth={2}
+              />
+              <Path
+                d='M19.4 15A7.96 7.96 0 0020 12c0-.7-.1-1.4-.3-2l2-1-2-3-2 1a8.13 8.13 0 00-1.7-1l-.3-2h-4l-.3 2a8.13 8.13 0 00-1.7 1l-2-1-2 3 2 1c-.2.6-.3 1.3-.3 2 0 .7.1 1.4.3 2l-2 1 2 3 2-1c.5.4 1.1.7 1.7 1l.3 2h4l.3-2c.6-.3 1.2-.6 1.7-1l2 1 2-3-2-1z'
+                stroke={currentView === 'Settings' ? 'currentColor' : '#FFFFFF'}
+                strokeWidth={2}
+                strokeLinejoin='round'
+              />
+            </Svg>
+            {currentView === 'Settings' && <Text style={styles.iconLabel}>settings</Text>}
+          </View>
         </Pressable>
       </View>
     </View>
@@ -99,81 +207,86 @@ export default function SimpleBottomToolbar({ currentView, setCurrentView }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.surface,
+    backgroundColor: colors.bg,
     borderTopWidth: 1,
     borderTopColor: colors.border,
-    paddingTop: 4,
-    minHeight: 50, // Minimum height for toolbar content
+    overflow: 'visible',
+    position: 'relative',
+  },
+  gradient: {
+    position: 'absolute',
+    top: -16,
+    left: 0,
+    right: 0,
+    height: 16,
   },
   toolbar: {
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'space-around',
-    paddingHorizontal: 16,
-    minHeight: 50, // Minimum height for toolbar content
+    height: 40,
+    paddingTop: 8,
   },
-  button: {
+  tabButton: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 6,
-    paddingHorizontal: 8,
-    minWidth: 50,
-    height: 40,
+    backgroundColor: 'transparent',
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    paddingTop: 8,
+    paddingBottom: 4,
+    paddingHorizontal: 4,
+    minHeight: 40,
   },
-  buttonLabel: {
+  tabLabel: {
     ...type.caption,
     color: colors.textDim,
     fontSize: 9,
     textAlign: 'center',
     fontWeight: '500',
   },
-  todayButton: {
+  todayTabButton: {
+    flex: 1.2,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.accent,
-    borderRadius: 25,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    marginBottom: 15, // Makes it pop out much more
-    minWidth: 70,
-    height: 50,
-    // Use modern shadow syntax for web compatibility
-    ...(Platform.OS === 'web'
-      ? {
-          boxShadow: `0 6px 15px ${colors.glow}80`,
-        }
-      : {
-          shadowColor: colors.glow,
-          shadowOpacity: 0.8,
-          shadowRadius: 15,
-          shadowOffset: { width: 0, height: 6 },
-          elevation: 12,
-        }),
+    backgroundColor: 'transparent',
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    paddingTop: 8,
+    paddingBottom: 4,
+    paddingHorizontal: 4,
+    minHeight: 40,
   },
-  todayLabel: {
+  todayTabLabel: {
     ...type.caption,
-    color: colors.text,
+    color: colors.textDim,
     fontSize: 10,
     fontWeight: '700',
     textAlign: 'center',
   },
-  // Active state styles
-  activeButton: {
-    backgroundColor: 'rgba(164,118,255,0.2)',
-    borderColor: colors.accent,
-    borderWidth: 1,
-  },
-  activeButtonLabel: {
-    color: colors.text,
-    fontWeight: '600',
-  },
-  activeTodayButton: {
+  // Active state styles - filled with purple, extends upward
+  activeTabButton: {
     backgroundColor: colors.accent,
-    borderColor: colors.accent,
-    borderWidth: 2,
+    marginTop: -12,
+    paddingTop: 5,
+    paddingBottom: 5,
+    minHeight: 52,
   },
-  activeTodayLabel: {
+  activeTabLabel: {
     color: colors.text,
-    fontWeight: '800',
+    fontWeight: '700',
+  },
+  iconContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  iconLabel: {
+    ...type.caption,
+    color: 'currentColor',
+    fontSize: 10,
+    marginTop: 2,
+    fontWeight: '500',
+    textTransform: 'lowercase',
   },
 });

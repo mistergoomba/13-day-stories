@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
@@ -25,16 +25,13 @@ export default function HomeScreenContent({ setCurrentView }) {
 
   return (
     <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-      <SectionHeader title="About This Project" />
+      <Image source={require('../assets/icon.png')} style={styles.icon} resizeMode='contain' />
 
       <Card>
         <Text style={styles.body}>
           Welcome to 13-Day Stories, a journey through the sacred cycles of the Mayan calendar.
-        </Text>
-      </Card>
-
-      <Card>
-        <Text style={styles.body}>
+          <br />
+          <br />
           Every day carries a unique energy, guided through these 13-day stories known as trecenas.
           Each day combines a number (1-13) and a nawal, or day sign, creating a distinct
           vibrational quality that offers insight, guidance, and reflection.
@@ -61,18 +58,20 @@ export default function HomeScreenContent({ setCurrentView }) {
       {/* Navigation Links */}
       <View style={styles.navigationContainer}>
         <Pressable
-          style={styles.navLink}
+          style={styles.topNavLink}
           onPress={() => setCurrentView && setCurrentView('Day')}
         >
+          <Text style={styles.navLinkText}>See the Energy of the Day</Text>
+        </Pressable>
+
+        <Pressable style={styles.navLink} onPress={() => setCurrentView && setCurrentView('Day')}>
           <Text style={styles.navLinkText}>
-            Join our journey in progress and see the energy of today, {formatDate(today.gregorianDate)}
+            Join our journey in progress and see the energy of today,{' '}
+            {formatDate(today.gregorianDate)}
           </Text>
         </Pressable>
 
-        <Pressable
-          style={styles.navLink}
-          onPress={() => setCurrentView && setCurrentView('Index')}
-        >
+        <Pressable style={styles.navLink} onPress={() => setCurrentView && setCurrentView('Index')}>
           <Text style={styles.navLinkText}>Read from the beginning of this 13 day story</Text>
         </Pressable>
       </View>
@@ -84,6 +83,12 @@ const styles = StyleSheet.create({
   content: {
     padding: 20,
   },
+  icon: {
+    width: '100%',
+    height: 200,
+    marginBottom: 24,
+    alignSelf: 'center',
+  },
   body: {
     ...type.body,
     color: colors.text,
@@ -92,6 +97,15 @@ const styles = StyleSheet.create({
   },
   navigationContainer: {
     marginTop: 24,
+  },
+  topNavLink: {
+    backgroundColor: colors.accent2,
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.accent,
+    alignItems: 'center',
+    marginBottom: 24,
   },
   navLink: {
     backgroundColor: colors.accent2,
@@ -108,4 +122,3 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
-

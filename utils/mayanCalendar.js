@@ -34,7 +34,15 @@ export function getDayData(dayNumber) {
 // Add more days as images become available
 // This can be easily switched to remote URLs later by changing the return value in getImageSource()
 const IMAGE_MAP = {
-  // Day 8 images are available
+  // Day 1 images
+  1: {
+    story_primary: require('../assets/trecena-aqabal/1/story_primary.png'),
+    story_wide_1: require('../assets/trecena-aqabal/1/story_wide_1.png'),
+    story_wide_2: require('../assets/trecena-aqabal/1/story_wide_2.png'),
+    horoscope: require('../assets/trecena-aqabal/1/horoscope.png'),
+    affirmation: require('../assets/trecena-aqabal/1/affirmation.png'),
+  },
+  // Day 8 images
   8: {
     story_primary: require('../assets/trecena-aqabal/8/story_primary.png'),
     story_wide_1: require('../assets/trecena-aqabal/8/story_wide_1.png'),
@@ -43,12 +51,7 @@ const IMAGE_MAP = {
     affirmation: require('../assets/trecena-aqabal/8/affirmation.png'),
     meditation: require('../assets/trecena-aqabal/8/meditation.png'),
   },
-  // Add other days (1-7, 9-13) here as images become available
-  // Example:
-  // 1: {
-  //   story_primary: require('../assets/trecena-aqabal/1/story_primary.png'),
-  //   ...
-  // },
+  // Add other days (2-7, 9-13) here as images become available
 };
 
 /**
