@@ -42,6 +42,54 @@ const IMAGE_MAP = {
     horoscope: require('../assets/trecena-aqabal/1/horoscope.png'),
     affirmation: require('../assets/trecena-aqabal/1/affirmation.png'),
   },
+  // Day 2 images
+  2: {
+    story_primary: require('../assets/trecena-aqabal/2/story_primary.png'),
+    story_wide_1: require('../assets/trecena-aqabal/2/story_wide_1.png'),
+    story_wide_2: require('../assets/trecena-aqabal/2/story_wide_2.png'),
+    horoscope: require('../assets/trecena-aqabal/2/horoscope.png'),
+    affirmation: require('../assets/trecena-aqabal/2/affirmation.png'),
+  },
+  // Day 3 images
+  3: {
+    story_primary: require('../assets/trecena-aqabal/3/story_primary.png'),
+    story_wide_1: require('../assets/trecena-aqabal/3/story_wide_1.png'),
+    story_wide_2: require('../assets/trecena-aqabal/3/story_wide_2.png'),
+    horoscope: require('../assets/trecena-aqabal/3/horoscope.png'),
+    affirmation: require('../assets/trecena-aqabal/3/affirmation.png'),
+  },
+  // Day 4 images
+  4: {
+    story_primary: require('../assets/trecena-aqabal/4/story_primary.png'),
+    story_wide_1: require('../assets/trecena-aqabal/4/story_wide_1.png'),
+    story_wide_2: require('../assets/trecena-aqabal/4/story_wide_2.png'),
+    horoscope: require('../assets/trecena-aqabal/4/horoscope.png'),
+    affirmation: require('../assets/trecena-aqabal/4/affirmation.png'),
+  },
+  // Day 5 images
+  5: {
+    story_primary: require('../assets/trecena-aqabal/5/story_primary.png'),
+    story_wide_1: require('../assets/trecena-aqabal/5/story_wide_1.png'),
+    story_wide_2: require('../assets/trecena-aqabal/5/story_wide_2.png'),
+    horoscope: require('../assets/trecena-aqabal/5/horoscope.png'),
+    affirmation: require('../assets/trecena-aqabal/5/affirmation.png'),
+  },
+  // Day 6 images
+  6: {
+    story_primary: require('../assets/trecena-aqabal/6/story_primary.png'),
+    story_wide_1: require('../assets/trecena-aqabal/6/story_wide_1.png'),
+    story_wide_2: require('../assets/trecena-aqabal/6/story_wide_2.png'),
+    horoscope: require('../assets/trecena-aqabal/6/horoscope.png'),
+    affirmation: require('../assets/trecena-aqabal/6/affirmation.png'),
+  },
+  // Day 7 images
+  7: {
+    story_primary: require('../assets/trecena-aqabal/7/story_primary.png'),
+    story_wide_1: require('../assets/trecena-aqabal/7/story_wide_1.png'),
+    story_wide_2: require('../assets/trecena-aqabal/7/story_wide_2.png'),
+    horoscope: require('../assets/trecena-aqabal/7/horoscope.png'),
+    affirmation: require('../assets/trecena-aqabal/7/affirmation.png'),
+  },
   // Day 8 images
   8: {
     story_primary: require('../assets/trecena-aqabal/8/story_primary.png'),
@@ -51,7 +99,7 @@ const IMAGE_MAP = {
     affirmation: require('../assets/trecena-aqabal/8/affirmation.png'),
     meditation: require('../assets/trecena-aqabal/8/meditation.png'),
   },
-  // Add other days (2-7, 9-13) here as images become available
+  // Add other days (9-13) here as images become available
 };
 
 /**

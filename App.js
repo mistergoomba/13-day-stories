@@ -97,6 +97,7 @@ function AppContent() {
             <DayScreenContent
               setCurrentView={setCurrentView}
               setSelectedDay={setSelectedDay}
+              scrollViewRef={scrollViewRef}
             />
           ) : (
             <CurrentComponent setCurrentView={setCurrentView} />

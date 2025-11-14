@@ -2,11 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Card from '../components/Card';
-import SectionHeader from '../components/SectionHeader';
-import HoroscopeSection from '../components/HoroscopeSection';
-import MayanCalendarExplanation from '../components/MayanCalendarExplanation';
-import EnergyOfTheDay from '../components/EnergyOfTheDay';
-import MeditationSection from '../components/MeditationSection';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
 import {
@@ -26,8 +21,6 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef }) {
   const storyPrimaryImage = getImageSource(dayNumber, 'story_primary');
   const storyWide1Image = getImageSource(dayNumber, 'story_wide_1');
   const storyWide2Image = getImageSource(dayNumber, 'story_wide_2');
-  const horoscopeImage = getImageSource(dayNumber, 'horoscope');
-  const affirmationImage = getImageSource(dayNumber, 'affirmation');
 
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
@@ -37,56 +30,6 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef }) {
     if (scrollViewRef?.current) {
       scrollViewRef.current.scrollTo({ y: 0, animated: true });
     }
-  };
-
-  // Render day navigation buttons (previous, index, next)
-  const renderDayNavigation = () => {
-    const canGoPrevious = dayNumber > 1;
-    const canGoNext = dayNumber < 13 && isDayAvailable(dayNumber + 1);
-
-    return (
-      <View style={styles.dayNavigationContainer}>
-        <Pressable
-          style={[styles.dayNavButton, !canGoPrevious && styles.dayNavButtonDisabled]}
-          onPress={() => {
-            if (canGoPrevious) {
-              setSelectedDay(dayNumber - 1);
-              scrollToTop();
-            }
-          }}
-          disabled={!canGoPrevious}
-        >
-          <Text
-            style={[styles.dayNavButtonText, !canGoPrevious && styles.dayNavButtonTextDisabled]}
-          >
-            Day {dayNumber - 1}
-          </Text>
-        </Pressable>
-        <Pressable
-          style={styles.dayNavButton}
-          onPress={() => {
-            onBack();
-            scrollToTop();
-          }}
-        >
-          <Text style={styles.dayNavButtonText}>Index</Text>
-        </Pressable>
-        <Pressable
-          style={[styles.dayNavButton, !canGoNext && styles.dayNavButtonDisabled]}
-          onPress={() => {
-            if (canGoNext) {
-              setSelectedDay(dayNumber + 1);
-              scrollToTop();
-            }
-          }}
-          disabled={!canGoNext}
-        >
-          <Text style={[styles.dayNavButtonText, !canGoNext && styles.dayNavButtonTextDisabled]}>
-            Day {dayNumber + 1}
-          </Text>
-        </Pressable>
-      </View>
-    );
   };
 
   if (!dayData) {
@@ -143,58 +86,50 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef }) {
     return elements;
   };
 
+  const canGoPrevious = dayNumber > 1;
+  const canGoNext = dayNumber < 13 && isDayAvailable(dayNumber + 1);
+
+  const handlePreviousDay = () => {
+    if (canGoPrevious) {
+      setSelectedDay(dayNumber - 1);
+      scrollToTop();
+    } else {
+      // If on Day 1, go to index page
+      onBack();
+      scrollToTop();
+    }
+  };
+
   return (
     <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-      {/* Top Day Navigation */}
-      <View style={[styles.dayNavigationContainer, { marginTop: 0, marginBottom: 24 }]}>
-        <Pressable
-          style={[styles.dayNavButton, dayNumber <= 1 && styles.dayNavButtonDisabled]}
-          onPress={() => {
-            if (dayNumber > 1) {
-              setSelectedDay(dayNumber - 1);
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Journey</Text>
+        <View style={styles.headerDateContainer}>
+          <Pressable onPress={handlePreviousDay} style={styles.headerArrowButton}>
+            <Text style={styles.headerArrow}>←</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              onBack();
               scrollToTop();
-            }
-          }}
-          disabled={dayNumber <= 1}
-        >
-          <Text
-            style={[styles.dayNavButtonText, dayNumber <= 1 && styles.dayNavButtonTextDisabled]}
+            }}
           >
-            Day {dayNumber - 1}
-          </Text>
-        </Pressable>
-        <Pressable
-          style={styles.dayNavButton}
-          onPress={() => {
-            onBack();
-            scrollToTop();
-          }}
-        >
-          <Text style={styles.dayNavButtonText}>Index</Text>
-        </Pressable>
-        <Pressable
-          style={[
-            styles.dayNavButton,
-            (dayNumber >= 13 || !isDayAvailable(dayNumber + 1)) && styles.dayNavButtonDisabled,
-          ]}
-          onPress={() => {
-            if (dayNumber < 13 && isDayAvailable(dayNumber + 1)) {
-              setSelectedDay(dayNumber + 1);
-              scrollToTop();
-            }
-          }}
-          disabled={dayNumber >= 13 || !isDayAvailable(dayNumber + 1)}
-        >
-          <Text
-            style={[
-              styles.dayNavButtonText,
-              (dayNumber >= 13 || !isDayAvailable(dayNumber + 1)) &&
-                styles.dayNavButtonTextDisabled,
-            ]}
+            <Text style={styles.headerDate}>Day {dayNumber} of 13</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              if (canGoNext) {
+                setSelectedDay(dayNumber + 1);
+                scrollToTop();
+              }
+            }}
+            disabled={!canGoNext}
+            style={styles.headerArrowButton}
           >
-            Day {dayNumber + 1}
-          </Text>
-        </Pressable>
+            <Text style={[styles.headerArrow, !canGoNext && styles.headerArrowDisabled]}>→</Text>
+          </Pressable>
+        </View>
       </View>
 
       {/* Chapter Header */}
@@ -210,37 +145,32 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef }) {
         <View style={styles.chapterContainer}>{renderChapterContent()}</View>
       </Card>
 
-      {/* Separator */}
-      <View style={styles.separator} />
-
-      {/* Horoscope Section */}
-      {dayData && (
-        <>
-          <HoroscopeSection horoscopeImage={horoscopeImage} horoscopeText={dayData.horoscope} />
-
-          {/* Separator */}
-          <View style={styles.separator} />
-
-          {/* Mayan Calendar Explanation */}
-          <MayanCalendarExplanation />
-
-          {/* Energy of the Day Section */}
-          <EnergyOfTheDay dayData={dayData} energyOfTheDay={dayData.energy_of_the_day} />
-
-          {/* Separator */}
-          <View style={styles.separator} />
-
-          {/* Meditation Section */}
-          <MeditationSection
-            affirmationImage={affirmationImage}
-            meditationText={dayData.meditation}
-            dayNumber={dayNumber}
-          />
-        </>
-      )}
-
-      {/* Bottom Day Navigation */}
-      {renderDayNavigation()}
+      {/* Bottom Day Navigation (mimics top) */}
+      <View style={styles.bottomDayNavigationContainer}>
+        <Pressable onPress={handlePreviousDay} style={styles.bottomArrowButton}>
+          <Text style={styles.bottomArrow}>←</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            onBack();
+            scrollToTop();
+          }}
+        >
+          <Text style={styles.bottomDayIndicator}>Day {dayNumber} of 13</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            if (canGoNext) {
+              setSelectedDay(dayNumber + 1);
+              scrollToTop();
+            }
+          }}
+          disabled={!canGoNext}
+          style={styles.bottomArrowButton}
+        >
+          <Text style={[styles.bottomArrow, !canGoNext && styles.bottomArrowDisabled]}>→</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -280,10 +210,63 @@ export default function IndexScreenContent({
     );
   }
 
+  // Scroll to top helper function
+  const scrollToTop = () => {
+    if (scrollViewRef?.current) {
+      scrollViewRef.current.scrollTo({ y: 0, animated: true });
+    }
+  };
+
+  // Find first and last available days
+  const firstAvailableDay = allDays.find((day) => isDayAvailable(day.day))?.day || 1;
+  const lastAvailableDay =
+    allDays
+      .filter((day) => isDayAvailable(day.day))
+      .map((day) => day.day)
+      .pop() || today.day;
+
+  const handleGoToFirstDay = () => {
+    if (firstAvailableDay) {
+      setSelectedDay(firstAvailableDay);
+      scrollToTop();
+    }
+  };
+
+  const handleGoToLastDay = () => {
+    if (lastAvailableDay) {
+      setSelectedDay(lastAvailableDay);
+      scrollToTop();
+    }
+  };
+
   // List view
   return (
     <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-      <SectionHeader title='Journey' />
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Journey</Text>
+        <View style={styles.headerDateContainer}>
+          <Pressable
+            onPress={handleGoToFirstDay}
+            disabled={!firstAvailableDay}
+            style={styles.headerArrowButton}
+          >
+            <Text style={[styles.headerArrow, !firstAvailableDay && styles.headerArrowDisabled]}>
+              ←
+            </Text>
+          </Pressable>
+          <Text style={styles.headerDate}>Index</Text>
+          <Pressable
+            onPress={handleGoToLastDay}
+            disabled={!lastAvailableDay}
+            style={styles.headerArrowButton}
+          >
+            <Text style={[styles.headerArrow, !lastAvailableDay && styles.headerArrowDisabled]}>
+              →
+            </Text>
+          </Pressable>
+        </View>
+      </View>
 
       <Card>
         <Text style={styles.trecenaTitle}>{trecenaData.trecena} Trecena</Text>
@@ -572,5 +555,70 @@ const styles = StyleSheet.create({
     color: colors.textDim,
     textAlign: 'center',
     marginTop: 32,
+  },
+  header: {
+    marginBottom: 24,
+    alignItems: 'center',
+  },
+  headerTitle: {
+    ...type.title,
+    color: colors.text,
+    fontSize: 32,
+    fontWeight: '700',
+    marginBottom: 8,
+  },
+  headerDateContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerDate: {
+    ...type.body,
+    color: colors.textDim,
+    fontSize: 16,
+    minWidth: 120,
+    textAlign: 'center',
+  },
+  headerArrowButton: {
+    padding: 8,
+    marginHorizontal: 8,
+  },
+  headerArrow: {
+    ...type.body,
+    color: colors.text,
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  headerArrowDisabled: {
+    color: colors.textDim,
+    opacity: 0.3,
+  },
+  bottomDayNavigationContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 24,
+    marginBottom: 24,
+  },
+  bottomArrowButton: {
+    padding: 8,
+    marginHorizontal: 8,
+  },
+  bottomArrow: {
+    ...type.body,
+    color: colors.text,
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  bottomArrowDisabled: {
+    color: colors.textDim,
+    opacity: 0.3,
+  },
+  bottomDayIndicator: {
+    ...type.body,
+    color: colors.textDim,
+    fontSize: 16,
+    minWidth: 120,
+    textAlign: 'center',
   },
 });

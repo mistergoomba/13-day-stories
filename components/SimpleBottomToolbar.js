@@ -45,7 +45,7 @@ export default function SimpleBottomToolbar({ currentView, setCurrentView, setSe
         style={styles.gradient}
         pointerEvents='none'
       />
-      <View style={styles.toolbar}>
+      <View style={[styles.toolbar, { zIndex: 1 }]}>
         {/* Home */}
         <Pressable
           style={[styles.tabButton, currentView === 'Home' && styles.activeTabButton]}
@@ -219,6 +219,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 16,
+    zIndex: 0,
   },
   toolbar: {
     flexDirection: 'row',
@@ -272,6 +273,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingBottom: 5,
     minHeight: 52,
+    zIndex: 2,
   },
   activeTabLabel: {
     color: colors.text,

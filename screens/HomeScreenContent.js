@@ -30,8 +30,7 @@ export default function HomeScreenContent({ setCurrentView }) {
       <Card>
         <Text style={styles.body}>
           Welcome to 13-Day Stories, a journey through the sacred cycles of the Mayan calendar.
-          <br />
-          <br />
+          {'\n\n'}
           Every day carries a unique energy, guided through these 13-day stories known as trecenas.
           Each day combines a number (1-13) and a nawal, or day sign, creating a distinct
           vibrational quality that offers insight, guidance, and reflection.
