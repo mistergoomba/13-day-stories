@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Pressable, Image, Dimensions, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Svg, { Path } from 'react-native-svg';
+import Svg, { Path, Rect } from 'react-native-svg';
 import Card from '../components/Card';
 import DayNavigationHeader from '../components/DayNavigationHeader';
 import colors from '../theme/colors';
@@ -151,28 +151,20 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef }) {
             <View style={styles.chapterTitleRow}>
               <Text style={styles.chapterTitle}>Chapter {dayNumber}</Text>
               <Pressable onPress={onBack} style={styles.indexIconButton}>
-                <Svg width={24} height={24} viewBox='0 0 24 24' fill='none'>
-                  {/* Left page, angled */}
-                  <Path
-                    d='M4 12.5L11.5 14V22L4 21.5V12.5Z'
-                    stroke={colors.text}
-                    strokeWidth={2}
-                    strokeLinejoin='round'
-                  />
-                  {/* Right page, angled */}
-                  <Path
-                    d='M20 12.5L12.5 14V22L20 21.5V12.5Z'
-                    stroke={colors.text}
-                    strokeWidth={2}
-                    strokeLinejoin='round'
-                  />
-                  {/* Heart floating above the book */}
-                  <Path
-                    d='M8 3C8 1.7 9.1 0.6 10.5 0.6C11.2 0.6 11.9 1 12.3 1.6C12.7 1 13.4 0.6 14.1 0.6C15.5 0.6 16.6 1.7 16.6 3C16.6 5.2 14.7 6.8 12.3 8.4C9.9 6.8 8 5.2 8 3Z'
-                    stroke={colors.text}
-                    strokeWidth={2}
-                    strokeLinejoin='round'
-                  />
+                <Svg width={30} height={30} viewBox='0 0 24 24' fill='none'>
+                  {/* Bulleted list icon - 4 rows with bullets and lines */}
+                  {/* Row 1 */}
+                  <Rect x='3' y='5' width='3' height='3' fill={colors.text} />
+                  <Rect x='8' y='6' width='11' height='1.5' fill={colors.text} />
+                  {/* Row 2 */}
+                  <Rect x='3' y='9' width='3' height='3' fill={colors.text} />
+                  <Rect x='8' y='10' width='11' height='1.5' fill={colors.text} />
+                  {/* Row 3 */}
+                  <Rect x='3' y='13' width='3' height='3' fill={colors.text} />
+                  <Rect x='8' y='14' width='11' height='1.5' fill={colors.text} />
+                  {/* Row 4 */}
+                  <Rect x='3' y='17' width='3' height='3' fill={colors.text} />
+                  <Rect x='8' y='18' width='11' height='1.5' fill={colors.text} />
                 </Svg>
               </Pressable>
             </View>
@@ -318,7 +310,9 @@ export default function IndexScreenContent({
           <View style={styles.contentSection}>
             <Card>
               <Text style={styles.trecenaTitle}>{trecenaData.trecena} Trecena</Text>
-              <Text style={styles.trecenaSubtitle}>Select a day to explore</Text>
+              <Text style={styles.trecenaSubtitle}>
+                {trecenaData.days[0].energy_of_the_day.nawal.content}
+              </Text>
             </Card>
           </View>
 
@@ -347,7 +341,7 @@ export default function IndexScreenContent({
           {/* Days List */}
           <View style={styles.contentSection}>
             <Card>
-              <Text style={styles.sectionTitle}>Days</Text>
+              <Text style={styles.sectionTitle}>Chapters</Text>
               {allDays.map((day) => {
                 const available = isDayAvailable(day.day);
                 const isToday = day.day === today.day;
@@ -371,7 +365,7 @@ export default function IndexScreenContent({
                           isToday && styles.todayText,
                         ]}
                       >
-                        Day {day.day}
+                        Chapter {day.day}
                       </Text>
                       <Text
                         style={[
