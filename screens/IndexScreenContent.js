@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, Dimensions, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Svg, { Path } from 'react-native-svg';
 import Card from '../components/Card';
+import DayNavigationHeader from '../components/DayNavigationHeader';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
 import {
@@ -12,6 +14,8 @@ import {
   isDayAvailable,
   getImageSource,
 } from '../utils/mayanCalendar';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 // Component to render day detail view (story chapter only)
 function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef }) {
@@ -90,87 +94,127 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef }) {
   const canGoNext = dayNumber < 13 && isDayAvailable(dayNumber + 1);
 
   const handlePreviousDay = () => {
+    scrollToTop();
     if (canGoPrevious) {
       setSelectedDay(dayNumber - 1);
-      scrollToTop();
     } else {
       // If on Day 1, go to index page
       onBack();
-      scrollToTop();
     }
   };
 
+  const handleGoToToday = () => {
+    scrollToTop();
+    onBack();
+  };
+
   return (
-    <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Journey</Text>
-        <View style={styles.headerDateContainer}>
-          <Pressable onPress={handlePreviousDay} style={styles.headerArrowButton}>
-            <Text style={styles.headerArrow}>←</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => {
-              onBack();
-              scrollToTop();
-            }}
-          >
-            <Text style={styles.headerDate}>Day {dayNumber} of 13</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => {
-              if (canGoNext) {
-                setSelectedDay(dayNumber + 1);
-                scrollToTop();
-              }
-            }}
-            disabled={!canGoNext}
-            style={styles.headerArrowButton}
-          >
-            <Text style={[styles.headerArrow, !canGoNext && styles.headerArrowDisabled]}>→</Text>
-          </Pressable>
-        </View>
-      </View>
-
-      {/* Chapter Header */}
-      <Text style={styles.chapterTitle}>Chapter {dayNumber}</Text>
-
-      {/* Story Primary Image */}
-      {storyPrimaryImage && (
-        <Image source={storyPrimaryImage} style={styles.storyPrimaryImage} resizeMode='contain' />
-      )}
-
-      {/* Chapter Text with Inline Images */}
-      <Card>
-        <View style={styles.chapterContainer}>{renderChapterContent()}</View>
-      </Card>
-
-      {/* Bottom Day Navigation (mimics top) */}
-      <View style={styles.bottomDayNavigationContainer}>
-        <Pressable onPress={handlePreviousDay} style={styles.bottomArrowButton}>
-          <Text style={styles.bottomArrow}>←</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => {
-            onBack();
+    <View style={styles.container}>
+      {/* Header - Fixed at top */}
+      <View style={styles.headerContainer}>
+        <DayNavigationHeader
+          title='Journey'
+          currentDay={dayNumber}
+          todayDay={today.day}
+          onPrevious={handlePreviousDay}
+          onNext={() => {
             scrollToTop();
-          }}
-        >
-          <Text style={styles.bottomDayIndicator}>Day {dayNumber} of 13</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => {
             if (canGoNext) {
               setSelectedDay(dayNumber + 1);
-              scrollToTop();
             }
           }}
-          disabled={!canGoNext}
-          style={styles.bottomArrowButton}
-        >
-          <Text style={[styles.bottomArrow, !canGoNext && styles.bottomArrowDisabled]}>→</Text>
-        </Pressable>
+          onToday={handleGoToToday}
+          canGoPrevious={canGoPrevious}
+          canGoNext={canGoNext}
+        />
       </View>
+
+      {/* Scrollable Content */}
+      <ScrollView
+        ref={scrollViewRef}
+        style={styles.scrollView}
+        contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 48 }]}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={[styles.content, { paddingBottom: bottomPadding }]}>
+          {/* Story Primary Image */}
+          {storyPrimaryImage && (
+            <Image
+              source={storyPrimaryImage}
+              style={[styles.storyPrimaryImage, { height: SCREEN_WIDTH }]}
+              resizeMode='cover'
+            />
+          )}
+
+          {/* Chapter Header */}
+          <View style={styles.contentSection}>
+            <View style={styles.chapterTitleRow}>
+              <Text style={styles.chapterTitle}>Chapter {dayNumber}</Text>
+              <Pressable onPress={onBack} style={styles.indexIconButton}>
+                <Svg width={24} height={24} viewBox='0 0 24 24' fill='none'>
+                  {/* Left page, angled */}
+                  <Path
+                    d='M4 12.5L11.5 14V22L4 21.5V12.5Z'
+                    stroke={colors.text}
+                    strokeWidth={2}
+                    strokeLinejoin='round'
+                  />
+                  {/* Right page, angled */}
+                  <Path
+                    d='M20 12.5L12.5 14V22L20 21.5V12.5Z'
+                    stroke={colors.text}
+                    strokeWidth={2}
+                    strokeLinejoin='round'
+                  />
+                  {/* Heart floating above the book */}
+                  <Path
+                    d='M8 3C8 1.7 9.1 0.6 10.5 0.6C11.2 0.6 11.9 1 12.3 1.6C12.7 1 13.4 0.6 14.1 0.6C15.5 0.6 16.6 1.7 16.6 3C16.6 5.2 14.7 6.8 12.3 8.4C9.9 6.8 8 5.2 8 3Z'
+                    stroke={colors.text}
+                    strokeWidth={2}
+                    strokeLinejoin='round'
+                  />
+                </Svg>
+              </Pressable>
+            </View>
+
+            {/* Chapter Text with Inline Images */}
+            <Card>
+              <View style={styles.chapterContainer}>{renderChapterContent()}</View>
+            </Card>
+          </View>
+
+          {/* Bottom Day Navigation (mimics top) */}
+          <View style={styles.contentSection}>
+            <View style={styles.bottomDayNavigationContainer}>
+              <Pressable onPress={handlePreviousDay} style={styles.bottomArrowButton}>
+                <Text style={styles.bottomArrow}>←</Text>
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  onBack();
+                  scrollToTop();
+                }}
+              >
+                <Text style={styles.bottomDayIndicator}>Day {dayNumber} of 13</Text>
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  if (canGoNext) {
+                    setSelectedDay(dayNumber + 1);
+                    scrollToTop();
+                  }
+                }}
+                disabled={!canGoNext}
+                style={styles.bottomArrowButton}
+              >
+                <Text style={[styles.bottomArrow, !canGoNext && styles.bottomArrowDisabled]}>
+                  →
+                </Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
     </View>
   );
 }
@@ -226,119 +270,154 @@ export default function IndexScreenContent({
       .pop() || today.day;
 
   const handleGoToFirstDay = () => {
+    scrollToTop();
     if (firstAvailableDay) {
       setSelectedDay(firstAvailableDay);
-      scrollToTop();
     }
   };
 
   const handleGoToLastDay = () => {
+    scrollToTop();
     if (lastAvailableDay) {
       setSelectedDay(lastAvailableDay);
-      scrollToTop();
     }
   };
 
   // List view
+  const handleGoToToday = () => {
+    scrollToTop();
+    if (today.day && isDayAvailable(today.day)) {
+      setSelectedDay(today.day);
+    }
+  };
+
   return (
-    <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Journey</Text>
-        <View style={styles.headerDateContainer}>
-          <Pressable
-            onPress={handleGoToFirstDay}
-            disabled={!firstAvailableDay}
-            style={styles.headerArrowButton}
-          >
-            <Text style={[styles.headerArrow, !firstAvailableDay && styles.headerArrowDisabled]}>
-              ←
-            </Text>
-          </Pressable>
-          <Text style={styles.headerDate}>Index</Text>
-          <Pressable
-            onPress={handleGoToLastDay}
-            disabled={!lastAvailableDay}
-            style={styles.headerArrowButton}
-          >
-            <Text style={[styles.headerArrow, !lastAvailableDay && styles.headerArrowDisabled]}>
-              →
-            </Text>
-          </Pressable>
-        </View>
+    <View style={styles.container}>
+      {/* Header - Fixed at top */}
+      <View style={styles.headerContainer}>
+        <DayNavigationHeader
+          title='Journey'
+          currentDay={today.day}
+          todayDay={today.day}
+          onPrevious={handleGoToFirstDay}
+          onNext={handleGoToLastDay}
+          onToday={handleGoToToday}
+          canGoPrevious={!!firstAvailableDay}
+          canGoNext={!!lastAvailableDay}
+        />
       </View>
 
-      <Card>
-        <Text style={styles.trecenaTitle}>{trecenaData.trecena} Trecena</Text>
-        <Text style={styles.trecenaSubtitle}>Select a day to explore</Text>
-      </Card>
+      {/* Scrollable Content */}
+      <ScrollView
+        ref={scrollViewRef}
+        style={styles.scrollView}
+        contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 56 }]}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={[styles.content, { paddingBottom: bottomPadding }]}>
+          <View style={styles.contentSection}>
+            <Card>
+              <Text style={styles.trecenaTitle}>{trecenaData.trecena} Trecena</Text>
+              <Text style={styles.trecenaSubtitle}>Select a day to explore</Text>
+            </Card>
+          </View>
 
-      {/* Prologue Section */}
-      <Card>
-        <Text style={styles.sectionTitle}>Prologue</Text>
-        <Text
-          style={styles.prologueText}
-          numberOfLines={prologueExpanded ? undefined : 2}
-          ellipsizeMode='tail'
-        >
-          {trecenaData.prologue}
-        </Text>
-        <Pressable
-          style={styles.readMoreButton}
-          onPress={() => setPrologueExpanded(!prologueExpanded)}
-        >
-          <Text style={styles.readMoreText}>{prologueExpanded ? 'Read less' : 'Read more'}</Text>
-        </Pressable>
-      </Card>
-
-      {/* Days List */}
-      <Card>
-        <Text style={styles.sectionTitle}>Days</Text>
-        {allDays.map((day) => {
-          const available = isDayAvailable(day.day);
-          const isToday = day.day === today.day;
-
-          return (
-            <Pressable
-              key={day.day}
-              style={[
-                styles.dayCard,
-                available ? styles.availableDay : styles.unavailableDay,
-                isToday && styles.todayCard,
-              ]}
-              onPress={() => available && setSelectedDay(day.day)}
-              disabled={!available}
-            >
-              <View style={styles.dayCardHeader}>
-                <Text
-                  style={[
-                    styles.dayNumber,
-                    available ? styles.availableText : styles.unavailableText,
-                    isToday && styles.todayText,
-                  ]}
-                >
-                  Day {day.day}
+          {/* Prologue Section */}
+          <View style={styles.contentSection}>
+            <Card>
+              <Text style={styles.sectionTitle}>Prologue</Text>
+              <Text
+                style={styles.prologueText}
+                numberOfLines={prologueExpanded ? undefined : 2}
+                ellipsizeMode='tail'
+              >
+                {trecenaData.prologue}
+              </Text>
+              <Pressable
+                style={styles.readMoreButton}
+                onPress={() => setPrologueExpanded(!prologueExpanded)}
+              >
+                <Text style={styles.readMoreText}>
+                  {prologueExpanded ? 'Read less' : 'Read more'}
                 </Text>
-                <Text
-                  style={[
-                    styles.dayNawal,
-                    available ? styles.availableText : styles.unavailableText,
-                  ]}
-                >
-                  {day.nawal} {day.number}
-                </Text>
-              </View>
-            </Pressable>
-          );
-        })}
-      </Card>
+              </Pressable>
+            </Card>
+          </View>
+
+          {/* Days List */}
+          <View style={styles.contentSection}>
+            <Card>
+              <Text style={styles.sectionTitle}>Days</Text>
+              {allDays.map((day) => {
+                const available = isDayAvailable(day.day);
+                const isToday = day.day === today.day;
+
+                return (
+                  <Pressable
+                    key={day.day}
+                    style={[
+                      styles.dayCard,
+                      available ? styles.availableDay : styles.unavailableDay,
+                      isToday && styles.todayCard,
+                    ]}
+                    onPress={() => available && setSelectedDay(day.day)}
+                    disabled={!available}
+                  >
+                    <View style={styles.dayCardHeader}>
+                      <Text
+                        style={[
+                          styles.dayNumber,
+                          available ? styles.availableText : styles.unavailableText,
+                          isToday && styles.todayText,
+                        ]}
+                      >
+                        Day {day.day}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.dayNawal,
+                          available ? styles.availableText : styles.unavailableText,
+                        ]}
+                      >
+                        {day.nawal} {day.number}
+                      </Text>
+                    </View>
+                  </Pressable>
+                );
+              })}
+            </Card>
+          </View>
+        </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  headerContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
   content: {
-    padding: 20,
+    paddingBottom: 20,
+    paddingTop: 0,
+    width: '100%',
+  },
+  contentSection: {
+    paddingHorizontal: 20,
+    paddingBottom: 20,
   },
   trecenaTitle: {
     ...type.title,
@@ -471,18 +550,27 @@ const styles = StyleSheet.create({
     marginVertical: 24,
     opacity: 0.3,
   },
+  chapterTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 16,
+    marginBottom: 16,
+  },
   chapterTitle: {
     ...type.title,
     color: colors.text,
-    marginBottom: 16,
     fontSize: 28,
     fontWeight: '700',
+    flex: 1,
+  },
+  indexIconButton: {
+    padding: 8,
+    marginLeft: 16,
   },
   storyPrimaryImage: {
     width: '100%',
-    height: 300,
-    marginBottom: 16,
-    borderRadius: 8,
+    marginBottom: 0,
   },
   chapterContainer: {
     marginTop: 8,
@@ -555,43 +643,6 @@ const styles = StyleSheet.create({
     color: colors.textDim,
     textAlign: 'center',
     marginTop: 32,
-  },
-  header: {
-    marginBottom: 24,
-    alignItems: 'center',
-  },
-  headerTitle: {
-    ...type.title,
-    color: colors.text,
-    fontSize: 32,
-    fontWeight: '700',
-    marginBottom: 8,
-  },
-  headerDateContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  headerDate: {
-    ...type.body,
-    color: colors.textDim,
-    fontSize: 16,
-    minWidth: 120,
-    textAlign: 'center',
-  },
-  headerArrowButton: {
-    padding: 8,
-    marginHorizontal: 8,
-  },
-  headerArrow: {
-    ...type.body,
-    color: colors.text,
-    fontSize: 20,
-    fontWeight: '600',
-  },
-  headerArrowDisabled: {
-    color: colors.textDim,
-    opacity: 0.3,
   },
   bottomDayNavigationContainer: {
     flexDirection: 'row',

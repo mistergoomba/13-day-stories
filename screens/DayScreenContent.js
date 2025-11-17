@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
 import HoroscopeSection from '../components/HoroscopeSection';
 import EnergyOfTheDay from '../components/EnergyOfTheDay';
+import DayNavigationHeader from '../components/DayNavigationHeader';
 import {
   getTodayMayanDate,
   getDayData,
@@ -58,22 +59,22 @@ export default function DayScreenContent({ setCurrentView, setSelectedDay, scrol
 
   // Navigation handlers
   const handlePreviousDay = () => {
+    scrollToTop();
     if (currentDay > 1 && isDayAvailable(currentDay - 1)) {
       setCurrentDay(currentDay - 1);
-      scrollToTop();
     }
   };
 
   const handleNextDay = () => {
+    scrollToTop();
     if (currentDay < today.day && isDayAvailable(currentDay + 1)) {
       setCurrentDay(currentDay + 1);
-      scrollToTop();
     }
   };
 
   const handleResetToToday = () => {
-    setCurrentDay(today.day);
     scrollToTop();
+    setCurrentDay(today.day);
   };
 
   const canGoPrevious = currentDay > 1 && isDayAvailable(currentDay - 1);
@@ -81,113 +82,115 @@ export default function DayScreenContent({ setCurrentView, setSelectedDay, scrol
   const isToday = currentDay === today.day;
 
   return (
-    <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Energy of the Day</Text>
-        <View style={styles.headerDateContainer}>
-          <Pressable
-            onPress={handlePreviousDay}
-            disabled={!canGoPrevious}
-            style={styles.headerArrowButton}
-          >
-            <Text style={[styles.headerArrow, !canGoPrevious && styles.headerArrowDisabled]}>
-              ←
-            </Text>
-          </Pressable>
-          <Pressable onPress={handleResetToToday}>
-            <Text style={styles.headerDate}>{isToday ? 'today' : `Day ${currentDay} of 13`}</Text>
-          </Pressable>
-          <Pressable onPress={handleNextDay} disabled={!canGoNext} style={styles.headerArrowButton}>
-            <Text style={[styles.headerArrow, !canGoNext && styles.headerArrowDisabled]}>→</Text>
-          </Pressable>
+    <View style={styles.container}>
+      {/* Header - Fixed at top */}
+      <View style={styles.headerContainer}>
+        <DayNavigationHeader
+          title='Energy of the Day'
+          currentDay={currentDay}
+          todayDay={today.day}
+          onPrevious={handlePreviousDay}
+          onNext={handleNextDay}
+          onToday={handleResetToToday}
+          canGoPrevious={canGoPrevious}
+          canGoNext={canGoNext}
+        />
+      </View>
+
+      {/* Scrollable Content */}
+      <ScrollView
+        ref={scrollViewRef}
+        style={styles.scrollView}
+        contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 48 }]}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={[styles.content, { paddingBottom: bottomPadding }]}>
+          {/* Horoscope Section */}
+          <HoroscopeSection horoscopeImage={horoscopeImage} horoscopeText={horoscope} />
+
+          {/* Separator */}
+          <View style={styles.contentSection}>
+            <View style={styles.separator} />
+          </View>
+
+          {/* Energy of the Day Section */}
+          <View style={styles.contentSection}>
+            <EnergyOfTheDay dayData={dayData} energyOfTheDay={energy_of_the_day} />
+          </View>
+
+          {/* Bottom Day Navigation (mimics top) */}
+          <View style={styles.contentSection}>
+            <View style={styles.bottomDayNavigationContainer}>
+              <Pressable
+                onPress={handlePreviousDay}
+                disabled={!canGoPrevious}
+                style={styles.bottomArrowButton}
+              >
+                <Text style={[styles.bottomArrow, !canGoPrevious && styles.bottomArrowDisabled]}>
+                  ←
+                </Text>
+              </Pressable>
+              <Pressable onPress={handleResetToToday}>
+                <Text style={styles.bottomDayIndicator}>
+                  {isToday ? 'today' : `Day ${currentDay} of 13`}
+                </Text>
+              </Pressable>
+              <Pressable
+                onPress={handleNextDay}
+                disabled={!canGoNext}
+                style={styles.bottomArrowButton}
+              >
+                <Text style={[styles.bottomArrow, !canGoNext && styles.bottomArrowDisabled]}>
+                  →
+                </Text>
+              </Pressable>
+            </View>
+          </View>
+
+          {/* Bottom Navigation Links */}
+          <View style={styles.contentSection}>
+            <View style={styles.navigationContainer}>
+              <Pressable
+                style={styles.navLink}
+                onPress={() => setCurrentView && setCurrentView('Meditation')}
+              >
+                <Text style={styles.navLinkText}>View Meditation / Affirmation</Text>
+              </Pressable>
+              <Pressable style={styles.navLink} onPress={handleJoinStory}>
+                <Text style={styles.navLinkText}>Join the Story in Progress</Text>
+              </Pressable>
+            </View>
+          </View>
         </View>
-      </View>
-
-      {/* Horoscope Section */}
-      <HoroscopeSection horoscopeImage={horoscopeImage} horoscopeText={horoscope} />
-
-      {/* Separator */}
-      <View style={styles.separator} />
-
-      {/* Energy of the Day Section */}
-      <EnergyOfTheDay dayData={dayData} energyOfTheDay={energy_of_the_day} />
-
-      {/* Bottom Day Navigation (mimics top) */}
-      <View style={styles.bottomDayNavigationContainer}>
-        <Pressable
-          onPress={handlePreviousDay}
-          disabled={!canGoPrevious}
-          style={styles.bottomArrowButton}
-        >
-          <Text style={[styles.bottomArrow, !canGoPrevious && styles.bottomArrowDisabled]}>←</Text>
-        </Pressable>
-        <Pressable onPress={handleResetToToday}>
-          <Text style={styles.bottomDayIndicator}>
-            {isToday ? 'today' : `Day ${currentDay} of 13`}
-          </Text>
-        </Pressable>
-        <Pressable onPress={handleNextDay} disabled={!canGoNext} style={styles.bottomArrowButton}>
-          <Text style={[styles.bottomArrow, !canGoNext && styles.bottomArrowDisabled]}>→</Text>
-        </Pressable>
-      </View>
-
-      {/* Bottom Navigation Links */}
-      <View style={styles.navigationContainer}>
-        <Pressable
-          style={styles.navLink}
-          onPress={() => setCurrentView && setCurrentView('Meditation')}
-        >
-          <Text style={styles.navLinkText}>View Meditation / Affirmation</Text>
-        </Pressable>
-        <Pressable style={styles.navLink} onPress={handleJoinStory}>
-          <Text style={styles.navLinkText}>Join the Story in Progress</Text>
-        </Pressable>
-      </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  headerContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
   content: {
-    padding: 16,
+    paddingBottom: 16,
+    paddingTop: 0,
+    width: '100%',
   },
-  header: {
-    marginBottom: 24,
-    alignItems: 'center',
-  },
-  headerTitle: {
-    ...type.title,
-    color: colors.text,
-    fontSize: 32,
-    fontWeight: '700',
-    marginBottom: 8,
-  },
-  headerDateContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  headerDate: {
-    ...type.body,
-    color: colors.textDim,
-    fontSize: 16,
-    minWidth: 120,
-    textAlign: 'center',
-  },
-  headerArrowButton: {
-    padding: 8,
-    marginHorizontal: 8,
-  },
-  headerArrow: {
-    ...type.body,
-    color: colors.text,
-    fontSize: 20,
-    fontWeight: '600',
-  },
-  headerArrowDisabled: {
-    color: colors.textDim,
-    opacity: 0.3,
+  contentSection: {
+    paddingHorizontal: 16,
   },
   separator: {
     height: 1,

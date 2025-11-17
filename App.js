@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, ScrollView, Text, StyleSheet } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, StatusBar } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SimpleBottomToolbar from './components/SimpleBottomToolbar';
@@ -66,8 +66,8 @@ function AppContent() {
   // Get the current component
   const CurrentComponent = viewComponents[currentView];
 
-  // Meditation screen handles its own scrolling for fixed background
-  const isMeditationView = currentView === 'Meditation';
+  // Screens that handle their own scrolling (with sticky headers)
+  const screensWithOwnScrollView = ['Meditation', 'Day', 'Index'];
 
   // Don't render until we've checked first time status
   if (currentView === null) {
@@ -76,38 +76,41 @@ function AppContent() {
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#000000" />
       <NebulaBackground />
-      {isMeditationView ? (
-        // Meditation screen handles its own ScrollView
-        <CurrentComponent setCurrentView={setCurrentView} scrollViewRef={meditationScrollViewRef} />
+      {screensWithOwnScrollView.includes(currentView) ? (
+        // These screens handle their own ScrollView with sticky headers
+        currentView === 'Index' ? (
+          <IndexScreenContent
+            selectedDay={selectedDay}
+            setSelectedDay={setSelectedDay}
+            setCurrentView={setCurrentView}
+            scrollViewRef={scrollViewRef}
+          />
+        ) : currentView === 'Day' ? (
+          <DayScreenContent
+            setCurrentView={setCurrentView}
+            setSelectedDay={setSelectedDay}
+            scrollViewRef={scrollViewRef}
+          />
+        ) : (
+          <CurrentComponent setCurrentView={setCurrentView} scrollViewRef={meditationScrollViewRef} />
+        )
       ) : (
         <ScrollView
           ref={scrollViewRef}
-          style={[styles.scrollView, { paddingTop: Math.max(insets.top, 64) }]}
+          style={styles.scrollView}
           showsVerticalScrollIndicator={false}
         >
-          {currentView === 'Index' ? (
-            <IndexScreenContent
-              selectedDay={selectedDay}
-              setSelectedDay={setSelectedDay}
-              setCurrentView={setCurrentView}
-              scrollViewRef={scrollViewRef}
-            />
-          ) : currentView === 'Day' ? (
-            <DayScreenContent
-              setCurrentView={setCurrentView}
-              setSelectedDay={setSelectedDay}
-              scrollViewRef={scrollViewRef}
-            />
-          ) : (
-            <CurrentComponent setCurrentView={setCurrentView} />
-          )}
+          <CurrentComponent setCurrentView={setCurrentView} />
         </ScrollView>
       )}
       <SimpleBottomToolbar
         currentView={currentView}
         setCurrentView={setCurrentView}
         setSelectedDay={setSelectedDay}
+        scrollViewRef={scrollViewRef}
+        meditationScrollViewRef={meditationScrollViewRef}
       />
     </View>
   );

@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
 import Card from '../components/Card';
+import DayNavigationHeader from '../components/DayNavigationHeader';
 import {
   getTodayMayanDate,
   getDayData,
@@ -33,22 +34,22 @@ export default function MeditationScreenContent({ scrollViewRef }) {
 
   // Navigation handlers
   const handlePreviousDay = () => {
+    scrollToTop();
     if (currentDay > 1 && isDayAvailable(currentDay - 1)) {
       setCurrentDay(currentDay - 1);
-      scrollToTop();
     }
   };
 
   const handleNextDay = () => {
+    scrollToTop();
     if (currentDay < today.day && isDayAvailable(currentDay + 1)) {
       setCurrentDay(currentDay + 1);
-      scrollToTop();
     }
   };
 
   const handleResetToToday = () => {
-    setCurrentDay(today.day);
     scrollToTop();
+    setCurrentDay(today.day);
   };
 
   const canGoPrevious = currentDay > 1 && isDayAvailable(currentDay - 1);
@@ -89,71 +90,72 @@ export default function MeditationScreenContent({ scrollViewRef }) {
         <Image source={meditationImage} style={styles.backgroundImage} resizeMode='cover' />
       )}
 
+      {/* Header - Fixed at top */}
+      <View style={styles.headerContainer}>
+        <DayNavigationHeader
+          title='Meditation'
+          currentDay={currentDay}
+          todayDay={today.day}
+          onPrevious={handlePreviousDay}
+          onNext={handleNextDay}
+          onToday={handleResetToToday}
+          canGoPrevious={canGoPrevious}
+          canGoNext={canGoNext}
+        />
+      </View>
+
       {/* Scrollable Content */}
       <ScrollView
+        ref={scrollViewRef}
         style={styles.scrollView}
-        contentContainerStyle={[styles.scrollContent, { paddingTop: Math.max(insets.top, 64) }]}
+        contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 48 }]}
         showsVerticalScrollIndicator={false}
       >
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-          {/* Header */}
-          <View style={styles.header}>
-            <Text style={styles.headerTitle}>Meditation</Text>
-            <View style={styles.headerDateContainer}>
+          {/* Affirmation Image */}
+          {affirmationImage && (
+            <Image
+              source={affirmationImage}
+              style={[styles.affirmationImage, { height: SCREEN_WIDTH }]}
+              resizeMode='cover'
+            />
+          )}
+
+          {/* Meditation Card */}
+          <View style={styles.contentSection}>
+            <Card style={styles.meditationCard}>
+              <Text style={styles.meditationTitle}>Meditation</Text>
+              <Text style={styles.meditationText}>{dayData.meditation}</Text>
+            </Card>
+          </View>
+
+          {/* Bottom Day Navigation (mimics top) */}
+          <View style={styles.contentSection}>
+            <View style={styles.bottomDayNavigationContainer}>
               <Pressable
                 onPress={handlePreviousDay}
                 disabled={!canGoPrevious}
-                style={styles.headerArrowButton}
+                style={styles.bottomArrowButton}
               >
-                <Text style={[styles.headerArrow, !canGoPrevious && styles.headerArrowDisabled]}>
+                <Text style={[styles.bottomArrow, !canGoPrevious && styles.bottomArrowDisabled]}>
                   ←
                 </Text>
               </Pressable>
               <Pressable onPress={handleResetToToday}>
-                <Text style={styles.headerDate}>
+                <Text style={styles.bottomDayIndicator}>
                   {isToday ? 'today' : `Day ${currentDay} of 13`}
                 </Text>
               </Pressable>
               <Pressable
                 onPress={handleNextDay}
                 disabled={!canGoNext}
-                style={styles.headerArrowButton}
+                style={styles.bottomArrowButton}
               >
-                <Text style={[styles.headerArrow, !canGoNext && styles.headerArrowDisabled]}>→</Text>
+                <Text style={[styles.bottomArrow, !canGoNext && styles.bottomArrowDisabled]}>
+                  →
+                </Text>
               </Pressable>
             </View>
-          </View>
-
-          {/* Affirmation Image */}
-          {affirmationImage && (
-            <Image source={affirmationImage} style={styles.affirmationImage} resizeMode='contain' />
-          )}
-
-          {/* Meditation Card */}
-          <Card style={styles.meditationCard}>
-            <Text style={styles.meditationTitle}>Meditation</Text>
-            <Text style={styles.meditationText}>{dayData.meditation}</Text>
-          </Card>
-
-          {/* Bottom Day Navigation (mimics top) */}
-          <View style={styles.bottomDayNavigationContainer}>
-            <Pressable
-              onPress={handlePreviousDay}
-              disabled={!canGoPrevious}
-              style={styles.bottomArrowButton}
-            >
-              <Text style={[styles.bottomArrow, !canGoPrevious && styles.bottomArrowDisabled]}>
-                ←
-              </Text>
-            </Pressable>
-            <Pressable onPress={handleResetToToday}>
-              <Text style={styles.bottomDayIndicator}>
-                {isToday ? 'today' : `Day ${currentDay} of 13`}
-              </Text>
-            </Pressable>
-            <Pressable onPress={handleNextDay} disabled={!canGoNext} style={styles.bottomArrowButton}>
-              <Text style={[styles.bottomArrow, !canGoNext && styles.bottomArrowDisabled]}>→</Text>
-            </Pressable>
           </View>
         </View>
       </ScrollView>
@@ -174,6 +176,13 @@ const styles = StyleSheet.create({
     top: 0,
     zIndex: 0,
   },
+  headerContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+  },
   scrollView: {
     flex: 1,
     zIndex: 1,
@@ -182,51 +191,18 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   content: {
-    padding: 16,
+    paddingBottom: 16,
     minHeight: SCREEN_HEIGHT,
+    paddingTop: 0,
+    width: '100%',
   },
-  header: {
-    marginBottom: 24,
-    alignItems: 'center',
-  },
-  headerTitle: {
-    ...type.title,
-    color: colors.text,
-    fontSize: 32,
-    fontWeight: '700',
-    marginBottom: 8,
-  },
-  headerDateContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  headerDate: {
-    ...type.body,
-    color: colors.textDim,
-    fontSize: 16,
-    minWidth: 120,
-    textAlign: 'center',
-  },
-  headerArrowButton: {
-    padding: 8,
-    marginHorizontal: 8,
-  },
-  headerArrow: {
-    ...type.body,
-    color: colors.text,
-    fontSize: 20,
-    fontWeight: '600',
-  },
-  headerArrowDisabled: {
-    color: colors.textDim,
-    opacity: 0.3,
+  contentSection: {
+    paddingHorizontal: 16,
+    paddingBottom: 16,
   },
   affirmationImage: {
     width: '100%',
-    height: 400,
     marginBottom: 16,
-    borderRadius: 8,
   },
   meditationCard: {
     backgroundColor: 'rgba(0, 0, 0, 0.7)', // Semi-transparent background for readability

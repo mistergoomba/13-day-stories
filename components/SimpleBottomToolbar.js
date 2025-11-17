@@ -6,26 +6,42 @@ import Svg, { Path, Circle } from 'react-native-svg';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
 
-export default function SimpleBottomToolbar({ currentView, setCurrentView, setSelectedDay }) {
+export default function SimpleBottomToolbar({
+  currentView,
+  setCurrentView,
+  setSelectedDay,
+  scrollViewRef,
+  meditationScrollViewRef,
+}) {
   const insets = useSafeAreaInsets();
+
+  const scrollToTop = (ref) => {
+    if (ref?.current) {
+      ref.current.scrollTo({ y: 0, animated: true });
+    }
+  };
 
   const handleHome = () => {
     console.log('Home button pressed');
+    scrollToTop(scrollViewRef);
     setCurrentView('Home');
   };
 
   const handleMeditation = () => {
     console.log('Meditation button pressed');
+    scrollToTop(meditationScrollViewRef);
     setCurrentView('Meditation');
   };
 
   const handleToday = () => {
     console.log('Today button pressed');
+    scrollToTop(scrollViewRef);
     setCurrentView('Day');
   };
 
   const handleIndex = () => {
     console.log('Journey button pressed');
+    scrollToTop(scrollViewRef);
     // Set to Chapter 8 when navigating to Journey from toolbar
     if (setSelectedDay) {
       setSelectedDay(8);
@@ -35,6 +51,7 @@ export default function SimpleBottomToolbar({ currentView, setCurrentView, setSe
 
   const handleSettings = () => {
     console.log('Settings button pressed');
+    scrollToTop(scrollViewRef);
     setCurrentView('Settings');
   };
 
