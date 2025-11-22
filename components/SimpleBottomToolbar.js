@@ -12,6 +12,8 @@ export default function SimpleBottomToolbar({
   setSelectedDay,
   scrollViewRef,
   meditationScrollViewRef,
+  setResetToTodayTrigger,
+  setResetMeditationTrigger,
 }) {
   const insets = useSafeAreaInsets();
 
@@ -30,12 +32,20 @@ export default function SimpleBottomToolbar({
   const handleMeditation = () => {
     console.log('Meditation button pressed');
     scrollToTop(meditationScrollViewRef);
+    // Reset meditation screen to today when clicking meditate tab (similar to how today tab resets Day screen)
+    if (setResetMeditationTrigger) {
+      setResetMeditationTrigger((prev) => prev + 1);
+    }
     setCurrentView('Meditation');
   };
 
   const handleToday = () => {
     console.log('Today button pressed');
     scrollToTop(scrollViewRef);
+    // Reset to today when clicking the today tab (similar to how journey tab resets to day 8)
+    if (setResetToTodayTrigger) {
+      setResetToTodayTrigger((prev) => prev + 1);
+    }
     setCurrentView('Day');
   };
 

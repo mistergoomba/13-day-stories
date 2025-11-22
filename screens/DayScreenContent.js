@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '../theme/colors';
@@ -13,7 +13,7 @@ import {
   isDayAvailable,
 } from '../utils/mayanCalendar';
 
-export default function DayScreenContent({ setCurrentView, setSelectedDay, scrollViewRef }) {
+export default function DayScreenContent({ setCurrentView, setSelectedDay, scrollViewRef, resetToTodayTrigger }) {
   const insets = useSafeAreaInsets();
   const today = getTodayMayanDate();
   const [currentDay, setCurrentDay] = useState(today.day);
@@ -26,6 +26,15 @@ export default function DayScreenContent({ setCurrentView, setSelectedDay, scrol
       scrollViewRef.current.scrollTo({ y: 0, animated: true });
     }
   };
+
+  // Reset to today when resetToTodayTrigger changes (triggered by clicking today tab)
+  useEffect(() => {
+    if (resetToTodayTrigger > 0) {
+      setCurrentDay(today.day);
+      scrollToTop();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resetToTodayTrigger]);
 
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;

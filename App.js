@@ -17,6 +17,8 @@ function AppContent() {
   const insets = useSafeAreaInsets();
   const [currentView, setCurrentView] = useState(null); // null initially, will be set after checking first time
   const [selectedDay, setSelectedDay] = useState(null); // null = no selection, number = selected day for Index detail view
+  const [resetToTodayTrigger, setResetToTodayTrigger] = useState(0); // Trigger to reset Day screen to today
+  const [resetMeditationTrigger, setResetMeditationTrigger] = useState(0); // Trigger to reset Meditation screen to today
   const scrollViewRef = useRef(null);
   const meditationScrollViewRef = useRef(null);
 
@@ -76,7 +78,7 @@ function AppContent() {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#000000" />
+      <StatusBar barStyle='light-content' backgroundColor='#000000' />
       <NebulaBackground />
       {screensWithOwnScrollView.includes(currentView) ? (
         // These screens handle their own ScrollView with sticky headers
@@ -92,9 +94,19 @@ function AppContent() {
             setCurrentView={setCurrentView}
             setSelectedDay={setSelectedDay}
             scrollViewRef={scrollViewRef}
+            resetToTodayTrigger={resetToTodayTrigger}
+          />
+        ) : currentView === 'Meditation' ? (
+          <MeditationScreenContent
+            setCurrentView={setCurrentView}
+            scrollViewRef={meditationScrollViewRef}
+            resetMeditationTrigger={resetMeditationTrigger}
           />
         ) : (
-          <CurrentComponent setCurrentView={setCurrentView} scrollViewRef={meditationScrollViewRef} />
+          <CurrentComponent
+            setCurrentView={setCurrentView}
+            scrollViewRef={meditationScrollViewRef}
+          />
         )
       ) : (
         <ScrollView
@@ -111,6 +123,8 @@ function AppContent() {
         setSelectedDay={setSelectedDay}
         scrollViewRef={scrollViewRef}
         meditationScrollViewRef={meditationScrollViewRef}
+        setResetToTodayTrigger={setResetToTodayTrigger}
+        setResetMeditationTrigger={setResetMeditationTrigger}
       />
     </View>
   );
