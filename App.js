@@ -4,11 +4,11 @@ import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-cont
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SimpleBottomToolbar from './components/SimpleBottomToolbar';
 import NebulaBackground from './components/NebulaBackground';
-import DayScreenContent from './screens/DayScreenContent';
+import TodayScreenContent from './screens/TodayScreenContent';
 import HomeScreenContent from './screens/HomeScreenContent';
 import MeditationScreenContent from './screens/MeditationScreenContent';
 import SettingsScreenContent from './screens/SettingsScreenContent';
-import IndexScreenContent from './screens/IndexScreenContent';
+import JourneyScreenContent from './screens/JourneyScreenContent';
 import colors from './theme/colors';
 
 const HAS_OPENED_APP_KEY = '@has_opened_app';
@@ -16,7 +16,7 @@ const HAS_OPENED_APP_KEY = '@has_opened_app';
 function AppContent() {
   const insets = useSafeAreaInsets();
   const [currentView, setCurrentView] = useState(null); // null initially, will be set after checking first time
-  const [selectedDay, setSelectedDay] = useState(null); // null = no selection, number = selected day for Index detail view
+  const [selectedDay, setSelectedDay] = useState(null); // null = no selection, number = selected day for Journey detail view
   const scrollViewRef = useRef(null);
   const meditationScrollViewRef = useRef(null);
 
@@ -32,12 +32,12 @@ function AppContent() {
           await AsyncStorage.setItem(HAS_OPENED_APP_KEY, 'true');
         } else {
           // Not first time - show Today
-          setCurrentView('Day');
+          setCurrentView('Today');
         }
       } catch (error) {
         console.error('Error checking first time:', error);
-        // Default to Day on error
-        setCurrentView('Day');
+        // Default to Today on error
+        setCurrentView('Today');
       }
     };
 
@@ -56,18 +56,18 @@ function AppContent() {
 
   // View mapping object
   const viewComponents = {
-    Day: DayScreenContent,
+    Today: TodayScreenContent,
     Home: HomeScreenContent,
     Meditation: MeditationScreenContent,
     Settings: SettingsScreenContent,
-    Index: IndexScreenContent,
+    Journey: JourneyScreenContent,
   };
 
   // Get the current component
   const CurrentComponent = viewComponents[currentView];
 
   // Screens that handle their own scrolling (with sticky headers)
-  const screensWithOwnScrollView = ['Meditation', 'Day', 'Index'];
+  const screensWithOwnScrollView = ['Meditation', 'Today', 'Journey'];
 
   // Don't render until we've checked first time status
   if (currentView === null) {
@@ -80,15 +80,15 @@ function AppContent() {
       <NebulaBackground />
       {screensWithOwnScrollView.includes(currentView) ? (
         // These screens handle their own ScrollView with sticky headers
-        currentView === 'Index' ? (
-          <IndexScreenContent
+        currentView === 'Journey' ? (
+          <JourneyScreenContent
             selectedDay={selectedDay}
             setSelectedDay={setSelectedDay}
             setCurrentView={setCurrentView}
             scrollViewRef={scrollViewRef}
           />
-        ) : currentView === 'Day' ? (
-          <DayScreenContent
+        ) : currentView === 'Today' ? (
+          <TodayScreenContent
             setCurrentView={setCurrentView}
             setSelectedDay={setSelectedDay}
             scrollViewRef={scrollViewRef}

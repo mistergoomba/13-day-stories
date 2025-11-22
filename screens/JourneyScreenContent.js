@@ -98,7 +98,7 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef }) {
     if (canGoPrevious) {
       setSelectedDay(dayNumber - 1);
     } else {
-      // If on Day 1, go to index page
+      // If on Day 1, go to journey page
       onBack();
     }
   };
@@ -150,7 +150,7 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef }) {
           <View style={styles.contentSection}>
             <View style={styles.chapterTitleRow}>
               <Text style={styles.chapterTitle}>Chapter {dayNumber}</Text>
-              <Pressable onPress={onBack} style={styles.indexIconButton}>
+              <Pressable onPress={onBack} style={styles.journeyIconButton}>
                 <Svg width={30} height={30} viewBox='0 0 24 24' fill='none'>
                   {/* Bulleted list icon - 4 rows with bullets and lines */}
                   {/* Row 1 */}
@@ -211,7 +211,7 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef }) {
   );
 }
 
-export default function IndexScreenContent({
+export default function JourneyScreenContent({
   selectedDay,
   setSelectedDay,
   setCurrentView,
@@ -558,7 +558,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     flex: 1,
   },
-  indexIconButton: {
+  journeyIconButton: {
     padding: 8,
     marginLeft: 16,
   },
@@ -667,3 +667,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+

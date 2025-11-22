@@ -58,19 +58,19 @@ export default function HomeScreenContent({ setCurrentView }) {
       <View style={styles.navigationContainer}>
         <Pressable
           style={styles.topNavLink}
-          onPress={() => setCurrentView && setCurrentView('Day')}
+          onPress={() => setCurrentView && setCurrentView('Today')}
         >
           <Text style={styles.navLinkText}>See the Energy of the Day</Text>
         </Pressable>
 
-        <Pressable style={styles.navLink} onPress={() => setCurrentView && setCurrentView('Day')}>
+        <Pressable style={styles.navLink} onPress={() => setCurrentView && setCurrentView('Today')}>
           <Text style={styles.navLinkText}>
             Join our journey in progress and see the energy of today,{' '}
             {formatDate(today.gregorianDate)}
           </Text>
         </Pressable>
 
-        <Pressable style={styles.navLink} onPress={() => setCurrentView && setCurrentView('Index')}>
+        <Pressable style={styles.navLink} onPress={() => setCurrentView && setCurrentView('Journey')}>
           <Text style={styles.navLinkText}>Read from the beginning of this 13 day story</Text>
         </Pressable>
       </View>

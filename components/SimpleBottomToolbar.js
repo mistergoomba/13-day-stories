@@ -36,17 +36,17 @@ export default function SimpleBottomToolbar({
   const handleToday = () => {
     console.log('Today button pressed');
     scrollToTop(scrollViewRef);
-    setCurrentView('Day');
+    setCurrentView('Today');
   };
 
-  const handleIndex = () => {
+  const handleJourney = () => {
     console.log('Journey button pressed');
     scrollToTop(scrollViewRef);
     // Set to Chapter 8 when navigating to Journey from toolbar
     if (setSelectedDay) {
       setSelectedDay(8);
     }
-    setCurrentView('Index');
+    setCurrentView('Journey');
   };
 
   const handleSettings = () => {
@@ -122,8 +122,8 @@ export default function SimpleBottomToolbar({
         <Pressable
           style={[
             styles.todayTabButton,
-            currentView !== 'Day' && { backgroundColor: colors.bg },
-            currentView === 'Day' && styles.activeTabButton,
+            currentView !== 'Today' && { backgroundColor: colors.bg },
+            currentView === 'Today' && styles.activeTabButton,
           ]}
           onPress={handleToday}
         >
@@ -133,18 +133,18 @@ export default function SimpleBottomToolbar({
                 cx={12}
                 cy={10}
                 r={6}
-                stroke={currentView === 'Day' ? 'currentColor' : '#FFFFFF'}
+                stroke={currentView === 'Today' ? 'currentColor' : '#FFFFFF'}
                 strokeWidth={2}
               />
               <Path
                 d='M6 20H18'
-                stroke={currentView === 'Day' ? 'currentColor' : '#FFFFFF'}
+                stroke={currentView === 'Today' ? 'currentColor' : '#FFFFFF'}
                 strokeWidth={2}
                 strokeLinecap='round'
               />
               <Path
                 d='M8 16H16'
-                stroke={currentView === 'Day' ? 'currentColor' : '#FFFFFF'}
+                stroke={currentView === 'Today' ? 'currentColor' : '#FFFFFF'}
                 strokeWidth={2}
                 strokeLinecap='round'
               />
@@ -152,7 +152,7 @@ export default function SimpleBottomToolbar({
             <Text
               style={[
                 styles.iconLabel,
-                { color: currentView === 'Day' ? 'currentColor' : '#FFFFFF' },
+                { color: currentView === 'Today' ? 'currentColor' : '#FFFFFF' },
               ]}
             >
               today
@@ -162,34 +162,34 @@ export default function SimpleBottomToolbar({
 
         {/* Journey */}
         <Pressable
-          style={[styles.tabButton, currentView === 'Index' && styles.activeTabButton]}
-          onPress={handleIndex}
+          style={[styles.tabButton, currentView === 'Journey' && styles.activeTabButton]}
+          onPress={handleJourney}
         >
           <View style={styles.iconContainer}>
             <Svg width={24} height={24} viewBox='0 0 24 24' fill='none'>
               {/* Left page, angled */}
               <Path
                 d='M4 12.5L11.5 14V22L4 21.5V12.5Z'
-                stroke={currentView === 'Index' ? 'currentColor' : '#FFFFFF'}
+                stroke={currentView === 'Journey' ? 'currentColor' : '#FFFFFF'}
                 strokeWidth={2}
                 strokeLinejoin='round'
               />
               {/* Right page, angled */}
               <Path
                 d='M20 12.5L12.5 14V22L20 21.5V12.5Z'
-                stroke={currentView === 'Index' ? 'currentColor' : '#FFFFFF'}
+                stroke={currentView === 'Journey' ? 'currentColor' : '#FFFFFF'}
                 strokeWidth={2}
                 strokeLinejoin='round'
               />
               {/* Heart floating above the book */}
               <Path
                 d='M8 3C8 1.7 9.1 0.6 10.5 0.6C11.2 0.6 11.9 1 12.3 1.6C12.7 1 13.4 0.6 14.1 0.6C15.5 0.6 16.6 1.7 16.6 3C16.6 5.2 14.7 6.8 12.3 8.4C9.9 6.8 8 5.2 8 3Z'
-                stroke={currentView === 'Index' ? 'currentColor' : '#FFFFFF'}
+                stroke={currentView === 'Journey' ? 'currentColor' : '#FFFFFF'}
                 strokeWidth={2}
                 strokeLinejoin='round'
               />
             </Svg>
-            {currentView === 'Index' && <Text style={styles.iconLabel}>journey</Text>}
+            {currentView === 'Journey' && <Text style={styles.iconLabel}>journey</Text>}
           </View>
         </Pressable>
 

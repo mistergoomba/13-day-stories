@@ -13,7 +13,7 @@ import {
   isDayAvailable,
 } from '../utils/mayanCalendar';
 
-export default function DayScreenContent({ setCurrentView, setSelectedDay, scrollViewRef }) {
+export default function TodayScreenContent({ setCurrentView, setSelectedDay, scrollViewRef }) {
   const insets = useSafeAreaInsets();
   const today = getTodayMayanDate();
   const [currentDay, setCurrentDay] = useState(today.day);
@@ -53,7 +53,7 @@ export default function DayScreenContent({ setCurrentView, setSelectedDay, scrol
   const handleJoinStory = () => {
     if (setSelectedDay && setCurrentView) {
       setSelectedDay(currentDay);
-      setCurrentView('Index');
+      setCurrentView('Journey');
     }
   };
 
@@ -250,3 +250,4 @@ const styles = StyleSheet.create({
     marginTop: 32,
   },
 });
+
