@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions, ScrollView, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '../theme/colors';
@@ -14,7 +14,7 @@ import {
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
-export default function MeditationScreenContent({ scrollViewRef }) {
+export default function MeditationScreenContent({ scrollViewRef, resetMeditationTrigger }) {
   const insets = useSafeAreaInsets();
   const today = getTodayMayanDate();
   const [currentDay, setCurrentDay] = useState(today.day);
@@ -31,6 +31,15 @@ export default function MeditationScreenContent({ scrollViewRef }) {
       scrollViewRef.current.scrollTo({ y: 0, animated: true });
     }
   };
+
+  // Reset to today when resetMeditationTrigger changes (triggered by clicking meditate tab)
+  useEffect(() => {
+    if (resetMeditationTrigger > 0) {
+      setCurrentDay(today.day);
+      scrollToTop();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resetMeditationTrigger]);
 
   // Navigation handlers
   const handlePreviousDay = () => {

@@ -11,7 +11,8 @@
     "dev": "npm run web",
     "stop": "pkill -f 'expo start' || true",
     "clean": "rm -rf node_modules/.cache .expo && npm start",
-    "build": "eas build --platform android --profile preview"
+    "build:android": "eas build --platform android --profile preview",
+    "build": "npx expo export -p web"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",
