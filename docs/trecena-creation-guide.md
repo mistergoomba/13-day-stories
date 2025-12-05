@@ -1,7 +1,4 @@
-Here is the updated **RULES.md** file, ready for you to download or copy.
-
-```markdown
-# 🌿 **RULES.md — Master Specification for the 13-Day Mayan Stories Project**
+# 🌿 **Trecena Creation Guide — Master Specification for the 13-Day Mayan Stories Project**
 
 ## 📘 **1. Purpose of This Document**
 
@@ -27,25 +24,14 @@ Any new chat must reference this file and ALL canonical sources to ensure perfec
 
 The following uploaded files are ALWAYS the sources of truth:
 
-### **mayan-calendar-spec.md**
+### **mayan-calendar-reference.md**
 
-- Full traditional meanings of nawales
-- Numerology (1–13)
-- Elemental relationships
-- Shadow/light dynamics
-- Cosmological grounding
-
-### **mayan-summaries.md**
-
-- Concise, narrative-friendly summaries of each nawal
-- Quick-reference keywords
-- Emotional/psychological interpretations
-
-### **mayan-calendar.md**
-
-- Extended descriptions of each number and nawal
-- Integration of shadow/light expressions
-- Elemental resonance + trecena themes
+- Complete Mayan calendar system reference
+- Numbers (1–13) and Nawales (20) with detailed meanings
+- All 20 trecenas with daily arcs
+- Individual day interpretations
+- Cycling mechanism and calendar mechanics
+- Trecena reference data
 
 ### **writing-style-guide.md**
 
@@ -53,19 +39,6 @@ The following uploaded files are ALWAYS the sources of truth:
 - Mystical but grounded poetic voice
 - "Dark rainbow / mystical street poet" style
 - What to avoid (clichés, spiritual bypassing, etc.)
-
-### **Completed Trecena Files**
-
-(e.g., `trecena-imox.js`, `trecena-aqabal.js`)
-
-- Serve as the gold standard for:
-  - JSON formatting
-  - Story pacing
-  - Image prompt structure
-  - Tone, symbolism, and emotional arc
-  - Integration of nawal + number
-
-All future trecenas must be consistent with these foundational examples.
 
 ---
 
@@ -242,6 +215,7 @@ These modules will be appended here before story generation.
 # 🔢 **7. Daily Energy Structure**
 
 Each day includes:
+
 ```
 
 energy_of_the_day: {
@@ -262,7 +236,7 @@ notes: []
 }
 }
 
-````
+```
 
 ### **Rules**:
 
@@ -276,6 +250,10 @@ notes: []
 
 # 🔮 **8. Horoscope Rules**
 
+**For detailed writing style guidance, see `writing-style-guide.md`.**
+
+## **Basic Requirements**
+
 - Grounded mystical tone
 - Poetic but direct
 - ~120–200 words
@@ -285,6 +263,76 @@ notes: []
 - No fortune telling
 - About inner alignment, not prediction
 - Do not mention the specific mayan references
+
+## **Horoscope Generation Process**
+
+### 1. Determine Today's Energy
+
+- Identify the **Tone (1–13)** and **Nawal (glyph)** for today.
+- Identify which **Trecena** we're currently in.
+
+### 2. Interpret the Combination
+
+- Blend the Tone's _motion_ with the Nawal's _essence_.
+- Consider how it interacts with the **ruling Trecena's theme**.
+- Note patterns (e.g., repeating nawales, mirrored numbers, transition points).
+
+### 3. Add the Personal Layer (for 13 Ajpu)
+
+- Compare the day's energy to your birth nawal (Ajpu = the Sun, light, truth, creative power).
+- Interpret how this energy either amplifies, challenges, or harmonizes with it.
+
+### 4. Create the Message
+
+- **Personal Version:** Use the full Mayan terms (e.g., "5 Iq'") and describe how this interacts with 13 Ajpu personally.
+- **Sharable Version:** Remove specific Mayan numbers/nawales and translate the energy into poetic, mystical, universal language. Blend in a bit of Libra balance and artistry.
+
+### 5. Generate the Image
+
+- **Format:** Square image
+- **Mood:** Fantastical, vibrant, dreamlike — "dark rainbow" tone
+- **Rules:** No human faces or words. Use abstract figures, light, color, and cosmic movement to capture the day's essence.
+- **Goal:** Match the emotional frequency of the horoscope, not the literal symbols.
+
+## **Horoscope Structure**
+
+### **Personal Horoscope (for 13 Ajpu)**
+
+1. **Opening:**  
+   Describe the energy of the day using the tone and nawal by name.  
+   Example:  
+   "Today we walk within the heart of 6 Aq'ab'al — a day when the dawn stirs gently before bursting into color."
+
+2. **Middle:**  
+   Relate this energy to your personal path (Ajpu).  
+   Example:  
+   "For one born under 13 Ajpu, this light is familiar — the pull between creation and reflection, the sun whispering through shadow."
+
+3. **Closing:**  
+   Offer guidance or affirmation.  
+   Example:  
+   "Let movement come before certainty. Dawn does not ask permission to rise."
+
+### **Sharable Horoscope (Public Version)**
+
+1. Translate the full reading into **symbolic storytelling** without mentioning numbers or nawales.
+2. Keep it poetic, whimsical, and grounded in fantasy or emotion.
+3. End with empowerment or humor.
+
+**Example (Sharable):**  
+"The day cracks open like a geode, spilling strange light across your path. Something within you remembers how to glow, even when the world forgets how to look. The cosmos is laughing softly — take the hint and create something wild."
+
+## **Example with Trecena Influence**
+
+**Context:** We are in the _Wind / Iq' trecena_ (themes: communication, breath, clarity).  
+**Today's day:** _5 Tz'ikin_ (tone 5 = power, Tz'ikin = vision).  
+**Birth energy:** _13 Ajpu._
+
+**Personal Horoscope:**
+"Under the breath of the Wind trecena, 5 Tz'ikin opens your sight. The power of vision swells in your chest, and truth wants a voice. For the Sun-born Ajpu, this is your sacred mirror — to see your light through the stories you tell. Speak as if the sky itself were listening."
+
+**Sharable Horoscope:**
+"The wind is restless again, carrying messages between clouds. Vision sparks behind your eyes — stories begging to be sung. Say what your silence has been sculpting. The air itself is ready to applaud."
 
 ---
 
@@ -297,7 +345,7 @@ birthday: {
   title: "Poetic Title",
   content: "100-150 words explanation"
 }
-````
+```
 
 - **Content**:
 
@@ -369,13 +417,64 @@ image_prompts: {
 
 - Affirmation images **must include the exact affirmation text**
 
-- Affirmation images must be “cute surreal” or “soft surreal”
+- Affirmation images must be "cute surreal" or "soft surreal"
 
 - Meditation images must be soft, abstract, meditative gradients
 
 - Prompts must indicate **aspect ratio** and **palette**
 
 - Prompts must be detailed enough to be consistent across models
+
+### **Core Aesthetic Principles**
+
+- **Mood:** Dark rainbow (vibrant saturation over shadowy undertones)
+- **Vibes:** Cosmic mysticism, fantasy, occult-but-playful, pulp sci-fi texture
+- **No literal glyphs, sigils, or words**
+- **No recognizable human faces or logos**
+- **Figures are abstract or vague beings** — silhouettes and "alien-but-not" forms are welcome
+
+### **Composition Principles**
+
+- Use **one clear focal glow** with supporting orbits and trails
+- Favor **asymmetry** with deliberate negative space
+- Build depth in **3–5 atmospheric layers**: background haze → mid fog → foreground energy
+- Edges: soft diffusion around lights, crisp micro-details near focal point
+- Motion cues: spirals, arcs, drifting particles, magnetized dust
+
+### **Palette & Materials**
+
+- **Base colors:** charcoal, obsidian, deep teal, indigo
+- **Accent colors:** electric magenta, viridian, gold, cyan, ultraviolet, ember orange
+- **Materials:** iridescent smoke, opal sheen, oil-on-water film, nebula dust, brushed metal, velvet black
+- **Lighting:** bioluminescent cores, rimlight halos, subsurface scattering on mist
+
+### **Prompt Scaffold Structure**
+
+When writing image prompts, use this structure:
+
+**Base elements:**
+
+- Aspect ratio (Square or 16:9 as specified)
+- Fantasy/mystical artwork descriptor
+- Dark rainbow palette
+- Single radiant focal glow
+- Layered atmospheric depth (nebula haze, iridescent smoke)
+- Abstract beings suggested by light and shadow
+- Rich depth, subtle grain, high detail
+- No text, no faces
+
+**With trecena + day flavor:**
+
+- Background mood of [TRECENA MOOD]
+- Foreground motif hints of [DAY THEMES]
+- Bioluminescent core
+- Spiral motion or appropriate motion cues
+- Layered fog, iridescent particles
+- Abstract beings suggested by negative space
+
+**Negative prompt elements:**
+
+- no text, no logo, no watermark, no human face, no realistic animals, no weapons, no letters, no numbers, avoid flat lighting, avoid low-contrast mush
 
 ### **Birthday Image Prompt Specifics**
 
@@ -416,6 +515,19 @@ Every new trecena MUST define:
 
 This ensures all 13 images across a cycle are visually distinct.
 
+### **Image Prompt QA Checklist**
+
+Before finalizing prompts, verify:
+
+- Aspect ratio matches specification (Square or 16:9)
+- No text or faces mentioned
+- Clear focal glow with layered depth described
+- Colors vibrant yet controlled (dark rainbow palette)
+- Motifs match the day's energy and trecena theme
+- Negative prompts included to avoid unwanted elements
+
+**Note:** For detailed aesthetic guidance and composition principles, see `image-creation-guide.md`.
+
 ---
 
 # ✨ **12. JSON Output Rules**
@@ -453,7 +565,8 @@ This ensures all 13 images across a cycle are visually distinct.
 # 🎭 **15. Style Guide Integration**
 
 Use `writing-style-guide.md` for tone and sentence craft
-Use `mayan-calendar.md` + `mayan-summaries.md` for accurate meanings
+Use `mayan-calendar-reference.md` Part I for Mayan calendar reference data (Numbers and Nawales with detailed meanings)
+Use `mayan-calendar-reference.md` Part II for trecena reference data
 Use `trecena-imox.js` as the exemplar format
 
 ---
@@ -462,16 +575,14 @@ Use `trecena-imox.js` as the exemplar format
 
 Provide:
 
-- RULES.md
-- mayan-calendar-spec.md
-- mayan-summaries.md
-- mayan-calendar.md
+- trecena-creation-guide.md
+- mayan-calendar-reference.md
 - writing-style-guide.md
 - any completed trecena files
 
 Then say:
 
-"I am generating the **X trecena**, starting on Day Y. Follow all rules in RULES.md."
+"I am generating the **X trecena**, starting on Day Y. Follow all rules in trecena-creation-guide.md."
 
 ---
 
@@ -619,7 +730,7 @@ After all 13 days are planned:
 
 **Step 1: Generate Complete JSON**
 
-- Follow ALL rules in RULES.md
+- Follow ALL rules in trecena-creation-guide.md
 - Generate full trecena with prologue, all 13 days, epilogue
 - Include all content: stories, energies, horoscopes, meditations, affirmations, birthdays, all 7 image prompts per day
 - Ensure JSON is valid and parseable
