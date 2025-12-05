@@ -40,6 +40,14 @@ The following uploaded files are ALWAYS the sources of truth:
 - "Dark rainbow / mystical street poet" style
 - What to avoid (clichés, spiritual bypassing, etc.)
 
+### **Example Output Files (Reference)**
+
+When creating new trecenas, refer to these completed examples for format and structure:
+
+- **`data/trecena-toj.js`** — Complete JSON output for the Toj trecena, showing the full structure including prologue, epilogue, all 13 days with stories, energies, horoscopes, meditations, affirmations, birthdays, and all 7 image prompts per day.
+
+- **`docs/trecena-rules-toj.md`** — Complete documentation of the creative decisions made during the Toj trecena creation process, including world module, prologue/epilogue choices, day-by-day decisions, and continuity notes. This serves as a template for the trecena-specific rules file created in Phase 6 of the workflow.
+
 ---
 
 # 🌅 **3. Core Concept of the App**
@@ -535,7 +543,8 @@ Before finalizing prompts, verify:
 Use `writing-style-guide.md` for tone and sentence craft
 Use `mayan-calendar-reference.md` Part I for Mayan calendar reference data (Numbers and Nawales with detailed meanings)
 Use `mayan-calendar-reference.md` Part II for trecena reference data
-Use `trecena-imox.js` as the exemplar format
+Use `data/trecena-toj.js` as the exemplar format for JSON structure
+Use `docs/trecena-rules-toj.md` as the exemplar format for trecena-specific rules documentation
 
 ---
 
@@ -546,7 +555,7 @@ Provide:
 - trecena-creation-guide.md
 - mayan-calendar-reference.md
 - writing-style-guide.md
-- any completed trecena files
+- any completed trecena files (e.g., `data/trecena-toj.js` and `docs/trecena-rules-toj.md` as examples)
 
 Then say:
 
@@ -716,7 +725,9 @@ After all 13 days are planned:
 - Ensure JSON is valid and parseable
 
 **Step 2: Create Trecena-Specific Rules File**
-After JSON generation, create a new file: `data/trecena-rules-[nawal].md`
+After JSON generation, create a new file: `docs/trecena-rules-[nawal].md`
+
+**Reference:** See `docs/trecena-rules-toj.md` for a complete example of this file structure.
 
 This file must document:
 
