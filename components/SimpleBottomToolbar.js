@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Path, Circle } from 'react-native-svg';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
+import { TODAY_DAY } from '../utils/mayanCalendar';
 
 export default function SimpleBottomToolbar({
   currentView,
@@ -43,7 +44,7 @@ export default function SimpleBottomToolbar({
     console.log('Today button pressed');
     scrollToTop(scrollViewRef);
 
-    // Reset to today when clicking the today tab (similar to how journey tab resets to day 8)
+    // Reset to today when clicking the today tab (similar to how journey tab resets to current chapter)
     if (setResetToTodayTrigger) {
       setResetToTodayTrigger((prev) => prev + 1);
     }
@@ -53,9 +54,9 @@ export default function SimpleBottomToolbar({
   const handleJourney = () => {
     console.log('Journey button pressed');
     scrollToTop(scrollViewRef);
-    // Set to Chapter 8 when navigating to Journey from toolbar
+    // Set to current chapter when navigating to Journey from toolbar
     if (setSelectedDay) {
-      setSelectedDay(8);
+      setSelectedDay(TODAY_DAY);
     }
     setCurrentView('Journey');
   };

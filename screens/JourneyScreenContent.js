@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Pressable, Image, Dimensions, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Svg, { Path, Rect } from 'react-native-svg';
+import Svg, { Rect } from 'react-native-svg';
 import Card from '../components/Card';
 import DayNavigationHeader from '../components/DayNavigationHeader';
 import colors from '../theme/colors';
@@ -14,6 +14,7 @@ import {
   isDayAvailable,
   getImageSource,
 } from '../utils/mayanCalendar';
+import { TODAY_DAY } from '../utils/mayanCalendar';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -150,22 +151,29 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef }) {
           <View style={styles.contentSection}>
             <View style={styles.chapterTitleRow}>
               <Text style={styles.chapterTitle}>Chapter {dayNumber}</Text>
-              <Pressable onPress={onBack} style={styles.journeyIconButton}>
-                <Svg width={30} height={30} viewBox='0 0 24 24' fill='none'>
+              <Pressable onPress={onBack} style={styles.fullStoryButton}>
+                <Svg
+                  width={16}
+                  height={16}
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  style={styles.fullStoryIcon}
+                >
                   {/* Bulleted list icon - 4 rows with bullets and lines */}
                   {/* Row 1 */}
-                  <Rect x='3' y='5' width='3' height='3' fill={colors.text} />
-                  <Rect x='8' y='6' width='11' height='1.5' fill={colors.text} />
+                  <Rect x='3' y='5' width='3' height='3' fill={colors.accent} />
+                  <Rect x='8' y='6' width='11' height='1.5' fill={colors.accent} />
                   {/* Row 2 */}
-                  <Rect x='3' y='9' width='3' height='3' fill={colors.text} />
-                  <Rect x='8' y='10' width='11' height='1.5' fill={colors.text} />
+                  <Rect x='3' y='9' width='3' height='3' fill={colors.accent} />
+                  <Rect x='8' y='10' width='11' height='1.5' fill={colors.accent} />
                   {/* Row 3 */}
-                  <Rect x='3' y='13' width='3' height='3' fill={colors.text} />
-                  <Rect x='8' y='14' width='11' height='1.5' fill={colors.text} />
+                  <Rect x='3' y='13' width='3' height='3' fill={colors.accent} />
+                  <Rect x='8' y='14' width='11' height='1.5' fill={colors.accent} />
                   {/* Row 4 */}
-                  <Rect x='3' y='17' width='3' height='3' fill={colors.text} />
-                  <Rect x='8' y='18' width='11' height='1.5' fill={colors.text} />
+                  <Rect x='3' y='17' width='3' height='3' fill={colors.accent} />
+                  <Rect x='8' y='18' width='11' height='1.5' fill={colors.accent} />
                 </Svg>
+                <Text style={styles.fullStoryText}>Full story</Text>
               </Pressable>
             </View>
 
@@ -226,10 +234,10 @@ export default function JourneyScreenContent({
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
 
-  // Default to Chapter 8 on initial load if no day is selected
+  // Default to current chapter on initial load if no day is selected
   useEffect(() => {
     if (selectedDay === null && setSelectedDay) {
-      setSelectedDay(8);
+      setSelectedDay(TODAY_DAY);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Only run on mount - intentionally not including selectedDay in deps
@@ -562,6 +570,26 @@ const styles = StyleSheet.create({
     padding: 8,
     marginLeft: 16,
   },
+  fullStoryButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginLeft: 16,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.accent,
+    backgroundColor: 'transparent',
+  },
+  fullStoryIcon: {
+    marginRight: 6,
+  },
+  fullStoryText: {
+    ...type.caption,
+    color: colors.accent,
+    fontWeight: '600',
+    textTransform: 'lowercase',
+  },
   storyPrimaryImage: {
     width: '100%',
     marginBottom: 0,
@@ -667,4 +695,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-

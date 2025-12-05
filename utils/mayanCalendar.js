@@ -1,9 +1,36 @@
+// Import all trecenas - React Native requires static imports
 import { aqabalTrecena } from '../data/trecena-aqabal';
+import { imoxTrecena } from '../data/trecena-imox';
+import { iqTrecena } from '../data/trecena-iq';
+import { katTrecena } from '../data/trecena-kat';
+import { tojTrecena } from '../data/trecena-toj';
+import { tzikinTrecena } from '../data/trecena-tzikin';
 
-// Hardcoded for now: Today is 11/13/2024 = Day 8, Tz'i', Number 8 in Aq'ab'al trecena
+// Trecena mapping - maps CURRENT_TRECENA to the imported trecena object
+const TRECENA_MAP = {
+  aqabal: aqabalTrecena,
+  imox: imoxTrecena,
+  iq: iqTrecena,
+  kat: katTrecena,
+  toj: tojTrecena,
+  tzikin: tzikinTrecena,
+};
+
+// Hardcoded for now: Today is 11/13/2024 = Day 13, Number 13 in Toj trecena
 // This will be replaced with real Mayan calendar calculation later
-const TODAY_DAY = 8;
-const TODAY_TRECENA = "Aq'ab'al";
+export const TODAY_DAY = 13;
+const TODAY_TRECENA = 'Toj';
+const CURRENT_TRECENA = 'toj';
+
+// Get the current trecena based on CURRENT_TRECENA
+function getCurrentTrecena() {
+  const trecena = TRECENA_MAP[CURRENT_TRECENA];
+  if (!trecena) {
+    console.warn(`Trecena '${CURRENT_TRECENA}' not found, falling back to 'toj'`);
+    return TRECENA_MAP.toj;
+  }
+  return trecena;
+}
 
 /**
  * Get today's Mayan calendar date information
@@ -26,103 +53,61 @@ export function getTodayMayanDate() {
  * @returns {Object|null} Day data object or null if not found
  */
 export function getDayData(dayNumber) {
-  const day = aqabalTrecena.days.find((d) => d.day === dayNumber);
+  const currentTrecena = getCurrentTrecena();
+  const day = currentTrecena.days.find((d) => d.day === dayNumber);
   return day || null;
 }
 
+// Fallback images - used when a specific image is not found
+const FALLBACK_IMAGES = {
+  story_primary: require('../assets/fallback-images/story_primary.png'),
+  story_wide_1: require('../assets/fallback-images/story_wide_1.png'),
+  story_wide_2: require('../assets/fallback-images/story_wide_2.png'),
+  horoscope: require('../assets/fallback-images/horoscope.png'),
+  affirmation: require('../assets/fallback-images/affirmation.png'),
+  birthday: require('../assets/fallback-images/birthday.png'),
+  meditation: require('../assets/fallback-images/affirmation.png'), // Using affirmation as fallback for meditation
+};
+
 // Image mapping - React Native requires static require() paths
-// Add more days as images become available
+// Currently set to trecena-toj for testing
+// TODO: Make this dynamic based on CURRENT_TRECENA when React Native supports dynamic requires
 // This can be easily switched to remote URLs later by changing the return value in getImageSource()
 const IMAGE_MAP = {
   // Day 1 images
   1: {
-    story_primary: require('../assets/trecena-aqabal/1/story_primary.png'),
-    story_wide_1: require('../assets/trecena-aqabal/1/story_wide_1.png'),
-    story_wide_2: require('../assets/trecena-aqabal/1/story_wide_2.png'),
-    horoscope: require('../assets/trecena-aqabal/1/horoscope.png'),
-    affirmation: require('../assets/trecena-aqabal/1/affirmation.png'),
+    story_primary: require('../assets/trecena-toj/1/story_primary.png'),
+    story_wide_1: require('../assets/trecena-toj/1/story_wide_1.png'),
+    story_wide_2: require('../assets/trecena-toj/1/story_wide_2.png'),
+    horoscope: require('../assets/trecena-toj/1/horoscope.png'),
+    affirmation: require('../assets/trecena-toj/1/affirmation.png'),
+    birthday: require('../assets/trecena-toj/1/birthday.png'),
+    meditation: require('../assets/trecena-toj/1/meditation.png'),
   },
-  // Day 2 images
-  2: {
-    story_primary: require('../assets/trecena-aqabal/2/story_primary.png'),
-    story_wide_1: require('../assets/trecena-aqabal/2/story_wide_1.png'),
-    story_wide_2: require('../assets/trecena-aqabal/2/story_wide_2.png'),
-    horoscope: require('../assets/trecena-aqabal/2/horoscope.png'),
-    affirmation: require('../assets/trecena-aqabal/2/affirmation.png'),
-  },
-  // Day 3 images
-  3: {
-    story_primary: require('../assets/trecena-aqabal/3/story_primary.png'),
-    story_wide_1: require('../assets/trecena-aqabal/3/story_wide_1.png'),
-    story_wide_2: require('../assets/trecena-aqabal/3/story_wide_2.png'),
-    horoscope: require('../assets/trecena-aqabal/3/horoscope.png'),
-    affirmation: require('../assets/trecena-aqabal/3/affirmation.png'),
-  },
-  // Day 4 images
-  4: {
-    story_primary: require('../assets/trecena-aqabal/4/story_primary.png'),
-    story_wide_1: require('../assets/trecena-aqabal/4/story_wide_1.png'),
-    story_wide_2: require('../assets/trecena-aqabal/4/story_wide_2.png'),
-    horoscope: require('../assets/trecena-aqabal/4/horoscope.png'),
-    affirmation: require('../assets/trecena-aqabal/4/affirmation.png'),
-  },
-  // Day 5 images
-  5: {
-    story_primary: require('../assets/trecena-aqabal/5/story_primary.png'),
-    story_wide_1: require('../assets/trecena-aqabal/5/story_wide_1.png'),
-    story_wide_2: require('../assets/trecena-aqabal/5/story_wide_2.png'),
-    horoscope: require('../assets/trecena-aqabal/5/horoscope.png'),
-    affirmation: require('../assets/trecena-aqabal/5/affirmation.png'),
-  },
-  // Day 6 images
-  6: {
-    story_primary: require('../assets/trecena-aqabal/6/story_primary.png'),
-    story_wide_1: require('../assets/trecena-aqabal/6/story_wide_1.png'),
-    story_wide_2: require('../assets/trecena-aqabal/6/story_wide_2.png'),
-    horoscope: require('../assets/trecena-aqabal/6/horoscope.png'),
-    affirmation: require('../assets/trecena-aqabal/6/affirmation.png'),
-  },
-  // Day 7 images
-  7: {
-    story_primary: require('../assets/trecena-aqabal/7/story_primary.png'),
-    story_wide_1: require('../assets/trecena-aqabal/7/story_wide_1.png'),
-    story_wide_2: require('../assets/trecena-aqabal/7/story_wide_2.png'),
-    horoscope: require('../assets/trecena-aqabal/7/horoscope.png'),
-    affirmation: require('../assets/trecena-aqabal/7/affirmation.png'),
-  },
-  // Day 8 images
-  8: {
-    story_primary: require('../assets/trecena-aqabal/8/story_primary.png'),
-    story_wide_1: require('../assets/trecena-aqabal/8/story_wide_1.png'),
-    story_wide_2: require('../assets/trecena-aqabal/8/story_wide_2.png'),
-    horoscope: require('../assets/trecena-aqabal/8/horoscope.png'),
-    affirmation: require('../assets/trecena-aqabal/8/affirmation.png'),
-    meditation: require('../assets/trecena-aqabal/8/meditation.png'),
-  },
-  // Add other days (9-13) here as images become available
+  // Add other days (2-13) here as images become available
 };
 
 /**
  * Get image source for a specific day and image type
  * Returns format compatible with both local require() and remote URLs
  * @param {number} dayNumber - Day number (1-13)
- * @param {string} imageType - Type: 'story_primary', 'story_wide_1', 'story_wide_2', 'horoscope', 'affirmation', 'meditation'
- * @returns {Object} Image source object { uri: ... } or require() result
+ * @param {string} imageType - Type: 'story_primary', 'story_wide_1', 'story_wide_2', 'horoscope', 'affirmation', 'meditation', 'birthday'
+ * @returns {Object} Image source object { uri: ... } or require() result, or fallback if not found
  *
  * Note: To switch to remote URLs later, change this function to return:
- * { uri: `https://your-domain.com/images/trecena-aqabal/${dayNumber}/${imageType}.png` }
+ * { uri: `https://your-domain.com/images/trecena-${CURRENT_TRECENA}/${dayNumber}/${imageType}.png` }
  */
 export function getImageSource(dayNumber, imageType) {
   const dayImages = IMAGE_MAP[dayNumber];
   if (!dayImages) {
-    console.warn(`No images found for day ${dayNumber}`);
-    return null;
+    console.warn(`No images found for day ${dayNumber}, using fallback`);
+    return FALLBACK_IMAGES[imageType] || FALLBACK_IMAGES.story_primary;
   }
 
   const image = dayImages[imageType];
   if (!image) {
-    console.warn(`Image type ${imageType} not found for day ${dayNumber}`);
-    return null;
+    console.warn(`Image type ${imageType} not found for day ${dayNumber}, using fallback`);
+    return FALLBACK_IMAGES[imageType] || FALLBACK_IMAGES.story_primary;
   }
 
   return image;
@@ -130,10 +115,10 @@ export function getImageSource(dayNumber, imageType) {
 
 /**
  * Get full trecena data
- * @returns {Object} Full aqabalTrecena object
+ * @returns {Object} Full current trecena object based on CURRENT_TRECENA
  */
 export function getTrecenaData() {
-  return aqabalTrecena;
+  return getCurrentTrecena();
 }
 
 /**
@@ -150,5 +135,6 @@ export function isDayAvailable(dayNumber) {
  * @returns {Array} Array of day objects sorted by day number
  */
 export function getAllDays() {
-  return [...aqabalTrecena.days].sort((a, b) => a.day - b.day);
+  const currentTrecena = getCurrentTrecena();
+  return [...currentTrecena.days].sort((a, b) => a.day - b.day);
 }

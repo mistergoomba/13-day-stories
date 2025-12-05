@@ -1,6 +1,6 @@
 # 🖼️ Image Creation Style Guide for Martin's Horoscopes
 
-Purpose: create square, fantastical images that _feel_ like the day's energy. No text. No faces. Abstract, mystical, and a little mischievous.
+Purpose: create square, fantastical images that _feel_ like the day's energy. No text (except for the affirmation prompt). No faces. Abstract, mystical, and a little mischievous.
 
 ---
 

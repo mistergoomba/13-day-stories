@@ -57,7 +57,7 @@ export const tojTrecena = {
         horoscope:
           'Square fantasy artwork, a stylized mystical balance scale made of swirling smoke and fire, set against a deep void. One side of the scale holds a glowing ember, the other side holds a feather made of light. Dark rainbow palette, vibrant orange and deep teal. Minimalist, symbolic, no text.',
         affirmation:
-          'Square fantasy artwork, a cute surreal fire-spirit—small, glowing, round, made of warm light—holding a golden coin and offering it up. Soft dreamlike lighting, surrounding air filled with tiny floating sparks. Dark rainbow palette with softer edges, magenta and gold accents. Whimsical, gentle, no text.',
+          "Square fantasy artwork, a cute surreal fire-spirit—small, glowing, round, made of warm light—holding a golden coin and offering it up. The image must feature the text: 'I am the seed of gratitude, planting peace with every payment.' written in an elegant, readable font integrated into the design. Soft dreamlike lighting, surrounding air filled with tiny floating sparks. Dark rainbow palette with softer edges, magenta and gold accents. Whimsical, gentle. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).",
         meditation:
           'Square abstract artwork, gradients of deep magma red transitioning into warm gold and charcoal black. Soft, flowing shapes that resemble breath or heat waves. Meditative, calming, no sharp edges, no text.',
         birthday:
@@ -115,8 +115,7 @@ export const tojTrecena = {
           '16:9 widescreen artwork, close up of the calm guardian’s face—texture of cooled volcanic rock with a vein of living gold light running through it like a tear or a scar. The eye is a pool of deep liquid gold. Mystical and serene. No text.',
         horoscope:
           'Square fantasy artwork, two pillars of light—one pure white, one deep indigo—twisting together in a double helix DNA shape. They are balanced in a void of stars. Dark rainbow palette, cosmic style. Symbolic of duality and union. No text.',
-        affirmation:
-          'Square fantasy artwork, a cute surreal dog-spirit made of soft blue light, carrying a small lantern of golden truth in its mouth. It is walking happily on a path of floating stones. Background is a soft nebula of pink and teal. Whimsical, comforting, no text.',
+        affirmation: `Square fantasy artwork, a cute surreal dog-spirit made of soft blue light, carrying a small lantern of golden truth in its mouth. It is walking happily on a path of floating stones. The image must feature the text: 'I choose the path of love over the path of fear.' written in an elegant, readable font integrated into the design. Background is a soft nebula of pink and teal. Whimsical, comforting. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
         meditation:
           'Square abstract artwork, a vertical line of gold light dividing a field of deep blue and warm magenta. The colors blend softly at the center line. Balanced, symmetrical, calming. No sharp edges, no text.',
         birthday:
@@ -174,8 +173,7 @@ export const tojTrecena = {
           '16:9 widescreen artwork, close up of the golden vein in the rock. It has a texture like braided metal or organic fiber. It glows against the matte black stone. Sparks of blue and gold drift off it. High detail. No text.',
         horoscope:
           'Square fantasy artwork, a loom made of beams of light, weaving a fabric of stars and galaxies. The threads are vibrant neon colors—magenta, cyan, gold—against a deep space background. The weaving pattern is intricate and spiral-based. Dark rainbow palette. No text.',
-        affirmation:
-          'Square fantasy artwork, a cute surreal monkey-spirit made of soft golden light, holding a glowing thread. It is swinging playfully from a loop of the thread. Background is a swirl of soft pastel colors—lavender, mint, and peach. Whimsical, joyful, no text.',
+        affirmation: `Square fantasy artwork, a cute surreal monkey-spirit made of soft golden light, holding a glowing thread. It is swinging playfully from a loop of the thread. The image must feature the text: 'I am the weaver of my own story, choosing threads of joy.' written in an elegant, readable font integrated into the design. Background is a swirl of soft pastel colors—lavender, mint, and peach. Whimsical, joyful. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
         meditation:
           'Square abstract artwork, oscillating waves of electric blue and warm gold light. They interweave and separate like breathing patterns. Fluid, dynamic, energetic but balanced. No text.',
         birthday:
@@ -233,8 +231,7 @@ export const tojTrecena = {
           '16:9 widescreen artwork, close up of the bridge surface. The texture is like polished ivory or organic ceramic. It is pristine white, contrasting with the orange glow reflecting from below. Geometric lattice patterns. No text.',
         horoscope:
           'Square fantasy artwork, a golden compass floating in a dark void. It has four glowing points—Red (East), Black (West), Yellow (South), White (North). The needle is made of starlight. Dark rainbow palette with nebula background. Symbolic of direction and grounding. No text.',
-        affirmation:
-          'Square fantasy artwork, a cute surreal "path-spirit"—a small, round, glowing white stone creature with little legs, walking happily on a floating path. It leaves glowing footprints behind it. Background is a soft gradient of teal and indigo. Whimsical, reassuring, no text.',
+        affirmation: `Square fantasy artwork, a cute surreal 'path-spirit'—a small, round, glowing white stone creature with little legs, walking happily on a floating path. It leaves glowing footprints behind it. The image must feature the text: 'I am safe, supported, and guided on my journey.' written in an elegant, readable font integrated into the design. Background is a soft gradient of teal and indigo. Whimsical, reassuring. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
         meditation:
           'Square abstract artwork, a perfect cube of translucent light resting on a dark surface. The cube emits a soft, steady glow. The colors are grounding—terracotta, deep green, and warm brown. Stable, geometric, peaceful. No text.',
         birthday:
@@ -292,8 +289,7 @@ export const tojTrecena = {
           '16:9 widescreen artwork, close up of a hand gripping a smooth, black staff. The staff has gold geometric carvings near the grip. The background is a blur of sharp, leafy shapes. Texture of wood and glass. No text.',
         horoscope:
           'Square fantasy artwork, a spinal column made of vertebrae of pure light, rooting into a dark earth and branching into a starry sky like a tree. Dark rainbow palette, gold and indigo. Symbolic of alignment and strength. No text.',
-        affirmation:
-          'Square fantasy artwork, a cute surreal "corn-spirit"—a small, glowing yellow creature resembling a corn cob or pillar with a leaf-hat—standing proudly and holding a tiny roof over its head. Background is a soft gradient of green and gold. Whimsical, protective, no text.',
+        affirmation: `Square fantasy artwork, a cute surreal 'corn-spirit'—a small, glowing yellow creature resembling a corn cob or pillar with a leaf-hat—standing proudly and holding a tiny roof over its head. The image must feature the text: 'I stand tall in my truth and protect my inner home.' written in an elegant, readable font integrated into the design. Background is a soft gradient of green and gold. Whimsical, protective. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
         meditation:
           'Square abstract artwork, a single, vertical beam of solid white-gold light connecting a dark bottom edge to a bright top edge. The beam is unmoving and perfectly straight. Background is deep charcoal. Minimalist, grounding. No text.',
         birthday:
@@ -351,8 +347,7 @@ export const tojTrecena = {
           '16:9 widescreen artwork, close up of a hand touching a black rock covered in glowing, pulsing ultraviolet moss. The light from the moss illuminates the fingertips. High detail, macro texture. No text.',
         horoscope:
           'Square fantasy artwork, a single large paw print made of constellations and star dust pressed into dark earth. It glows softly. Background is a deep indigo night sky. Mystical, symbolic. No text.',
-        affirmation:
-          'Square fantasy artwork, a cute surreal "jaguar-spirit"—a small, round, fluffy creature made of dark blue galaxy clouds with glowing eyes—sleeping peacefully on a floating rock. Background is a soft violet nebula. Whimsical, dreamy, no text.',
+        affirmation: `Square fantasy artwork, a cute surreal 'jaguar-spirit'—a small, round, fluffy creature made of dark blue galaxy clouds with glowing eyes—sleeping peacefully on a floating rock. The image must feature the text: 'I walk with the silent confidence of the jaguar.' written in an elegant, readable font integrated into the design. Background is a soft violet nebula. Whimsical, dreamy. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
         meditation:
           'Square abstract artwork, soft swirls of purple and teal mist moving like water. The colors blend and flow into each other. No hard edges. Calming, fluid. No text.',
         birthday:
@@ -410,8 +405,7 @@ export const tojTrecena = {
           '16:9 widescreen artwork, close up of an eagle’s eye, reflecting a mountain peak and a golden sun. The feathers are iridescent blue and gold. High detail, intense focus. No text.',
         horoscope:
           'Square fantasy artwork, a giant eye formed by clouds and golden light in the sky, looking down at a jagged mountain peak. Rays of light connect the eye to the mountain. Dark rainbow palette, surreal, visionary. No text.',
-        affirmation:
-          'Square fantasy artwork, a cute surreal "eagle-spirit"—a small, round bird with glowing golden wings—perched proudly on a high floating rock. Background is a vast expanse of blue sky and white clouds. Whimsical, uplifting, no text.',
+        affirmation: `Square fantasy artwork, a cute surreal 'eagle-spirit'—a small, round bird with glowing golden wings—perched proudly on a high floating rock. The image must feature the text: 'I rise above the noise and see my path with crystal clarity.' written in an elegant, readable font integrated into the design. Background is a vast expanse of blue sky and white clouds. Whimsical, uplifting. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
         meditation:
           'Square abstract artwork, a gradient that starts with deep earth tones (brown, charcoal) at the bottom and transitions smoothly into expansive sky blue and bright gold at the top. Represents the ascent from earth to sky. Minimalist, calming. No text.',
         birthday:
@@ -469,8 +463,7 @@ export const tojTrecena = {
           '16:9 widescreen artwork, close up of a spectral owl perched on a ledge of amber. Its eyes are pools of golden light. Feathers are made of smoke. High detail. No text.',
         horoscope:
           'Square fantasy artwork, a heavy iron chain breaking, but instead of metal shards, the links turn into golden butterflies and light. Background is a soft amber glow. Symbolic of release. No text.',
-        affirmation:
-          'Square fantasy artwork, a cute surreal "owl-spirit"—round, fluffy, glowing with soft brown and gold feathers—holding a tiny olive branch. Background is a warm sunset gradient. Whimsical, peaceful, no text.',
+        affirmation: `Square fantasy artwork, a cute surreal 'owl-spirit'—round, fluffy, glowing with soft brown and gold feathers—holding a tiny olive branch. The image must feature the text: 'I forgive myself for the past and step into the harmony of the present.' written in an elegant, readable font integrated into the design. Background is a warm sunset gradient. Whimsical, peaceful. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
         meditation:
           'Square abstract artwork, soft gradients of honey, amber, and deep violet. The colors swirl gently like oil on water. Healing, warm, soothing. No text.',
         birthday:
@@ -528,8 +521,7 @@ export const tojTrecena = {
           '16:9 widescreen artwork, close up of a glowing blue fractal tree growing instantly from black soil. The branches are made of light. High detail, crystalline texture. No text.',
         horoscope:
           'Square fantasy artwork, a dandelion seed head made of light, exploding into stars and geometric shapes. The background is deep indigo. Symbolic of a spreading idea. No text.',
-        affirmation:
-          'Square fantasy artwork, a cute surreal "brain-spirit"—a soft, glowing pink and blue geometric shape with friendly eyes—watering a tiny potted plant. Background is a soft study room with floating books. Whimsical, smart, no text.',
+        affirmation: `Square fantasy artwork, a cute surreal 'brain-spirit'—a soft, glowing pink and blue geometric shape with friendly eyes—watering a tiny potted plant. The image must feature the text: 'I trust my inner wisdom to reveal the perfect solution in perfect time.' written in an elegant, readable font integrated into the design. Background is a soft study room with floating books. Whimsical, smart. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
         meditation:
           'Square abstract artwork, concentric circles of blue and indigo light expanding slowly like ripples in a pond. The center is a bright white point. Calming, hypnotic. No text.',
         birthday:
@@ -587,8 +579,7 @@ export const tojTrecena = {
           '16:9 widescreen artwork, close up of a hand holding a glowing white obsidian shard, cutting through a dark, thick bio-mechanical vine. Sparks fly at the contact point. High action, sharp focus. No text.',
         horoscope:
           'Square fantasy artwork, a rough diamond or crystal floating in the air, being cut by a precise beam of white light, revealing a glowing, faceted core. Background is deep teal. Symbolic of refinement. No text.',
-        affirmation:
-          'Square fantasy artwork, a cute surreal "sword-spirit"—a glowing, friendly blade or scalpel with a smiley face—carefully trimming a messy hedge into a perfect heart shape. Background is a manicured garden. Whimsical, tidy, no text.',
+        affirmation: `Square fantasy artwork, a cute surreal 'sword-spirit'—a glowing, friendly blade or scalpel with a smiley face—carefully trimming a messy hedge into a perfect heart shape. The image must feature the text: 'I am the sculptor of my own life, refining my path with truth.' written in an elegant, readable font integrated into the design. Background is a manicured garden. Whimsical, tidy. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
         meditation:
           'Square abstract artwork, a vertical beam of white light descending like a laser into a dark field. It is precise and cleansing. The edges are sharp. Minimalist, intense. No text.',
         birthday:
@@ -646,8 +637,7 @@ export const tojTrecena = {
           '16:9 widescreen artwork, close up of rain hitting hot black stone, turning instantly to iridescent steam. The steam curls in spiral shapes. High detail, texture of water and rock. No text.',
         horoscope:
           'Square fantasy artwork, a storm cloud that isn’t raining water, but raining tiny flowers and sparks of light into a pair of open hands. Background is deep storm-blue. Surreal, hopeful. No text.',
-        affirmation:
-          'Square fantasy artwork, a cute surreal "turtle-spirit"—round shell with glowing spots, soft eyes—hiding happily under a large green leaf while rain falls around it. Background is a cozy, wet garden. Whimsical, safe, no text.',
+        affirmation: `Square fantasy artwork, a cute surreal 'turtle-spirit'—round shell with glowing spots, soft eyes—hiding happily under a large green leaf while rain falls around it. The image must feature the text: 'I am safe in the center of the change.' written in an elegant, readable font integrated into the design. Background is a cozy, wet garden. Whimsical, safe. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
         meditation:
           'Square abstract artwork, a vortex of water and light spinning clockwise. The center is clear and calm, while the edges are dynamic and blurry. Colors are teal, indigo, and white. Cleansing, active. No text.',
         birthday:
@@ -705,8 +695,7 @@ export const tojTrecena = {
           '16:9 widescreen artwork, close up of a pool of rainwater reflecting a face. The reflection is wearing a crown of golden light rays. The water ripples slightly. High detail, symbolic. No text.',
         horoscope:
           'Square fantasy artwork, a simple golden crown floating in the air above a rough grey stone. The crown glows with an intense inner light. Background is deep blue. Symbolic of sovereignty. No text.',
-        affirmation:
-          'Square fantasy artwork, a cute surreal "sun-spirit"—a little shining ball of golden light with a happy face—wearing a red cape and standing in a superhero pose. Background is a bright blue sky with fluffy clouds. Whimsical, empowering, no text.',
+        affirmation: `Square fantasy artwork, a cute surreal 'sun-spirit'—a little shining ball of golden light with a happy face—wearing a red cape and standing in a superhero pose. The image must feature the text: 'I honor the light within me and shine without apology.' written in an elegant, readable font integrated into the design. Background is a bright blue sky with fluffy clouds. Whimsical, empowering. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
         meditation:
           'Square abstract artwork, a mandala of twelve golden rays expanding outward from a central point. The background is deep amber and gold. Radiant, symmetrical, powerful. No text.',
         birthday:
@@ -746,7 +735,7 @@ export const tojTrecena = {
         },
       },
       horoscope:
-        'The cycle is done. Stop trying to hold onto the shore. Let go. Tone 13 is the ocean; you are the drop. Surrender isn’t giving up; it’s joining something bigger.\n\nThe veil is thin today. Pay attention to your dreams—waking and sleeping. The universe is speaking in symbols now, not words. You have graduated from the classroom of fire to the library of water. Float, and let the current carry you home.',
+        "The cycle is done. Stop trying to hold onto the shore. Let go. Today's energy is the ocean; you are the drop. Surrender isn’t giving up; it’s joining something bigger.\n\nThe veil is thin today. Pay attention to your dreams—waking and sleeping. The universe is speaking in symbols now, not words. You have graduated from the classroom of fire to the library of water. Float, and let the current carry you home.",
       affirmation: 'I surrender to the flow of the universe and trust the wisdom of my dreams.',
       meditation:
         'Lie down and close your eyes. Imagine you are floating on the surface of a deep, dark ocean under a starry sky. The water is warm and supports you completely.\n\nVisualize your thoughts as waves on the surface—moving, chopping, changing. But beneath the waves, your consciousness is the deep, still water. Vast. Silent. Eternal.\n\nSink slowly into that depth. Let the surface noise fade away. You are the ocean. You are the depth. Rest in the silence.',
@@ -764,8 +753,7 @@ export const tojTrecena = {
           '16:9 widescreen artwork, close up of water lilies floating in a dark pool. The flowers are glowing white and blue. The water surface reflects a nebula. High detail, magical. No text.',
         horoscope:
           'Square fantasy artwork, a crystal water pitcher pouring out a stream of stars and galaxies instead of liquid. The flow turns into a river. Background is deep space. Surreal, flowing. No text.',
-        affirmation:
-          'Square fantasy artwork, a cute surreal "water-spirit"—a teardrop-shaped creature made of blue liquid with big eyes—hugging a glowing crescent moon. Floating in a starry sky. Whimsical, soft, no text.',
+        affirmation: `Square fantasy artwork, a cute surreal 'water-spirit'—a teardrop-shaped creature made of blue liquid with big eyes—hugging a glowing crescent moon. The image must feature the text: 'I surrender to the flow of the universe and trust the wisdom of my dreams.' written in an elegant, readable font integrated into the design. Floating in a starry sky. Whimsical, soft. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
         meditation:
           'Square abstract artwork, a spiral of water and starlight merging into a central point of blinding white light. The colors are deep indigo, teal, and silver. Hypnotic, spiritual. No text.',
         birthday:
