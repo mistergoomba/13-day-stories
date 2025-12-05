@@ -262,7 +262,7 @@ notes: []
 - No astrology clichés
 - No fortune telling
 - About inner alignment, not prediction
-- Do not mention the specific mayan references
+- Do not mention the specific tones, nawales, or mayan references
 
 ## **Horoscope Generation Process**
 
@@ -277,14 +277,8 @@ notes: []
 - Consider how it interacts with the **ruling Trecena's theme**.
 - Note patterns (e.g., repeating nawales, mirrored numbers, transition points).
 
-### 3. Add the Personal Layer (for 13 Ajpu)
+### 3. Create the Message
 
-- Compare the day's energy to your birth nawal (Ajpu = the Sun, light, truth, creative power).
-- Interpret how this energy either amplifies, challenges, or harmonizes with it.
-
-### 4. Create the Message
-
-- **Personal Version:** Use the full Mayan terms (e.g., "5 Iq'") and describe how this interacts with 13 Ajpu personally.
 - **Sharable Version:** Remove specific Mayan numbers/nawales and translate the energy into poetic, mystical, universal language. Blend in a bit of Libra balance and artistry.
 
 ### 5. Generate the Image
@@ -296,24 +290,7 @@ notes: []
 
 ## **Horoscope Structure**
 
-### **Personal Horoscope (for 13 Ajpu)**
-
-1. **Opening:**  
-   Describe the energy of the day using the tone and nawal by name.  
-   Example:  
-   "Today we walk within the heart of 6 Aq'ab'al — a day when the dawn stirs gently before bursting into color."
-
-2. **Middle:**  
-   Relate this energy to your personal path (Ajpu).  
-   Example:  
-   "For one born under 13 Ajpu, this light is familiar — the pull between creation and reflection, the sun whispering through shadow."
-
-3. **Closing:**  
-   Offer guidance or affirmation.  
-   Example:  
-   "Let movement come before certainty. Dawn does not ask permission to rise."
-
-### **Sharable Horoscope (Public Version)**
+### **Horoscope**
 
 1. Translate the full reading into **symbolic storytelling** without mentioning numbers or nawales.
 2. Keep it poetic, whimsical, and grounded in fantasy or emotion.
@@ -322,16 +299,7 @@ notes: []
 **Example (Sharable):**  
 "The day cracks open like a geode, spilling strange light across your path. Something within you remembers how to glow, even when the world forgets how to look. The cosmos is laughing softly — take the hint and create something wild."
 
-## **Example with Trecena Influence**
-
-**Context:** We are in the _Wind / Iq' trecena_ (themes: communication, breath, clarity).  
-**Today's day:** _5 Tz'ikin_ (tone 5 = power, Tz'ikin = vision).  
-**Birth energy:** _13 Ajpu._
-
-**Personal Horoscope:**
-"Under the breath of the Wind trecena, 5 Tz'ikin opens your sight. The power of vision swells in your chest, and truth wants a voice. For the Sun-born Ajpu, this is your sacred mirror — to see your light through the stories you tell. Speak as if the sky itself were listening."
-
-**Sharable Horoscope:**
+**Example (Sharable):**  
 "The wind is restless again, carrying messages between clouds. Vision sparks behind your eyes — stories begging to be sung. Say what your silence has been sculpting. The air itself is ready to applaud."
 
 ---
@@ -705,6 +673,18 @@ For each of the 7 image types, present 2–3 visual concept options:
 - Wait for user selections/feedback on ALL aspects (A–F) before moving to the next day
 - User may request revisions to earlier days as the story develops—this is expected and welcome
 
+**Incremental JSON Export Schedule**
+
+To prevent context loss and keep the process clean, you must **generate and present the JSON code block** at the following specific milestones. Do not wait for the very end to generate code.
+
+- **Milestone 1 (After Day 1 is approved):** Generate JSON containing trecena data, `prologue`, `epilogue` and `day 1`.
+- **Milestone 2 (After Day 4 is approved):** Generate JSON containing `days 2–4`.
+- **Milestone 3 (After Day 7 is approved):** Generate JSON containing `days 5–7`.
+- **Milestone 4 (After Day 10 is approved):** Generate JSON containing `days 8–10`.
+- **Milestone 5 (After Day 13 is approved):** Generate JSON containing `days 11–13`.
+
+_Note: Continue the standard planning process (presenting options A–F) for every single day. The export happens only after the specific days listed above are finalized._
+
 ### **Phase 5: Review & Refinement**
 
 After all 13 days are planned:
@@ -736,7 +716,7 @@ After all 13 days are planned:
 - Ensure JSON is valid and parseable
 
 **Step 2: Create Trecena-Specific Rules File**
-After JSON generation, create a new file: `data/trecena-[nawal]-rules.md`
+After JSON generation, create a new file: `data/trecena-rules-[nawal].md`
 
 This file must document:
 
