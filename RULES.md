@@ -471,11 +471,224 @@ Provide:
 
 Then say:
 
-“I am generating the **X trecena**, starting on Day Y. Follow all rules in RULES.md.”
+"I am generating the **X trecena**, starting on Day Y. Follow all rules in RULES.md."
 
 ---
 
-## 🌟 **17. What the Model Must Always Remember**
+## 🤝 **17. Collaborative Trecena Building Workflow**
+
+When the user requests to build a new trecena, you MUST follow this collaborative workflow. **Never generate JSON until explicitly approved.** Always present options and wait for user feedback.
+
+### **Phase 1: Trecena Discovery & Overview**
+
+When user says "I want to build [Nawal] trecena":
+
+1. **Acknowledge the request** and confirm the nawal name
+2. **Provide brief overview**:
+   - Core meaning of the nawal (from canonical sources)
+   - Emotional/psychological themes
+   - How it differs from existing trecenas
+3. **Reference existing trecenas** for context (e.g., "Like Imox's water-world or Aq'ab'al's dual city...")
+4. **Wait for user confirmation** before proceeding to world building
+
+### **Phase 2: World Building (Present Options)**
+
+**Present 2–3 world concept options.** Each option must include:
+
+- **Core Theme**: One-sentence essence
+- **World Essence**: 2–3 sentences describing the environment
+- **Key Motifs**: 3–5 recurring visual/symbolic elements
+- **Color Palette Direction**: General color scheme
+- **Symbolic Guides**: Types of non-human presences
+
+**Format example:**
+
+```
+**Option A: [World Name]**
+- Core Theme: [one sentence]
+- World Essence: [2-3 sentences]
+- Key Motifs: [list]
+- Colors: [description]
+- Guides: [types]
+
+**Option B: [World Name]**
+...
+```
+
+**After user selects:**
+
+- Expand the chosen world with full details matching Section 6 requirements
+- Define: core theme, world essence, recurring motifs, symbolic presences, color palette progression
+- Get user approval/refinement before proceeding
+
+### **Phase 3: Prologue & Epilogue Planning**
+
+**Present 2–3 options for each:**
+
+**Prologue Options:**
+
+- Each option: 1–2 sentence scene concept
+- How the traveler enters the world
+- Emotional tone
+- Opening symbols/motifs
+
+**Epilogue Options:**
+
+- Each option: 1–2 sentence scene concept
+- How the journey integrates/completes
+- Emotional resolution
+- Closing symbols that echo the arc
+
+**Wait for user selections/refinements** before moving to day-by-day planning.
+
+### **Phase 4: Day-by-Day Planning (Days 1–13)**
+
+**For EACH day, you must present ALL of the following for user review:**
+
+#### **A. Story Scene Options (2–3 options)**
+
+- Brief scene concept (1–2 sentences)
+- Emotional arc position (emergence/revelation/integration/culmination)
+- Key symbols/motifs that will appear
+- How it builds on previous days
+
+#### **B. Image Prompt Directions (All 7 images)**
+
+For each of the 7 image types, present 2–3 visual concept options:
+
+- **story_primary**: Square establishing shot options
+- **story_wide_1**: 16:9 cinematic wide options
+- **story_wide_2**: 16:9 symbolic close/detail options
+- **horoscope**: Square mystical symbolic options
+- **affirmation**: Square with text (must include affirmation) options
+- **meditation**: Square abstract gradient options
+- **birthday**: Square Mayan glyph + numeral options
+
+#### **C. Horoscope Direction (2–3 options)**
+
+- Brief thematic direction (1 sentence each)
+- Emotional tone options
+- Key insights to explore
+
+#### **D. Meditation Direction (2–3 options)**
+
+- Visualization concept (1 sentence each)
+- Symbols to invoke
+- Emotional journey for the meditation
+
+#### **E. Affirmation Direction (2–3 options)**
+
+- Brief affirmation concept (not full text yet)
+- Core message to express
+- Energy to embody
+
+#### **F. Birthday Profile Direction (2–3 options)**
+
+- Title concept (poetic direction)
+- Core identity theme to explore
+- How number + nawal blend
+
+**Important:**
+
+- **Energy of the Day** (number, nawal, combined) will be auto-generated based on canonical sources—no user supervision needed
+- Wait for user selections/feedback on ALL aspects (A–F) before moving to the next day
+- User may request revisions to earlier days as the story develops—this is expected and welcome
+
+### **Phase 5: Review & Refinement**
+
+After all 13 days are planned:
+
+1. **Present arc summary**:
+
+   - Overall emotional journey
+   - Key continuity points
+   - Symbol evolution across days
+   - World transformation arc
+
+2. **Ask for any final adjustments**:
+
+   - "Any changes to any days before we generate?"
+   - "Any motifs or symbols to strengthen?"
+   - "Any continuity issues to address?"
+
+3. **Wait for explicit approval** before JSON generation
+
+### **Phase 6: JSON Generation & Trecena Rules Creation**
+
+**Only proceed when user explicitly approves** (e.g., "Generate the JSON now" or "Let's build it").
+
+**Step 1: Generate Complete JSON**
+
+- Follow ALL rules in RULES.md
+- Generate full trecena with prologue, all 13 days, epilogue
+- Include all content: stories, energies, horoscopes, meditations, affirmations, birthdays, all 7 image prompts per day
+- Ensure JSON is valid and parseable
+
+**Step 2: Create Trecena-Specific Rules File**
+After JSON generation, create a new file: `data/trecena-[nawal]-rules.md`
+
+This file must document:
+
+```markdown
+# Trecena [Nawal] — Creation Rules & Decisions
+
+## World Module
+
+[Full world description as defined in Phase 2]
+
+## Prologue Choice
+
+[Selected option and any refinements]
+
+## Epilogue Choice
+
+[Selected option and any refinements]
+
+## Day-by-Day Decisions
+
+### Day 1: [Number] [Nawal]
+
+- Story Scene: [Selected option]
+- Image Prompts: [Selected directions for all 7]
+- Horoscope: [Selected direction]
+- Meditation: [Selected direction]
+- Affirmation: [Selected direction]
+- Birthday: [Selected direction]
+- Notes: [Any special decisions or refinements]
+
+[... repeat for all 13 days ...]
+
+## Continuity Notes
+
+[Key symbols, motifs, or themes that must be maintained]
+[Color progression decisions]
+[World evolution arc]
+```
+
+**This rules file serves as:**
+
+- Memory of all creative decisions
+- Reference for future revisions
+- Documentation of the trecena's unique identity
+
+### **Workflow Flexibility**
+
+- **User can revise earlier decisions** at any point—accommodate changes gracefully
+- **User can say "take the wheel"** on specific aspects—use best judgment while staying true to established choices
+- **User can request regeneration** of JSON after reviewing—make adjustments and regenerate
+- **Always wait for explicit approval** before generating JSON—never assume
+
+### **What NOT to Do**
+
+- ❌ Never generate JSON without explicit approval
+- ❌ Never skip presenting options (unless user explicitly says "take the wheel")
+- ❌ Never proceed to next day without user feedback on current day
+- ❌ Never forget to create the trecena-specific rules file
+- ❌ Never make assumptions about user preferences—always present options
+
+---
+
+## 🌟 **18. What the Model Must Always Remember**
 
 - Stories are rituals
 - Worlds mirror inner transformation
