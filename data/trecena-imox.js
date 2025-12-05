@@ -96,6 +96,11 @@ export const imoxTrecena = {
         'I honor the quiet beginnings inside me, and I give my deepest dreams space to breathe.',
       meditation:
         "Find a place where you can sit comfortably for a few minutes. Close your eyes and imagine a still body of water in front of you. With each inhale, see the surface grow clearer. With each exhale, let scattered thoughts dissolve. Ask gently, 'What wants to begin inside me?' Let whatever arises come naturally. Before opening your eyes, send quiet gratitude to the lineages and ancestors who learned to listen to cycles and the living world. Carry that stillness with you into the day.",
+      birthday: {
+        title: 'The Dreamer at the Source',
+        content:
+          'To be born on 1 Imox is to be a person who feels the world as much as they see it. The number 1 brings unity, beginnings, and singularity. Imox is the Water, the Dream, and the Collective Unconscious. You are the source of new visions.\n\nYou likely have a psychic sensitivity that allows you to pick up on the emotions and thoughts of others before they speak. You are a natural initiator of creative projects, often pulling ideas from the ether that others can’t see yet. Your challenge is discernment; because you feel everything, you can become overwhelmed. Your path is to learn to navigate the waters without drowning in them, bringing the treasures of the deep to the surface.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A vast surreal dream-ocean under a twilight indigo sky. Soft bioluminescent ripples expand from a single glowing point at the center. Faint water-geometry lines shimmer beneath the surface. No characters and no text. Palette uses deep blue, indigo, pale cyan, and soft turquoise light. Style is painterly, mystical, and fluid.',
@@ -109,6 +114,8 @@ export const imoxTrecena = {
           'Square affirmation image. Centered text must read exactly: “I listen to the first ripple of truth within me and allow my inner waters to awaken.” Surround the text with cute surreal ripple-spirits, tiny glowing droplets, and pastel wave symbols. Palette uses teal, lavender, aqua, and soft blue. Style is cute, simple, surreal, and soothing.',
         meditation:
           'Square image. A soft abstracted dream-ocean scene with a faint glowing ripple at center. Everything is blurred into peaceful gradients of blue, teal, and lavender. No characters and no text. Style is meditative, fluid, and serene.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Imox (Water/Crocodile) glowing with internal aqua-blue light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 1: a single glowing golden dot. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -149,6 +156,11 @@ export const imoxTrecena = {
         'My breath clears the space between my inner truth and the world, and I choose words that carry clarity and care.',
       meditation:
         "Find a place where you can sit upright with your spine relaxed and your chest open. Close your eyes and place one hand over your heart, the other over your belly. Inhale slowly through your nose for a gentle count of four, feeling your lower hand rise. Hold for a moment, then exhale for a count of six, imagining a soft breeze leaving your body.\n\nWith each exhale, picture a light wind carrying away one small piece of tension, one unsaid worry, one old phrase you no longer believe. Do this for several breaths. When you feel ready, silently ask, 'What truth wants to move through my voice today?' Do not force an answer. Let it arrive like a breeze, in its own time.\n\nBefore you open your eyes, offer a quiet thank you to the ancient keepers of breath, word, and story—those who spoke with the land and the winds long before you. Then take one final deep, clear breath and reenter your day.",
+      birthday: {
+        title: 'The Voice of Connection',
+        content:
+          'To be born on 2 Iq’ is to be a bridge between people. The number 2 brings duality, relationship, and the energy of the "other." Iq’ is the Wind, the Breath, and the Word. You are a natural communicator who thrives in one-on-one connections.\n\nYou have a gift for saying what others are thinking but are afraid to articulate. You breathe life into stagnant situations. Your words can heal or cut, so your lesson is to use your voice with mindfulness. You are here to keep the air moving, to ensure that truth is spoken in relationships, and to remind others that breath is the first connection to spirit.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A swirling underwater canyon in a dreamlike ocean realm. Dark currents twist through glowing sediment clouds. A soft spiraling vortex of pale light forms at the center. No characters and no text. Palette uses deep navy, aqua glow, muted green-blue, and soft violet shadows. Style is painterly, mysterious, and immersive.',
@@ -162,6 +174,8 @@ export const imoxTrecena = {
           'Square affirmation image. Centered text must read exactly: “I meet what stirs beneath the surface with courage and gentle curiosity.” Surround with cute surreal swirl-spirits, tiny glowing currents, and pastel droplets. Palette uses teal, lavender, gold, and aqua. Style is cute, simple, surreal, and encouraging.',
         meditation:
           'Square image. A soft abstract spiral of underwater light fading outward through deep gradients of blue and teal. No characters and no text. Style is meditative, introspective, and fluid.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Iq’ (Wind) glowing with internal cyan-blue light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 2: two glowing golden dots arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -208,6 +222,11 @@ export const imoxTrecena = {
         'I honor the in-between spaces in my life, and I allow myself to take small, imperfect steps toward the light that feels true.',
       meditation:
         'If possible, sit where you can see a natural horizon—a window, a skyline, even a blank wall you can imagine as the edge between earth and sky. Close your eyes and picture the moment just before dawn over a body of water.\n\nImagine the darkness holding you like a quiet room. Then, slowly, let a thin band of light appear along the horizon in your mind. With each inhale, allow that light to grow a little wider. With each exhale, soften any tension around not knowing what comes next.\n\nNow bring to mind one area of your life that feels “in between.” See it resting in that twilight band where night and day meet. You do not have to force a decision. Just acknowledge it kindly and say, either out loud or silently, “It is okay to be in transition. I am allowed to arrive slowly.”\n\nOffer a moment of gratitude for the ancient watchers of dawn and keepers of thresholds—those who listened to the turning of light and time long before you. Take one more steady breath, then open your eyes and carry that gentleness into whatever comes next.',
+      birthday: {
+        title: 'The Dawn Bringer',
+        content:
+          'To be born on 3 Aq’ab’al is to be a harbinger of new hope. The number 3 represents movement, expression, and rhythm. Aq’ab’al is the Dawn, the Threshold, and the House. You are a person who gets things moving when they have been stuck in the dark.\n\nYou have an optimistic spirit and a talent for seeing the potential in situations that others have given up on. You are a natural communicator of hope. Your presence feels like morning light entering a room. Your challenge is restlessness; you love beginnings so much that you may struggle to stay for the midday work. Remember that the dawn is just the start of the day, not the whole story.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A surreal dream-ocean filled with floating, jellyfish-like bioluminescent shapes emitting soft gold and cyan glow. One larger light-creature drifts near the center, abstract and symbolic. No characters and no text. Palette uses turquoise, cyan, indigo, and pale gold. Style is painterly, mystical, and gently uplifting.',
@@ -221,6 +240,8 @@ export const imoxTrecena = {
           'Square affirmation image. Centered text must read exactly: “I follow the small sparks of instinct that illuminate my inner ocean.” Surround with cute surreal jelly-spirits, tiny glowing tendrils, and pastel bubbles. Palette uses teal, lavender, aqua, and gold. Style is cute, simple, surreal, and intuitive.',
         meditation:
           'Square image. A soft abstracted underwater glow with drifting tendril shapes and blurred lights. Palette uses blue, teal, lavender, and gold. No characters and no text. Style is meditative, dreamy, and weightless.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Aq’ab’al (Dawn/House) glowing with internal rose-gold light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 3: three glowing golden dots arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -261,6 +282,11 @@ export const imoxTrecena = {
         'I release what weighs me down and keep only what supports my growth, clarity, and truth.',
       meditation:
         'Sit comfortably and imagine a net resting in your lap — woven from threads of memory, responsibility, and emotion. Take a slow breath and picture one knot tightening. As you exhale, imagine gently loosening it. On the next inhale, see another knot appear; on the exhale, soften that one too.\n\nYou do not need to unravel the whole net. Focus on the knots that call your attention. Honor what remains useful. Let go of what dissolves. Before opening your eyes, offer a moment of gratitude to the ancient keepers of cycles and caretakers of community — those who understood the balance between holding and releasing. Carry that wisdom with you into the day.',
+      birthday: {
+        title: 'The Stable Gatherer',
+        content:
+          'To be born on 4 K’at is to be a person of grounded abundance. The number 4 brings stability, structure, and the four corners of the earth. K’at is the Net, the Gatherer, and the Lizard. You are a magnet for resources and people.\n\nYou have a natural ability to accumulate what is needed—whether it’s friends, knowledge, or material wealth. You provide a safe container for others. You are dependable and woven deeply into your community. Your challenge is hoarding; you can hold onto things (and feelings) long past their expiration date. Your path is to learn that true stability comes from a clean net, not a full one.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A surreal underwater ruin where broken structures lie covered in luminous silt. Bubbles rise in soft glowing streams from cracks. No characters and no text. Palette uses deep blue, slate teal, muted violet, and pale aqua highlights. Style is painterly, emotional, and quietly heavy.',
@@ -274,6 +300,8 @@ export const imoxTrecena = {
           'Square affirmation image. Centered text must read exactly: “I release old heaviness and rise toward clearer waters.” Surround with cute surreal bubble-spirits, tiny glowing fragments, and pastel silt-creatures. Palette uses teal, gold, lavender, and blue. Style is cute, simple, surreal, and releasing.',
         meditation:
           'Square image. A soft abstracted underwater ruin blurred into calm shapes with a few glowing bubble trails rising. No characters and no text. Style is meditative, cleansing, and gentle.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for K’at (Net/Lizard) glowing with internal harvest-yellow light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 4: four glowing golden dots arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -314,6 +342,11 @@ export const imoxTrecena = {
         'I honor my life-force as sacred and choose to direct my energy toward what is honest, alive, and aligned with my growth.',
       meditation:
         'Sit or stand in a position where you can feel your feet firmly connected to the ground. Close your eyes and imagine a gentle, glowing current coiled at the base of your spine or deep in your belly.\n\nWith each inhale, see that current brighten slightly, as if you are greeting your own life-force. With each exhale, imagine it stretching a little longer through your body — up your spine, into your chest, down your arms, into your hands, and through your legs into your feet.\n\nOnce you can feel this imagined current flowing through you, quietly ask: “Where do I choose to direct this energy today?” Let an image, word, or feeling arise without forcing it. You do not need a full plan, only a clear direction.\n\nBefore you open your eyes, offer thanks to the wisdom of the body and to the ancient keepers of earth and fire, who understood that power is not just what you have, but how you use it. Take one steady breath and step back into your day with intention.',
+      birthday: {
+        title: 'The Vital Worker',
+        content:
+          'To be born on 5 Kan is to be a dynamo of energy. The number 5 brings empowerment, work, and the hand that grasps. Kan is the Serpent, the Life Force, and the Lightning. You are a person who gets things done through sheer force of will and charisma.\n\nYou have an infectious vitality. When you walk into a room, the energy level rises. You are naturally powerful, perhaps athletic or physically expressive. You are not afraid of hard work, especially if it involves transformation. Your challenge is burnout; you can burn so bright that you scorch yourself and those around you. Learn to regulate your current so it sustains you instead of consuming you.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A pair of glowing ripples expanding across calm dream-water, overlapping to form a soft luminous mandala. Surrounding waves glow subtly. No characters and no text. Palette uses teal, aqua, lavender, and gold accents. Style is painterly, tender, and harmonious.',
@@ -327,6 +360,8 @@ export const imoxTrecena = {
           'Square affirmation image. Centered text must read exactly: “I open my heart to gentle connection and trust the currents that bring harmony.” Surround with cute ripple-spirits, tiny pastel hearts, and glowing circles. Palette uses teal, lavender, soft pink, and aqua. Style is cute, simple, surreal, and warm.',
         meditation:
           'Square image. A dreamy abstract water scene with two overlapping ripples blurred into soft gradients of teal and lavender. No characters and no text. Style is meditative, relational, and peaceful.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Kan (Serpent) glowing with internal ruby-red light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 5: a single glowing golden bar. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -373,6 +408,11 @@ export const imoxTrecena = {
         'I move with the rhythm of my life, allowing old versions of myself to dissolve and new harmony to form.',
       meditation:
         'Sit comfortably with your spine relaxed and your feet grounded. Close your eyes and imagine your breath as a soft tide rolling in and out.\n\nWith each inhale, see a gentle wave of light rise within you. With each exhale, let the wave fall, smoothing out tension in your body. As you breathe, picture faint silhouettes of past versions of yourself appearing in the mist — not to judge you, but to acknowledge how they shaped who you are.\n\nLet each silhouette dissolve on an exhale, leaving behind only the wisdom they carried. When you feel a steady rhythm inside you, offer a brief gratitude to the ancestors and elders who understood transformation as part of life’s ongoing flow.\n\nTake one more slow inhale and let the exhale guide you back into your day.',
+      birthday: {
+        title: 'The Gentle Transformer',
+        content:
+          'To be born on 6 Kame is to be a bridge between worlds. The number 6 brings flow, stability, and responsiveness. Kame is Death, Rebirth, and the Ancestors. You are a person who navigates change with grace.\n\nYou have a calming presence that helps others feel safe during times of transition. You likely have a strong connection to your family history or lineage. You understand that death is just another form of life, and this gives you a fearlessness that is quiet and steady. Your challenge is to not get stuck in the past; you honor the dead, but you must remember to live for the living. Your flow is strongest when you are moving forward.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A surreal underwater kelp-forest of glowing fronds swaying slowly. Trails of gold and aqua bioluminescence drift between the fronds. No characters and no text. Palette uses deep green-blue, teal, gold, and soft turquoise. Style is painterly, mystical, and full of gentle motion.',
@@ -386,6 +426,8 @@ export const imoxTrecena = {
           'Square affirmation image. Centered text must read exactly: “I let clarity rise naturally, like light drifting through deep waters.” Surround with cute kelp-spirits, golden droplets, and pastel glow-rings. Palette uses green, teal, gold, and lavender. Style is cute, simple, surreal, and clarifying.',
         meditation:
           'Square image. A soft abstracted kelp-forest scene blurred into peaceful greens and teals with faint golden lights. No characters and no text. Style is meditative, drifting, and serene.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Kame (Death/Transformation) glowing with internal bone-white light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 6: a glowing golden bar with one golden dot centered above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -426,6 +468,11 @@ export const imoxTrecena = {
         'I trust the quiet clarity that rises within me, and I allow my path to reveal itself with ease and truth.',
       meditation:
         'Find a comfortable seated position. Close your eyes and imagine yourself standing at the top of a gentle hill above a wide, open landscape. The air is calm. The sky is clear.\n\nIn your mind’s eye, see lines of light stretching across this landscape — pathways, connections, choices. Some glow strongly. Others are faint. There is no right or wrong path, only different expressions of who you are becoming.\n\nAs you breathe slowly, let one path brighten slightly. Follow it with your awareness, not to its end, but just far enough to feel its energy. What does it evoke? Peace? Curiosity? Strength? Relief?\n\nWhen you return to center, offer gratitude to the great teachers of stability, direction, and nature. Then open your eyes gently, carrying that clarity into your day.',
+      birthday: {
+        title: 'The Mystic Guardian',
+        content:
+          'To be born on 7 Kej is to possess a natural spiritual authority. The number 7 brings vision, mysticism, and the ability to see the whole picture. Kej is the Deer, the Forest, and the Strength of the Earth. You are a grounded mystic.\n\nYou are likely the person others come to for stability and perspective. You are not easily shaken because your roots go deep into the earth and your vision reaches high into the sky. You have a profound connection to nature and animals. Your presence feels safe and strong. Your challenge is isolation; you can be so self-contained that you forget to let others in. Remember that even the strongest tree is part of a forest.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A perfectly still dream-ocean reflecting a twilight sky. A single glowing line marks the horizon where water and sky merge. Subtle light geometry radiates from the center. No characters and no text. Palette uses deep blue, pale lavender, silver, and aqua. Style is painterly, tranquil, and expansive.',
@@ -439,6 +486,8 @@ export const imoxTrecena = {
           'Square affirmation image. Centered text must read exactly: “I rest in stillness and let my insight become clear as calm water.” Surround with cute water-spirits, pastel reflection symbols, and tiny glow-rings. Palette uses blue, teal, lavender, and silver. Style is cute, simple, surreal, and calming.',
         meditation:
           'Square image. A soft abstract water-mirror gradient fading from blue to lavender with faint glowing geometry. No characters and no text. Style is meditative, open, and quiet.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Kej (Deer) glowing with internal forest-green light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 7: a glowing golden bar with two golden dots centered above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -479,6 +528,11 @@ export const imoxTrecena = {
         'I honor the quiet seeds that have been growing within me, and I choose to tend my inner garden with gratitude and care.',
       meditation:
         'Sit comfortably and close your eyes. Imagine the lake before you, its surface calm and gently glowing from beneath.\n\nSee tiny seeds of light floating just under the water — each one representing a part of your life that has been quietly growing: a healed wound, a new habit, a creative idea, a relationship, a boundary, a tender hope.\n\nWith each inhale, imagine one seed brightening. With each exhale, see it open into a soft ripple of color that spreads across the water.\n\nSilently repeat: “Thank you for growing, even when I wasn’t watching.”\n\nWhen you feel complete, offer a moment of gratitude to the unseen forces — ancestral, earthly, and inner — that help your seeds take root. Then open your eyes, carrying that sense of abundance into the rest of your day.',
+      birthday: {
+        title: 'The Harmonic Seed',
+        content:
+          'To be born on 8 Q’anil is to be a gardener of joy. The number 8 brings harmony, wholeness, and the infinity loop. Q’anil is the Seed, the Star, and the Rabbit. You are a person who naturally creates abundance.\n\nYou have a sunny, fertile energy that makes things grow—businesses, families, art projects. You understand the cycle of planting and harvesting better than anyone. You are likely generous and optimistic. Your challenge is patience; sometimes you want the fruit before the tree has finished growing. Trust the timing of your life. You are a star seed, here to bring light and beauty to the earth.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A dream-ocean current rising in a graceful upward spiral, glowing gold and aqua. Soft bubbles drift like lanterns. No characters and no text. Palette uses teal, gold, indigo, and pale blue. Style is painterly, uplifting, and fluid.',
@@ -492,6 +546,8 @@ export const imoxTrecena = {
           'Square affirmation image. Centered text must read exactly: “I welcome renewal and rise gently toward the light that calls me forward.” Surrounded by cute bubble-spirits, spiral-creatures, and pastel currents. Palette uses gold, teal, lavender, aqua. Style is cute, simple, surreal, and uplifting.',
         meditation:
           'Square image. A soft abstract water-spiral rising through gradients of teal and gold. No characters and no text. Style is meditative, brightening, and serene.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Q’anil (Seed/Star) glowing with internal sunlight-yellow light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 8: a glowing golden bar with three golden dots centered above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -539,6 +595,11 @@ export const imoxTrecena = {
         'I honor the ways life has supported me, and I choose to give back with sincerity, gratitude, and care.',
       meditation:
         'Sit comfortably with your feet on the ground and your hands resting over your heart or in your lap. Close your eyes and imagine the lake before you at dusk.\n\nSee small bowls of light floating on the surface—each one an offering from someone, somewhere, across time. Some represent gratitude. Some represent healing. Some represent apologies finally spoken.\n\nBring to mind one place in your life that feels like it needs balance: a relationship, a memory, a pattern, or a way you’ve treated yourself. Hold it gently in your awareness.\n\nOn your inhale, imagine drawing in warmth from one of the floating flames. On your exhale, silently offer something back: a promise, a thank you, a willingness to change, a simple “I’m sorry.”\n\nRepeat this for several breaths, letting the exchange feel real and mutual. When you feel complete, picture your own small bowl of light joining the others on the water.\n\nOffer a quiet gratitude to the keepers of sacred fire, reciprocity, and balance. Then open your eyes and carry that intention into one concrete action today.',
+      birthday: {
+        title: 'The Offering Heart',
+        content:
+          'To be born on 9 Toj is to be a person of deep emotional reciprocity. The number 9 brings feminine energy, patience, and the depths of the unconscious. Toj is the Offering, the Fire, and the Payment. You feel the balance of the universe in your body.\n\nYou are naturally giving, often sensing what others need before they ask. You have a talent for ceremony, even in simple ways—making a meal, writing a note, creating a moment of connection. You understand that everything we receive must be paid for with gratitude. Your challenge is not to over-give to the point of depletion. Remember that you are also a vessel worthy of receiving.',
+      },
       image_prompts: {
         story_primary:
           'Square image. Strands of glowing water-threads weaving a floating luminous pattern above the ocean surface. Some threads drip light into the water below. No characters and no text. Palette uses aqua, lavender, gold, and navy. Style is painterly, creative, and delicate.',
@@ -552,6 +613,8 @@ export const imoxTrecena = {
           'Square affirmation image. Centered text must read exactly: “I let creativity flow through me in gentle, effortless ways.” Surround with cute thread-spirits, tiny pastel loops, and glowing droplets. Palette uses teal, lavender, pink, and aqua. Style is cute, simple, surreal, and inspiring.',
         meditation:
           'Square image. A soft abstract of glowing threads and blurred water reflections merging into pastel gradients. No characters and no text. Style is meditative, soft, and flowing.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Toj (Offering/Fire) glowing with internal ember-red light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 9: a glowing golden bar with four golden dots centered above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -592,6 +655,11 @@ export const imoxTrecena = {
         'I stand in my truth with clarity and kindness, and I let my actions reflect the person I choose to be.',
       meditation:
         'Sit or stand with a long spine. Close your eyes and imagine the lake before you, perfectly reflective.\n\nOn the surface, see lines of light forming a simple map—paths, arcs, intersections. Let the image shift until one path brightens. Follow it gently in your mind. Notice how it feels in your body: does it bring steadiness, calm, relief?\n\nNow place a hand on your heart and ask inwardly: “What truth wants to be lived today?”\n\nYou don’t need a sentence. Even a sensation or a single word is enough.\n\nOffer a quiet thanks to the keepers of truth, justice, and integrity. Then open your eyes and take one grounded step into the day with that guidance in mind.',
+      birthday: {
+        title: 'The Loyal Authority',
+        content:
+          'To be born on 10 Tz’i’ is to be a pillar of justice and loyalty. The number 10 brings manifestation, community, and the power of two hands joining. Tz’i’ is the Dog, the Guide, and the Law. You are a person who instinctively knows right from wrong.\n\nYou are the rock of your community, the one people trust to be fair and honest. You have a deep sense of responsibility and likely find yourself in leadership roles where ethics matter. You protect those you love with fierce loyalty. Your challenge is flexibility; your moral compass is so strong that you can become rigid. Remember that true justice includes compassion.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A luminous underwater channel stretching forward, marked by glowing sand lines and drifting light beads. The path curves gently into the distance. No characters and no text. Palette uses aqua, teal, gold, and deep blue. Style is painterly, directional, and serene.',
@@ -605,6 +673,8 @@ export const imoxTrecena = {
           'Square affirmation image. Centered text must read exactly: “I follow the path that feels clear, true, and aligned with my spirit.” Surround with cute path-spirits, pastel arrows, and glowing beads. Palette uses teal, lavender, gold, aqua. Style is cute, simple, surreal, and directional.',
         meditation:
           'Square image. A soft abstract underwater corridor faded into gradients of teal and gold. No characters and no text. Style is meditative, spacious, and guiding.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Tz’i’ (Dog/Justice) glowing with internal white-silver light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 10: two glowing golden bars stacked horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -653,6 +723,11 @@ export const imoxTrecena = {
         'I follow the thread of inspiration and allow my creativity to flow freely, joyfully, and without perfection.',
       meditation:
         'Sit comfortably and imagine a single shimmering thread floating before you. With every inhale, see it brighten; with every exhale, see another thread join it. Let them form a small, shifting tapestry—your experiences woven into light.\n\nAsk yourself: “What thread wants my attention today?” Allow an image, word, or feeling to appear.\n\nHonor it. Follow it. Let it guide your steps.\n\nOffer thanks to the ancient weavers and artists who understood that life is created, not controlled.',
+      birthday: {
+        title: 'The Creative Weaver',
+        content:
+          'To be born on 11 B’atz’ is to be an artist of life. The number 11 brings high energy, dynamism, and a touch of chaos. B’atz’ is the Thread, the Monkey, and the Weaver of Time. You are a person who sees the connections between everything.\n\nYou have a brilliant, perhaps restless mind. You are constantly weaving new ideas, new projects, and new social connections. You are charming, playful, and deeply creative. You don’t follow the beaten path; you swing from the trees. Your challenge is focus; you can start a hundred tapestries and finish none. Learn to cherish the process of finishing as much as the thrill of starting.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A tall pillar of glowing water rising from the ocean floor like a vertical beam of light. Soft rings pulse outward from it. No characters and no text. Palette uses turquoise, gold, deep blue, and lavender. Style is painterly, calming, and resonant.',
@@ -666,6 +741,8 @@ export const imoxTrecena = {
           'Square affirmation image. Centered text must read exactly: “I stand in my center and let harmony rise through every part of me.” Surround with cute pillar-spirits, glowing droplets, and pastel radiance symbols. Palette uses teal, lavender, gold, aqua. Style is cute, simple, surreal, and grounding.',
         meditation:
           'Square image. A soft abstract water-pillar gradient fading into teal and gold. No characters and no text. Style is meditative, stable, and serene.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for B’atz’ (Monkey/Weaver) glowing with internal neon-blue light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 11: two glowing golden bars with one golden dot centered above them. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -712,6 +789,11 @@ export const imoxTrecena = {
         'I honor the journey I have walked, and I step forward with clarity, trust, and conscious intention.',
       meditation:
         'Sit comfortably and imagine a curved path of glowing stones forming around you. Each stone represents a moment of your recent journey.\n\nWalk it slowly in your mind. Touch each one. Let its memory rise and fade without pressure or judgment.\n\nWhen you reach the final stone, place your hand on it and silently say:\n“My path is mine to walk, and I walk it with awareness.”\n\nOffer gratitude to the ancient guardians of travelers, seekers, and wandering souls. Then gently return to your breath and open your eyes.',
+      birthday: {
+        title: 'The Wise Traveler',
+        content:
+          'To be born on 12 E’ is to be a keeper of the map. The number 12 brings accumulated wisdom and understanding. E’ is the Path, the Road, and the Destiny. You are a person who learns by going.\n\nYou are not content with theory; you need experience. You gather wisdom from every place you visit and every person you meet. You are likely a natural guide or teacher because you can explain the terrain to others. You have a restless spirit that always wants to know what is over the next hill. Your challenge is to recognize when you have arrived. Sometimes the destination is not a place, but a state of being.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A vast open dream-ocean with a giant glowing manta-ray shaped light-form drifting gracefully overhead. Its underside emits soft gold and aqua illumination. No characters and no text. Palette uses deep blue, turquoise, gold, and lavender. Style is painterly, majestic, and deeply intuitive.',
@@ -725,6 +807,8 @@ export const imoxTrecena = {
           'Square affirmation image. Centered text must read exactly: “I trust the wide wisdom moving through my life and let my awareness expand naturally.” Surround with cute manta-spirits, pastel bubbles, and soft glow-waves. Palette uses teal, lavender, gold, aqua. Style is cute, simple, surreal, and wise.',
         meditation:
           'Square image. A soft abstract ocean-sky gradient with faint manta-shaped light drifting through it. No characters and no text. Style is meditative, expansive, and serene.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for E’ (Path/Road) glowing with internal emerald-green light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 12: two glowing golden bars with two golden dots centered above them. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -765,6 +849,11 @@ export const imoxTrecena = {
         'I stand in my truth with clarity, dignity, and harmony. I honor the foundation I have built within myself.',
       meditation:
         'Sit comfortably and imagine thirteen pillars of light forming a gentle circle around you. Each one represents a lesson, a moment of growth, or a truth you’ve reclaimed.\n\nLet them glow brighter, one by one, until you feel surrounded by a soft, steady sanctuary.\n\nPlace your hand on your heart and silently repeat:\n“I am held. I am centered. I am aligned.”\n\nOffer gratitude to the keepers of home, harmony, and sacred structure. Then let the pillars dissolve in your mind, leaving their steadiness in your body as you return to your day.',
+      birthday: {
+        title: 'The Ascended Pillar',
+        content:
+          'To be born on 13 Aj is to be a spiritual anchor for the world. The number 13 represents the spirit realm, the ancestors, and the completion of all cycles. Aj is the Home, the Cane, and the Authority. You are a person who holds space for the divine in the everyday.\n\nYou have a quiet, unbreakable strength. People come to you when their lives are falling apart because you know how to help them rebuild. You are a natural leader, not through force, but through integrity. Your presence aligns rooms. Your challenge is to remember that you are also human; you do not have to hold up the sky alone. Let the ancestors help you carry the weight.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A high aerial view above a dream-ocean where the first golden dawn-light breaks across the horizon. The water below glows with bioluminescent geometry. No characters and no text. Palette uses gold, cyan, deep blue, and soft rose. Style is painterly, radiant, and transcendent.',
@@ -778,6 +867,8 @@ export const imoxTrecena = {
           'Square affirmation image. Centered text must read exactly: “I rise with the light and welcome the vision that opens my next beginning.” Surround with cute feather-spirits, miniature dawn glows, and pastel light-rings. Palette uses gold, teal, lavender, pink. Style is cute, simple, surreal, and uplifting.',
         meditation:
           'Square image. A soft abstract dawn-ocean gradient with faint glowing geometry. No characters and no text. Style is meditative, expansive, and bright.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Aj (Cane/Home) glowing with internal amber light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 13: two glowing golden bars with three golden dots centered above them. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
   ],

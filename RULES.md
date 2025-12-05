@@ -1,3 +1,6 @@
+Here is the updated **RULES.md** file, ready for you to download or copy.
+
+```markdown
 # 🌿 **RULES.md — Master Specification for the 13-Day Mayan Stories Project**
 
 ## 📘 **1. Purpose of This Document**
@@ -14,12 +17,59 @@ This file contains the **complete rules** for generating a 13-day Mayan trecena 
 - Horoscope voice
 - Affirmation and meditation format
 - Continuity across a trecena
+- Birthday profile format
 
-Any new chat must reference this file to ensure perfect consistency.
+Any new chat must reference this file and ALL canonical sources to ensure perfect consistency.
 
 ---
 
-# 🌅 **2. Core Concept of the App**
+## 📚 **2. Authoritative Source Files (Canonical & Required)**
+
+The following uploaded files are ALWAYS the sources of truth:
+
+### **mayan-calendar-spec.md**
+
+- Full traditional meanings of nawales
+- Numerology (1–13)
+- Elemental relationships
+- Shadow/light dynamics
+- Cosmological grounding
+
+### **mayan-summaries.md**
+
+- Concise, narrative-friendly summaries of each nawal
+- Quick-reference keywords
+- Emotional/psychological interpretations
+
+### **mayan-calendar.md**
+
+- Extended descriptions of each number and nawal
+- Integration of shadow/light expressions
+- Elemental resonance + trecena themes
+
+### **writing-style-guide.md**
+
+- Tone, rhythm, pacing
+- Mystical but grounded poetic voice
+- "Dark rainbow / mystical street poet" style
+- What to avoid (clichés, spiritual bypassing, etc.)
+
+### **Completed Trecena Files**
+
+(e.g., `trecena-imox.js`, `trecena-aqabal.js`)
+
+- Serve as the gold standard for:
+  - JSON formatting
+  - Story pacing
+  - Image prompt structure
+  - Tone, symbolism, and emotional arc
+  - Integration of nawal + number
+
+All future trecenas must be consistent with these foundational examples.
+
+---
+
+# 🌅 **3. Core Concept of the App**
 
 Each trecena is a **13-day spiritual story cycle**.
 Each day contains:
@@ -39,14 +89,18 @@ Each day contains:
 
 5. A **daily meditation**
 
-6. **Six image prompts**
-   (square story, wide story 1, wide story 2, horoscope, affirmation, meditation)
+6. **Birthday Profile**
+
+   - Personal energy reading for users born on this specific day.
+
+7. **Seven image prompts**
+   (story_primary, story_wide_1, story_wide_2, horoscope, affirmation, meditation, birthday)
 
 All content is generated in **consistent JSON format**.
 
 ---
 
-# 🌙 **3. Story Chapter Requirements**
+# 🌙 **4. Story Chapter Requirements**
 
 ### **Length**
 
@@ -90,7 +144,7 @@ Must always be:
 
 ---
 
-# 🌗 **4. Trecena Structure**
+# 🌗 **5. Trecena Structure**
 
 A trecena includes:
 
@@ -106,13 +160,23 @@ Content must reference:
 
 ---
 
-# 🌉 **5. Story World Modules**
+# 🌉 **6. Story World Modules**
 
-Each trecena has its own symbolic world. These worlds must be defined before writing the trecena, and new worlds will be added here as modules.
+Each trecena requires a **world module**. These worlds must be defined before writing the trecena, and new worlds will be added here as modules.
+
+For future trecenas, the world module must specify:
+
+- **Core thematic essence**
+- **Environmental logic**
+- **Symbolic structures**
+- **Color palette progression**
+- **Recurring motifs**
+- **Symbolic guides (non-human)**
+- **How the world evolves across the 13 days**
 
 ---
 
-## **5A. Imox Story World — Primordial Waters & Dream-Sea**
+## **6A. Imox Story World — Primordial Waters & Dream-Sea**
 
 _(Derived from trecena-imox.js)_
 
@@ -141,7 +205,7 @@ _(Derived from trecena-imox.js)_
 
 ---
 
-## **5B. Aq’ab’al Story World — Dual City (Shadow + Dawn)**
+## **6B. Aq'ab'al Story World — Dual City (Shadow + Dawn)**
 
 _(Derived from trecena-aqabal.js)_
 
@@ -169,88 +233,38 @@ _(Derived from trecena-aqabal.js)_
 
 ---
 
-## **5C. Future Trecenas**
+## **6C. Future Trecenas**
 
-For future trecenas, the world module must specify:
-
-- **Core theme of the trecena**
-- **Environmental motifs**
-- **Symbolic structures**
-- **Color palette progression**
-- **Types of symbolic guides allowed**
-- **How the world evolves across the 13 days**
-
-These modules will be appended here before story generation. (Dual City)\*\*
-
-For the Aq’ab’al trecena, the world is a **dual-reality urban environment**:
-
-### **Shadow City**
-
-- Cracked neon
-- Dim twilight
-- Flickering signs
-- Dystopian, but not evil
-- Represents trauma, stagnation, emotional numbness, unspoken truths
-- Wounded but alive
-- A place of forgotten hopes and buried feelings
-
-### **Dawn/Dream City**
-
-- Ethereal
-- Luminous structures
-- Glowing seams of light
-- Surreal geometry
-- A city half-formed from hope and inner revelation
-- Represents possibility, becoming, healing, transition
-
-### **Core Theme**
-
-**Dawn occurs inside the traveler, and the city mirrors it.**
-The traveler’s inner alignment alters the world.
-
-### **Recurring Motifs**
-
-- flickering lights
-- broken vs. forming structures
-- glowing doorways
-- reflective surfaces
-- dream-geometry
-- soft gold light
-- shadow creatures or guides
-- liminal alleyways
-
-### **Character Rule**
-
-- No named characters
-- Keep all presences symbolic (shadows, shapes, guardians, silhouettes, etc.)
+These modules will be appended here before story generation.
 
 ---
 
-# 🔢 **6. Daily Energy Structure**
+# 🔢 **7. Daily Energy Structure**
 
 Each day includes:
-
 ```
+
 energy_of_the_day: {
-  number: {
-    title: "",
-    content: "",
-    keywords: []
-  },
-  nawal: {
-    title: "",
-    content: "",
-    keywords: []
-  },
-  combined_energy: {
-    title: "",
-    content: "",
-    notes: []
-  }
+number: {
+title: "",
+content: "",
+keywords: []
+},
+nawal: {
+title: "",
+content: "",
+keywords: []
+},
+combined_energy: {
+title: "",
+content: "",
+notes: []
 }
-```
+}
 
-### Rules:
+````
+
+### **Rules**:
 
 - The **number meaning** must match the traditional Mayan numerological energy
 - The **nawal meaning** must match the Mayan calendar spec
@@ -260,29 +274,59 @@ energy_of_the_day: {
 
 ---
 
-# 🔮 **7. Horoscope Rules**
+# 🔮 **8. Horoscope Rules**
 
-- Poetic but grounded
+- Grounded mystical tone
+- Poetic but direct
 - ~120–200 words
 - Tones: mystical, psychological, encouraging, honest
 - Must match the chapter + combined energy
 - No astrology clichés
 - No fortune telling
 - About inner alignment, not prediction
+- Do not mention the specific mayan references
 
 ---
 
-# 💬 **8. Affirmation Rules**
+# 🎂 **8B. Birthday Profile Rules**
 
-- Short
-- Present tense
-- First person (“I…”)
-- Emotionally warm
+- **Structure**:
+
+```json
+birthday: {
+  title: "Poetic Title",
+  content: "100-150 words explanation"
+}
+````
+
+- **Content**:
+
+  - Direct address ("To be born on X is to...")
+  - Must blend the Number's meaning (e.g., 13 = Ascension/Completion) with the Nawal's meaning (e.g., Ajpu = Sun/Hero).
+  - Tone: Empowering, insightful, identity-focused. Deeply respectful of the user's soul path.
+
+---
+
+# 💬 **9. Affirmation Rules**
+
 - ~1 sentence
+- First-person
+- Present tense
+- Emotionally warm
+- No future tense or negativity
+
+### Alignment Requirement
+
+- Every affirmation must reflect the synergy of the day’s **number + nawal**.
+- The affirmation must express the combined-energy lesson in a warm, first-person form.
+- Affirmations should not be generic; they must be derived from:
+  - the number’s core theme,
+  - the nawal’s core theme,
+  - and the day’s combined_energy title/content.
 
 ---
 
-# 🧘‍♀️ **9. Meditation Rules**
+# 🧘‍♀️ **10. Meditation Rules**
 
 - 150–250 words
 - Guided visualization
@@ -293,7 +337,7 @@ energy_of_the_day: {
 
 ---
 
-# 🖼 **10. Image Prompt Rules**
+# 🖼 **11. Image Prompt Rules**
 
 For each day:
 
@@ -304,7 +348,8 @@ image_prompts: {
   story_wide_2: "",
   horoscope: "",
   affirmation: "",
-  meditation: ""
+  meditation: "",
+  birthday: ""
 }
 ```
 
@@ -332,6 +377,17 @@ image_prompts: {
 
 - Prompts must be detailed enough to be consistent across models
 
+### **Birthday Image Prompt Specifics**
+
+- **Subject**: MUST depict the **Mayan Glyph** for the day's nawal AND the **Mayan Numeral** for the day's number.
+- **Numeral format**:
+  - Dots (•) = 1 (up to 4)
+  - Bars (—) = 5 (up to 3)
+  - Shell = 0
+  - Example: Number 13 = Two bars with three dots above them.
+- **Style**: Ancient stone carving, glowing energy, mystical realism. No English text.
+- **Location**: Inside `image_prompts.birthday`.
+
 ### **Aspect Ratios**
 
 - story_primary: Square
@@ -340,13 +396,7 @@ image_prompts: {
 - horoscope: Square symbolic
 - affirmation: Square with text
 - meditation: Square abstract gradients
-
-### **Aq’ab’al-Specific Image Behavior**
-
-- Environments must reflect dual-city world
-- Shadow City: cracked neon, dim twilight
-- Dawn City: luminous gold seams, surreal geometry
-- No literal humans
+- birthday: Square symbolic/stone
 
 ### **Consistency Across Days**
 
@@ -354,21 +404,34 @@ image_prompts: {
 - Colors gradually brighten over the trecena
 - Surreal elements must match nawal energies
 
+### **Uniqueness Rule for Multi-Trecena Image Design**
+
+Every new trecena MUST define:
+
+- new motifs
+- new symbolic structures
+- new color logic
+- new visual guardians
+- new atmospheric language
+
+This ensures all 13 images across a cycle are visually distinct.
+
 ---
 
-# ✨ **11. JSON Output Rules**
+# ✨ **12. JSON Output Rules**
 
-- Deliver each day as a JSON object in the trecena’s `days[]` array
-- Paragraphs separated with `
-
-`
-
+- Located inside `days: []` array
+- Deliver each day as a JSON object in the trecena's `days[]` array
+- NO trailing commas
+- Paragraphs separated with `\n\n`
 - Quote-safe formatting
+- Must remain parseable JSON
+- No fancy punctuation that breaks JSON
 - Chapters fixed at 300–600 words
 
 ---
 
-# 📜 **12. Prologue & Epilogue Rules**
+# 📜 **13. Prologue & Epilogue Rules**
 
 - 600–900 words
 - Prologue introduces world + traveler
@@ -377,7 +440,7 @@ image_prompts: {
 
 ---
 
-# 🔄 **13. Continuity Rules**
+# 🔄 **14. Continuity Rules**
 
 - Environment shifts gradually with inner change
 - Symbols must be consistent across the trecena
@@ -387,7 +450,7 @@ image_prompts: {
 
 ---
 
-# 🎭 **14. Style Guide Integration**
+# 🎭 **15. Style Guide Integration**
 
 Use `writing-style-guide.md` for tone and sentence craft
 Use `mayan-calendar.md` + `mayan-summaries.md` for accurate meanings
@@ -395,4 +458,27 @@ Use `trecena-imox.js` as the exemplar format
 
 ---
 
-# 💼
+## 💼 **16. How to Start a New Chat**
+
+Provide:
+
+- RULES.md
+- mayan-calendar-spec.md
+- mayan-summaries.md
+- mayan-calendar.md
+- writing-style-guide.md
+- any completed trecena files
+
+Then say:
+
+“I am generating the **X trecena**, starting on Day Y. Follow all rules in RULES.md.”
+
+---
+
+## 🌟 **17. What the Model Must Always Remember**
+
+- Stories are rituals
+- Worlds mirror inner transformation
+- Symbols must be intentional
+- Reader is mid-transformation
+- Each trecena = emotional + spiritual arc

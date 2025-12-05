@@ -1,62 +1,9 @@
 export const aqabalTrecena = {
   trecena: 'Aq’ab’al',
-  prologue: `You arrive at the edge of a city that exists between breath and heartbeat, between the moment darkness loosens its grip and the moment light remembers how to rise.
-
-At first glance, the streets look abandoned—buildings leaning in strange angles, signs half-lit, windows reflecting a world you do not recognize. Yet nothing here is truly empty. The city hums with a quiet tension, a subtle flicker beneath the surface like something stirring just out of sight.
-
-This is the realm of Aq’ab’al—the threshold, the twilight doorway, the space where possibility and memory breathe together. It is not night. It is not day. It is the ache of becoming.
-
-You walk deeper.
-
-Shadows cling to the walls, not with menace but with longing. Certain doorways glow faintly, as if the buildings themselves hold secrets they are not yet ready to speak aloud. Light leaks through cracks in the pavement, through slits in old metal shutters, through seams in forgotten stairwells.
-
-The entire city feels like a room about to exhale.
-
-A strange sensation moves through you: the awareness that the world around you is responding to something inside you, mirroring the places where you have hesitated, the wounds you have numbed, the hopes that still flicker even when you pretend not to see them.
-
-This trecena begins with a question, whispered from the heart of the city itself:
-
-What is ready to come into the light?
-
-Aq’ab’al does not offer answers. It offers a threshold, a doorway not yet fully opened, an invitation to step into the soft, fragile glow of a new beginning.
-
-You take your first step into the twilight streets, and somewhere in the distance, a single light steadies.`,
-  epilogue: `The city settles into a soft, breath-like stillness.
-
-You stand once more where shadow and light overlap, but something has changed in the texture of the world. The broken city is no longer only broken. The luminous city is no longer out of reach. They exist together now—interwoven, interdependent, each revealing what the other tried to hide.
-
-The streets carry new rhythm.  
-The doorways breathe more easily.  
-The sky holds a faint, persistent glow.
-
-You walk through the districts you once wandered in confusion—the knotted alleys, the trembling undercity, the forest grown through concrete, the weaving plaza, the loyal square, the anchored pillars. Everywhere, you feel the imprint of what you learned here.
-
-Instinct sharpened.  
-Grief honored.  
-Strength rooted.  
-Love softened.  
-Magic revealed.  
-Vision rising.
-
-In the highest place of the city, where the eagle dissolved into dawn, you felt something widen inside you. That spaciousness remains. It is not a command or a prophecy. It is a horizon.
-
-Aq’ab’al was never meant to give you final answers.  
-Its purpose is revelation—gentle, gradual, honest.
-
-It shows you the first light.  
-It invites you to look.  
-It teaches you to breathe in the in-between.  
-It opens the door you have avoided touching.
-
-Now you stand at that door again. But this time, it is not a thin crack of light. It is a warm, widening glow—steady, patient, waiting.
-
-The journey does not end here.
-
-It continues with the next step you choose, the next truth you allow, the next dawn you let into your life.
-
-In the tender quiet of this moment, the city whispers its final blessing:
-
-May every threshold you meet become a place where light finds you.`,
+  prologue:
+    'You arrive at the edge of a city that exists between breath and heartbeat, between the moment darkness loosens its grip and the moment light remembers how to rise.\n\nAt first glance, the streets look abandoned—buildings leaning in strange angles, signs half-lit, windows reflecting a world you do not recognize. Yet nothing here is truly empty. The city hums with a quiet tension, a subtle flicker beneath the surface like something stirring just out of sight.\n\nThis is the realm of Aq’ab’al—the threshold, the twilight doorway, the space where possibility and memory breathe together. It is not night. It is not day. It is the ache of becoming.\n\nYou walk deeper.\n\nShadows cling to the walls, not with menace but with longing. Certain doorways glow faintly, as if the buildings themselves hold secrets they are not yet ready to speak aloud. Light leaks through cracks in the pavement, through slits in old metal shutters, through seams in forgotten stairwells.\n\nThe entire city feels like a room about to exhale.\n\nA strange sensation moves through you: the awareness that the world around you is responding to something inside you, mirroring the places where you have hesitated, the wounds you have numbed, the hopes that still flicker even when you pretend not to see them.\n\nThis trecena begins with a question, whispered from the heart of the city itself:\n\nWhat is ready to come into the light?\n\nAq’ab’al does not offer answers. It offers a threshold, a doorway not yet fully opened, an invitation to step into the soft, fragile glow of a new beginning.\n\nYou take your first step into the twilight streets, and somewhere in the distance, a single light steadies.',
+  epilogue:
+    'The city settles into a soft, breath-like stillness.\n\nYou stand once more where shadow and light overlap, but something has changed in the texture of the world. The broken city is no longer only broken. The luminous city is no longer out of reach. They exist together now—interwoven, interdependent, each revealing what the other tried to hide.\n\nThe streets carry new rhythm.\nThe doorways breathe more easily.\nThe sky holds a faint, persistent glow.\n\nYou walk through the districts you once wandered in confusion—the knotted alleys, the trembling undercity, the forest grown through concrete, the weaving plaza, the loyal square, the anchored pillars. Everywhere, you feel the imprint of what you learned here.\n\nInstinct sharpened.\nGrief honored.\nStrength rooted.\nLove softened.\nMagic revealed.\nVision rising.\n\nIn the highest place of the city, where the eagle dissolved into dawn, you felt something widen inside you. That spaciousness remains. It is not a command or a prophecy. It is a horizon.\n\nAq’ab’al was never meant to give you final answers.\nIts purpose is revelation—gentle, gradual, honest.\n\nIt shows you the first light.\nIt invites you to look.\nIt teaches you to breathe in the in-between.\nIt opens the door you have avoided touching.\n\nNow you stand at that door again. But this time, it is not a thin crack of light. It is a warm, widening glow—steady, patient, waiting.\n\nThe journey does not end here.\n\nIt continues with the next step you choose, the next truth you allow, the next dawn you let into your life.\n\nIn the tender quiet of this moment, the city whispers its final blessing:\n\nMay every threshold you meet become a place where light finds you.',
   days: [
     {
       day: 1,
@@ -103,6 +50,11 @@ May every threshold you meet become a place where light finds you.`,
         'I welcome the first cracks of light in my life and allow small, honest truths to guide my next step.',
       meditation:
         'Find a place where you can sit quietly, even for a few minutes. Close your eyes and imagine yourself standing in a dim, quiet street in a city at perpetual twilight.\n\nSee the worn buildings, the flickering signs, the long shadows. Let this city gently represent the parts of your life that feel tired, stuck, or unresolved.\n\nNow, imagine one small sign above a doorway beginning to glow steadily. No drama, no fanfare — just one light deciding not to go out.\n\nBring your attention to your chest and ask softly, “Where is the first light returning in my life?” Do not force an answer. Let an image, a feeling, or a simple word arise.\n\nOffer a quiet thank you to the peoples and ancestors who honored the in-between times — dawn, dusk, thresholds — and treated them as sacred moments of turning. Take one more slow breath, then open your eyes, carrying that thin but real light with you.',
+      birthday: {
+        title: 'The Bringer of New Dawn',
+        content:
+          'To be born on 1 Aq’ab’al is to be a person of beginnings. The number 1 is the Seed and the Initiation. Aq’ab’al is the Dawn, the Threshold, and the House. You are a natural innovator, always seeing the potential for a fresh start.\n\nYou have an optimistic spirit that believes in the possibility of change. You are likely the first to try new things, the first to offer a solution, and the first to see the light at the end of the tunnel. People are drawn to your hopeful energy. Your challenge is patience; you often want the sun to rise immediately, but true dawn is a process. Trust the gradual unfolding of your life.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A twilight plaza split subtly between two overlapping cities — one shadowed with cracked neon, one softly glowing with dawn-like light. A small reflective pool sits at the center, glowing gently. A thin golden ribbon of abstract light curls above it, casting gentle ripples of illumination. No characters and no text. Palette uses gold, violet twilight, muted blue, and soft rose. Style is painterly, mystical, and gently emotional.',
@@ -113,9 +65,11 @@ May every threshold you meet become a place where light finds you.`,
         horoscope:
           'Square image. A twilight pool glowing softly with ripples of golden light. Subtle sacred geometry appears faintly within the reflections. The dual-city horizon is softly blurred behind it. No characters or text. Palette blends warm gold, lavender, deep blue, and soft rose. Style is mystical and soothing.',
         affirmation:
-          'Square affirmation image. Centered text must read exactly: “I welcome gentle, reciprocal love and honor the truths that keep my heart aligned.” Surround the text with cute surreal golden ribbon-spirits, tiny glowing heart-ripples, and pastel light-trails. Palette uses gold, lavender, aqua, and dusk pink. Style is cute, simple, surreal, and heart-calming.',
+          'Square affirmation image. Centered text must read exactly: “I welcome the first cracks of light in my life and allow small, honest truths to guide my next step.” Surround the text with cute surreal golden ribbon-spirits, tiny glowing heart-ripples, and pastel light-trails. Palette uses gold, lavender, aqua, and dusk pink. Style is cute, simple, surreal, and heart-calming.',
         meditation:
           'Square image. A soft abstracted twilight scene with a glowing reflective pool and faint golden light-ripples. Everything is blurred into peaceful gradients of gold, lavender, blue, and rose. No characters and no text. Style is meditative, dreamy, and serene.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Aq’ab’al (Dawn/House) glowing with internal sunrise-gold light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 1: a single glowing golden dot. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -163,6 +117,11 @@ May every threshold you meet become a place where light finds you.`,
         'I gently loosen the knots in my life and choose to carry only what truly nourishes my heart.',
       meditation:
         'Sit comfortably and let your breath slow. Close your eyes and imagine yourself walking through the twilight city, following streets that keep looping back on themselves.\n\nAbove you, see cables and glowing threads strung between the buildings, crossing and knotting into dense nets. Let these strands represent all the roles, expectations, and obligations you have taken on.\n\nNow, imagine that some of the threads glow with a warm, steady light. These are the connections and commitments that truly feed you. Others look dull, frayed, or lifeless. These are the burdens you carry out of habit, fear, or old agreements.\n\nChoose one dim strand. In your mind, reach up and touch it. Feel any emotion that arises. Then visualize the knot in that strand slowly loosening. The thread slips free from the bundle and drifts down, dissolving into soft light at your feet.\n\nOffer quiet gratitude to the ancestors and lineages who understood the power of weaving and unweaving, of tying and releasing. Take three slow breaths, feeling a little more space in your chest each time. When you are ready, open your eyes and carry that sense of gentle release into the rest of your day.',
+      birthday: {
+        title: 'The Relational Weaver',
+        content:
+          'To be born on 2 K’at is to be a person deeply connected to the web of life. The number 2 brings duality, partnership, and reflection. K’at is the Net, the Gatherer, and the Harvest. You are a person who thrives in connection.\n\nYou have a talent for bringing people together and for seeing the links between seemingly unrelated things. You are a natural networker, but with a heart. You care deeply about your relationships and often carry the emotional load for others. Your challenge is boundaries; your net can get so full of other people’s needs that you forget your own. Learn to untangle yourself regularly so you can love freely.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A surreal twilight alley where the two overlapping cities blur into each other. Overhead, massive nets of glowing and non-glowing cables hang between buildings in tangled arcs. Some strands pulse warmly, others hang slack. A faint patch of dawn-city light leaks through an opening in the net. No characters and no text. Palette uses deep indigo, gold accents, muted violet, and cool slate blues. Style is painterly, atmospheric, and introspective.',
@@ -176,6 +135,8 @@ May every threshold you meet become a place where light finds you.`,
           'Square affirmation image. Centered text must read exactly: “I gently loosen the knots in my life and choose to carry only what truly nourishes my heart.” Surround the text with cute surreal thread-spirits, tiny pastel loop-creatures untying knots, and miniature glowing bundles. Palette uses lavender, soft teal, warm gold, and dusky blue. Style is cute, simple, surreal, and liberating.',
         meditation:
           'Square image. A soft abstracted twilight alley where looping strands form gentle curves overhead. One section of the net dissolves into warm light. Everything is blurred into calm gradients of purple, blue, and gold. No characters and no text. Style is meditative, dreamlike, and serene.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for K’at (Net/Lizard) glowing with internal harvest-yellow light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 2: two glowing golden dots arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -216,6 +177,11 @@ May every threshold you meet become a place where light finds you.`,
         'I listen to the quiet spark within me and let instinct guide my next small movement.',
       meditation:
         'Find a calm place to sit. Close your eyes and imagine yourself descending a stairwell lit by soft green and gold light. The air thickens as you move deeper, growing warm and electric.\n\nAt the bottom, see a shimmering serpent-shaped energy coil emerging from the shadows. It approaches without threat, moving with curiosity. Let it pause in front of you, sensing your breath, your heartbeat, your truth.\n\nImagine this serpent is your intuition — the part of you that knows before words form. As it hovers near your chest, feel warmth spread outward, loosening doubt, softening hesitation.\n\nNow imagine placing your hand near the serpent’s glow. A pulse of warmth travels through your arm, into your ribs, your spine, your belly. Let that warmth gather into a single point of golden clarity.\n\nThank the ancient ones who honored instinct as sacred guidance. Take one final breath, then watch the serpent slip back into the corridor, leaving a soft trail of light.\n\nWhen you open your eyes, let your next action be guided by that quiet inner spark.',
+      birthday: {
+        title: 'The Vital Spark',
+        content:
+          'To be born on 3 Kan is to be a person of dynamic energy. The number 3 brings movement, rhythm, and communication. Kan is the Serpent, the Life Force, and Wisdom. You are a person who cannot be contained.\n\nYou have a quick mind and a vibrant physical presence. You are likely very active, creative, and perhaps a bit restless. You learn by doing, moving, and experiencing. You are a catalyst for others, sparking ideas and action wherever you go. Your challenge is focus; your energy can scatter like sparks in the wind. Learn to channel your vitality into a single stream, and you will be unstoppable.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A surreal undercity corridor glowing with electric greens and warm gold. Walls subtly ripple as if alive. A shimmering serpent-shaped coil of energy drifts mid-air, abstract and luminous. No characters and no text. Palette uses neon green, soft gold, deep indigo shadow, and muted concrete tones. Style is mystical, atmospheric, and vital.',
@@ -229,6 +195,8 @@ May every threshold you meet become a place where light finds you.`,
           'Square affirmation image. Centered text must read exactly: “I listen to the quiet spark within me and let instinct guide my next small movement.” Surround with cute surreal coil-spirits, tiny glowing sparks, and green-gold doodle spirals. Palette uses soft gold, mint green, lavender, and blue. Style is cute, simple, surreal, and empowering.',
         meditation:
           'Square image. A soft abstracted neon undercity scene with faint stair shapes and a drifting serpent-light trail. Colors blur into calm greens, golds, and deep blues. No characters and no text. Style is meditative, warm, and dreamlike.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Kan (Serpent) glowing with internal electric-green light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 3: three glowing golden dots arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -268,6 +236,11 @@ May every threshold you meet become a place where light finds you.`,
       affirmation: 'I honor what has ended and let its light guide me toward renewed purpose.',
       meditation:
         'Sit comfortably and close your eyes. Imagine you are standing in a quiet avenue of the twilight city. The buildings on either side appear slightly blurred, as if dissolving into memory.\n\nShadows begin to cross the street — gentle silhouettes of past versions of yourself. Notice how they move slowly, peacefully, carrying no threat. One approaches with hands extended, holding a small ember of soft violet-gold light.\n\nVisualize yourself cupping your hands beneath theirs. Feel the warmth of the ember settle into your palms. This ember represents an ending you never fully faced, a part of your story that deserves acknowledgment.\n\nHold it gently. Breathe. With each inhale, feel the ember brighten. With each exhale, feel the tension around that memory loosen.\n\nOffer quiet gratitude to the ancestors who walk with you through transformation. When you are ready, watch the remaining shadows fade through the buildings, leaving faint trails of violet light.\n\nOpen your eyes slowly, carrying the warmth of the ember with you.',
+      birthday: {
+        title: 'The Ancestral Guardian',
+        content:
+          'To be born on 4 Kame is to be a person of profound depth and stability. The number 4 brings structure, order, and grounding. Kame is Death, Rebirth, and the Ancestors. You are a person who walks comfortably between the worlds.\n\nYou are not afraid of the deep questions of life. You likely have a strong connection to your history, your family lineage, or the wisdom of the past. You are a steadying presence for others during times of crisis. You understand that endings are just beginnings in disguise. Your challenge is to not become rigid in your traditions or stuck in the past. Use your roots to grow tall, not to stay small.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A twilight avenue in the dual city where dissolving plum-grey buildings rise on both sides, edges blurring into soft haze. Shadowy silhouettes drift slowly across the street in a gentle procession, leaving faint violet trailing light behind them. In the foreground, one silhouette offers a tiny ember of violet-gold light cupped in abstract hands. No faces, no details, no text. Palette uses plum grey, deep violet, muted gold, and blue-grey shadows. Style is painterly, mystical, somber-gentle, and emotionally tender.',
@@ -281,6 +254,8 @@ May every threshold you meet become a place where light finds you.`,
           'Square affirmation image. Centered text must read exactly: “I honor what has ended and let its light guide me toward renewed purpose.” Surround the text with cute surreal ember-spirits, tiny gentle shadow-spirits, and pastel glow-fragments drifting like soft firefly lights. Ember-spirits are small, round, glowing creatures with simple shapes and warm violet-gold centers. Shadow-spirits are soft charcoal silhouettes with tiny spark-glow eyes, friendly and non-threatening. Palette uses lavender, soft teal, warm gold, dusk purple, and pastel rose. Style is cute, simple, surreal, and comforting, with no harsh shadows and no complex details.',
         meditation:
           'Square image. A soft, abstracted twilight avenue rendered in blurred plum-grey and deep violet tones. Faint drifting shadow-trails arc gently across the scene, dissolving as they rise. At the center sits a small glowing ember of warm violet-gold light, diffused and meditative. No characters and no text. Palette uses muted purples, smoky blue-greys, and gentle gold. Style is meditative, still, dreamlike, and tender.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Kame (Death/Transformation) glowing with internal bone-white light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 4: four glowing golden dots arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -320,6 +295,11 @@ May every threshold you meet become a place where light finds you.`,
       affirmation: 'I move with grounded strength and let steady truth guide my actions.',
       meditation:
         'Close your eyes and imagine stepping through a cracked concrete archway into a hidden forest growing inside the city. Feel the ground shift beneath your feet — soil instead of pavement, roots instead of wires.\n\nIn the center of this wild space, see four stone pillars forming a square of gentle light. Approach them slowly. Let your breath match the steady rhythm you feel in the air.\n\nA deer-shaped guardian appears at the forest’s edge, formed of golden dusk and soft-shadow light. It stands calmly, watching you without expectation. Feel its presence settle your body. Notice your spine lengthening, your breath deepening, your energy grounding.\n\nImagine placing your hand on one of the glowing pillars. A warm pulse travels up your arm and spreads through your chest, rooting you into the earth.\n\nThank the ancient nature guardians who held balance long before cities rose. When you are ready, step back into your body, carrying the forest’s steadiness with you.',
+      birthday: {
+        title: 'The Empowered Leader',
+        content:
+          'To be born on 5 Kej is to be a force of natural authority. The number 5 brings work, effort, and empowerment. Kej is the Deer, the Four Directions, and Strength. You are a person who commands respect without demanding it.\n\nYou have a powerful physical presence and a strong will. You are a natural leader, capable of handling responsibility and guiding others through the wilderness of life. You are grounded, practical, and deeply connected to your values. Your challenge is to not over-exert yourself; the number 5 loves to work, and Kej loves to serve. Remember to rest in the clearing as often as you walk the path.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A hidden forest sanctuary growing inside cracked twilight city architecture. Giant roots break through pavement. Four softly glowing stone pillars surround a clearing. A deer-shaped light-silhouette stands at the edge, made of golden dusk particles. No characters and no text. Palette uses deep greens, twilight violets, muted gold, and soft blue. Style is painterly, mystical, and grounding.',
@@ -333,6 +313,8 @@ May every threshold you meet become a place where light finds you.`,
           'Square affirmation image. Centered text must read exactly: “I move with grounded strength and let steady truth guide my actions.” Surround with cute surreal deer-spirits, miniature moss-pillars, and tiny golden leaf-hearts. Palette uses soft green, gold, lavender, and dusk blue. Style is cute, simple, surreal, and grounding.',
         meditation:
           'Square image. A dreamlike blend of forest and stone pillars abstracted into soft shapes. Gentle gold glows through mossy textures. No characters and no text. Style is meditative, earthy, and serene.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Kej (Deer) glowing with internal amber-brown light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 5: a single glowing golden bar. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -372,6 +354,11 @@ May every threshold you meet become a place where light finds you.`,
       affirmation: 'I nourish the small lights within me and trust them to grow in their own time.',
       meditation:
         'Find a comfortable seat and close your eyes. Imagine walking into a twilight plaza where the cracked pavement glows with soft golden light. Fireflies drift through the air, settling into patterns that guide your steps.\n\nIn the center of the plaza, see a small mound of warm earth rising from the broken stone. A single seedling grows from it, its translucent leaves pulsing with faint golden light.\n\nKneel beside it. Place your hands gently on the soil. Feel its warmth, its potential, its quiet promise. Each breath you take sends a soft glow through the seedling, encouraging it to grow at its own pace.\n\nInvite one intention — small, gentle, real — into your awareness. See it as a glowing seed resting in the soil with the plant.\n\nOffer gratitude to the keepers of growth and renewal. Allow the fireflies to gather around you, lighting the plaza with soft radiance.\n\nWhen you are ready, open your eyes, carrying that small glow with you.',
+      birthday: {
+        title: 'The Joyful Cultivator',
+        content:
+          'To be born on 6 Q’anil is to be a bringer of beauty. The number 6 brings flow, stability, and rhythm. Q’anil is the Seed, the Star, and the Rabbit. You are a person who makes life bloom.\n\nYou have a natural talent for growth—whether it is growing plants, businesses, families, or art. You are optimistic and resilient, able to find the light even in dark soil. You move through life with a steady, joyful rhythm that attracts abundance. Your challenge is to not scatter your seeds too widely. Focus your energy on what you truly love, and the harvest will be magnificent.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A twilight plaza where cracked pavement forms geometric shapes. A glowing seedling grows from a mound of warm soil at center. Firefly-orbs drift softly in gold, amber, and pale green. Subtle dual-city structures overlap in the background. No characters and no text. Palette uses warm golds, soft greens, dusky purples, and muted blues. Style is painterly, gentle, and hopeful.',
@@ -385,6 +372,8 @@ May every threshold you meet become a place where light finds you.`,
           'Square affirmation image. Centered text must read exactly: “I nourish the small lights within me and trust them to grow in their own time.” Surround with cute surreal seed-spirits, tiny glowing sprouts, and pastel firefly-orbs. Palette uses soft green, warm gold, lavender, and teal. Style is cute, simple, surreal, and uplifting.',
         meditation:
           'Square image. A soft abstracted twilight plaza with gentle golden trails swirling around a faint seedling glow. Colors blur into peaceful gold, green, violet, and blue. No characters and no text. Style is meditative, dreamy, and hopeful.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Q’anil (Seed/Star) glowing with internal sunlight-yellow light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 6: a glowing golden bar with one golden dot centered above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -424,6 +413,11 @@ May every threshold you meet become a place where light finds you.`,
       affirmation: 'I release what weighs me down and allow clarity to rise in its place.',
       meditation:
         'Find a quiet place to sit. Close your eyes and imagine climbing a long set of steps up the side of an old twilight tower. With each step, feel your body grow lighter.\n\nAt the top, envision a wide rooftop platform overlooking both the shadow-city and the luminous city. A shallow stone basin rests in the center.\n\nPicture yourself kneeling beside it. In your hands, a small ember glows softly — a symbol of something you’re ready to release.\n\nDrop the ember into the basin. Watch as the ash glows and a thin column of light rises into the sky. Feel the weight you’ve been carrying dissolve into that light.\n\nOffer quiet gratitude to the keepers of balance and reciprocity. Sit with the stillness for a few breaths. When you are ready, open your eyes, carrying renewed clarity with you.',
+      birthday: {
+        title: 'The Mystic Altar',
+        content:
+          'To be born on 7 Toj is to stand at the spiritual center of exchange. The number 7 brings reflection, mysticism, and the midpoint of the pyramid. Toj is the Fire, the Offering, and the Payment. You are a person who instinctually understands the spiritual economy.\n\nYou see the cause and effect in everything. You are likely very spiritual or philosophical, always looking for the deeper meaning behind events. You are a natural healer or counselor because you can see both the debt and the payment required to clear it. Your challenge is to not become overwhelmed by the needs of the world. Remember that you are the channel for the offering, not the offering itself.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A twilight rooftop altar overlooking two overlapping cities—one shadowed, one luminous. A shallow stone basin at center emits a thin rising column of glowing gold light. No characters and no text. Palette uses soft gold, violet twilight, muted blue, and warm stone tones. Style is mystical, cinematic, and devotional.',
@@ -437,6 +431,8 @@ May every threshold you meet become a place where light finds you.`,
           'Square affirmation image. Centered text must read exactly: “I release what weighs me down and allow clarity to rise in its place.” Surround with cute surreal ember-spirits, pastel offering bowls, and tiny golden light-spirals. Palette uses soft gold, teal, lavender, and dusk blue. Style is cute, simple, surreal, and uplifting.',
         meditation:
           'Square image. A dreamy abstract rooftop scene with blurred city shapes and a faint glowing column rising from a basin. Colors blend into calm gradients of gold, blue, and violet. No characters and no text. Style is meditative, spacious, and serene.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Toj (Offering/Fire) glowing with internal ember-orange light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 7: a glowing golden bar with two golden dots centered above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -476,6 +472,11 @@ May every threshold you meet become a place where light finds you.`,
       affirmation: 'I honor connections that guide me toward balance and love.',
       meditation:
         'Close your eyes and imagine walking into a quiet square at twilight. In the center lies a perfectly still pool, mirroring the sky. Kneel beside it.\n\nAs you look into the water, see a soft reflection of yourself — not wounded or weary, but tender and honest. A golden ribbon of light curls beside the reflection, a loyal spirit of warmth and unconditional care.\n\nLet the presence rest near you. Breathe in its gentleness. Feel the tight spaces in your chest loosen.\n\nNow imagine touching the surface of the pool. Rings of golden light ripple outward, blending shadow and luminous reflections into a unified glow. Allow that harmony to enter you.\n\nThank the guardians of loyalty and truth. When you’re ready, rise from the square and open your eyes, carrying that gentle loyalty with you.',
+      birthday: {
+        title: 'The Harmonic Guide',
+        content:
+          'To be born on 8 Tz’i’ is to be an embodiment of love and justice. The number 8 brings harmony, infinity, and wholeness. Tz’i’ is the Dog, the Guide, and the Law. You are a person who lives by a code of the heart.\n\nYou have an unshakable moral compass, but it is softened by deep compassion. You are the friend everyone turns to because you are loyal, fair, and kind. You have a talent for bringing balance to chaotic situations. Your challenge is to ensure that your loyalty to others doesn’t overshadow your loyalty to yourself. Your love is a powerful force; make sure you include yourself in its radius.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A small twilight square in a surreal dual city. At its center is a perfectly still reflective pool glowing softly. A golden ribbon-like light presence curls near the surface, casting gentle warm ripples. The two overlapping cities are visible around the plaza—shadow-city with cracked walls and luminous-city with soft gold highlights. No characters and no text. Palette uses warm gold, violet twilight, muted blue, and soft rose. Style is painterly, mystical, and emotionally gentle.',
@@ -494,6 +495,8 @@ May every threshold you meet become a place where light finds you.`,
 
         meditation:
           'Square image. A soft, abstracted twilight background inspired by the Day 8 square. Shapes are blurred into dreamy gradients of gold, lavender, blue, and rose. A gentle oval glow suggests the presence of a reflective pool, but without detail. No characters and no text. Style is meditative, peaceful, and atmospheric, with zero sharp edges or focal points.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Tz’i’ (Dog/Justice) glowing with internal white-gold light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 8: a glowing golden bar with three golden dots centered above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -533,6 +536,11 @@ May every threshold you meet become a place where light finds you.`,
       affirmation: 'I weave my life with intention and let creativity flow gently through me.',
       meditation:
         'Close your eyes and imagine stepping into a vast circular plaza where glowing threads stretch overhead like a living canopy. Walk to the center.\n\nA single luminous thread drifts down and rests across your open palm. Feel its warmth pulse in rhythm with your breath.\n\nWith each inhale, the thread brightens. With each exhale, it softens. Around you, thousands of threads begin weaving themselves into patterns of gentle color—spirals, arcs, flowing loops.\n\nSee these patterns as the many parts of your life: experiences, dreams, old lessons, new hopes. Watch them weave themselves into something coherent and beautiful.\n\nWhen you are ready, offer gratitude to the weavers and creators who came before you. Open your eyes knowing you hold a thread of your own destiny.',
+      birthday: {
+        title: 'The Weaver of Life',
+        content:
+          'To be born on 9 B’atz’ is to be an artist of existence. The number 9 brings depth, life-force, and the feminine energy of creation. B’atz’ is the Thread, the Monkey, and the Artist. You are a person who sees the patterns in everything.\n\nYou have a profound creative spirit. Whether through art, words, or problem-solving, you have a knack for taking disparate threads and weaving them into a beautiful whole. You are playful, expressive, and deeply connected to the rhythm of life. Your challenge is focus; you can get so caught up in the beauty of the threads that you forget to finish the tapestry. Trust your hands. You are weaving a masterpiece.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A circular twilight plaza in a surreal dual city. Overhead, thousands of luminous woven threads create a shimmering canopy stretching between rooftops. A single golden-white thread descends into the foreground, softly glowing as though responding to the viewer’s breath. Buildings show both shadow-city cracks and luminous-city highlights. No characters and no text. Palette uses gold, rose, pale blue, and deep violet. Style is painterly, mystical, and gently creative.',
@@ -551,6 +559,8 @@ May every threshold you meet become a place where light finds you.`,
 
         meditation:
           'Square image. A soft abstracted plaza with luminous weaving threads overhead, blurred into gentle gradients. The canopy appears only as drifting lines of gold, pink, blue, and violet merging into each other like soft brushstrokes. Ground patterns are faint spirals, barely visible. No characters and no text. Style is meditative, dreamy, and serene.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for B’atz’ (Monkey/Weaver) glowing with internal rose-gold light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 9: a glowing golden bar with four golden dots centered above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -591,6 +601,11 @@ May every threshold you meet become a place where light finds you.`,
         'I walk my path with purpose, clarity, and the support of those who walk beside me.',
       meditation:
         'Close your eyes and picture a long glowing path stretching between two overlapping cities—one shadowed, one luminous. Walk toward it.\n\nAs you step onto the path, see soft figures of light traveling with you. Some ahead, some behind, some beside. Feel their presence as gentle support, a community of souls moving toward their own destinations.\n\nWalk until the path rises into a bridge. Pause in the middle. Look across the cities merging below—both the broken parts you’ve healed and the luminous parts you’re growing into.\n\nFeel your next step form clearly in your heart.\n\nWhen you are ready, cross the rest of the bridge. Open your eyes knowing your journey is shared, and your direction true.',
+      birthday: {
+        title: 'The Path Builder',
+        content:
+          'To be born on 10 E’ is to be a way-shower. The number 10 brings manifestation, community, and collaboration. E’ is the Path, the Road, and the Destiny. You are a person who doesn’t just walk the path; you build it for others.\n\nYou have a strong sense of direction and a natural ability to bring people along with you. You are likely an explorer, an entrepreneur, or a leader who blazes new trails. You understand that the journey is better when shared. Your challenge is to not get so focused on the destination that you forget to enjoy the company. Remember, the road is made by walking together.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A softly glowing corridor stretches forward between two merging twilight cities—one shadowed and cracked, one luminous with warm golden edges. Light-figures made of soft shifting glow walk along the corridor in various distances, some ahead, some beside, some behind. The ground lights up gently with each footstep, forming brief flares of gold. No characters and no text. Palette uses gold, lavender, twilight blue, and muted rose. Style is painterly, mystical, and quietly hopeful.',
@@ -609,6 +624,8 @@ May every threshold you meet become a place where light finds you.`,
 
         meditation:
           'Square image. A soft abstracted vision of a glowing bridge between two blended cities. Everything is blurred into meditative gradients of gold, violet, blue, and soft rose. The bridge is only hinted at through gentle horizontal light and faint silhouetted shapes. No characters and no text. Style is dreamy, tranquil, and calming.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for E’ (Path/Road) glowing with internal turquoise light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 10: two glowing golden bars stacked horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -648,6 +665,11 @@ May every threshold you meet become a place where light finds you.`,
       affirmation: 'I am rooted, steady, and supported by the quiet strength within me.',
       meditation:
         'Sit comfortably and close your eyes. Imagine walking through a peaceful district of the twilight city where tall glowing pillars rise between buildings.\n\nSee yourself approach a central pillar—a massive structure of stone and light. Place your hands upon it. Feel the warm resonance travel into your palms, up your arms, and through your spine.\n\nWith each breath, feel your body align. Feel your energy settle. Imagine roots extending gently from your feet into the ground, anchoring you in calm strength.\n\nLet this pillar represent the home inside you—the place that cannot be shaken. Sit with its grounding presence for a few moments.\n\nWhen you are ready, open your eyes, carrying that steadiness forward.',
+      birthday: {
+        title: 'The Unshakeable Pillar',
+        content:
+          'To be born on 11 Aj is to be a person of dynamic stability. The number 11 brings change, complexity, and high energy. Aj is the Home, the Cane, and Authority. You are a person who can hold your center even in a storm.\n\nYou are likely a leader in your family or community, the one who stays calm when everyone else is panicking. You have a unique ability to adapt to changing circumstances without losing your core values. People rely on you for strength and guidance. Your challenge is to not become the "fixer" for everyone else’s chaos. Protect your own home (your inner self) as fiercely as you protect others.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A serene twilight residential district where glowing stone pillars rise between softly lit buildings. In the center of a circular plaza stands a massive pillar—wide, tall, and etched with faint glowing lines resembling intertwined roots and constellations. The atmosphere feels grounded and welcoming. No characters and no text. Palette uses warm gold, soft blue, violet twilight, and muted grey-stone tones. Style is painterly, mystical, and deeply grounding.',
@@ -666,6 +688,8 @@ May every threshold you meet become a place where light finds you.`,
 
         meditation:
           'Square image. A soft abstract of the pillar district—blurred golden vertical shapes suggesting columns, gentle horizontal gradients hinting at calm architecture, and diffused twilight colors blending together. No details, no characters, no text. Palette uses peaceful gradients of gold, deep blue, lavender, and muted violet. Style is meditative, dreamy, and deeply calming.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Aj (Cane/Home) glowing with internal amber-gold light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 11: two glowing golden bars with one golden dot centered above them. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -712,6 +736,11 @@ May every threshold you meet become a place where light finds you.`,
       affirmation: 'I honor the unseen magic in my life and trust the wisdom rising within me.',
       meditation:
         'Close your eyes and imagine stepping into a part of the twilight city where buildings and forest blend into one living landscape.\n\nSee a jaguar-shaped being made of twilight light walking beside you. Feel its steady presence, its grounded steps, its deep awareness.\n\nAs you walk together, watch flowers bloom where it steps. Feel your senses sharpen—every sound clearer, every color richer.\n\nThe jaguar stops at a vine-covered archway. You step through it. Behind you, the jaguar dissolves into golden-green light.\n\nStand in the stillness that follows. Feel the earth beneath you humming with quiet magic.\n\nWhen you are ready, open your eyes, carrying that subtle awareness forward.',
+      birthday: {
+        title: 'The Wise Magician',
+        content:
+          'To be born on 12 Ix is to be a keeper of ancient secrets. The number 12 brings accumulated wisdom and understanding. Ix is the Jaguar, the Shaman, and the Earth Magic. You are a person who sees the hidden patterns of reality.\n\nYou have a profound connection to nature and the spiritual realms. You likely have intuitive or psychic gifts that you’ve honed over many lifetimes. You are the one who understands the "why" behind the mystery. You are a natural teacher of esoteric or hidden knowledge. Your challenge is to not become isolated in your wisdom; share your magic with the world. You are a bridge between the earth and the spirit.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A twilight district where the city melts seamlessly into forest—roots becoming staircases, branches merging with steel, moss glowing along cracked stone. A luminous jaguar-shaped figure made of shifting twilight colors (indigo, gold, muted green) walks beside the path, its paws making small flowers bloom. Mist drifts through the air. No characters and no text. Palette uses deep indigo, soft gold, forest green, and violet. Style is mystical, earthy, and atmospheric.',
@@ -730,6 +759,8 @@ May every threshold you meet become a place where light finds you.`,
 
         meditation:
           'Square image. A soft abstracted blend of forest and twilight city shapes. Faint verticals hint at buildings, while horizontal and organic curves imply roots and vines. A subtle jaguar-light silhouette glows in the distance, blurred into dreamlike gradients of green-gold, deep indigo, and soft violet. No characters and no text. Style is meditative, dreamy, and earthy.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Ix (Jaguar) glowing with internal jungle-green light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 12: two glowing golden bars with two golden dots centered above them. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -777,6 +808,11 @@ May every threshold you meet become a place where light finds you.`,
         'I rise into clarity and welcome the vision that opens the next chapter of my life.',
       meditation:
         'Close your eyes and imagine standing on a high terrace in the twilight city. The horizon stretches wide, glowing with soft gold and deep blue.\n\nA structure of light and metal rises beside you—a spire catching the first rays of a new dawn. Above it, feathers of golden light gather into the shape of a great eagle.\n\nAs the eagle lifts, feel your awareness lift with it. See the whole city from above: the broken places, the luminous places, the paths you walked, the moments of healing.\n\nLet this wide vision settle into your heart.\n\nWhen the eagle disappears into the brightening sky, breathe deeply and open your eyes, carrying that clarity with you.',
+      birthday: {
+        title: 'The Cosmic Visionary',
+        content:
+          'To be born on 13 Tz’ikin is to see the infinite potential of the universe. The number 13 represents the spirit world and completion. Tz’ikin is the Eagle, the Vision, and Prosperity. You are a person who lives in the realm of high possibility.\n\nYou have a perspective that is vast and all-encompassing. You can see the threads that connect everything. You are likely a visionary leader, an artist, or a spiritual guide. You inspire others to lift their eyes from the ground and look at the stars. Your challenge is to stay connected to the details; you can be so focused on the horizon that you trip over the stone in front of you. But when you are aligned, you help humanity fly.',
+      },
       image_prompts: {
         story_primary:
           'Square image. A high twilight terrace at the top of the surreal dual city. A delicate lattice-spire of shifting metal and light stands at the terrace edge, glowing softly. Above it, a vast eagle-shaped figure made of gold and twilight-blue light rises into a dawn sky of rose and amber gradients. No characters and no text. Palette uses luminous gold, cobalt blue, rose, and violet twilight. Style is mystical, radiant, and expansive.',
@@ -795,6 +831,8 @@ May every threshold you meet become a place where light finds you.`,
 
         meditation:
           'Square image. A soft abstract dawn-terrace composition: blurred hints of a spire, gentle upward gradients of gold, blue, and rose, and a faint eagle-shaped light silhouette dissolving into sky color. No sharp lines, no characters, no text. Style is meditative, dreamy, spacious, and expansive.',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Tz’ikin (Bird/Vision) glowing with internal sky-blue light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 13: two glowing golden bars with three golden dots centered above them. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
   ],
