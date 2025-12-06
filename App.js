@@ -76,6 +76,13 @@ function AppContent() {
   // Screens that handle their own scrolling (with sticky headers)
   const screensWithOwnScrollView = ['Meditation', 'Today', 'Journey', 'Personal', 'Birthday'];
 
+  // Screens that use DynamicBackground (should not show NebulaBackground)
+  // Journey only uses DynamicBackground when showing a chapter detail (selectedDay !== null)
+  // Birthday always uses DynamicBackground when viewing a birthday
+  const screensWithDynamicBackground = ['Today', 'Meditation', 'Birthday'];
+  const journeyHasDynamicBackground = currentView === 'Journey' && selectedDay !== null;
+  const shouldShowNebulaBackground = !screensWithDynamicBackground.includes(currentView) && !journeyHasDynamicBackground;
+
   // Don't render until we've checked first time status
   if (currentView === null) {
     return null;
@@ -84,7 +91,7 @@ function AppContent() {
   return (
     <View style={styles.container}>
       <StatusBar barStyle='light-content' backgroundColor='#000000' />
-      <NebulaBackground />
+      {shouldShowNebulaBackground && <NebulaBackground />}
       {screensWithOwnScrollView.includes(currentView) ? (
         // These screens handle their own ScrollView with sticky headers
         currentView === 'Journey' ? (

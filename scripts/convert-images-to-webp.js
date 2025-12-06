@@ -58,16 +58,15 @@ async function convertImageToWebP(pngPath) {
       };
     }
 
-    await image
-      .resize(resizeOptions)
-      .webp({ quality: WEBP_QUALITY })
-      .toFile(webpPath);
+    await image.resize(resizeOptions).webp({ quality: WEBP_QUALITY }).toFile(webpPath);
 
     // Delete the original PNG file
     fs.unlinkSync(pngPath);
 
     stats.converted++;
-    console.log(`✓ Converted: ${path.relative(ASSETS_DIR, pngPath)} → ${path.relative(ASSETS_DIR, webpPath)}`);
+    console.log(
+      `✓ Converted: ${path.relative(ASSETS_DIR, pngPath)} → ${path.relative(ASSETS_DIR, webpPath)}`
+    );
     return true;
   } catch (error) {
     stats.failed++;
@@ -106,8 +105,8 @@ async function main() {
   // Find all trecena-* folders
   const entries = fs.readdirSync(ASSETS_DIR, { withFileTypes: true });
   const trecenaFolders = entries
-    .filter(entry => entry.isDirectory() && entry.name.startsWith('trecena-'))
-    .map(entry => path.join(ASSETS_DIR, entry.name));
+    .filter((entry) => entry.isDirectory() && entry.name.startsWith('trecena-'))
+    .map((entry) => path.join(ASSETS_DIR, entry.name));
 
   if (trecenaFolders.length === 0) {
     console.log('No trecena-* folders found in assets directory.');
@@ -115,7 +114,7 @@ async function main() {
   }
 
   console.log(`Found ${trecenaFolders.length} trecena folder(s):`);
-  trecenaFolders.forEach(folder => {
+  trecenaFolders.forEach((folder) => {
     console.log(`  - ${path.basename(folder)}`);
   });
   console.log('');
@@ -147,8 +146,7 @@ async function main() {
 }
 
 // Run the script
-main().catch(error => {
+main().catch((error) => {
   console.error('Fatal error:', error);
   process.exit(1);
 });
-

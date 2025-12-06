@@ -1,0 +1,340 @@
+{
+  "trecena-aqabal": {
+    "1": {
+      "horoscope": {
+        "primary": "#0b1014",
+        "secondary": "#1a222d",
+        "accent": "#4b3c38"
+      },
+      "affirmation": {
+        "primary": "#4f3b69",
+        "secondary": "#897387",
+        "accent": "#e8933b"
+      },
+      "story_primary": {
+        "primary": "#1a252e",
+        "secondary": "#3d4045",
+        "accent": "#64616b"
+      }
+    },
+    "2": {
+      "horoscope": {
+        "primary": "#060b1a",
+        "secondary": "#221938",
+        "accent": "#863b36"
+      },
+      "affirmation": {
+        "primary": "#0f182b",
+        "secondary": "#314650",
+        "accent": "#927a54"
+      },
+      "story_primary": {
+        "primary": "#021023",
+        "secondary": "#0e2040",
+        "accent": "#71464c"
+      }
+    },
+    "3": {
+      "horoscope": {
+        "primary": "#1d1c21",
+        "secondary": "#5a4235",
+        "accent": "#d29033"
+      },
+      "affirmation": {
+        "primary": "#09161a",
+        "secondary": "#564622",
+        "accent": "#c78a22"
+      },
+      "story_primary": {
+        "primary": "#043322",
+        "secondary": "#536526",
+        "accent": "#d99a0d"
+      }
+    },
+    "4": {
+      "horoscope": {
+        "primary": "#212960",
+        "secondary": "#4e4097",
+        "accent": "#af749a"
+      },
+      "affirmation": {
+        "primary": "#1a1142",
+        "secondary": "#cc403b",
+        "accent": "#977988"
+      },
+      "story_primary": {
+        "primary": "#1e2131",
+        "secondary": "#34354a",
+        "accent": "#5c556c"
+      }
+    },
+    "5": {
+      "horoscope": {
+        "primary": "#060b1a",
+        "secondary": "#221938",
+        "accent": "#863b36"
+      },
+      "affirmation": {
+        "primary": "#0e172b",
+        "secondary": "#283b48",
+        "accent": "#827455"
+      },
+      "story_primary": {
+        "primary": "#021023",
+        "secondary": "#0c1f3e",
+        "accent": "#5b404d"
+      }
+    },
+    "6": {
+      "horoscope": {
+        "primary": "#1c1a1f",
+        "secondary": "#523e35",
+        "accent": "#cc8b33"
+      },
+      "affirmation": {
+        "primary": "#09161a",
+        "secondary": "#534422",
+        "accent": "#c68922"
+      },
+      "story_primary": {
+        "primary": "#03291d",
+        "secondary": "#1b552f",
+        "accent": "#d2970f"
+      }
+    },
+    "7": {
+      "horoscope": {
+        "primary": "#20295f",
+        "secondary": "#483d93",
+        "accent": "#a66f9c"
+      },
+      "affirmation": {
+        "primary": "#120f3d",
+        "secondary": "#572762",
+        "accent": "#c97766"
+      },
+      "story_primary": {
+        "primary": "#1d202e",
+        "secondary": "#303246",
+        "accent": "#59536a"
+      }
+    },
+    "8": {
+      "horoscope": {
+        "primary": "#2d3367",
+        "secondary": "#544884",
+        "accent": "#af737f"
+      },
+      "affirmation": {
+        "primary": "#0d0820",
+        "secondary": "#553331",
+        "accent": "#ba7527"
+      },
+      "story_primary": {
+        "primary": "#292636",
+        "secondary": "#613f53",
+        "accent": "#a36060"
+      }
+    }
+  },
+  "trecena-toj": {
+    "1": {
+      "horoscope": {
+        "primary": "#0a121c",
+        "secondary": "#694f37",
+        "accent": "#94be9e"
+      },
+      "affirmation": {
+        "primary": "#3f3151",
+        "secondary": "#b88479",
+        "accent": "#eae1d8"
+      },
+      "story_primary": {
+        "primary": "#181018",
+        "secondary": "#412635",
+        "accent": "#914048"
+      },
+      "birthday": {
+        "primary": "#050b09",
+        "secondary": "#203532",
+        "accent": "#376d67"
+      }
+    },
+    "6": {
+      "horoscope": {
+        "primary": "#10192a",
+        "secondary": "#293d83",
+        "accent": "#5288d4"
+      },
+      "affirmation": {
+        "primary": "#242b54",
+        "secondary": "#7464ab",
+        "accent": "#b79add"
+      },
+      "story_primary": {
+        "primary": "#131728",
+        "secondary": "#373962",
+        "accent": "#8684b0"
+      },
+      "birthday": {
+        "primary": "#090e0a",
+        "secondary": "#466e3b",
+        "accent": "#7fb86f"
+      }
+    },
+    "7": {
+      "horoscope": {
+        "primary": "#20263a",
+        "secondary": "#54595d",
+        "accent": "#c3b17e"
+      },
+      "affirmation": {
+        "primary": "#4d7492",
+        "secondary": "#89a4ae",
+        "accent": "#cdd3c8"
+      },
+      "story_primary": {
+        "primary": "#28232a",
+        "secondary": "#396281",
+        "accent": "#8b6c54"
+      },
+      "birthday": {
+        "primary": "#191b15",
+        "secondary": "#57615a",
+        "accent": "#c0dcd9"
+      }
+    },
+    "8": {
+      "horoscope": {
+        "primary": "#623c26",
+        "secondary": "#ab784a",
+        "accent": "#e4c181"
+      },
+      "affirmation": {
+        "primary": "#7b454c",
+        "secondary": "#ac604a",
+        "accent": "#dd9456"
+      },
+      "story_primary": {
+        "primary": "#3f2b30",
+        "secondary": "#8b5c3f",
+        "accent": "#c59759"
+      },
+      "birthday": {
+        "primary": "#1d1d18",
+        "secondary": "#5b4c35",
+        "accent": "#d7b56d"
+      }
+    },
+    "9": {
+      "horoscope": {
+        "primary": "#0e1436",
+        "secondary": "#485171",
+        "accent": "#939fa3"
+      },
+      "affirmation": {
+        "primary": "#5d3a37",
+        "secondary": "#9c705e",
+        "accent": "#dbbfb5"
+      },
+      "story_primary": {
+        "primary": "#1b1334",
+        "secondary": "#4d44a9",
+        "accent": "#676fd0"
+      },
+      "birthday": {
+        "primary": "#0f1518",
+        "secondary": "#374d5e",
+        "accent": "#7bbdca"
+      }
+    },
+    "10": {
+      "horoscope": {
+        "primary": "#092e34",
+        "secondary": "#396e70",
+        "accent": "#c0c7b8"
+      },
+      "affirmation": {
+        "primary": "#385527",
+        "secondary": "#96a050",
+        "accent": "#dcdbaa"
+      },
+      "story_primary": {
+        "primary": "#10151d",
+        "secondary": "#68686b",
+        "accent": "#d9dfe2"
+      },
+      "birthday": {
+        "primary": "#181a19",
+        "secondary": "#4c4b45",
+        "accent": "#d4d1c5"
+      }
+    },
+    "11": {
+      "horoscope": {
+        "primary": "#1c2937",
+        "secondary": "#424850",
+        "accent": "#ac8b6d"
+      },
+      "affirmation": {
+        "primary": "#2a453a",
+        "secondary": "#52755b",
+        "accent": "#7eac99"
+      },
+      "story_primary": {
+        "primary": "#131a31",
+        "secondary": "#365478",
+        "accent": "#6da3bd"
+      },
+      "birthday": {
+        "primary": "#15141b",
+        "secondary": "#453068",
+        "accent": "#b382d3"
+      }
+    },
+    "12": {
+      "horoscope": {
+        "primary": "#172743",
+        "secondary": "#5e585a",
+        "accent": "#ddbc7d"
+      },
+      "affirmation": {
+        "primary": "#609bc6",
+        "secondary": "#a7cadd",
+        "accent": "#e4e8da"
+      },
+      "story_primary": {
+        "primary": "#12131c",
+        "secondary": "#3e91df",
+        "accent": "#e5a84b"
+      },
+      "birthday": {
+        "primary": "#181811",
+        "secondary": "#604f31",
+        "accent": "#d7bb58"
+      }
+    },
+    "13": {
+      "horoscope": {
+        "primary": "#1d2236",
+        "secondary": "#4f5468",
+        "accent": "#9d9ba2"
+      },
+      "affirmation": {
+        "primary": "#202a4e",
+        "secondary": "#597196",
+        "accent": "#b9d0d3"
+      },
+      "story_primary": {
+        "primary": "#13182c",
+        "secondary": "#353f54",
+        "accent": "#5d7482"
+      },
+      "birthday": {
+        "primary": "#0e1410",
+        "secondary": "#384b3c",
+        "accent": "#3cad9a"
+      }
+    }
+  }
+}

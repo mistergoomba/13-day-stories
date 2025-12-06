@@ -3,15 +3,18 @@ import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
+import { mainButton } from '../theme/buttons';
 import HoroscopeSection from '../components/HoroscopeSection';
 import EnergyOfTheDay from '../components/EnergyOfTheDay';
 import SimpleHeader from '../components/SimpleHeader';
 import DayNavigationButton from '../components/DayNavigationButton';
+import DynamicBackground from '../components/DynamicBackground';
 import {
   getTodayMayanDate,
   getDayData,
   getImageSource,
   isDayAvailable,
+  getBackgroundColors,
 } from '../utils/mayanCalendar';
 
 export default function TodayScreenContent({
@@ -25,6 +28,7 @@ export default function TodayScreenContent({
   const [currentDay, setCurrentDay] = useState(today.day);
   const dayData = getDayData(currentDay);
   const horoscopeImage = getImageSource(currentDay, 'horoscope');
+  const backgroundColors = getBackgroundColors(currentDay);
 
   // Scroll to top helper function
   const scrollToTop = () => {
@@ -98,6 +102,9 @@ export default function TodayScreenContent({
 
   return (
     <View style={styles.container}>
+      {/* Dynamic Background */}
+      <DynamicBackground backgroundColors={backgroundColors} />
+
       {/* Header - Fixed at top */}
       <View style={styles.headerContainer}>
         <SimpleHeader
@@ -124,7 +131,11 @@ export default function TodayScreenContent({
 
           {/* Energy of the Day Section */}
           <View style={styles.contentSection}>
-            <EnergyOfTheDay dayData={dayData} energyOfTheDay={energy_of_the_day} />
+            <EnergyOfTheDay
+              dayData={dayData}
+              energyOfTheDay={energy_of_the_day}
+              tagColor={backgroundColors?.primary}
+            />
           </View>
 
           {/* Bottom Day Navigation */}
@@ -173,6 +184,7 @@ export default function TodayScreenContent({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'transparent',
   },
   headerContainer: {
     position: 'absolute',
@@ -210,39 +222,28 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   bottomDayButtonCenter: {
+    ...mainButton.button,
     height: 48,
     paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: '#000000',
     minWidth: 80,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   bottomDayButtonText: {
     ...type.body,
-    color: colors.text,
+    ...mainButton.text,
     fontSize: 14,
-    fontWeight: '600',
   },
   navigationContainer: {
     marginTop: 0,
   },
   navLink: {
-    backgroundColor: colors.accent2,
+    ...mainButton.button,
     padding: 16,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: colors.accent,
-    alignItems: 'center',
     marginBottom: 12,
   },
   navLinkText: {
     ...type.subtitle,
-    color: colors.text,
-    fontWeight: '600',
+    ...mainButton.text,
   },
   errorText: {
     ...type.body,

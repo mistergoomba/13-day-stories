@@ -13,7 +13,9 @@
     "clean": "rm -rf node_modules/.cache .expo && npm start",
     "build:android": "eas build --platform android --profile preview",
     "build": "npx expo export -p web",
-    "convert:images": "node scripts/convert-images-to-webp.js"
+    "convert:images": "node scripts/convert-images-to-webp.js",
+    "extract:colors": "node scripts/extract-image-colors.js",
+    "images": "node scripts/convert-images-to-webp.js && node scripts/extract-image-colors.js"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",

@@ -5,8 +5,10 @@ import Svg, { Rect } from 'react-native-svg';
 import Card from '../components/Card';
 import SimpleHeader from '../components/SimpleHeader';
 import DayNavigationButton from '../components/DayNavigationButton';
+import DynamicBackground from '../components/DynamicBackground';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
+import { mainButton } from '../theme/buttons';
 import {
   getTodayMayanDate,
   getDayData,
@@ -14,6 +16,7 @@ import {
   getAllDays,
   isDayAvailable,
   getImageSource,
+  getBackgroundColors,
 } from '../utils/mayanCalendar';
 import { TODAY_DAY } from '../utils/mayanCalendar';
 
@@ -27,6 +30,7 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef, setCu
   const storyPrimaryImage = getImageSource(dayNumber, 'story_primary');
   const storyWide1Image = getImageSource(dayNumber, 'story_wide_1');
   const storyWide2Image = getImageSource(dayNumber, 'story_wide_2');
+  const storyPrimaryColors = getBackgroundColors(dayNumber, 'story_primary');
 
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
@@ -112,6 +116,9 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef, setCu
 
   return (
     <View style={styles.container}>
+      {/* Dynamic Background */}
+      <DynamicBackground backgroundColors={storyPrimaryColors} />
+
       {/* Header - Fixed at top */}
       <View style={styles.headerContainer}>
         <SimpleHeader
@@ -382,6 +389,7 @@ export default function JourneyScreenContent({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'transparent',
   },
   headerContainer: {
     position: 'absolute',
@@ -555,23 +563,19 @@ const styles = StyleSheet.create({
     marginLeft: 16,
   },
   fullStoryButton: {
+    ...mainButton.button,
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 8,
     paddingHorizontal: 12,
     marginLeft: 16,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: colors.accent,
-    backgroundColor: 'transparent',
   },
   fullStoryIcon: {
     marginRight: 6,
   },
   fullStoryText: {
     ...type.caption,
-    color: colors.accent,
-    fontWeight: '600',
+    ...mainButton.text,
     textTransform: 'lowercase',
   },
   storyPrimaryImage: {
@@ -603,17 +607,12 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   navLink: {
-    backgroundColor: colors.accent2,
+    ...mainButton.button,
     padding: 16,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: colors.accent,
-    alignItems: 'center',
   },
   navLinkText: {
     ...type.subtitle,
-    color: colors.text,
-    fontWeight: '600',
+    ...mainButton.text,
   },
   dayNavigationContainer: {
     flexDirection: 'row',
@@ -622,27 +621,27 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   dayNavButton: {
+    ...mainButton.button,
     flex: 1,
-    backgroundColor: colors.accent2,
     padding: 16,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: colors.accent,
-    alignItems: 'center',
     marginHorizontal: 6,
   },
   dayNavButtonDisabled: {
-    backgroundColor: 'rgba(255,255,255,0.05)',
-    borderColor: 'rgba(255,255,255,0.1)',
+    ...mainButton.button,
+    flex: 1,
+    padding: 16,
+    marginHorizontal: 6,
+    backgroundColor: 'rgba(0,0,0,0.3)',
     opacity: 0.5,
   },
   dayNavButtonText: {
     ...type.subtitle,
-    color: colors.text,
-    fontWeight: '600',
+    ...mainButton.text,
   },
   dayNavButtonTextDisabled: {
-    color: colors.textDim,
+    ...type.subtitle,
+    ...mainButton.text,
+    opacity: 0.5,
   },
   errorText: {
     ...type.body,
@@ -659,21 +658,15 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   bottomDayButtonCenter: {
+    ...mainButton.button,
     height: 48,
     paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: '#000000',
     minWidth: 80,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   bottomDayButtonText: {
     ...type.body,
-    color: colors.text,
+    ...mainButton.text,
     fontSize: 14,
-    fontWeight: '600',
   },
 });

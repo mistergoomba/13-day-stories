@@ -5,6 +5,7 @@ import { iqTrecena } from '../data/trecena-iq';
 import { katTrecena } from '../data/trecena-kat';
 import { tojTrecena } from '../data/trecena-toj';
 import { tzikinTrecena } from '../data/trecena-tzikin';
+import imageColors from '../data/image-colors.json';
 
 // Trecena mapping - maps CURRENT_TRECENA to the imported trecena object
 const TRECENA_MAP = {
@@ -210,4 +211,31 @@ export function isDayAvailable(dayNumber) {
 export function getAllDays() {
   const currentTrecena = getCurrentTrecena();
   return [...currentTrecena.days].sort((a, b) => a.day - b.day);
+}
+
+/**
+ * Get background colors for a specific day from a specific image type
+ * @param {number} dayNumber - Day number (1-13)
+ * @param {string} imageType - Image type: 'horoscope', 'affirmation', 'story_primary', 'birthday' (defaults to 'horoscope' for backward compatibility)
+ * @returns {Object} Object with primary, secondary, and accent colors
+ */
+export function getBackgroundColors(dayNumber, imageType = 'horoscope') {
+  const trecenaKey = `trecena-${CURRENT_TRECENA}`;
+  const dayKey = String(dayNumber);
+  
+  // Check if colors exist for this image type
+  if (
+    imageColors[trecenaKey] &&
+    imageColors[trecenaKey][dayKey] &&
+    imageColors[trecenaKey][dayKey][imageType]
+  ) {
+    return imageColors[trecenaKey][dayKey][imageType];
+  }
+  
+  // Fallback to default colors if not found
+  return {
+    primary: '#12091A',
+    secondary: '#1C0F29',
+    accent: '#6E45CF',
+  };
 }

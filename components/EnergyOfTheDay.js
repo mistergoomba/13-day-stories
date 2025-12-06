@@ -4,10 +4,13 @@ import Card from './Card';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
 
-export default function EnergyOfTheDay({ dayData, energyOfTheDay }) {
+export default function EnergyOfTheDay({ dayData, energyOfTheDay, tagColor }) {
   if (!dayData || !energyOfTheDay) {
     return null;
   }
+
+  // Use provided tagColor or fall back to default purple
+  const tagBackgroundColor = tagColor || colors.accent2;
 
   return (
     <Card>
@@ -18,7 +21,7 @@ export default function EnergyOfTheDay({ dayData, energyOfTheDay }) {
         <Text style={styles.energyContent}>{energyOfTheDay.number.content}</Text>
         <View style={styles.keywordsContainer}>
           {energyOfTheDay.number.keywords.map((keyword, index) => (
-            <View key={index} style={styles.keywordTag}>
+            <View key={index} style={[styles.keywordTag, { backgroundColor: tagBackgroundColor }]}>
               <Text style={styles.keywordText}>{keyword}</Text>
             </View>
           ))}
@@ -32,7 +35,7 @@ export default function EnergyOfTheDay({ dayData, energyOfTheDay }) {
         <Text style={styles.energyContent}>{energyOfTheDay.nawal.content}</Text>
         <View style={styles.keywordsContainer}>
           {energyOfTheDay.nawal.keywords.map((keyword, index) => (
-            <View key={index} style={styles.keywordTag}>
+            <View key={index} style={[styles.keywordTag, { backgroundColor: tagBackgroundColor }]}>
               <Text style={styles.keywordText}>{keyword}</Text>
             </View>
           ))}
@@ -50,7 +53,7 @@ export default function EnergyOfTheDay({ dayData, energyOfTheDay }) {
           <View style={styles.notesContainer}>
             {energyOfTheDay.combined_energy.notes.map((note, index) => (
               <View key={index} style={styles.noteItem}>
-                <Text style={styles.noteBullet}>•</Text>
+                <Text style={[styles.noteBullet, { color: tagBackgroundColor }]}>•</Text>
                 <Text style={styles.noteText}>{note}</Text>
               </View>
             ))}
@@ -89,7 +92,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   keywordTag: {
-    backgroundColor: colors.accent2,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
@@ -111,7 +113,6 @@ const styles = StyleSheet.create({
   },
   noteBullet: {
     ...type.body,
-    color: colors.accent,
     marginRight: 8,
     fontSize: 16,
   },

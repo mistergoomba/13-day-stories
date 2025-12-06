@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle, Path } from 'react-native-svg';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
+import { mainButton } from '../theme/buttons';
 import Card from '../components/Card';
 import SectionHeader from '../components/SectionHeader';
 import { getTodayMayanDate } from '../utils/mayanCalendar';
@@ -127,27 +128,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   mainButton: {
+    ...mainButton.button,
     width: '100%',
     height: '100%',
-    backgroundColor: '#000000',
-    borderRadius: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-    // Beveled/3D effect - light from top-left, shadow on bottom-right
-    borderTopWidth: 2,
-    borderTopColor: 'rgba(164, 118, 255, 0.5)', // Lighter top edge
-    borderLeftWidth: 2,
-    borderLeftColor: 'rgba(164, 118, 255, 0.4)', // Lighter left edge
-    borderBottomWidth: 2,
-    borderBottomColor: 'rgba(164, 118, 255, 0.15)', // Darker bottom edge
-    borderRightWidth: 2,
-    borderRightColor: 'rgba(164, 118, 255, 0.2)', // Darker right edge
-    // Outer shadow for depth
-    shadowColor: colors.accent,
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 12,
-    elevation: 10,
+    borderRadius: 16, // Custom size for this specific button
   },
   mainButtonContent: {
     alignItems: 'center',
@@ -174,31 +158,21 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   storyButton: {
-    backgroundColor: colors.accent2,
+    ...mainButton.button,
     padding: 18,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: colors.accent,
-    alignItems: 'center',
     marginBottom: 12,
   },
   storyButtonText: {
     ...type.subtitle,
-    color: colors.text,
-    fontWeight: '600',
+    ...mainButton.text,
   },
   secondaryStoryButton: {
-    backgroundColor: 'transparent',
+    ...mainButton.button,
     padding: 16,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: colors.border,
-    alignItems: 'center',
     marginBottom: 12,
   },
   secondaryStoryButtonText: {
     ...type.body,
-    color: colors.textDim,
-    fontWeight: '500',
+    ...mainButton.text,
   },
 });

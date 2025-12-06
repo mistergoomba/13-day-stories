@@ -3,14 +3,17 @@ import { View, Text, StyleSheet, Image, Dimensions, ScrollView, Pressable } from
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
+import { mainButton } from '../theme/buttons';
 import Card from '../components/Card';
 import SimpleHeader from '../components/SimpleHeader';
 import DayNavigationButton from '../components/DayNavigationButton';
+import DynamicBackground from '../components/DynamicBackground';
 import {
   getTodayMayanDate,
   getDayData,
   getImageSource,
   isDayAvailable,
+  getBackgroundColors,
 } from '../utils/mayanCalendar';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -20,8 +23,8 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
   const today = getTodayMayanDate();
   const [currentDay, setCurrentDay] = useState(today.day);
   const dayData = getDayData(currentDay);
-  const meditationImage = getImageSource(currentDay, 'meditation');
   const affirmationImage = getImageSource(currentDay, 'affirmation');
+  const affirmationColors = getBackgroundColors(currentDay, 'affirmation');
 
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
@@ -69,9 +72,7 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
   if (!dayData) {
     return (
       <View style={styles.container}>
-        {meditationImage && (
-          <Image source={meditationImage} style={styles.backgroundImage} resizeMode='cover' />
-        )}
+        <DynamicBackground backgroundColors={affirmationColors} />
         <ScrollView
           ref={scrollViewRef}
           style={styles.scrollView}
@@ -95,10 +96,8 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
 
   return (
     <View style={styles.container}>
-      {/* Fixed Background Image */}
-      {meditationImage && (
-        <Image source={meditationImage} style={styles.backgroundImage} resizeMode='cover' />
-      )}
+      {/* Dynamic Background */}
+      <DynamicBackground backgroundColors={affirmationColors} />
 
       {/* Header - Fixed at top */}
       <View style={styles.headerContainer}>
@@ -168,14 +167,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: 'relative',
-  },
-  backgroundImage: {
-    position: 'absolute',
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT * 2, // Make it tall enough to cover scrolling
-    left: 0,
-    top: 0,
-    zIndex: 0,
+    backgroundColor: 'transparent',
   },
   headerContainer: {
     position: 'absolute',
@@ -236,21 +228,15 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   bottomDayButtonCenter: {
+    ...mainButton.button,
     height: 48,
     paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: '#000000',
     minWidth: 80,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   bottomDayButtonText: {
     ...type.body,
-    color: colors.text,
+    ...mainButton.text,
     fontSize: 14,
-    fontWeight: '600',
   },
 });

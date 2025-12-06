@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
+import { mainButton } from '../theme/buttons';
 
 export default function DayNavigationButton({ direction, dayNumber, onPress, disabled }) {
   if (disabled) {
@@ -36,16 +37,11 @@ export default function DayNavigationButton({ direction, dayNumber, onPress, dis
 
 const styles = StyleSheet.create({
   button: {
+    ...mainButton.button,
     height: 48,
     paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: colors.accent,
-    backgroundColor: '#000000',
     minWidth: 80,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   placeholder: {
     height: 48,
@@ -59,9 +55,8 @@ const styles = StyleSheet.create({
   },
   dayNumber: {
     ...type.body,
-    color: colors.text,
+    ...mainButton.text,
     fontSize: 14,
-    fontWeight: '600',
   },
 });
 

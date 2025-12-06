@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
+import { mainButton } from '../theme/buttons';
 import Card from '../components/Card';
 
 export default function PersonalScreenContent({ scrollViewRef, setCurrentView, setBirthdayDay }) {
@@ -152,19 +153,14 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   dayButton: {
+    ...mainButton.button,
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: colors.accent2,
-    borderWidth: 2,
-    borderColor: colors.accent,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   dayButtonText: {
     ...type.subtitle,
-    color: colors.text,
+    ...mainButton.text,
     fontSize: 20,
-    fontWeight: '700',
   },
 });

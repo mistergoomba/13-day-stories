@@ -6,7 +6,8 @@ import colors from '../theme/colors';
 import { type } from '../theme/typography';
 import Card from '../components/Card';
 import EnergyOfTheDay from '../components/EnergyOfTheDay';
-import { getDayData, getImageSource } from '../utils/mayanCalendar';
+import DynamicBackground from '../components/DynamicBackground';
+import { getDayData, getImageSource, getBackgroundColors } from '../utils/mayanCalendar';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -15,10 +16,12 @@ export default function BirthdayScreenContent({ scrollViewRef, setCurrentView, b
   const bottomPadding = 50 + insets.bottom + 20;
   const dayData = getDayData(birthdayDay);
   const birthdayImage = getImageSource(birthdayDay, 'birthday');
+  const birthdayColors = getBackgroundColors(birthdayDay, 'birthday');
 
   if (!dayData || !dayData.birthday) {
     return (
       <View style={styles.container}>
+        <DynamicBackground backgroundColors={birthdayColors} />
         <View style={[styles.header, { paddingTop: insets.top }]}>
           <Pressable
             onPress={() => setCurrentView && setCurrentView('Personal')}
@@ -56,6 +59,9 @@ export default function BirthdayScreenContent({ scrollViewRef, setCurrentView, b
 
   return (
     <View style={styles.container}>
+      {/* Dynamic Background */}
+      <DynamicBackground backgroundColors={birthdayColors} />
+
       {/* Header - Fixed at top */}
       <View style={[styles.header, { paddingTop: insets.top }]}>
         <Pressable
@@ -108,7 +114,11 @@ export default function BirthdayScreenContent({ scrollViewRef, setCurrentView, b
 
           {/* Energy of the Day Section */}
           <View style={styles.contentSection}>
-            <EnergyOfTheDay dayData={dayData} energyOfTheDay={energy_of_the_day} />
+            <EnergyOfTheDay
+              dayData={dayData}
+              energyOfTheDay={energy_of_the_day}
+              tagColor={birthdayColors?.primary}
+            />
           </View>
         </View>
       </ScrollView>
@@ -119,6 +129,7 @@ export default function BirthdayScreenContent({ scrollViewRef, setCurrentView, b
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'transparent',
   },
   header: {
     flexDirection: 'row',
