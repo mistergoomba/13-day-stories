@@ -84,15 +84,6 @@ const IMAGE_MAP = {
     birthday: require('../assets/trecena-toj/1/birthday.webp'),
     meditation: require('../assets/trecena-toj/1/meditation.webp'),
   },
-  5: {
-    story_primary: require('../assets/trecena-toj/5/story_primary.webp'),
-    story_wide_1: require('../assets/trecena-toj/5/story_wide_1.webp'),
-    story_wide_2: require('../assets/trecena-toj/5/story_wide_2.webp'),
-    horoscope: require('../assets/trecena-toj/5/horoscope.webp'),
-    affirmation: require('../assets/trecena-toj/5/affirmation.webp'),
-    birthday: require('../assets/trecena-toj/5/birthday.webp'),
-    meditation: require('../assets/trecena-toj/5/meditation.webp'),
-  },
   6: {
     story_primary: require('../assets/trecena-toj/6/story_primary.webp'),
     story_wide_1: require('../assets/trecena-toj/6/story_wide_1.webp'),
