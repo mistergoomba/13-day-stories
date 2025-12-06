@@ -9,6 +9,7 @@ import HomeScreenContent from './screens/HomeScreenContent';
 import MeditationScreenContent from './screens/MeditationScreenContent';
 import SettingsScreenContent from './screens/SettingsScreenContent';
 import JourneyScreenContent from './screens/JourneyScreenContent';
+import PersonalScreenContent from './screens/PersonalScreenContent';
 import colors from './theme/colors';
 
 const HAS_OPENED_APP_KEY = '@has_opened_app';
@@ -63,13 +64,14 @@ function AppContent() {
     Meditation: MeditationScreenContent,
     Settings: SettingsScreenContent,
     Journey: JourneyScreenContent,
+    Personal: PersonalScreenContent,
   };
 
   // Get the current component
   const CurrentComponent = viewComponents[currentView];
 
   // Screens that handle their own scrolling (with sticky headers)
-  const screensWithOwnScrollView = ['Meditation', 'Today', 'Journey'];
+  const screensWithOwnScrollView = ['Meditation', 'Today', 'Journey', 'Personal'];
 
   // Don't render until we've checked first time status
   if (currentView === null) {
@@ -101,6 +103,11 @@ function AppContent() {
             setCurrentView={setCurrentView}
             scrollViewRef={meditationScrollViewRef}
             resetMeditationTrigger={resetMeditationTrigger}
+          />
+        ) : currentView === 'Personal' ? (
+          <PersonalScreenContent
+            scrollViewRef={scrollViewRef}
+            setCurrentView={setCurrentView}
           />
         ) : (
           <CurrentComponent

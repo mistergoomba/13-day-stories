@@ -5,7 +5,8 @@ import colors from '../theme/colors';
 import { type } from '../theme/typography';
 import HoroscopeSection from '../components/HoroscopeSection';
 import EnergyOfTheDay from '../components/EnergyOfTheDay';
-import DayNavigationHeader from '../components/DayNavigationHeader';
+import SimpleHeader from '../components/SimpleHeader';
+import DayNavigationButton from '../components/DayNavigationButton';
 import {
   getTodayMayanDate,
   getDayData,
@@ -99,15 +100,9 @@ export default function TodayScreenContent({
     <View style={styles.container}>
       {/* Header - Fixed at top */}
       <View style={styles.headerContainer}>
-        <DayNavigationHeader
+        <SimpleHeader
           title='Energy of the Day'
-          currentDay={currentDay}
-          todayDay={today.day}
-          onPrevious={handlePreviousDay}
-          onNext={handleNextDay}
-          onToday={handleResetToToday}
-          canGoPrevious={canGoPrevious}
-          canGoNext={canGoNext}
+          onAccountPress={() => setCurrentView && setCurrentView('Personal')}
         />
       </View>
 
@@ -132,32 +127,26 @@ export default function TodayScreenContent({
             <EnergyOfTheDay dayData={dayData} energyOfTheDay={energy_of_the_day} />
           </View>
 
-          {/* Bottom Day Navigation (mimics top) */}
+          {/* Bottom Day Navigation */}
           <View style={styles.contentSection}>
             <View style={styles.bottomDayNavigationContainer}>
-              <Pressable
+              <DayNavigationButton
+                direction='prev'
+                dayNumber={currentDay - 1}
                 onPress={handlePreviousDay}
                 disabled={!canGoPrevious}
-                style={styles.bottomArrowButton}
-              >
-                <Text style={[styles.bottomArrow, !canGoPrevious && styles.bottomArrowDisabled]}>
-                  ←
+              />
+              <Pressable onPress={handleResetToToday} style={styles.bottomDayButtonCenter}>
+                <Text style={styles.bottomDayButtonText}>
+                  {isToday ? 'TODAY' : `Day ${currentDay}`}
                 </Text>
               </Pressable>
-              <Pressable onPress={handleResetToToday}>
-                <Text style={styles.bottomDayIndicator}>
-                  {isToday ? 'today' : `Day ${currentDay} of 13`}
-                </Text>
-              </Pressable>
-              <Pressable
+              <DayNavigationButton
+                direction='next'
+                dayNumber={currentDay + 1}
                 onPress={handleNextDay}
                 disabled={!canGoNext}
-                style={styles.bottomArrowButton}
-              >
-                <Text style={[styles.bottomArrow, !canGoNext && styles.bottomArrowDisabled]}>
-                  →
-                </Text>
-              </Pressable>
+              />
             </View>
           </View>
 
@@ -171,7 +160,7 @@ export default function TodayScreenContent({
                 <Text style={styles.navLinkText}>View Meditation / Affirmation</Text>
               </Pressable>
               <Pressable style={styles.navLink} onPress={handleJoinStory}>
-                <Text style={styles.navLinkText}>Join the Story in Progress</Text>
+                <Text style={styles.navLinkText}>Read Today's Chapter</Text>
               </Pressable>
             </View>
           </View>
@@ -218,27 +207,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 24,
     marginBottom: 24,
+    gap: 12,
   },
-  bottomArrowButton: {
-    padding: 8,
-    marginHorizontal: 8,
+  bottomDayButtonCenter: {
+    height: 48,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: '#000000',
+    minWidth: 80,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  bottomArrow: {
+  bottomDayButtonText: {
     ...type.body,
     color: colors.text,
-    fontSize: 20,
+    fontSize: 14,
     fontWeight: '600',
-  },
-  bottomArrowDisabled: {
-    color: colors.textDim,
-    opacity: 0.3,
-  },
-  bottomDayIndicator: {
-    ...type.body,
-    color: colors.textDim,
-    fontSize: 16,
-    minWidth: 120,
-    textAlign: 'center',
   },
   navigationContainer: {
     marginTop: 0,

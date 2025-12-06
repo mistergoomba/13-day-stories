@@ -4,7 +4,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
 import Card from '../components/Card';
-import DayNavigationHeader from '../components/DayNavigationHeader';
+import SimpleHeader from '../components/SimpleHeader';
+import DayNavigationButton from '../components/DayNavigationButton';
 import {
   getTodayMayanDate,
   getDayData,
@@ -14,7 +15,7 @@ import {
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
-export default function MeditationScreenContent({ scrollViewRef, resetMeditationTrigger }) {
+export default function MeditationScreenContent({ scrollViewRef, resetMeditationTrigger, setCurrentView }) {
   const insets = useSafeAreaInsets();
   const today = getTodayMayanDate();
   const [currentDay, setCurrentDay] = useState(today.day);
@@ -101,15 +102,9 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
 
       {/* Header - Fixed at top */}
       <View style={styles.headerContainer}>
-        <DayNavigationHeader
+        <SimpleHeader
           title='Meditation'
-          currentDay={currentDay}
-          todayDay={today.day}
-          onPrevious={handlePreviousDay}
-          onNext={handleNextDay}
-          onToday={handleResetToToday}
-          canGoPrevious={canGoPrevious}
-          canGoNext={canGoNext}
+          onAccountPress={() => setCurrentView && setCurrentView('Personal')}
         />
       </View>
 
@@ -138,32 +133,29 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
             </Card>
           </View>
 
-          {/* Bottom Day Navigation (mimics top) */}
+          {/* Bottom Day Navigation */}
           <View style={styles.contentSection}>
             <View style={styles.bottomDayNavigationContainer}>
-              <Pressable
+              <DayNavigationButton
+                direction='prev'
+                dayNumber={currentDay - 1}
                 onPress={handlePreviousDay}
                 disabled={!canGoPrevious}
-                style={styles.bottomArrowButton}
-              >
-                <Text style={[styles.bottomArrow, !canGoPrevious && styles.bottomArrowDisabled]}>
-                  ←
-                </Text>
-              </Pressable>
-              <Pressable onPress={handleResetToToday}>
-                <Text style={styles.bottomDayIndicator}>
-                  {isToday ? 'today' : `Day ${currentDay} of 13`}
-                </Text>
-              </Pressable>
+              />
               <Pressable
+                onPress={handleResetToToday}
+                style={styles.bottomDayButtonCenter}
+              >
+                <Text style={styles.bottomDayButtonText}>
+                  {isToday ? 'TODAY' : `Day ${currentDay}`}
+                </Text>
+              </Pressable>
+              <DayNavigationButton
+                direction='next'
+                dayNumber={currentDay + 1}
                 onPress={handleNextDay}
                 disabled={!canGoNext}
-                style={styles.bottomArrowButton}
-              >
-                <Text style={[styles.bottomArrow, !canGoNext && styles.bottomArrowDisabled]}>
-                  →
-                </Text>
-              </Pressable>
+              />
             </View>
           </View>
         </View>
@@ -241,26 +233,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 24,
     marginBottom: 24,
+    gap: 12,
   },
-  bottomArrowButton: {
-    padding: 8,
-    marginHorizontal: 8,
+  bottomDayButtonCenter: {
+    height: 48,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: '#000000',
+    minWidth: 80,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  bottomArrow: {
+  bottomDayButtonText: {
     ...type.body,
     color: colors.text,
-    fontSize: 20,
+    fontSize: 14,
     fontWeight: '600',
-  },
-  bottomArrowDisabled: {
-    color: colors.textDim,
-    opacity: 0.3,
-  },
-  bottomDayIndicator: {
-    ...type.body,
-    color: colors.textDim,
-    fontSize: 16,
-    minWidth: 120,
-    textAlign: 'center',
   },
 });

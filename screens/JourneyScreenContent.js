@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, Pressable, Image, Dimensions, ScrollView } from
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Rect } from 'react-native-svg';
 import Card from '../components/Card';
-import DayNavigationHeader from '../components/DayNavigationHeader';
+import SimpleHeader from '../components/SimpleHeader';
+import DayNavigationButton from '../components/DayNavigationButton';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
 import {
@@ -19,7 +20,7 @@ import { TODAY_DAY } from '../utils/mayanCalendar';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 // Component to render day detail view (story chapter only)
-function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef }) {
+function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef, setCurrentView }) {
   const insets = useSafeAreaInsets();
   const today = getTodayMayanDate();
   const dayData = getDayData(dayNumber);
@@ -113,20 +114,9 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef }) {
     <View style={styles.container}>
       {/* Header - Fixed at top */}
       <View style={styles.headerContainer}>
-        <DayNavigationHeader
+        <SimpleHeader
           title='Journey'
-          currentDay={dayNumber}
-          todayDay={today.day}
-          onPrevious={handlePreviousDay}
-          onNext={() => {
-            scrollToTop();
-            if (canGoNext) {
-              setSelectedDay(dayNumber + 1);
-            }
-          }}
-          onToday={handleGoToToday}
-          canGoPrevious={canGoPrevious}
-          canGoNext={canGoNext}
+          onAccountPress={() => setCurrentView && setCurrentView('Personal')}
         />
       </View>
 
@@ -183,34 +173,33 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef }) {
             </Card>
           </View>
 
-          {/* Bottom Day Navigation (mimics top) */}
+          {/* Bottom Day Navigation */}
           <View style={styles.contentSection}>
             <View style={styles.bottomDayNavigationContainer}>
-              <Pressable onPress={handlePreviousDay} style={styles.bottomArrowButton}>
-                <Text style={styles.bottomArrow}>←</Text>
-              </Pressable>
+              <DayNavigationButton
+                direction='prev'
+                dayNumber={dayNumber - 1}
+                onPress={handlePreviousDay}
+                disabled={!canGoPrevious}
+              />
               <Pressable
                 onPress={() => {
                   onBack();
                   scrollToTop();
                 }}
+                style={styles.bottomDayButtonCenter}
               >
-                <Text style={styles.bottomDayIndicator}>Day {dayNumber} of 13</Text>
+                <Text style={styles.bottomDayButtonText}>Day {dayNumber}</Text>
               </Pressable>
-              <Pressable
+              <DayNavigationButton
+                direction='next'
+                dayNumber={dayNumber + 1}
                 onPress={() => {
-                  if (canGoNext) {
-                    setSelectedDay(dayNumber + 1);
-                    scrollToTop();
-                  }
+                  setSelectedDay(dayNumber + 1);
+                  scrollToTop();
                 }}
                 disabled={!canGoNext}
-                style={styles.bottomArrowButton}
-              >
-                <Text style={[styles.bottomArrow, !canGoNext && styles.bottomArrowDisabled]}>
-                  →
-                </Text>
-              </Pressable>
+              />
             </View>
           </View>
         </View>
@@ -250,6 +239,7 @@ export default function JourneyScreenContent({
         onBack={() => setSelectedDay(null)}
         setSelectedDay={setSelectedDay}
         scrollViewRef={scrollViewRef}
+        setCurrentView={setCurrentView}
       />
     );
   }
@@ -295,15 +285,9 @@ export default function JourneyScreenContent({
     <View style={styles.container}>
       {/* Header - Fixed at top */}
       <View style={styles.headerContainer}>
-        <DayNavigationHeader
+        <SimpleHeader
           title='Journey'
-          currentDay={today.day}
-          todayDay={today.day}
-          onPrevious={handleGoToFirstDay}
-          onNext={handleGoToLastDay}
-          onToday={handleGoToToday}
-          canGoPrevious={!!firstAvailableDay}
-          canGoNext={!!lastAvailableDay}
+          onAccountPress={() => setCurrentView && setCurrentView('Personal')}
         />
       </View>
 
@@ -672,26 +656,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 24,
     marginBottom: 24,
+    gap: 12,
   },
-  bottomArrowButton: {
-    padding: 8,
-    marginHorizontal: 8,
+  bottomDayButtonCenter: {
+    height: 48,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: '#000000',
+    minWidth: 80,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  bottomArrow: {
+  bottomDayButtonText: {
     ...type.body,
     color: colors.text,
-    fontSize: 20,
+    fontSize: 14,
     fontWeight: '600',
-  },
-  bottomArrowDisabled: {
-    color: colors.textDim,
-    opacity: 0.3,
-  },
-  bottomDayIndicator: {
-    ...type.body,
-    color: colors.textDim,
-    fontSize: 16,
-    minWidth: 120,
-    textAlign: 'center',
   },
 });
