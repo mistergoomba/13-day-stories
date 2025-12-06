@@ -346,7 +346,7 @@ export const tojTrecena = {
         story_wide_2:
           '16:9 widescreen artwork, close up of a hand touching a black rock covered in glowing, pulsing ultraviolet moss. The light from the moss illuminates the fingertips. High detail, macro texture. No text.',
         horoscope:
-          'Square fantasy artwork, a single large paw print made of constellations and star dust pressed into dark earth. It glows softly. Background is a deep indigo night sky. Mystical, symbolic. No text.',
+          'Square fantasy artwork, a swirling, serpentine river of bioluminescent blue and violet energy flowing through a dark, shadowy forest. The river is not water but glowing light, carrying small, glowing symbols—a spiral shell, a feather, a seed. The current loops and bends in a natural, rhythmic pattern rather than a straight line. A faint, large jaguar silhouette made of deeper shadow and starlight is subtly integrated into the curve of the energy river, flowing with it. No text.',
         affirmation: `Square fantasy artwork, a cute surreal 'jaguar-spirit'—a small, round, fluffy creature made of dark blue galaxy clouds with glowing eyes—sleeping peacefully on a floating rock. The image must feature the text: 'I walk with the silent confidence of the jaguar.' written in an elegant, readable font integrated into the design. Background is a soft violet nebula. Whimsical, dreamy. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
         meditation:
           'Square abstract artwork, soft swirls of purple and teal mist moving like water. The colors blend and flow into each other. No hard edges. Calming, fluid. No text.',
