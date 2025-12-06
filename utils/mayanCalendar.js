@@ -84,7 +84,26 @@ const IMAGE_MAP = {
     birthday: require('../assets/trecena-toj/1/birthday.png'),
     meditation: require('../assets/trecena-toj/1/meditation.png'),
   },
-  // Add other days (2-13) here as images become available
+  // Day 12 images
+  12: {
+    story_primary: require('../assets/trecena-toj/12/story_primary.png'),
+    story_wide_1: require('../assets/trecena-toj/12/story_wide_1.png'),
+    story_wide_2: require('../assets/trecena-toj/12/story_wide_2.png'),
+    horoscope: require('../assets/trecena-toj/12/horoscope.png'),
+    affirmation: require('../assets/trecena-toj/12/affirmation.png'),
+    birthday: require('../assets/trecena-toj/12/birthday.png'),
+    meditation: require('../assets/trecena-toj/12/meditation.png'),
+  },
+  // Day 13 images
+  13: {
+    story_primary: require('../assets/trecena-toj/13/story_primary.png'),
+    story_wide_1: require('../assets/trecena-toj/13/story_wide_1.png'),
+    story_wide_2: require('../assets/trecena-toj/13/story_wide_2.png'),
+    horoscope: require('../assets/trecena-toj/13/horoscope.png'),
+    affirmation: require('../assets/trecena-toj/13/affirmation.png'),
+    birthday: require('../assets/trecena-toj/13/birthday.png'),
+    meditation: require('../assets/trecena-toj/13/meditation.png'),
+  },
 };
 
 /**

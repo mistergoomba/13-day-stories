@@ -432,6 +432,8 @@ When writing image prompts, use this structure:
 
 - Aspect ratio (Square or 16:9 as specified)
 - Fantasy/mystical artwork descriptor
+- Digital art descriptor (use "digital art" or "digital painting", avoid generic "artwork")
+- "Full frame" or "filling the canvas" instruction
 - Dark rainbow palette
 - Single radiant focal glow
 - Layered atmospheric depth (nebula haze, iridescent smoke)

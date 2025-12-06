@@ -57,7 +57,7 @@ Use or adapt these as recipe checklists in your image tool of choice.
 
 **Base scaffold**
 
-- “Square fantasy artwork of abstract cosmic scene, dark rainbow palette, single radiant focal glow, layered nebula haze and iridescent smoke, vague alien silhouettes implied by light and shadow, rich depth, subtle grain, high detail, no text, no faces, mystical and whimsical, pulp sci fi mood”
+- Square digital art masterpiece, full frame, abstract cosmic scene, dark rainbow palette, single radiant focal glow, layered nebula haze and iridescent smoke, vague alien silhouettes implied by light and shadow, rich depth, subtle grain, high detail, no text, no faces, mystical and whimsical, pulp sci fi mood”
 
 **With trecena + day flavor**
 
@@ -72,7 +72,7 @@ Examples:
 
 **Negative prompt ideas**
 
-- “no text, no logo, no watermark, no human face, no realistic animals, no weapons, no letters, no numbers, avoid flat lighting, avoid low-contrast mush”
+- “no frame, no wall, no room, no gallery, no border, no museum display, no text, no logo, no watermark, no human face, no realistic animals, no weapons, no letters, no numbers, avoid flat lighting, avoid low-contrast mush”
 
 ---
 
