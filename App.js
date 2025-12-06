@@ -10,6 +10,7 @@ import MeditationScreenContent from './screens/MeditationScreenContent';
 import SettingsScreenContent from './screens/SettingsScreenContent';
 import JourneyScreenContent from './screens/JourneyScreenContent';
 import PersonalScreenContent from './screens/PersonalScreenContent';
+import BirthdayScreenContent from './screens/BirthdayScreenContent';
 import colors from './theme/colors';
 
 const HAS_OPENED_APP_KEY = '@has_opened_app';
@@ -18,6 +19,7 @@ function AppContent() {
   const insets = useSafeAreaInsets();
   const [currentView, setCurrentView] = useState(null); // null initially, will be set after checking first time
   const [selectedDay, setSelectedDay] = useState(null); // null = no selection, number = selected day for Journey detail view
+  const [birthdayDay, setBirthdayDay] = useState(null); // Selected birthday day (1-13)
   const [resetToTodayTrigger, setResetToTodayTrigger] = useState(0); // Trigger to reset Day screen to today
   const [resetMeditationTrigger, setResetMeditationTrigger] = useState(0); // Trigger to reset Meditation screen to today
   const scrollViewRef = useRef(null);
@@ -65,13 +67,14 @@ function AppContent() {
     Settings: SettingsScreenContent,
     Journey: JourneyScreenContent,
     Personal: PersonalScreenContent,
+    Birthday: BirthdayScreenContent,
   };
 
   // Get the current component
   const CurrentComponent = viewComponents[currentView];
 
   // Screens that handle their own scrolling (with sticky headers)
-  const screensWithOwnScrollView = ['Meditation', 'Today', 'Journey', 'Personal'];
+  const screensWithOwnScrollView = ['Meditation', 'Today', 'Journey', 'Personal', 'Birthday'];
 
   // Don't render until we've checked first time status
   if (currentView === null) {
@@ -108,6 +111,13 @@ function AppContent() {
           <PersonalScreenContent
             scrollViewRef={scrollViewRef}
             setCurrentView={setCurrentView}
+            setBirthdayDay={setBirthdayDay}
+          />
+        ) : currentView === 'Birthday' ? (
+          <BirthdayScreenContent
+            scrollViewRef={scrollViewRef}
+            setCurrentView={setCurrentView}
+            birthdayDay={birthdayDay}
           />
         ) : (
           <CurrentComponent

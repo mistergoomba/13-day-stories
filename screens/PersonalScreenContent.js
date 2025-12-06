@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
@@ -6,9 +6,16 @@ import colors from '../theme/colors';
 import { type } from '../theme/typography';
 import Card from '../components/Card';
 
-export default function PersonalScreenContent({ scrollViewRef, setCurrentView }) {
+export default function PersonalScreenContent({ scrollViewRef, setCurrentView, setBirthdayDay }) {
   const insets = useSafeAreaInsets();
   const bottomPadding = 50 + insets.bottom + 20;
+
+  const handleDaySelect = (dayNumber) => {
+    if (setBirthdayDay) {
+      setBirthdayDay(dayNumber);
+    }
+    setCurrentView && setCurrentView('Birthday');
+  };
 
   return (
     <View style={styles.container}>
@@ -42,10 +49,23 @@ export default function PersonalScreenContent({ scrollViewRef, setCurrentView })
           <View style={styles.contentSection}>
             <Card>
               <Text style={styles.title}>Personal Message</Text>
-              <Text style={styles.placeholderText}>
-                Your personal message based on your birthday will appear here.
+              <Text style={styles.temporaryText}>
+                This is a temporary page. In the future, you'll be able to enter your actual
+                birthday to receive personalized messages based on your Mayan calendar day sign.
+              </Text>
+              <Text style={styles.instructionText}>
+                For now, choose a number between 1 and 13 to see your birthday message:
               </Text>
             </Card>
+
+            {/* Day Number Picker */}
+            <View style={styles.dayPickerContainer}>
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((day) => (
+                <Pressable key={day} style={styles.dayButton} onPress={() => handleDaySelect(day)}>
+                  <Text style={styles.dayButtonText}>{day}</Text>
+                </Pressable>
+              ))}
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -111,10 +131,40 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 16,
   },
-  placeholderText: {
+  temporaryText: {
     ...type.body,
     color: colors.textDim,
     lineHeight: 24,
+    marginBottom: 16,
+  },
+  instructionText: {
+    ...type.body,
+    color: colors.text,
+    lineHeight: 24,
+    marginTop: 16,
+    marginBottom: 24,
+  },
+  dayPickerContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 12,
+    marginTop: 16,
+  },
+  dayButton: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: colors.accent2,
+    borderWidth: 2,
+    borderColor: colors.accent,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  dayButtonText: {
+    ...type.subtitle,
+    color: colors.text,
+    fontSize: 20,
+    fontWeight: '700',
   },
 });
-
