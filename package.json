@@ -12,7 +12,8 @@
     "stop": "pkill -f 'expo start' || true",
     "clean": "rm -rf node_modules/.cache .expo && npm start",
     "build:android": "eas build --platform android --profile preview",
-    "build": "npx expo export -p web"
+    "build": "npx expo export -p web",
+    "convert:images": "node scripts/convert-images-to-webp.js"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",
@@ -32,6 +33,7 @@
     "react-native-web": "^0.21.0"
   },
   "devDependencies": {
-    "babel-preset-expo": "^54.0.4"
+    "babel-preset-expo": "^54.0.4",
+    "sharp": "^0.34.5"
   }
 }
