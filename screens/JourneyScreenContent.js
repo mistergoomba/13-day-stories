@@ -8,7 +8,7 @@ import DayNavigationButton from '../components/DayNavigationButton';
 import DynamicBackground from '../components/DynamicBackground';
 import ImageWithPlaceholder from '../components/ImageWithPlaceholder';
 import colors from '../theme/colors';
-import { type } from '../theme/typography';
+import { type, headerFontFamily } from '../theme/typography';
 import { mainButton } from '../theme/buttons';
 import {
   getTodayMayanDateSync,
@@ -65,8 +65,8 @@ function DayDetailView({ mayanDate, onBack, setSelectedDay, scrollViewRef, setCu
   const renderTextBlock = (paragraphs, keyPrefix) => {
     return paragraphs.map((paragraph, index) => (
       <Text key={`${keyPrefix}-para-${index}`} style={styles.chapterText}>
-        {paragraph}
-      </Text>
+          {paragraph}
+        </Text>
     ));
   };
 
@@ -221,7 +221,7 @@ function DayDetailView({ mayanDate, onBack, setSelectedDay, scrollViewRef, setCu
                 onPress={() => {
                   if (nextDay) {
                     setSelectedDay(nextDay);
-                    scrollToTop();
+                  scrollToTop();
                   }
                 }}
                 disabled={!canGoNext}
@@ -306,12 +306,12 @@ export default function JourneyScreenContent({
 
   const handleGoToFirstDay = () => {
     scrollToTop();
-    setSelectedDay(firstAvailableDay);
+      setSelectedDay(firstAvailableDay);
   };
 
   const handleGoToLastDay = () => {
     scrollToTop();
-    setSelectedDay(lastAvailableDay);
+      setSelectedDay(lastAvailableDay);
   };
 
   // List view
@@ -594,9 +594,9 @@ const styles = StyleSheet.create({
   },
   chapterTitle: {
     ...type.title,
+    fontFamily: headerFontFamily,
     color: colors.text,
     fontSize: 28,
-    fontWeight: '700',
     flex: 1,
   },
   journeyIconButton: {

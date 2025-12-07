@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Dimensions, ScrollView, Pressable } from 'react
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
 import colors from '../theme/colors';
-import { type } from '../theme/typography';
+import { type, headerFontFamily } from '../theme/typography';
 import Card from '../components/Card';
 import EnergyOfTheDay from '../components/EnergyOfTheDay';
 import DynamicBackground from '../components/DynamicBackground';
@@ -74,7 +74,7 @@ export default function BirthdayScreenContent({
       <View style={styles.container}>
         <DynamicBackground backgroundColors={birthdayColors} />
         <View style={styles.headerContainer}>
-          <SimpleHeader title='Birthday' />
+          <SimpleHeader title='Your Birthday' />
         </View>
         <ScrollView
           ref={scrollViewRef}
@@ -83,7 +83,11 @@ export default function BirthdayScreenContent({
         >
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
             {/* Birthday Image - always show, uses fallback if not found */}
-            <ImageWithPlaceholder source={dayData?.images?.birthday} type='square' />
+            <ImageWithPlaceholder
+              source={dayData?.images?.birthday}
+              type='square'
+              flushTop={true}
+            />
 
             {/* Date Display Section */}
             <View style={styles.contentSection}>
@@ -142,7 +146,7 @@ export default function BirthdayScreenContent({
       <View style={styles.container}>
         <DynamicBackground backgroundColors={birthdayColors} />
         <View style={styles.headerContainer}>
-          <SimpleHeader title='Birthday' />
+          <SimpleHeader title='Your Birthday' />
         </View>
         <ScrollView
           ref={scrollViewRef}
@@ -151,7 +155,11 @@ export default function BirthdayScreenContent({
         >
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
             {/* Birthday Image - always show, uses fallback if not found */}
-            <ImageWithPlaceholder source={dayData?.images?.birthday} type='square' />
+            <ImageWithPlaceholder
+              source={dayData?.images?.birthday}
+              type='square'
+              flushTop={true}
+            />
 
             {/* Date Display Section */}
             <View style={styles.contentSection}>
@@ -204,7 +212,7 @@ export default function BirthdayScreenContent({
 
       {/* Header - Fixed at top */}
       <View style={styles.headerContainer}>
-        <SimpleHeader title='Birthday' />
+        <SimpleHeader title='Your Birthday' />
       </View>
 
       {/* Scrollable Content */}
@@ -216,7 +224,15 @@ export default function BirthdayScreenContent({
       >
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           {/* Birthday Image - always show, uses fallback if specific image not found */}
-          <ImageWithPlaceholder source={dayData?.images?.birthday} type='square' />
+          <ImageWithPlaceholder source={dayData?.images?.birthday} type='square' flushTop={true} />
+
+          {/* Birthday Title and Content */}
+          <View style={styles.contentSection}>
+            <Text style={[styles.birthdayTitle, { paddingTop: 0 }]}>{birthday.title}</Text>
+            <Card>
+              <Text style={styles.birthdayContent}>{birthday.content}</Text>
+            </Card>
+          </View>
 
           {/* Date Display Section */}
           <View style={styles.contentSection}>
@@ -246,14 +262,6 @@ export default function BirthdayScreenContent({
 
               {/* Formatted Mayan Date */}
               {mayanDate && <Text style={styles.mayanDateDisplay}>{mayanDate.formatted}</Text>}
-            </Card>
-          </View>
-
-          {/* Birthday Title and Content */}
-          <View style={styles.contentSection}>
-            <Card>
-              <Text style={styles.birthdayTitle}>{birthday.title}</Text>
-              <Text style={styles.birthdayContent}>{birthday.content}</Text>
             </Card>
           </View>
 
@@ -314,10 +322,12 @@ const styles = StyleSheet.create({
   },
   birthdayTitle: {
     ...type.title,
+    fontFamily: headerFontFamily,
     color: colors.text,
     fontSize: 28,
-    fontWeight: '700',
     marginBottom: 16,
+    paddingTop: 35,
+    textAlign: 'center',
   },
   birthdayContent: {
     ...type.body,

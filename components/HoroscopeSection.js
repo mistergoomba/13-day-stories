@@ -20,7 +20,7 @@ export default function HoroscopeSection({ horoscopeImage, horoscopeText, date, 
     <>
       {/* Horoscope Image */}
       <ImageWithPlaceholder
-        source={horoscopeImage}
+          source={horoscopeImage}
         type="square"
         flushTop={flushTop}
       />

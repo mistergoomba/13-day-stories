@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '../theme/colors';
-import { type } from '../theme/typography';
+import { type, headerFontFamily } from '../theme/typography';
 import { mainButton } from '../theme/buttons';
 import Card from '../components/Card';
 import SimpleHeader from '../components/SimpleHeader';
@@ -89,7 +89,7 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
             <ImageWithPlaceholder
               source={dayData?.images?.affirmation}
               type="square"
-            />
+              />
             <Text style={styles.errorText}>Unable to load meditation data</Text>
           </View>
         </ScrollView>
@@ -125,10 +125,10 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
             flushTop={true}
           />
 
-          {/* Meditation Card */}
+          {/* Meditation Title and Content */}
           <View style={styles.contentSection}>
-            <Card style={styles.meditationCard}>
-              <Text style={styles.meditationTitle}>Meditation</Text>
+            <Text style={styles.meditationTitle}>Meditation</Text>
+            <Card>
               <Text style={styles.meditationText}>{dayData.meditation}</Text>
             </Card>
           </View>
@@ -198,16 +198,14 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: 16,
   },
-  meditationCard: {
-    backgroundColor: 'rgba(0, 0, 0, 0.7)', // Semi-transparent background for readability
-    padding: 20,
-  },
   meditationTitle: {
     ...type.title,
+    fontFamily: headerFontFamily,
     color: colors.text,
-    fontSize: 24,
-    fontWeight: '700',
+    fontSize: 28,
     marginBottom: 16,
+    paddingTop: 35,
+    textAlign: 'center',
   },
   meditationText: {
     ...type.body,

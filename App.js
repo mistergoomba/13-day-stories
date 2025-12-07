@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, ScrollView, Text, StyleSheet, StatusBar } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useFonts } from 'expo-font';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SimpleBottomToolbar from './components/SimpleBottomToolbar';
 import NebulaBackground from './components/NebulaBackground';
@@ -216,6 +217,15 @@ function AppContent() {
 }
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    'BlackChancery': require('./assets/fonts/black_chancery/black_chancery.ttf'),
+    'Bromolek': require('./assets/fonts/bromolek/bromolek.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return null; // Or a loading screen
+  }
+
   return (
     <SafeAreaProvider>
       <AppContent />

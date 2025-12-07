@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Card from './Card';
 import colors from '../theme/colors';
-import { type } from '../theme/typography';
+import { type, headerFontFamily } from '../theme/typography';
 
 export default function EnergyOfTheDay({ dayData, energyOfTheDay, tagColor }) {
   if (!dayData || !energyOfTheDay) {
@@ -82,9 +82,9 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     ...type.title,
+    fontFamily: headerFontFamily,
     color: colors.text,
     fontSize: 28,
-    fontWeight: '700',
     marginBottom: 16,
     paddingTop: 35,
     textAlign: 'center',
