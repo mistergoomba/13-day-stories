@@ -401,10 +401,16 @@
       "affirmation": "",
       "meditation": "",
       "birthday": {
-        "title": "",
-        "content": ""
+        "title": "The Ascended Hero",
+        "content": "To be born on 13 Ajpu is to stand at the summit of the spiritual warrior’s path. The number 13 brings the energy of ascension and the spirit realm, while Ajpu is the solar hero who has conquered darkness to find the internal light. You are an old soul in the truest sense, carrying a natural authority and a deep connection to the divine.\n\nYou likely feel a strong sense of purpose, as if you are here to finish something important or to bridge the gap between the earth and the heavens. You are a natural leader, not through force, but through a radiant example of integrity. Your challenge is to stay grounded; your spirit is so light it sometimes forgets it needs a body. Shine, but remember to warm the earth beneath your feet."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#0d1313",
+          "secondary": "#2f3633",
+          "accent": "#cfb16e"
+        }
+      }
     }
   ]
 }

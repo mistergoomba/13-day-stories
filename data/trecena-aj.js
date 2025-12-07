@@ -68,8 +68,9 @@ export const ajTrecena = {
       affirmation: '',
       meditation: '',
       birthday: {
-        title: '',
-        content: '',
+        title: 'The Magic of Duality',
+        content:
+          "To be born on 2 Ix is to walk the thin veil between worlds with a companion by your side. The number 2 brings the energy of polarity and relationships, while Ix brings the high magic of the jaguar and the earth. You have a gift for seeing the magic in others and for balancing spiritual intuition with practical reality.\n\nYou are a natural mediator between the seen and unseen, often finding that your relationships serve as mirrors for your own spiritual growth. You possess a subtle, magnetic power that draws people to you, often seeking healing or insight. You understand that true magic isn't about control, but about partnership—with nature, with others, and with the divine. Your challenge is to trust your intuition even when it contradicts logic; your gut feeling is the jaguar growling the truth.",
       },
       image_prompts: {
         story_primary: '',
@@ -78,7 +79,8 @@ export const ajTrecena = {
         horoscope: '',
         affirmation: '',
         meditation: '',
-        birthday: '',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Ix (Jaguar/Spots) glowing with internal jungle-green and amber light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 2: two glowing golden dots arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {

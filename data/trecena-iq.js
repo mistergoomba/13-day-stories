@@ -43,9 +43,9 @@ export const iqTrecena = {
       meditation:
         'Sit comfortably. Close your eyes. Focus entirely on the tip of your nose. Feel the cool air entering. Feel the warm air leaving.\n\nVisualize the air as bright blue light. Inhale the light; let it fill your head, clearing away grey thoughts. Exhale the grey smoke. Do this until your mind feels as clear as a blue sky.',
       birthday: {
-        title: 'The Voice of Spirit',
+        title: 'The Breath of Origin',
         content:
-          'To be born on 1 Iq’ is to be a clear channel for inspiration. The number 1 represents unity and new beginnings. Iq’ is the Wind, the Breath, and the Word. You are a person who lives on the cutting edge of thought.\n\nYou have a quick mind and a powerful voice. You are often the one who starts the conversation or brings a fresh perspective to a stale situation. You need freedom like you need air; feeling trapped is your worst nightmare. Your challenge is to ground your many ideas so they don’t just blow away. When you speak your truth with clarity, you have the power to change the atmosphere of any room you enter.',
+          "To be born on 1 Iq’ is to be the first breath of a new creation. The number 1 represents the seed and the unified potential, while Iq’ is the wind, the voice, and the spirit of change. You are the initiator. When you speak, you aren't just conveying information; you are setting energy in motion.\n\nYou have a quick, agile mind and a spirit that refuses to be contained. You are here to bring fresh ideas, new perspectives, and vital inspiration to the world. Like the wind, you can be gentle or tempestuous, and your moods may shift rapidly. Your power lies in your voice—whether written or spoken. Your life lesson is focus; you have the power to start a thousand storms, but you must learn to direct your breath to fill a single sail.",
       },
       image_prompts: {
         story_primary:
@@ -61,7 +61,7 @@ export const iqTrecena = {
         meditation:
           'Square abstract image. Soft swirls of pale blue and white. Looks like smoke or mist. Airy and light. No text.',
         birthday:
-          'Square image. A mystical stone carving of the Mayan glyph for Iq’ (Wind) glowing with internal cyan-blue light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 1: a single glowing golden dot. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
+          "Square image. A mystical stone carving of the Mayan glyph for Iq' (Wind/T-Shape) glowing with internal crystalline-cyan breath-like light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 1: a single glowing golden dot. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.",
       },
     },
     {
