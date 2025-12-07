@@ -58,8 +58,6 @@ export const tojTrecena = {
           'Square fantasy artwork, a stylized mystical balance scale made of swirling smoke and fire, set against a deep void. One side of the scale holds a glowing ember, the other side holds a feather made of light. Dark rainbow palette, vibrant orange and deep teal. Minimalist, symbolic, no text.',
         affirmation:
           "Square fantasy artwork, a cute surreal fire-spirit—small, glowing, round, made of warm light—holding a golden coin and offering it up. The image must feature the text: 'I am the seed of gratitude, planting peace with every payment.' written in an elegant, readable font integrated into the design. Soft dreamlike lighting, surrounding air filled with tiny floating sparks. Dark rainbow palette with softer edges, magenta and gold accents. Whimsical, gentle. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).",
-        meditation:
-          'Square abstract artwork, gradients of deep magma red transitioning into warm gold and charcoal black. Soft, flowing shapes that resemble breath or heat waves. Meditative, calming, no sharp edges, no text.',
         birthday:
           'Square image. A mystical stone carving of the Mayan glyph for Toj (Offering/Fire) glowing with internal ember-orange light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 1: a single glowing golden dot. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
@@ -116,8 +114,6 @@ export const tojTrecena = {
         horoscope:
           'Square fantasy artwork, two pillars of light—one pure white, one deep indigo—twisting together in a double helix DNA shape. They are balanced in a void of stars. Dark rainbow palette, cosmic style. Symbolic of duality and union. No text.',
         affirmation: `Square fantasy artwork, a cute surreal dog-spirit made of soft blue light, carrying a small lantern of golden truth in its mouth. It is walking happily on a path of floating stones. The image must feature the text: 'I choose the path of love over the path of fear.' written in an elegant, readable font integrated into the design. Background is a soft nebula of pink and teal. Whimsical, comforting. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
-        meditation:
-          'Square abstract artwork, a vertical line of gold light dividing a field of deep blue and warm magenta. The colors blend softly at the center line. Balanced, symmetrical, calming. No sharp edges, no text.',
         birthday:
           'Square image. A mystical stone carving of the Mayan glyph for Tz’i’ (Dog/Lantern) glowing with internal white-gold light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 2: two glowing golden dots arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
@@ -174,8 +170,6 @@ export const tojTrecena = {
         horoscope:
           'Square fantasy artwork, a loom made of beams of light, weaving a fabric of stars and galaxies. The threads are vibrant neon colors—magenta, cyan, gold—against a deep space background. The weaving pattern is intricate and spiral-based. Dark rainbow palette. No text.',
         affirmation: `Square fantasy artwork, a cute surreal monkey-spirit made of soft golden light, holding a glowing thread. It is swinging playfully from a loop of the thread. The image must feature the text: 'I am the weaver of my own story, choosing threads of joy.' written in an elegant, readable font integrated into the design. Background is a swirl of soft pastel colors—lavender, mint, and peach. Whimsical, joyful. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
-        meditation:
-          'Square abstract artwork, oscillating waves of electric blue and warm gold light. They interweave and separate like breathing patterns. Fluid, dynamic, energetic but balanced. No text.',
         birthday:
           'Square image. A mystical stone carving of the Mayan glyph for B’atz’ (Monkey/Thread) glowing with internal rose-gold light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 3: three glowing golden dots arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
@@ -232,8 +226,6 @@ export const tojTrecena = {
         horoscope:
           'Square fantasy artwork, a golden compass floating in a dark void. It has four glowing points—Red (East), Black (West), Yellow (South), White (North). The needle is made of starlight. Dark rainbow palette with nebula background. Symbolic of direction and grounding. No text.',
         affirmation: `Square fantasy artwork, a cute surreal 'path-spirit'—a small, round, glowing white stone creature with little legs, walking happily on a floating path. It leaves glowing footprints behind it. The image must feature the text: 'I am safe, supported, and guided on my journey.' written in an elegant, readable font integrated into the design. Background is a soft gradient of teal and indigo. Whimsical, reassuring. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
-        meditation:
-          'Square abstract artwork, a perfect cube of translucent light resting on a dark surface. The cube emits a soft, steady glow. The colors are grounding—terracotta, deep green, and warm brown. Stable, geometric, peaceful. No text.',
         birthday:
           'Square image. A mystical stone carving of the Mayan glyph for E’ (Path/Tooth) glowing with internal turquoise light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 4: four glowing golden dots arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
@@ -290,8 +282,6 @@ export const tojTrecena = {
         horoscope:
           'Square fantasy artwork, a spinal column made of vertebrae of pure light, rooting into a dark earth and branching into a starry sky like a tree. Dark rainbow palette, gold and indigo. Symbolic of alignment and strength. No text.',
         affirmation: `Square fantasy artwork, a cute surreal 'corn-spirit'—a small, glowing yellow creature resembling a corn cob or pillar with a leaf-hat—standing proudly and holding a tiny roof over its head. The image must feature the text: 'I stand tall in my truth and protect my inner home.' written in an elegant, readable font integrated into the design. Background is a soft gradient of green and gold. Whimsical, protective. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
-        meditation:
-          'Square abstract artwork, a single, vertical beam of solid white-gold light connecting a dark bottom edge to a bright top edge. The beam is unmoving and perfectly straight. Background is deep charcoal. Minimalist, grounding. No text.',
         birthday:
           'Square image. A mystical stone carving of the Mayan glyph for Aj (Cane/Corn) glowing with internal amber-gold light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 5: a single glowing golden bar. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
@@ -348,8 +338,6 @@ export const tojTrecena = {
         horoscope:
           'Square fantasy artwork, a swirling, serpentine river of bioluminescent blue and violet energy flowing through a dark, shadowy forest. The river is not water but glowing light, carrying small, glowing symbols—a spiral shell, a feather, a seed. The current loops and bends in a natural, rhythmic pattern rather than a straight line. A faint, large jaguar silhouette made of deeper shadow and starlight is subtly integrated into the curve of the energy river, flowing with it. No text.',
         affirmation: `Square fantasy artwork, a cute surreal 'jaguar-spirit'—a small, round, fluffy creature made of dark blue galaxy clouds with glowing eyes—sleeping peacefully on a floating rock. The image must feature the text: 'I walk with the silent confidence of the jaguar.' written in an elegant, readable font integrated into the design. Background is a soft violet nebula. Whimsical, dreamy. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
-        meditation:
-          'Square abstract artwork, soft swirls of purple and teal mist moving like water. The colors blend and flow into each other. No hard edges. Calming, fluid. No text.',
         birthday:
           'Square image. A mystical stone carving of the Mayan glyph for Ix (Jaguar/Face) glowing with internal jungle-green light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 6: a glowing golden bar with one golden dot centered above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
@@ -406,8 +394,6 @@ export const tojTrecena = {
         horoscope:
           'Square fantasy artwork, a giant eye formed by clouds and golden light in the sky, looking down at a jagged mountain peak. Rays of light connect the eye to the mountain. Dark rainbow palette, surreal, visionary. No text.',
         affirmation: `Square fantasy artwork, a cute surreal 'eagle-spirit'—a small, round bird with glowing golden wings—perched proudly on a high floating rock. The image must feature the text: 'I rise above the noise and see my path with crystal clarity.' written in an elegant, readable font integrated into the design. Background is a vast expanse of blue sky and white clouds. Whimsical, uplifting. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
-        meditation:
-          'Square abstract artwork, a gradient that starts with deep earth tones (brown, charcoal) at the bottom and transitions smoothly into expansive sky blue and bright gold at the top. Represents the ascent from earth to sky. Minimalist, calming. No text.',
         birthday:
           'Square image. A mystical stone carving of the Mayan glyph for Tz’ikin (Eagle/Bird) glowing with internal sky-blue light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 7: a glowing golden bar with two golden dots centered above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
@@ -464,8 +450,6 @@ export const tojTrecena = {
         horoscope:
           'Square fantasy artwork, a heavy iron chain breaking, but instead of metal shards, the links turn into golden butterflies and light. Background is a soft amber glow. Symbolic of release. No text.',
         affirmation: `Square fantasy artwork, a cute surreal 'owl-spirit'—round, fluffy, glowing with soft brown and gold feathers—holding a tiny olive branch. The image must feature the text: 'I forgive myself for the past and step into the harmony of the present.' written in an elegant, readable font integrated into the design. Background is a warm sunset gradient. Whimsical, peaceful. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
-        meditation:
-          'Square abstract artwork, soft gradients of honey, amber, and deep violet. The colors swirl gently like oil on water. Healing, warm, soothing. No text.',
         birthday:
           'Square image. A mystical stone carving of the Mayan glyph for Ajmaq (Owl/Vulture/Face) glowing with internal honey-gold light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 8: a glowing golden bar with three golden dots centered above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
@@ -522,8 +506,6 @@ export const tojTrecena = {
         horoscope:
           'Square fantasy artwork, a dandelion seed head made of light, exploding into stars and geometric shapes. The background is deep indigo. Symbolic of a spreading idea. No text.',
         affirmation: `Square fantasy artwork, a cute surreal 'brain-spirit'—a soft, glowing pink and blue geometric shape with friendly eyes—watering a tiny potted plant. The image must feature the text: 'I trust my inner wisdom to reveal the perfect solution in perfect time.' written in an elegant, readable font integrated into the design. Background is a soft study room with floating books. Whimsical, smart. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
-        meditation:
-          'Square abstract artwork, concentric circles of blue and indigo light expanding slowly like ripples in a pond. The center is a bright white point. Calming, hypnotic. No text.',
         birthday:
           'Square image. A mystical stone carving of the Mayan glyph for No’j (Brain/Face) glowing with internal electric-blue light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 9: a glowing golden bar with four golden dots centered above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
@@ -580,8 +562,6 @@ export const tojTrecena = {
         horoscope:
           'Square fantasy artwork, a rough diamond or crystal floating in the air, being cut by a precise beam of white light, revealing a glowing, faceted core. Background is deep teal. Symbolic of refinement. No text.',
         affirmation: `Square fantasy artwork, a cute surreal 'sword-spirit'—a glowing, friendly blade or scalpel with a smiley face—carefully trimming a messy hedge into a perfect heart shape. The image must feature the text: 'I am the sculptor of my own life, refining my path with truth.' written in an elegant, readable font integrated into the design. Background is a manicured garden. Whimsical, tidy. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
-        meditation:
-          'Square abstract artwork, a vertical beam of white light descending like a laser into a dark field. It is precise and cleansing. The edges are sharp. Minimalist, intense. No text.',
         birthday:
           'Square image. A mystical stone carving of the Mayan glyph for Tijax (Obsidian Blade) glowing with internal white light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 10: two glowing golden bars stacked horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
@@ -638,8 +618,6 @@ export const tojTrecena = {
         horoscope:
           'Square fantasy artwork, a storm cloud that isn’t raining water, but raining tiny flowers and sparks of light into a pair of open hands. Background is deep storm-blue. Surreal, hopeful. No text.',
         affirmation: `Square fantasy artwork, a cute surreal 'turtle-spirit'—round shell with glowing spots, soft eyes—hiding happily under a large green leaf while rain falls around it. The image must feature the text: 'I am safe in the center of the change.' written in an elegant, readable font integrated into the design. Background is a cozy, wet garden. Whimsical, safe. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
-        meditation:
-          'Square abstract artwork, a vortex of water and light spinning clockwise. The center is clear and calm, while the edges are dynamic and blurry. Colors are teal, indigo, and white. Cleansing, active. No text.',
         birthday:
           'Square image. A mystical stone carving of the Mayan glyph for Kawoq (Storm/Turtle) glowing with internal electric-violet light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 11: two glowing golden bars with one golden dot centered above them. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
@@ -696,8 +674,6 @@ export const tojTrecena = {
         horoscope:
           'Square fantasy artwork, a simple golden crown floating in the air above a rough grey stone. The crown glows with an intense inner light. Background is deep blue. Symbolic of sovereignty. No text.',
         affirmation: `Square fantasy artwork, a cute surreal 'sun-spirit'—a little shining ball of golden light with a happy face—wearing a red cape and standing in a superhero pose. The image must feature the text: 'I honor the light within me and shine without apology.' written in an elegant, readable font integrated into the design. Background is a bright blue sky with fluffy clouds. Whimsical, empowering. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
-        meditation:
-          'Square abstract artwork, a mandala of twelve golden rays expanding outward from a central point. The background is deep amber and gold. Radiant, symmetrical, powerful. No text.',
         birthday:
           'Square image. A mystical stone carving of the Mayan glyph for Ajpu (Sun/Face) glowing with internal sunlight-yellow light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 12: two glowing golden bars with two golden dots centered above them. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
@@ -754,8 +730,6 @@ export const tojTrecena = {
         horoscope:
           'Square fantasy artwork, a crystal water pitcher pouring out a stream of stars and galaxies instead of liquid. The flow turns into a river. Background is deep space. Surreal, flowing. No text.',
         affirmation: `Square fantasy artwork, a cute surreal 'water-spirit'—a teardrop-shaped creature made of blue liquid with big eyes—hugging a glowing crescent moon. The image must feature the text: 'I surrender to the flow of the universe and trust the wisdom of my dreams.' written in an elegant, readable font integrated into the design. Floating in a starry sky. Whimsical, soft. (Negative prompt: no faces, no logos, no watermarks, avoid low contrast).`,
-        meditation:
-          'Square abstract artwork, a spiral of water and starlight merging into a central point of blinding white light. The colors are deep indigo, teal, and silver. Hypnotic, spiritual. No text.',
         birthday:
           'Square image. A mystical stone carving of the Mayan glyph for Imox (Crocodile/Water Lily) glowing with internal deep-sea teal light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 13: two glowing golden bars with three golden dots centered above them. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },

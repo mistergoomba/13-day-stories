@@ -44,7 +44,7 @@ The following uploaded files are ALWAYS the sources of truth:
 
 When creating new trecenas, refer to these completed examples for format and structure:
 
-- **`data/trecena-toj.js`** — Complete JSON output for the Toj trecena, showing the full structure including prologue, epilogue, all 13 days with stories, energies, horoscopes, meditations, affirmations, birthdays, and all 7 image prompts per day.
+- **`data/trecena-toj.js`** — Complete JSON output for the Toj trecena, showing the full structure including prologue, epilogue, all 13 days with stories, energies, horoscopes, meditations, affirmations, birthdays, and all 6 image prompts per day.
 
 - **`docs/trecena-rules-toj.md`** — Complete documentation of the creative decisions made during the Toj trecena creation process, including world module, prologue/epilogue choices, day-by-day decisions, and continuity notes. This serves as a template for the trecena-specific rules file created in Phase 6 of the workflow.
 
@@ -74,8 +74,8 @@ Each day contains:
 
    - Personal energy reading for users born on this specific day.
 
-7. **Seven image prompts**
-   (story_primary, story_wide_1, story_wide_2, horoscope, affirmation, meditation, birthday)
+7. **Six image prompts**
+   (story_primary, story_wide_1, story_wide_2, horoscope, affirmation, birthday)
 
 All content is generated in **consistent JSON format**.
 
@@ -372,7 +372,6 @@ image_prompts: {
   story_wide_2: "",
   horoscope: "",
   affirmation: "",
-  meditation: "",
   birthday: ""
 }
 ```
@@ -389,13 +388,11 @@ image_prompts: {
 
 - Color palette must fit the tone of the trecena
 
-- No text in story/horoscope/meditation images
+- No text in story/horoscope images
 
 - Affirmation images **must include the exact affirmation text**
 
 - Affirmation images must be "cute surreal" or "soft surreal"
-
-- Meditation images must be soft, abstract, meditative gradients
 
 - Prompts must indicate **aspect ratio** and **palette**
 
@@ -472,7 +469,6 @@ When writing image prompts, use this structure:
 - story_wide_2: 16:9 symbolic close/detail
 - horoscope: Square symbolic
 - affirmation: Square with text
-- meditation: Square abstract gradients
 - birthday: Square symbolic/stone
 
 ### **Consistency Across Days**
@@ -642,16 +638,15 @@ When user says "I want to build [Nawal] trecena":
 - Key symbols/motifs that will appear
 - How it builds on previous days
 
-#### **B. Image Prompt Directions (All 7 images)**
+#### **B. Image Prompt Directions (All 6 images)**
 
-For each of the 7 image types, present 2–3 visual concept options:
+For each of the 6 image types, present 2–3 visual concept options:
 
 - **story_primary**: Square establishing shot options
 - **story_wide_1**: 16:9 cinematic wide options
 - **story_wide_2**: 16:9 symbolic close/detail options
 - **horoscope**: Square mystical symbolic options
 - **affirmation**: Square with text (must include affirmation) options
-- **meditation**: Square abstract gradient options
 - **birthday**: Square Mayan glyph + numeral options
 
 #### **C. Horoscope Direction (2–3 options)**
@@ -723,7 +718,7 @@ After all 13 days are planned:
 
 - Follow ALL rules in trecena-creation-guide.md
 - Generate full trecena with prologue, all 13 days, epilogue
-- Include all content: stories, energies, horoscopes, meditations, affirmations, birthdays, all 7 image prompts per day
+- Include all content: stories, energies, horoscopes, meditations, affirmations, birthdays, all 6 image prompts per day
 - Ensure JSON is valid and parseable
 
 **Step 2: Create Trecena-Specific Rules File**
@@ -753,7 +748,7 @@ This file must document:
 ### Day 1: [Number] [Nawal]
 
 - Story Scene: [Selected option]
-- Image Prompts: [Selected directions for all 7]
+- Image Prompts: [Selected directions for all 6]
 - Horoscope: [Selected direction]
 - Meditation: [Selected direction]
 - Affirmation: [Selected direction]
