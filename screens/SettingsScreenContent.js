@@ -5,11 +5,16 @@ import Card from '../components/Card';
 import SimpleHeader from '../components/SimpleHeader';
 import DynamicBackground from '../components/DynamicBackground';
 import BirthdayDatePickerModal from '../components/BirthdayDatePickerModal';
+import NotificationsModal from '../components/NotificationsModal';
+import DataStorageModal from '../components/DataStorageModal';
+import PrivacyModal from '../components/PrivacyModal';
+import TermsOfServiceModal from '../components/TermsOfServiceModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
 
 const BIRTHDAY_KEY = '@user_birthday';
+const BIRTHDAY_DATE_KEY = '@birthday_date';
 
 export default function SettingsScreenContent({ scrollViewRef, setCurrentView, setBirthdayDate, birthdayDate, onPersonalPress }) {
   const insets = useSafeAreaInsets();
@@ -24,13 +29,25 @@ export default function SettingsScreenContent({ scrollViewRef, setCurrentView, s
     accent: '#6E45CF',
   };
 
-  // Date picker state for birthday update modal
+  // Modal states
   const [showBirthdayModal, setShowBirthdayModal] = useState(false);
+  const [showNotificationsModal, setShowNotificationsModal] = useState(false);
+  const [showDataStorageModal, setShowDataStorageModal] = useState(false);
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
 
   const handleUpdateBirthday = async (newDateString) => {
     await AsyncStorage.setItem(BIRTHDAY_KEY, newDateString);
+    await AsyncStorage.setItem(BIRTHDAY_DATE_KEY, newDateString);
     if (setBirthdayDate) {
       setBirthdayDate(newDateString);
+    }
+  };
+
+  const handleDataCleared = () => {
+    // Reset birthday date in parent component
+    if (setBirthdayDate) {
+      setBirthdayDate(null);
     }
   };
   
@@ -55,28 +72,29 @@ export default function SettingsScreenContent({ scrollViewRef, setCurrentView, s
         showsVerticalScrollIndicator={false}
       >
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-      <Card>
-        <Text style={styles.sectionTitle}>App Preferences</Text>
-        <Text style={styles.settingItem}>Notifications</Text>
-        <Text style={styles.settingItem}>Theme</Text>
-        <Text style={styles.settingItem}>Language</Text>
-      </Card>
+          <Card>
+            <Text style={styles.sectionTitle}>App Preferences</Text>
+            <Pressable onPress={() => setShowBirthdayModal(true)}>
+              <Text style={styles.settingItem}>Profile</Text>
+            </Pressable>
+            <Pressable onPress={() => setShowNotificationsModal(true)}>
+              <Text style={styles.settingItem}>Notifications</Text>
+            </Pressable>
+            <Pressable onPress={() => setShowDataStorageModal(true)}>
+              <Text style={styles.settingItem}>Data & Storage</Text>
+            </Pressable>
+          </Card>
 
-      <Card>
-        <Text style={styles.sectionTitle}>Account</Text>
-        <Pressable onPress={() => setShowBirthdayModal(true)}>
-          <Text style={styles.settingItem}>Profile</Text>
-        </Pressable>
-        <Text style={styles.settingItem}>Privacy</Text>
-        <Text style={styles.settingItem}>Data & Storage</Text>
-      </Card>
-
-      <Card>
-        <Text style={styles.sectionTitle}>About</Text>
-        <Text style={styles.settingItem}>Version 1.0.0</Text>
-        <Text style={styles.settingItem}>Help & Support</Text>
-        <Text style={styles.settingItem}>Terms of Service</Text>
-      </Card>
+          <Card>
+            <Text style={styles.sectionTitle}>About</Text>
+            <Text style={styles.settingItem}>Version 1.0.0</Text>
+            <Pressable onPress={() => setShowPrivacyModal(true)}>
+              <Text style={styles.settingItem}>Privacy</Text>
+            </Pressable>
+            <Pressable onPress={() => setShowTermsModal(true)}>
+              <Text style={styles.settingItem}>Terms of Service</Text>
+            </Pressable>
+          </Card>
         </View>
       </ScrollView>
 
@@ -88,6 +106,31 @@ export default function SettingsScreenContent({ scrollViewRef, setCurrentView, s
         initialDate={birthdayDate}
         title='Update Your Birthday'
         buttonText='Update Your Birthday'
+      />
+
+      {/* Notifications Modal */}
+      <NotificationsModal
+        visible={showNotificationsModal}
+        onClose={() => setShowNotificationsModal(false)}
+      />
+
+      {/* Data & Storage Modal */}
+      <DataStorageModal
+        visible={showDataStorageModal}
+        onClose={() => setShowDataStorageModal(false)}
+        onDataCleared={handleDataCleared}
+      />
+
+      {/* Privacy Modal */}
+      <PrivacyModal
+        visible={showPrivacyModal}
+        onClose={() => setShowPrivacyModal(false)}
+      />
+
+      {/* Terms of Service Modal */}
+      <TermsOfServiceModal
+        visible={showTermsModal}
+        onClose={() => setShowTermsModal(false)}
       />
     </View>
   );
@@ -122,6 +165,11 @@ const styles = StyleSheet.create({
   settingItem: {
     ...type.body,
     color: colors.textDim,
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  settingItemPressable: {
     paddingVertical: 8,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
