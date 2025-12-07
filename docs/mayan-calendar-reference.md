@@ -356,7 +356,7 @@ Each day inside that trecena then expresses its own number/nawal combination **w
 For example:
 
 - The **Wind / Iq' trecena** (1 Iq' → 13 Aj) emphasizes movement, communication, and renewal.
-- The **Jaguar / Ix trecena** (1 Ix → 13 Ajmak) emphasizes magic, intuition, and hidden realms.
+- The **Jaguar / Ix trecena** (1 Ix → 13 Ajmaq) emphasizes magic, intuition, and hidden realms.
 - The **Ajpu trecena** (1 Ajpu → 13 K'at) carries themes of heroism, revelation, and truth.
 
 ### 🧩 The Layers of Time and Meaning

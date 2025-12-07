@@ -1,8 +1,8 @@
 # Exclude data folder - data is generated before deployment
 data/
 
-# Exclude development scripts
-scripts/
+# Note: scripts/ folder is included because vercel-build.js is needed during build
+# The other scripts won't cause issues if included
 
 # Exclude documentation
 docs/

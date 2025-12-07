@@ -325,6 +325,7 @@ function transformTrecenaData(trecenaData, trecenaName) {
 async function main() {
   console.log('Starting data generation...\n');
   console.log(`Source images: ${DATA_IMAGES_DIR}`);
+  console.log(`Data modules: ${DATA_DIR}`);
   console.log(`Output directory: ${API_DIR}\n`);
 
   // Clear and recreate API directory
@@ -334,31 +335,35 @@ async function main() {
   }
   fs.mkdirSync(API_DIR, { recursive: true });
 
-  // Find all trecena folders in data/images-hd
-  if (!fs.existsSync(DATA_IMAGES_DIR)) {
-    console.error(`Error: Source directory does not exist: ${DATA_IMAGES_DIR}`);
+  // Find all trecena-*.js files in data directory
+  if (!fs.existsSync(DATA_DIR)) {
+    console.error(`Error: Data directory does not exist: ${DATA_DIR}`);
     process.exit(1);
   }
 
-  const entries = fs.readdirSync(DATA_IMAGES_DIR, { withFileTypes: true });
-  const trecenaFolders = entries
-    .filter((entry) => entry.isDirectory() && entry.name.startsWith('trecena-'))
-    .map((entry) => path.join(DATA_IMAGES_DIR, entry.name));
+  const entries = fs.readdirSync(DATA_DIR, { withFileTypes: true });
+  const trecenaModules = entries
+    .filter((entry) => entry.isFile() && entry.name.startsWith('trecena-') && entry.name.endsWith('.js'))
+    .map((entry) => {
+      // Extract trecena name from filename (e.g., "trecena-aqabal.js" -> "aqabal")
+      const name = entry.name.replace('trecena-', '').replace('.js', '');
+      return { name, filename: entry.name };
+    });
 
-  if (trecenaFolders.length === 0) {
-    console.log('No trecena-* folders found in data/images-hd directory.');
+  if (trecenaModules.length === 0) {
+    console.log('No trecena-*.js files found in data directory.');
     return;
   }
 
-  console.log(`Found ${trecenaFolders.length} trecena folder(s):`);
-  trecenaFolders.forEach((folder) => {
-    console.log(`  - ${path.basename(folder)}`);
+  console.log(`Found ${trecenaModules.length} trecena module(s):`);
+  trecenaModules.forEach((module) => {
+    console.log(`  - ${module.filename}`);
   });
   console.log('');
 
-  // Process each trecena folder
-  for (const trecenaFolder of trecenaFolders) {
-    const trecenaName = path.basename(trecenaFolder);
+  // Process each trecena module
+  for (const { name: trecenaKey, filename } of trecenaModules) {
+    const trecenaName = `trecena-${trecenaKey}`;
     console.log(`\n${'='.repeat(60)}`);
     console.log(`Processing ${trecenaName}...`);
     console.log('='.repeat(60));
@@ -373,30 +378,35 @@ async function main() {
       fs.mkdirSync(dayDir, { recursive: true });
     }
 
-    // Process all PNG files in this trecena folder
-    const dayFolders = fs
-      .readdirSync(trecenaFolder, { withFileTypes: true })
-      .filter((entry) => entry.isDirectory())
-      .map((entry) => path.join(trecenaFolder, entry.name));
+    // Process images if they exist
+    const trecenaImageFolder = path.join(DATA_IMAGES_DIR, trecenaName);
+    if (fs.existsSync(trecenaImageFolder)) {
+      console.log(`\nFound images folder, processing images...`);
+      const dayFolders = fs
+        .readdirSync(trecenaImageFolder, { withFileTypes: true })
+        .filter((entry) => entry.isDirectory())
+        .map((entry) => path.join(trecenaImageFolder, entry.name));
 
-    for (const dayFolder of dayFolders) {
-      const dayNumber = parseInt(path.basename(dayFolder));
-      if (isNaN(dayNumber) || dayNumber < 1 || dayNumber > 13) {
-        console.log(`⚠ Skipping invalid day folder: ${path.basename(dayFolder)}`);
-        continue;
+      for (const dayFolder of dayFolders) {
+        const dayNumber = parseInt(path.basename(dayFolder));
+        if (isNaN(dayNumber) || dayNumber < 1 || dayNumber > 13) {
+          console.log(`⚠ Skipping invalid day folder: ${path.basename(dayFolder)}`);
+          continue;
+        }
+
+        console.log(`\nProcessing day ${dayNumber} images...`);
+        await processDirectory(dayFolder, trecenaName, dayNumber);
       }
-
-      console.log(`\nProcessing day ${dayNumber}...`);
-      await processDirectory(dayFolder, trecenaName, dayNumber);
+    } else {
+      console.log(`\nNo images folder found for ${trecenaName}, skipping image processing`);
     }
 
     // Load trecena data and generate JSON
     console.log(`\nGenerating data.json for ${trecenaName}...`);
-    const trecenaKey = trecenaName.replace('trecena-', '');
     const trecenaData = await loadTrecenaData(trecenaKey);
 
     if (!trecenaData) {
-      console.log(`⚠ Skipping ${trecenaName} - data file not found`);
+      console.log(`⚠ Skipping ${trecenaName} - data file could not be loaded`);
       continue;
     }
 

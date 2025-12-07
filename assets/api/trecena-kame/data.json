@@ -1,0 +1,410 @@
+{
+  "trecena": "Kame",
+  "prologue": "",
+  "epilogue": "",
+  "days": [
+    {
+      "day": 1,
+      "number": 1,
+      "nawal": "Kame",
+      "chapter": "",
+      "energy_of_the_day": {
+        "number": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "nawal": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "combined_energy": {
+          "title": "",
+          "content": "",
+          "notes": []
+        }
+      },
+      "horoscope": "",
+      "affirmation": "",
+      "meditation": "",
+      "birthday": {
+        "title": "",
+        "content": ""
+      },
+      "colors": {}
+    },
+    {
+      "day": 2,
+      "number": 2,
+      "nawal": "Kej",
+      "chapter": "",
+      "energy_of_the_day": {
+        "number": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "nawal": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "combined_energy": {
+          "title": "",
+          "content": "",
+          "notes": []
+        }
+      },
+      "horoscope": "",
+      "affirmation": "",
+      "meditation": "",
+      "birthday": {
+        "title": "",
+        "content": ""
+      },
+      "colors": {}
+    },
+    {
+      "day": 3,
+      "number": 3,
+      "nawal": "Q'anil",
+      "chapter": "",
+      "energy_of_the_day": {
+        "number": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "nawal": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "combined_energy": {
+          "title": "",
+          "content": "",
+          "notes": []
+        }
+      },
+      "horoscope": "",
+      "affirmation": "",
+      "meditation": "",
+      "birthday": {
+        "title": "",
+        "content": ""
+      },
+      "colors": {}
+    },
+    {
+      "day": 4,
+      "number": 4,
+      "nawal": "Toj",
+      "chapter": "",
+      "energy_of_the_day": {
+        "number": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "nawal": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "combined_energy": {
+          "title": "",
+          "content": "",
+          "notes": []
+        }
+      },
+      "horoscope": "",
+      "affirmation": "",
+      "meditation": "",
+      "birthday": {
+        "title": "",
+        "content": ""
+      },
+      "colors": {}
+    },
+    {
+      "day": 5,
+      "number": 5,
+      "nawal": "Tz'i'",
+      "chapter": "",
+      "energy_of_the_day": {
+        "number": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "nawal": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "combined_energy": {
+          "title": "",
+          "content": "",
+          "notes": []
+        }
+      },
+      "horoscope": "",
+      "affirmation": "",
+      "meditation": "",
+      "birthday": {
+        "title": "",
+        "content": ""
+      },
+      "colors": {}
+    },
+    {
+      "day": 6,
+      "number": 6,
+      "nawal": "B'atz'",
+      "chapter": "",
+      "energy_of_the_day": {
+        "number": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "nawal": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "combined_energy": {
+          "title": "",
+          "content": "",
+          "notes": []
+        }
+      },
+      "horoscope": "",
+      "affirmation": "",
+      "meditation": "",
+      "birthday": {
+        "title": "",
+        "content": ""
+      },
+      "colors": {}
+    },
+    {
+      "day": 7,
+      "number": 7,
+      "nawal": "E'",
+      "chapter": "",
+      "energy_of_the_day": {
+        "number": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "nawal": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "combined_energy": {
+          "title": "",
+          "content": "",
+          "notes": []
+        }
+      },
+      "horoscope": "",
+      "affirmation": "",
+      "meditation": "",
+      "birthday": {
+        "title": "",
+        "content": ""
+      },
+      "colors": {}
+    },
+    {
+      "day": 8,
+      "number": 8,
+      "nawal": "Aj",
+      "chapter": "",
+      "energy_of_the_day": {
+        "number": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "nawal": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "combined_energy": {
+          "title": "",
+          "content": "",
+          "notes": []
+        }
+      },
+      "horoscope": "",
+      "affirmation": "",
+      "meditation": "",
+      "birthday": {
+        "title": "",
+        "content": ""
+      },
+      "colors": {}
+    },
+    {
+      "day": 9,
+      "number": 9,
+      "nawal": "Ix",
+      "chapter": "",
+      "energy_of_the_day": {
+        "number": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "nawal": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "combined_energy": {
+          "title": "",
+          "content": "",
+          "notes": []
+        }
+      },
+      "horoscope": "",
+      "affirmation": "",
+      "meditation": "",
+      "birthday": {
+        "title": "",
+        "content": ""
+      },
+      "colors": {}
+    },
+    {
+      "day": 10,
+      "number": 10,
+      "nawal": "Tz'ikin",
+      "chapter": "",
+      "energy_of_the_day": {
+        "number": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "nawal": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "combined_energy": {
+          "title": "",
+          "content": "",
+          "notes": []
+        }
+      },
+      "horoscope": "",
+      "affirmation": "",
+      "meditation": "",
+      "birthday": {
+        "title": "",
+        "content": ""
+      },
+      "colors": {}
+    },
+    {
+      "day": 11,
+      "number": 11,
+      "nawal": "Ajmaq",
+      "chapter": "",
+      "energy_of_the_day": {
+        "number": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "nawal": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "combined_energy": {
+          "title": "",
+          "content": "",
+          "notes": []
+        }
+      },
+      "horoscope": "",
+      "affirmation": "",
+      "meditation": "",
+      "birthday": {
+        "title": "",
+        "content": ""
+      },
+      "colors": {}
+    },
+    {
+      "day": 12,
+      "number": 12,
+      "nawal": "No'j",
+      "chapter": "",
+      "energy_of_the_day": {
+        "number": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "nawal": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "combined_energy": {
+          "title": "",
+          "content": "",
+          "notes": []
+        }
+      },
+      "horoscope": "",
+      "affirmation": "",
+      "meditation": "",
+      "birthday": {
+        "title": "",
+        "content": ""
+      },
+      "colors": {}
+    },
+    {
+      "day": 13,
+      "number": 13,
+      "nawal": "Tijax",
+      "chapter": "",
+      "energy_of_the_day": {
+        "number": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "nawal": {
+          "title": "",
+          "content": "",
+          "keywords": []
+        },
+        "combined_energy": {
+          "title": "",
+          "content": "",
+          "notes": []
+        }
+      },
+      "horoscope": "",
+      "affirmation": "",
+      "meditation": "",
+      "birthday": {
+        "title": "",
+        "content": ""
+      },
+      "colors": {}
+    }
+  ]
+}

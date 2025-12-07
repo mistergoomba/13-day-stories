@@ -53,24 +53,24 @@
       },
       "colors": {
         "horoscope": {
-          "primary": "#070b16",
-          "secondary": "#283b3a",
-          "accent": "#a67d52"
+          "primary": "#080c17",
+          "secondary": "#2b3f3d",
+          "accent": "#ac7f52"
         },
         "affirmation": {
-          "primary": "#3c3051",
-          "secondary": "#b37e77",
-          "accent": "#e7dace"
+          "primary": "#3e3151",
+          "secondary": "#b98478",
+          "accent": "#e9dfd9"
         },
         "story_primary": {
-          "primary": "#180f18",
-          "secondary": "#402535",
-          "accent": "#904149"
+          "primary": "#1a111a",
+          "secondary": "#482939",
+          "accent": "#9d444a"
         },
         "birthday": {
-          "primary": "#050a0a",
-          "secondary": "#213634",
-          "accent": "#38706a"
+          "primary": "#050b0a",
+          "secondary": "#223734",
+          "accent": "#38716b"
         }
       }
     },
@@ -121,7 +121,28 @@
         "title": "The Diplomat of Spirit",
         "content": "To be born on 2 Tz’i’ is to be a walker between worlds. The number 2 brings the gift of perspective and duality, while Tz’i’ brings the instinct for justice and truth. You are a natural mediator.\n\nYou see both sides of every story, which can sometimes make decision-making difficult, but it also makes you deeply compassionate. You are the glue in your community, the faithful friend who understands the complexity of human nature. Your challenge is to not lose your own truth while trying to balance everyone else’s. Remember, your first loyalty must be to your own soul."
       },
-      "colors": {}
+      "colors": {
+        "horoscope": {
+          "primary": "#191d34",
+          "secondary": "#535677",
+          "accent": "#d5d2da"
+        },
+        "affirmation": {
+          "primary": "#6f6d7f",
+          "secondary": "#9ba3b7",
+          "accent": "#d4b0be"
+        },
+        "story_primary": {
+          "primary": "#191419",
+          "secondary": "#40353e",
+          "accent": "#986253"
+        },
+        "birthday": {
+          "primary": "#161510",
+          "secondary": "#634f3a",
+          "accent": "#e7d8c1"
+        }
+      }
     },
     {
       "day": 3,
@@ -170,7 +191,28 @@
         "title": "The Master Artist",
         "content": "To be born on 3 B’atz’ is to be a vessel of pure creative expression. The number 3 brings rhythm and movement, while B’atz’ brings the mastery of the weaver. You don’t just live life; you perform it.\n\nYou have a quick wit, a charming presence, and a deep need to create beauty. You likely have a talent for the arts, communication, or bringing people together. Your life path is one of artistry—weaving together disparate elements to make something whole. Your challenge is focus; your mind moves so fast you can tangle your own threads. Slow down, find your rhythm, and the masterpiece will reveal itself."
       },
-      "colors": {}
+      "colors": {
+        "horoscope": {
+          "primary": "#19132c",
+          "secondary": "#52406a",
+          "accent": "#947a9e"
+        },
+        "affirmation": {
+          "primary": "#c3b0bf",
+          "secondary": "#c2cdba",
+          "accent": "#e7caad"
+        },
+        "story_primary": {
+          "primary": "#131316",
+          "secondary": "#2b3037",
+          "accent": "#5c5d59"
+        },
+        "birthday": {
+          "primary": "#110f0e",
+          "secondary": "#5d402f",
+          "accent": "#d5b299"
+        }
+      }
     },
     {
       "day": 4,
@@ -221,9 +263,9 @@
       },
       "colors": {
         "horoscope": {
-          "primary": "#17182c",
-          "secondary": "#39394b",
-          "accent": "#a98b6e"
+          "primary": "#16182c",
+          "secondary": "#38394b",
+          "accent": "#a88b6e"
         },
         "affirmation": {
           "primary": "#396377",
@@ -231,14 +273,14 @@
           "accent": "#b5c6cb"
         },
         "story_primary": {
-          "primary": "#27151d",
-          "secondary": "#64333a",
-          "accent": "#998991"
+          "primary": "#29151d",
+          "secondary": "#66363e",
+          "accent": "#a08f95"
         },
         "birthday": {
-          "primary": "#141b18",
-          "secondary": "#3b5b52",
-          "accent": "#86d4c8"
+          "primary": "#101714",
+          "secondary": "#38564d",
+          "accent": "#80cec2"
         }
       }
     },
@@ -291,23 +333,23 @@
       },
       "colors": {
         "horoscope": {
-          "primary": "#1e1e2a",
-          "secondary": "#605859",
-          "accent": "#bfb1a3"
+          "primary": "#1f1f2b",
+          "secondary": "#655c5d",
+          "accent": "#c1b4a5"
         },
         "affirmation": {
-          "primary": "#4a4e2e",
-          "secondary": "#8a8042",
-          "accent": "#c3ac5d"
+          "primary": "#4c502e",
+          "secondary": "#918545",
+          "accent": "#c6b05f"
         },
         "story_primary": {
-          "primary": "#13141b",
-          "secondary": "#404149",
-          "accent": "#90838a"
+          "primary": "#12131a",
+          "secondary": "#3e3f47",
+          "accent": "#8d8188"
         },
         "birthday": {
           "primary": "#13110b",
-          "secondary": "#52422e",
+          "secondary": "#52422d",
           "accent": "#c59d4f"
         }
       }
@@ -362,23 +404,23 @@
       "colors": {
         "horoscope": {
           "primary": "#0f1828",
-          "secondary": "#253678",
-          "accent": "#5085d3"
+          "secondary": "#26377a",
+          "accent": "#5185d3"
         },
         "affirmation": {
-          "primary": "#232a53",
-          "secondary": "#7665ac",
-          "accent": "#b99bde"
+          "primary": "#242b54",
+          "secondary": "#7867af",
+          "accent": "#bb9de0"
         },
         "story_primary": {
-          "primary": "#131828",
-          "secondary": "#383964",
-          "accent": "#8885b2"
+          "primary": "#141829",
+          "secondary": "#3b3b68",
+          "accent": "#8987b3"
         },
         "birthday": {
-          "primary": "#090e0a",
-          "secondary": "#48703d",
-          "accent": "#82ba71"
+          "primary": "#090d0a",
+          "secondary": "#456c3a",
+          "accent": "#7fb76f"
         }
       }
     },
@@ -431,24 +473,24 @@
       },
       "colors": {
         "horoscope": {
-          "primary": "#1f2539",
-          "secondary": "#53585c",
-          "accent": "#c2b07e"
+          "primary": "#22283c",
+          "secondary": "#5b5e5f",
+          "accent": "#c9b681"
         },
         "affirmation": {
-          "primary": "#4d7593",
-          "secondary": "#8ea5ac",
-          "accent": "#ced5cb"
+          "primary": "#527d9e",
+          "secondary": "#b09b6e",
+          "accent": "#bbcdd0"
         },
         "story_primary": {
-          "primary": "#292229",
-          "secondary": "#376181",
-          "accent": "#8a6e57"
+          "primary": "#2f2023",
+          "secondary": "#2b4d6c",
+          "accent": "#757b76"
         },
         "birthday": {
-          "primary": "#181a15",
-          "secondary": "#545d56",
-          "accent": "#c0dcd9"
+          "primary": "#191a15",
+          "secondary": "#555e57",
+          "accent": "#c0dcda"
         }
       }
     },
@@ -501,24 +543,24 @@
       },
       "colors": {
         "horoscope": {
-          "primary": "#613b26",
-          "secondary": "#ac784b",
-          "accent": "#e5c182"
+          "primary": "#623c27",
+          "secondary": "#ad794b",
+          "accent": "#e5c282"
         },
         "affirmation": {
-          "primary": "#7d454c",
-          "secondary": "#b16249",
-          "accent": "#de9657"
+          "primary": "#7a444c",
+          "secondary": "#ab5f4a",
+          "accent": "#db9255"
         },
         "story_primary": {
-          "primary": "#422d31",
-          "secondary": "#936240",
-          "accent": "#cb9e5d"
+          "primary": "#412c30",
+          "secondary": "#905f40",
+          "accent": "#c99b5c"
         },
         "birthday": {
-          "primary": "#1c1c17",
-          "secondary": "#564834",
-          "accent": "#d7b56d"
+          "primary": "#1d1d18",
+          "secondary": "#5b4b35",
+          "accent": "#dab76e"
         }
       }
     },
@@ -571,24 +613,24 @@
       },
       "colors": {
         "horoscope": {
-          "primary": "#0f1537",
-          "secondary": "#4e5775",
-          "accent": "#9aa6a7"
+          "primary": "#0d1234",
+          "secondary": "#3f486b",
+          "accent": "#8f9aa0"
         },
         "affirmation": {
           "primary": "#5c3937",
-          "secondary": "#9b6f5d",
-          "accent": "#dcbfb5"
+          "secondary": "#9a6e5d",
+          "accent": "#dbbeb5"
         },
         "story_primary": {
-          "primary": "#120d27",
-          "secondary": "#2e1e51",
-          "accent": "#5c5cc1"
+          "primary": "#1b1234",
+          "secondary": "#4d44a9",
+          "accent": "#676fd0"
         },
         "birthday": {
-          "primary": "#0f1417",
-          "secondary": "#354858",
-          "accent": "#77b9c8"
+          "primary": "#0e1317",
+          "secondary": "#344554",
+          "accent": "#74b4c4"
         }
       }
     },
@@ -642,23 +684,23 @@
       "colors": {
         "horoscope": {
           "primary": "#092e35",
-          "secondary": "#3a6f71",
-          "accent": "#c2c8ba"
+          "secondary": "#3b7072",
+          "accent": "#c3c9ba"
         },
         "affirmation": {
-          "primary": "#345126",
-          "secondary": "#899748",
-          "accent": "#d9d7a3"
+          "primary": "#365427",
+          "secondary": "#929d4e",
+          "accent": "#dbdaa8"
         },
         "story_primary": {
-          "primary": "#10151c",
-          "secondary": "#69696c",
-          "accent": "#dbe0e3"
+          "primary": "#0f141b",
+          "secondary": "#666669",
+          "accent": "#d9dee1"
         },
         "birthday": {
-          "primary": "#1b1d1c",
-          "secondary": "#56544e",
-          "accent": "#e3e1d6"
+          "primary": "#181a1a",
+          "secondary": "#4d4b46",
+          "accent": "#dad6cb"
         }
       }
     },
@@ -712,23 +754,23 @@
       "colors": {
         "horoscope": {
           "primary": "#1c2937",
-          "secondary": "#434850",
-          "accent": "#af8d6e"
+          "secondary": "#424850",
+          "accent": "#ad8b6e"
         },
         "affirmation": {
-          "primary": "#2b463b",
-          "secondary": "#56785d",
-          "accent": "#7eae9e"
+          "primary": "#284238",
+          "secondary": "#507258",
+          "accent": "#7caa97"
         },
         "story_primary": {
-          "primary": "#12182e",
-          "secondary": "#334e72",
-          "accent": "#699db9"
+          "primary": "#121930",
+          "secondary": "#355176",
+          "accent": "#6ca2bc"
         },
         "birthday": {
-          "primary": "#16151d",
-          "secondary": "#493171",
-          "accent": "#bf8dd9"
+          "primary": "#15141c",
+          "secondary": "#45306a",
+          "accent": "#b987d8"
         }
       }
     },
@@ -781,14 +823,14 @@
       },
       "colors": {
         "horoscope": {
-          "primary": "#162742",
-          "secondary": "#5b5659",
-          "accent": "#dcbb7d"
+          "primary": "#152642",
+          "secondary": "#565459",
+          "accent": "#dab97c"
         },
         "affirmation": {
-          "primary": "#5f9bc8",
-          "secondary": "#a9cadc",
-          "accent": "#e5e8da"
+          "primary": "#5f9ac7",
+          "secondary": "#a7cbdf",
+          "accent": "#e4e6d7"
         },
         "story_primary": {
           "primary": "#12131b",
@@ -796,9 +838,9 @@
           "accent": "#e5a84b"
         },
         "birthday": {
-          "primary": "#161610",
-          "secondary": "#5b4b30",
-          "accent": "#d7bb58"
+          "primary": "#191912",
+          "secondary": "#645233",
+          "accent": "#ddc15b"
         }
       }
     },
@@ -851,24 +893,24 @@
       },
       "colors": {
         "horoscope": {
-          "primary": "#1b2034",
-          "secondary": "#4c5065",
-          "accent": "#9b98a1"
+          "primary": "#1f2438",
+          "secondary": "#565a6e",
+          "accent": "#a5a1a8"
         },
         "affirmation": {
-          "primary": "#1c2548",
-          "secondary": "#45577d",
-          "accent": "#acc6cf"
+          "primary": "#202a4e",
+          "secondary": "#5d759a",
+          "accent": "#bcd2d4"
         },
         "story_primary": {
-          "primary": "#13182d",
-          "secondary": "#363f55",
-          "accent": "#5e7583"
+          "primary": "#141a2e",
+          "secondary": "#3a455a",
+          "accent": "#627a87"
         },
         "birthday": {
           "primary": "#0b100d",
-          "secondary": "#344336",
-          "accent": "#40a591"
+          "secondary": "#324235",
+          "accent": "#41a38f"
         }
       }
     }
