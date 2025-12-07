@@ -506,8 +506,9 @@ export const kawoqTrecena = {
       affirmation: '',
       meditation: '',
       birthday: {
-        title: '',
-        content: '',
+        title: 'The Cosmic Weaver',
+        content:
+          'To be born on 13 B’atz’ is to hold the golden needle that finishes the tapestry. The number 13 brings the energy of ascension and spiritual completion, while B’atz’ is the master weaver of time and reality. You are an artist of the highest order—not just of paint or words, but of life itself.\n\nYou have an innate ability to see how the disparate threads of existence connect into a unified, beautiful whole. You are here to bring creative cycles to their highest potential, turning raw experience into spiritual gold. Your presence teaches others that time is not a cage, but a canvas. Your challenge is to not get lost in the infinite possibilities; remember that even the most complex masterpiece requires a single, steady thread to begin.',
       },
       image_prompts: {
         story_primary: '',
@@ -516,7 +517,8 @@ export const kawoqTrecena = {
         horoscope: '',
         affirmation: '',
         meditation: '',
-        birthday: '',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for B’atz’ (Monkey/Thread/Pyramid shape) glowing with internal iridescent-gold light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 13: two glowing golden bars stacked horizontally with three golden dots centered above them. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
   ],

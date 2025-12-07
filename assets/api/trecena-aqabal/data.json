@@ -53,19 +53,19 @@
       },
       "colors": {
         "horoscope": {
-          "primary": "#0b1014",
-          "secondary": "#1a222d",
-          "accent": "#4e3d38"
+          "primary": "#0b0f13",
+          "secondary": "#181f29",
+          "accent": "#413739"
         },
         "affirmation": {
-          "primary": "#4c3868",
-          "secondary": "#7d657e",
-          "accent": "#dc954c"
+          "primary": "#4d3968",
+          "secondary": "#836c82",
+          "accent": "#e7933d"
         },
         "story_primary": {
           "primary": "#1b262f",
-          "secondary": "#404347",
-          "accent": "#67636e"
+          "secondary": "#404247",
+          "accent": "#66626e"
         }
       }
     },
@@ -119,19 +119,19 @@
       },
       "colors": {
         "horoscope": {
-          "primary": "#060b1a",
-          "secondary": "#221939",
-          "accent": "#883b35"
+          "primary": "#060a1a",
+          "secondary": "#211838",
+          "accent": "#843a35"
         },
         "affirmation": {
-          "primary": "#0d172b",
-          "secondary": "#30434e",
-          "accent": "#897451"
+          "primary": "#0e172b",
+          "secondary": "#31444f",
+          "accent": "#8a7451"
         },
         "story_primary": {
           "primary": "#020f23",
-          "secondary": "#0d1f3f",
-          "accent": "#70454b"
+          "secondary": "#0c1f3f",
+          "accent": "#66424b"
         }
       }
     },
@@ -185,19 +185,19 @@
       },
       "colors": {
         "horoscope": {
-          "primary": "#1c1a1f",
-          "secondary": "#513d34",
-          "accent": "#cc8b33"
+          "primary": "#1c1a20",
+          "secondary": "#553e34",
+          "accent": "#ce8c33"
         },
         "affirmation": {
-          "primary": "#08151a",
-          "secondary": "#524221",
-          "accent": "#c38722"
+          "primary": "#09151a",
+          "secondary": "#524321",
+          "accent": "#c38822"
         },
         "story_primary": {
-          "primary": "#02271c",
-          "secondary": "#18522e",
-          "accent": "#d2970f"
+          "primary": "#02281c",
+          "secondary": "#19522e",
+          "accent": "#d3970f"
         }
       }
     },
@@ -251,19 +251,19 @@
       },
       "colors": {
         "horoscope": {
-          "primary": "#20285e",
-          "secondary": "#463c92",
-          "accent": "#a36d9c"
+          "primary": "#212960",
+          "secondary": "#4d3f96",
+          "accent": "#ae739a"
         },
         "affirmation": {
-          "primary": "#110d3b",
-          "secondary": "#4e255f",
-          "accent": "#c27066"
+          "primary": "#120e3c",
+          "secondary": "#552661",
+          "accent": "#c47366"
         },
         "story_primary": {
-          "primary": "#222434",
-          "secondary": "#3f3f57",
-          "accent": "#685e72"
+          "primary": "#202333",
+          "secondary": "#393951",
+          "accent": "#60586e"
         }
       }
     },
@@ -322,14 +322,14 @@
           "accent": "#853a35"
         },
         "affirmation": {
-          "primary": "#0d172b",
-          "secondary": "#31444e",
-          "accent": "#8b7551"
+          "primary": "#0d172a",
+          "secondary": "#2c3f4b",
+          "accent": "#837152"
         },
         "story_primary": {
           "primary": "#020f23",
-          "secondary": "#0d1f3f",
-          "accent": "#6f454b"
+          "secondary": "#0c1e3e",
+          "accent": "#5e404d"
         }
       }
     },
@@ -383,14 +383,14 @@
       },
       "colors": {
         "horoscope": {
-          "primary": "#1c1a20",
-          "secondary": "#553e34",
-          "accent": "#cf8d33"
+          "primary": "#1c1a1f",
+          "secondary": "#523d34",
+          "accent": "#cc8b33"
         },
         "affirmation": {
-          "primary": "#09151a",
-          "secondary": "#5a4822",
-          "accent": "#c68922"
+          "primary": "#08151a",
+          "secondary": "#504221",
+          "accent": "#c38722"
         },
         "story_primary": {
           "primary": "#02271c",
@@ -454,14 +454,14 @@
           "accent": "#a56d9c"
         },
         "affirmation": {
-          "primary": "#100d3b",
-          "secondary": "#4b245f",
-          "accent": "#c16f66"
+          "primary": "#110d3b",
+          "secondary": "#4e255f",
+          "accent": "#c27066"
         },
         "story_primary": {
-          "primary": "#1e202f",
-          "secondary": "#323348",
-          "accent": "#5b546b"
+          "primary": "#202232",
+          "secondary": "#37374e",
+          "accent": "#5f576d"
         }
       }
     },
@@ -515,19 +515,19 @@
       },
       "colors": {
         "horoscope": {
-          "primary": "#2d3368",
+          "primary": "#2d3367",
           "secondary": "#544884",
-          "accent": "#b0737e"
+          "accent": "#af737e"
         },
         "affirmation": {
-          "primary": "#0b071f",
-          "secondary": "#4d2e30",
-          "accent": "#b57227"
+          "primary": "#0d071f",
+          "secondary": "#5b3834",
+          "accent": "#bd7623"
         },
         "story_primary": {
-          "primary": "#272535",
-          "secondary": "#5d3d50",
-          "accent": "#9e5d61"
+          "primary": "#2b2637",
+          "secondary": "#674156",
+          "accent": "#ab635e"
         }
       }
     },

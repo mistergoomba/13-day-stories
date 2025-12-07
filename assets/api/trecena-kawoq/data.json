@@ -419,10 +419,16 @@
       "affirmation": "",
       "meditation": "",
       "birthday": {
-        "title": "",
-        "content": ""
+        "title": "The Cosmic Weaver",
+        "content": "To be born on 13 B’atz’ is to hold the golden needle that finishes the tapestry. The number 13 brings the energy of ascension and spiritual completion, while B’atz’ is the master weaver of time and reality. You are an artist of the highest order—not just of paint or words, but of life itself.\n\nYou have an innate ability to see how the disparate threads of existence connect into a unified, beautiful whole. You are here to bring creative cycles to their highest potential, turning raw experience into spiritual gold. Your presence teaches others that time is not a cage, but a canvas. Your challenge is to not get lost in the infinite possibilities; remember that even the most complex masterpiece requires a single, steady thread to begin."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#10130e",
+          "secondary": "#414437",
+          "accent": "#ccb992"
+        }
+      }
     }
   ]
 }
