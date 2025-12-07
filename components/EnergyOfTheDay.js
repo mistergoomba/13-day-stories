@@ -13,67 +13,81 @@ export default function EnergyOfTheDay({ dayData, energyOfTheDay, tagColor }) {
   const tagBackgroundColor = tagColor || colors.accent2;
 
   return (
-    <Card>
+    <>
       {/* Number Energy */}
-      <View style={styles.energyBlock}>
-        <Text style={styles.energySectionTitle}>{energyOfTheDay.number.title}</Text>
-        <Text style={styles.energyTitle}>The Number {dayData.number}</Text>
-        <Text style={styles.energyContent}>{energyOfTheDay.number.content}</Text>
-        <View style={styles.keywordsContainer}>
-          {energyOfTheDay.number.keywords.map((keyword, index) => (
-            <View key={index} style={[styles.keywordTag, { backgroundColor: tagBackgroundColor }]}>
-              <Text style={styles.keywordText}>{keyword}</Text>
-            </View>
-          ))}
-        </View>
-      </View>
-
-      {/* Nawal Energy */}
-      <View style={styles.energyBlock}>
-        <Text style={styles.energySectionTitle}>{energyOfTheDay.nawal.title}</Text>
-        <Text style={styles.energyTitle}>The Nawal {dayData.nawal}</Text>
-        <Text style={styles.energyContent}>{energyOfTheDay.nawal.content}</Text>
-        <View style={styles.keywordsContainer}>
-          {energyOfTheDay.nawal.keywords.map((keyword, index) => (
-            <View key={index} style={[styles.keywordTag, { backgroundColor: tagBackgroundColor }]}>
-              <Text style={styles.keywordText}>{keyword}</Text>
-            </View>
-          ))}
-        </View>
-      </View>
-
-      {/* Combined Energy */}
-      <View style={styles.energyBlock}>
-        <Text style={styles.energySectionTitle}>{energyOfTheDay.combined_energy.title}</Text>
-        <Text style={styles.energyTitle}>
-          The Energy of {dayData.number} {dayData.nawal}
-        </Text>
-        <Text style={styles.energyContent}>{energyOfTheDay.combined_energy.content}</Text>
-        {energyOfTheDay.combined_energy.notes && (
-          <View style={styles.notesContainer}>
-            {energyOfTheDay.combined_energy.notes.map((note, index) => (
-              <View key={index} style={styles.noteItem}>
-                <Text style={[styles.noteBullet, { color: tagBackgroundColor }]}>•</Text>
-                <Text style={styles.noteText}>{note}</Text>
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionHeader}>{energyOfTheDay.number.title}</Text>
+        <Card>
+          <Text style={styles.energyTitle}>The Number {dayData.number}</Text>
+          <Text style={styles.energyContent}>{energyOfTheDay.number.content}</Text>
+          <View style={styles.keywordsContainer}>
+            {energyOfTheDay.number.keywords.map((keyword, index) => (
+              <View
+                key={index}
+                style={[styles.keywordTag, { backgroundColor: tagBackgroundColor }]}
+              >
+                <Text style={styles.keywordText}>{keyword}</Text>
               </View>
             ))}
           </View>
-        )}
+        </Card>
       </View>
-    </Card>
+
+      {/* Nawal Energy */}
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionHeader}>{energyOfTheDay.nawal.title}</Text>
+        <Card>
+          <Text style={styles.energyTitle}>The Nawal {dayData.nawal}</Text>
+          <Text style={styles.energyContent}>{energyOfTheDay.nawal.content}</Text>
+          <View style={styles.keywordsContainer}>
+            {energyOfTheDay.nawal.keywords.map((keyword, index) => (
+              <View
+                key={index}
+                style={[styles.keywordTag, { backgroundColor: tagBackgroundColor }]}
+              >
+                <Text style={styles.keywordText}>{keyword}</Text>
+              </View>
+            ))}
+          </View>
+        </Card>
+      </View>
+
+      {/* Combined Energy */}
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionHeader}>{energyOfTheDay.combined_energy.title}</Text>
+        <Card>
+          <Text style={styles.energyTitle}>
+            The Energy of {dayData.number} {dayData.nawal}
+          </Text>
+          <Text style={styles.energyContent}>{energyOfTheDay.combined_energy.content}</Text>
+          {energyOfTheDay.combined_energy.notes && (
+            <View style={styles.notesContainer}>
+              {energyOfTheDay.combined_energy.notes.map((note, index) => (
+                <View key={index} style={styles.noteItem}>
+                  <Text style={[styles.noteBullet, { color: tagBackgroundColor }]}>•</Text>
+                  <Text style={styles.noteText}>{note}</Text>
+                </View>
+              ))}
+            </View>
+          )}
+        </Card>
+      </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  energySectionTitle: {
-    ...type.subtitle,
-    color: colors.text,
-    fontWeight: '700',
+  sectionContainer: {
     marginBottom: 20,
-    fontSize: 20,
   },
-  energyBlock: {
-    marginBottom: 24,
+  sectionHeader: {
+    ...type.title,
+    color: colors.text,
+    fontSize: 28,
+    fontWeight: '700',
+    marginBottom: 16,
+    paddingTop: 35,
+    textAlign: 'center',
   },
   energyTitle: {
     ...type.subtitle,
@@ -85,7 +99,7 @@ const styles = StyleSheet.create({
     ...type.body,
     color: colors.text,
     lineHeight: 24,
-    marginBottom: 16,
+    marginBottom: 25,
   },
   keywordsContainer: {
     flexDirection: 'row',
@@ -123,4 +137,3 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
 });
-

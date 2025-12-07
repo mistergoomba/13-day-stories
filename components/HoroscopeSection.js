@@ -1,21 +1,35 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Card from './Card';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
+import ImageWithPlaceholder from './ImageWithPlaceholder';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
+export default function HoroscopeSection({ horoscopeImage, horoscopeText, date, flushTop = false }) {
+  // Format date for display
+  const formatDate = (date) => {
+    if (!date) return '';
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
 
-export default function HoroscopeSection({ horoscopeImage, horoscopeText }) {
   return (
     <>
       {/* Horoscope Image */}
-      {horoscopeImage && (
-        <Image
-          source={horoscopeImage}
-          style={[styles.horoscopeImage, { height: SCREEN_WIDTH }]}
-          resizeMode='cover'
-        />
+      <ImageWithPlaceholder
+        source={horoscopeImage}
+        type="square"
+        flushTop={flushTop}
+      />
+
+      {/* Date Display */}
+      {date && (
+        <View style={styles.dateContainer}>
+          <Text style={styles.dateText}>{formatDate(date)}</Text>
+        </View>
       )}
 
       {/* Horoscope Text */}
@@ -29,9 +43,17 @@ export default function HoroscopeSection({ horoscopeImage, horoscopeText }) {
 }
 
 const styles = StyleSheet.create({
-  horoscopeImage: {
-    width: '100%',
-    marginBottom: 16,
+  dateContainer: {
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+    alignItems: 'center',
+  },
+  dateText: {
+    ...type.caption,
+    color: colors.textDim,
+    fontSize: 14,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   horoscopeTextContainer: {
     paddingHorizontal: 16,

@@ -14,16 +14,48 @@ import BirthdayScreenContent from './screens/BirthdayScreenContent';
 import colors from './theme/colors';
 
 const HAS_OPENED_APP_KEY = '@has_opened_app';
+const BIRTHDAY_DATE_KEY = '@birthday_date';
 
 function AppContent() {
   const insets = useSafeAreaInsets();
   const [currentView, setCurrentView] = useState(null); // null initially, will be set after checking first time
   const [selectedDay, setSelectedDay] = useState(null); // null = no selection, number = selected day for Journey detail view
-  const [birthdayDay, setBirthdayDay] = useState(null); // Selected birthday day (1-13)
+  const [birthdayDate, setBirthdayDate] = useState(null); // Selected birthday date (YYYY-MM-DD format)
   const [resetToTodayTrigger, setResetToTodayTrigger] = useState(0); // Trigger to reset Day screen to today
   const [resetMeditationTrigger, setResetMeditationTrigger] = useState(0); // Trigger to reset Meditation screen to today
   const scrollViewRef = useRef(null);
   const meditationScrollViewRef = useRef(null);
+
+  // Load saved birthday on mount
+  useEffect(() => {
+    const loadBirthday = async () => {
+      try {
+        const savedBirthday = await AsyncStorage.getItem(BIRTHDAY_DATE_KEY);
+        if (savedBirthday) {
+          setBirthdayDate(savedBirthday);
+        }
+      } catch (error) {
+        console.error('Error loading birthday:', error);
+      }
+    };
+
+    loadBirthday();
+  }, []);
+
+  // Save birthday when it changes
+  useEffect(() => {
+    const saveBirthday = async () => {
+      if (birthdayDate) {
+        try {
+          await AsyncStorage.setItem(BIRTHDAY_DATE_KEY, birthdayDate);
+        } catch (error) {
+          console.error('Error saving birthday:', error);
+        }
+      }
+    };
+
+    saveBirthday();
+  }, [birthdayDate]);
 
   // Check if first time opening app
   useEffect(() => {
@@ -48,6 +80,15 @@ function AppContent() {
 
     checkFirstTime();
   }, []);
+
+  // Handle Personal icon click - navigate to Birthday if birthday exists, otherwise Personal
+  const handlePersonalNavigation = () => {
+    if (birthdayDate) {
+      setCurrentView('Birthday');
+    } else {
+      setCurrentView('Personal');
+    }
+  };
 
   // Scroll to top when view changes
   useEffect(() => {
@@ -74,12 +115,12 @@ function AppContent() {
   const CurrentComponent = viewComponents[currentView];
 
   // Screens that handle their own scrolling (with sticky headers)
-  const screensWithOwnScrollView = ['Meditation', 'Today', 'Journey', 'Personal', 'Birthday'];
+  const screensWithOwnScrollView = ['Meditation', 'Today', 'Journey', 'Personal', 'Birthday', 'Home', 'Settings'];
 
   // Screens that use DynamicBackground (should not show NebulaBackground)
   // Journey only uses DynamicBackground when showing a chapter detail (selectedDay !== null)
   // Birthday always uses DynamicBackground when viewing a birthday
-  const screensWithDynamicBackground = ['Today', 'Meditation', 'Birthday'];
+  const screensWithDynamicBackground = ['Today', 'Meditation', 'Birthday', 'Home', 'Settings'];
   const journeyHasDynamicBackground = currentView === 'Journey' && selectedDay !== null;
   const shouldShowNebulaBackground = !screensWithDynamicBackground.includes(currentView) && !journeyHasDynamicBackground;
 
@@ -100,6 +141,7 @@ function AppContent() {
             setSelectedDay={setSelectedDay}
             setCurrentView={setCurrentView}
             scrollViewRef={scrollViewRef}
+            onPersonalPress={handlePersonalNavigation}
           />
         ) : currentView === 'Today' ? (
           <TodayScreenContent
@@ -107,24 +149,43 @@ function AppContent() {
             setSelectedDay={setSelectedDay}
             scrollViewRef={scrollViewRef}
             resetToTodayTrigger={resetToTodayTrigger}
+            onPersonalPress={handlePersonalNavigation}
           />
         ) : currentView === 'Meditation' ? (
           <MeditationScreenContent
             setCurrentView={setCurrentView}
             scrollViewRef={meditationScrollViewRef}
             resetMeditationTrigger={resetMeditationTrigger}
+            onPersonalPress={handlePersonalNavigation}
           />
         ) : currentView === 'Personal' ? (
           <PersonalScreenContent
             scrollViewRef={scrollViewRef}
             setCurrentView={setCurrentView}
-            setBirthdayDay={setBirthdayDay}
+            setBirthdayDate={setBirthdayDate}
           />
         ) : currentView === 'Birthday' ? (
           <BirthdayScreenContent
             scrollViewRef={scrollViewRef}
             setCurrentView={setCurrentView}
-            birthdayDay={birthdayDay}
+            birthdayDate={birthdayDate}
+            setBirthdayDate={setBirthdayDate}
+            onPersonalPress={handlePersonalNavigation}
+          />
+        ) : currentView === 'Home' ? (
+          <HomeScreenContent
+            setCurrentView={setCurrentView}
+            scrollViewRef={scrollViewRef}
+            onPersonalPress={handlePersonalNavigation}
+            handlePersonalNavigation={handlePersonalNavigation}
+          />
+        ) : currentView === 'Settings' ? (
+          <SettingsScreenContent
+            setCurrentView={setCurrentView}
+            scrollViewRef={scrollViewRef}
+            setBirthdayDate={setBirthdayDate}
+            birthdayDate={birthdayDate}
+            onPersonalPress={handlePersonalNavigation}
           />
         ) : (
           <CurrentComponent

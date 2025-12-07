@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, Dimensions, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle, Path } from 'react-native-svg';
 import colors from '../theme/colors';
@@ -7,28 +7,37 @@ import { type } from '../theme/typography';
 import { mainButton } from '../theme/buttons';
 import Card from '../components/Card';
 import SectionHeader from '../components/SectionHeader';
-import { getTodayMayanDate } from '../utils/mayanCalendar';
+import DynamicBackground from '../components/DynamicBackground';
+// Home screen doesn't need Mayan date - removed unused import
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-export default function HomeScreenContent({ setCurrentView }) {
+export default function HomeScreenContent({ setCurrentView, scrollViewRef, onPersonalPress, handlePersonalNavigation }) {
   const insets = useSafeAreaInsets();
-  const today = getTodayMayanDate();
-
-  // Format today's date
-  const formatDate = (date) => {
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
 
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
 
+  // Default background colors for home screen
+  const defaultBackgroundColors = {
+    primary: '#12091A',
+    secondary: '#1C0F29',
+    accent: '#6E45CF',
+  };
+
   return (
-    <View style={[styles.content, { paddingBottom: bottomPadding }]}>
+    <View style={styles.container}>
+      {/* Dynamic Background */}
+      <DynamicBackground backgroundColors={defaultBackgroundColors} />
+
+      {/* Scrollable Content */}
+      <ScrollView
+        ref={scrollViewRef}
+        style={styles.scrollView}
+        contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 20 }]}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={[styles.content, { paddingBottom: bottomPadding }]}>
       <Image source={require('../assets/icon.png')} style={styles.icon} resizeMode='contain' />
 
       <Card>
@@ -60,19 +69,37 @@ export default function HomeScreenContent({ setCurrentView }) {
 
       {/* Navigation Links */}
       <View style={styles.navigationContainer}>
-        {/* Main Primary Button */}
-        <View style={styles.mainButtonContainer}>
+        {/* Main Primary Buttons - Side by Side */}
+        <View style={styles.mainButtonsRow}>
           <Pressable
             style={styles.mainButton}
             onPress={() => setCurrentView && setCurrentView('Today')}
           >
             <View style={styles.mainButtonContent}>
-              <Svg width={64} height={64} viewBox='0 0 24 24' fill='none'>
+              <Svg width={48} height={48} viewBox='0 0 24 24' fill='none'>
                 <Circle cx={12} cy={10} r={6} stroke={colors.text} strokeWidth={2} />
                 <Path d='M6 20H18' stroke={colors.text} strokeWidth={2} strokeLinecap='round' />
                 <Path d='M8 16H16' stroke={colors.text} strokeWidth={2} strokeLinecap='round' />
               </Svg>
-              <Text style={styles.mainButtonText}>Read the{'\n'}Energy of the Day</Text>
+              <Text style={styles.mainButtonText}>See the{'\n'}Energy of the Day</Text>
+            </View>
+          </Pressable>
+
+          <Pressable
+            style={styles.mainButton}
+            onPress={() => handlePersonalNavigation && handlePersonalNavigation()}
+          >
+            <View style={styles.mainButtonContent}>
+              <Svg width={48} height={48} viewBox='0 0 24 24' fill='none'>
+                <Circle cx={12} cy={8} r={4} stroke={colors.text} strokeWidth={2} />
+                <Path
+                  d='M6 21C6 17 9 14 12 14C15 14 18 17 18 21'
+                  stroke={colors.text}
+                  strokeWidth={2}
+                  strokeLinecap='round'
+                />
+              </Svg>
+              <Text style={styles.mainButtonText}>Find Your{'\n'}Mayan Birthday</Text>
             </View>
           </Pressable>
         </View>
@@ -96,11 +123,23 @@ export default function HomeScreenContent({ setCurrentView }) {
           </Pressable>
         </View>
       </View>
+      </View>
+    </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
   content: {
     padding: 20,
   },
@@ -120,31 +159,33 @@ const styles = StyleSheet.create({
     marginTop: 24,
     alignItems: 'center',
   },
-  mainButtonContainer: {
-    width: SCREEN_WIDTH * 0.5,
-    height: SCREEN_WIDTH * 0.5,
+  mainButtonsRow: {
+    flexDirection: 'row',
+    gap: 12,
     marginBottom: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: '100%',
+    paddingHorizontal: 20,
   },
   mainButton: {
     ...mainButton.button,
-    width: '100%',
-    height: '100%',
-    borderRadius: 16, // Custom size for this specific button
+    flex: 1,
+    aspectRatio: 1,
+    borderRadius: 16,
+    minHeight: 140,
   },
   mainButtonContent: {
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 16,
+    gap: 12,
+    flex: 1,
+    padding: 16,
   },
   mainButtonText: {
     ...type.body,
     color: colors.text,
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '600',
     textAlign: 'center',
-    paddingHorizontal: 8,
   },
   storySection: {
     marginTop: 8,

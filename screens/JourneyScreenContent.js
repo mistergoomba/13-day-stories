@@ -1,36 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, Dimensions, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Dimensions, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Rect } from 'react-native-svg';
 import Card from '../components/Card';
 import SimpleHeader from '../components/SimpleHeader';
 import DayNavigationButton from '../components/DayNavigationButton';
 import DynamicBackground from '../components/DynamicBackground';
+import ImageWithPlaceholder from '../components/ImageWithPlaceholder';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
 import { mainButton } from '../theme/buttons';
 import {
-  getTodayMayanDate,
+  getTodayMayanDateSync,
   getDayData,
-  getTrecenaData,
-  getAllDays,
+  getAllDaysInTrecena,
+  getPreviousDay,
+  getNextDay,
   isDayAvailable,
-  getImageSource,
   getBackgroundColors,
-} from '../utils/mayanCalendar';
-import { TODAY_DAY } from '../utils/mayanCalendar';
+  getTrecenaData,
+} from '../utils/calendarUtils';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 // Component to render day detail view (story chapter only)
-function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef, setCurrentView }) {
+function DayDetailView({ mayanDate, onBack, setSelectedDay, scrollViewRef, setCurrentView, onPersonalPress }) {
   const insets = useSafeAreaInsets();
-  const today = getTodayMayanDate();
-  const dayData = getDayData(dayNumber);
-  const storyPrimaryImage = getImageSource(dayNumber, 'story_primary');
-  const storyWide1Image = getImageSource(dayNumber, 'story_wide_1');
-  const storyWide2Image = getImageSource(dayNumber, 'story_wide_2');
-  const storyPrimaryColors = getBackgroundColors(dayNumber, 'story_primary');
+  const dayData = getDayData(mayanDate);
+  const storyPrimaryColors = getBackgroundColors(mayanDate, 'story_primary');
 
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
@@ -56,53 +53,33 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef, setCu
   // Split chapter text by paragraphs (\n\n)
   const paragraphs = dayData.chapter.split(/\n\n/).filter((p) => p.trim().length > 0);
 
-  // Render chapter with inline images
-  const renderChapterContent = () => {
-    const elements = [];
+  // Split paragraphs into three groups for the new structure
+  // Group 1: First 2 paragraphs (before first image)
+  // Group 2: Middle paragraphs (between images)
+  // Group 3: Last 2 paragraphs (after second image)
+  const textBeforeImage1 = paragraphs.slice(0, 2);
+  const textBetweenImages = paragraphs.slice(2, paragraphs.length - 2);
+  const textAfterImage2 = paragraphs.slice(paragraphs.length - 2);
 
-    paragraphs.forEach((paragraph, index) => {
-      // Add paragraph text (preserve line breaks within paragraph)
-      elements.push(
-        <Text key={`para-${index}`} style={styles.chapterText}>
-          {paragraph}
-        </Text>
-      );
-
-      // Insert story_wide_1.png after 2nd paragraph
-      if (index === 1 && storyWide1Image) {
-        elements.push(
-          <Image
-            key={`img-wide-1`}
-            source={storyWide1Image}
-            style={styles.storyWideImage}
-            resizeMode='contain'
-          />
-        );
-      }
-
-      // Insert story_wide_2.png before last paragraph
-      if (index === paragraphs.length - 2 && storyWide2Image) {
-        elements.push(
-          <Image
-            key={`img-wide-2`}
-            source={storyWide2Image}
-            style={styles.storyWideImage}
-            resizeMode='contain'
-          />
-        );
-      }
-    });
-
-    return elements;
+  // Render text block helper
+  const renderTextBlock = (paragraphs, keyPrefix) => {
+    return paragraphs.map((paragraph, index) => (
+      <Text key={`${keyPrefix}-para-${index}`} style={styles.chapterText}>
+        {paragraph}
+      </Text>
+    ));
   };
 
-  const canGoPrevious = dayNumber > 1;
-  const canGoNext = dayNumber < 13 && isDayAvailable(dayNumber + 1);
+  const previousDay = getPreviousDay(mayanDate);
+  const nextDay = getNextDay(mayanDate);
+  const canGoPrevious = previousDay !== null && isDayAvailable(previousDay);
+  const canGoNext = nextDay !== null && isDayAvailable(nextDay);
+  const dayNumber = dayData?.day || mayanDate.tone;
 
   const handlePreviousDay = () => {
     scrollToTop();
-    if (canGoPrevious) {
-      setSelectedDay(dayNumber - 1);
+    if (canGoPrevious && previousDay) {
+      setSelectedDay(previousDay);
     } else {
       // If on Day 1, go to journey page
       onBack();
@@ -123,7 +100,7 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef, setCu
       <View style={styles.headerContainer}>
         <SimpleHeader
           title='Journey'
-          onAccountPress={() => setCurrentView && setCurrentView('Personal')}
+          onAccountPress={onPersonalPress}
         />
       </View>
 
@@ -131,21 +108,19 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef, setCu
       <ScrollView
         ref={scrollViewRef}
         style={styles.scrollView}
-        contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 48 }]}
+        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <View style={[styles.content, { paddingBottom: bottomPadding }]}>
+        <View style={[styles.content, { paddingBottom: bottomPadding, paddingTop: insets.top + 56 }]}>
           {/* Story Primary Image */}
-          {storyPrimaryImage && (
-            <Image
-              source={storyPrimaryImage}
-              style={[styles.storyPrimaryImage, { height: SCREEN_WIDTH }]}
-              resizeMode='cover'
-            />
-          )}
+          <ImageWithPlaceholder
+            source={dayData?.images?.story_primary}
+            type="square"
+            flushTop={true}
+          />
 
           {/* Chapter Header */}
-          <View style={styles.contentSection}>
+          <View style={[styles.contentSection, styles.contentSectionBeforeImage]}>
             <View style={styles.chapterTitleRow}>
               <Text style={styles.chapterTitle}>Chapter {dayNumber}</Text>
               <Pressable onPress={onBack} style={styles.fullStoryButton}>
@@ -174,9 +149,51 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef, setCu
               </Pressable>
             </View>
 
-            {/* Chapter Text with Inline Images */}
+            {/* Chapter Text - Block 1 (before first image) */}
+            <Card style={styles.cardBeforeImage}>
+              <View style={styles.chapterContainer}>
+                {renderTextBlock(textBeforeImage1, 'block1')}
+              </View>
+            </Card>
+          </View>
+
+          {/* Story Wide Image 1 - Full Width (outside contentSection) */}
+          {dayData?.images?.story_wide_1 && (
+            <ImageWithPlaceholder
+              source={dayData.images.story_wide_1}
+              type="wide"
+              contentWidth={SCREEN_WIDTH}
+              resizeMode="cover"
+            />
+          )}
+
+          {/* Chapter Text - Block 2 (between images) */}
+          {textBetweenImages.length > 0 && (
+            <View style={[styles.contentSection, styles.contentSectionBeforeImage]}>
+              <Card style={styles.cardBeforeImage}>
+                <View style={styles.chapterContainer}>
+                  {renderTextBlock(textBetweenImages, 'block2')}
+                </View>
+              </Card>
+            </View>
+          )}
+
+          {/* Story Wide Image 2 - Full Width (outside contentSection) */}
+          {dayData?.images?.story_wide_2 && (
+            <ImageWithPlaceholder
+              source={dayData.images.story_wide_2}
+              type="wide"
+              contentWidth={SCREEN_WIDTH}
+              resizeMode="cover"
+            />
+          )}
+
+          {/* Chapter Text - Block 3 (after second image) */}
+          <View style={styles.contentSection}>
             <Card>
-              <View style={styles.chapterContainer}>{renderChapterContent()}</View>
+              <View style={styles.chapterContainer}>
+                {renderTextBlock(textAfterImage2, 'block3')}
+              </View>
             </Card>
           </View>
 
@@ -185,7 +202,7 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef, setCu
             <View style={styles.bottomDayNavigationContainer}>
               <DayNavigationButton
                 direction='prev'
-                dayNumber={dayNumber - 1}
+                dayNumber={previousDay?.tone || dayNumber - 1}
                 onPress={handlePreviousDay}
                 disabled={!canGoPrevious}
               />
@@ -200,10 +217,12 @@ function DayDetailView({ dayNumber, onBack, setSelectedDay, scrollViewRef, setCu
               </Pressable>
               <DayNavigationButton
                 direction='next'
-                dayNumber={dayNumber + 1}
+                dayNumber={nextDay?.tone || dayNumber + 1}
                 onPress={() => {
-                  setSelectedDay(dayNumber + 1);
-                  scrollToTop();
+                  if (nextDay) {
+                    setSelectedDay(nextDay);
+                    scrollToTop();
+                  }
                 }}
                 disabled={!canGoNext}
               />
@@ -220,11 +239,12 @@ export default function JourneyScreenContent({
   setSelectedDay,
   setCurrentView,
   scrollViewRef,
+  onPersonalPress,
 }) {
   const insets = useSafeAreaInsets();
-  const today = getTodayMayanDate();
-  const trecenaData = getTrecenaData();
-  const allDays = getAllDays();
+  const todayMayan = getTodayMayanDateSync();
+  const allDays = getAllDaysInTrecena(todayMayan);
+  const trecenaData = getTrecenaData(todayMayan.trecena);
   const [prologueExpanded, setPrologueExpanded] = useState(false);
 
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
@@ -233,20 +253,27 @@ export default function JourneyScreenContent({
   // Default to current chapter on initial load if no day is selected
   useEffect(() => {
     if (selectedDay === null && setSelectedDay) {
-      setSelectedDay(TODAY_DAY);
+      setSelectedDay(todayMayan);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Only run on mount - intentionally not including selectedDay in deps
 
   // If a day is selected, show detail view
+  // selectedDay can be a Mayan date object or null
   if (selectedDay !== null) {
+    // Handle legacy case where selectedDay might be a number
+    const mayanDate = typeof selectedDay === 'number' 
+      ? todayMayan // Fallback - shouldn't happen but handle gracefully
+      : selectedDay;
+    
     return (
       <DayDetailView
-        dayNumber={selectedDay}
+        mayanDate={mayanDate}
         onBack={() => setSelectedDay(null)}
         setSelectedDay={setSelectedDay}
         scrollViewRef={scrollViewRef}
         setCurrentView={setCurrentView}
+        onPersonalPress={onPersonalPress}
       />
     );
   }
@@ -259,32 +286,39 @@ export default function JourneyScreenContent({
   };
 
   // Find first and last available days
-  const firstAvailableDay = allDays.find((day) => isDayAvailable(day.day))?.day || 1;
-  const lastAvailableDay =
-    allDays
-      .filter((day) => isDayAvailable(day.day))
-      .map((day) => day.day)
-      .pop() || today.day;
+  const firstAvailableDayData = allDays.find((day) => {
+    const dayMayanDate = { ...todayMayan, tone: day.number };
+    return isDayAvailable(dayMayanDate);
+  });
+  const firstAvailableDay = firstAvailableDayData 
+    ? { ...todayMayan, tone: firstAvailableDayData.number }
+    : { ...todayMayan, tone: 1 };
+
+  const lastAvailableDayData = allDays
+    .filter((day) => {
+      const dayMayanDate = { ...todayMayan, tone: day.number };
+      return isDayAvailable(dayMayanDate);
+    })
+    .pop();
+  const lastAvailableDay = lastAvailableDayData
+    ? { ...todayMayan, tone: lastAvailableDayData.number }
+    : todayMayan;
 
   const handleGoToFirstDay = () => {
     scrollToTop();
-    if (firstAvailableDay) {
-      setSelectedDay(firstAvailableDay);
-    }
+    setSelectedDay(firstAvailableDay);
   };
 
   const handleGoToLastDay = () => {
     scrollToTop();
-    if (lastAvailableDay) {
-      setSelectedDay(lastAvailableDay);
-    }
+    setSelectedDay(lastAvailableDay);
   };
 
   // List view
   const handleGoToToday = () => {
     scrollToTop();
-    if (today.day && isDayAvailable(today.day)) {
-      setSelectedDay(today.day);
+    if (isDayAvailable(todayMayan)) {
+      setSelectedDay(todayMayan);
     }
   };
 
@@ -294,7 +328,7 @@ export default function JourneyScreenContent({
       <View style={styles.headerContainer}>
         <SimpleHeader
           title='Journey'
-          onAccountPress={() => setCurrentView && setCurrentView('Personal')}
+          onAccountPress={onPersonalPress}
         />
       </View>
 
@@ -342,8 +376,9 @@ export default function JourneyScreenContent({
             <Card>
               <Text style={styles.sectionTitle}>Chapters</Text>
               {allDays.map((day) => {
-                const available = isDayAvailable(day.day);
-                const isToday = day.day === today.day;
+                const dayMayanDate = { ...todayMayan, tone: day.number };
+                const available = isDayAvailable(dayMayanDate);
+                const isToday = day.number === todayMayan.tone;
 
                 return (
                   <Pressable
@@ -353,7 +388,7 @@ export default function JourneyScreenContent({
                       available ? styles.availableDay : styles.unavailableDay,
                       isToday && styles.todayCard,
                     ]}
-                    onPress={() => available && setSelectedDay(day.day)}
+                    onPress={() => available && setSelectedDay(dayMayanDate)}
                     disabled={!available}
                   >
                     <View style={styles.dayCardHeader}>
@@ -412,6 +447,12 @@ const styles = StyleSheet.create({
   contentSection: {
     paddingHorizontal: 20,
     paddingBottom: 20,
+  },
+  contentSectionBeforeImage: {
+    paddingBottom: 0,
+  },
+  cardBeforeImage: {
+    marginBottom: 0,
   },
   trecenaTitle: {
     ...type.title,

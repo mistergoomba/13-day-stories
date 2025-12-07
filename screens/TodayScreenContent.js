@@ -10,25 +10,49 @@ import SimpleHeader from '../components/SimpleHeader';
 import DayNavigationButton from '../components/DayNavigationButton';
 import DynamicBackground from '../components/DynamicBackground';
 import {
-  getTodayMayanDate,
+  getTodayMayanDateSync,
   getDayData,
-  getImageSource,
+  getPreviousDay,
+  getNextDay,
   isDayAvailable,
   getBackgroundColors,
-} from '../utils/mayanCalendar';
+  convertDateToMayan,
+} from '../utils/calendarUtils';
+import { getActualDateSync } from '../utils/getActualDate';
 
 export default function TodayScreenContent({
   setCurrentView,
   setSelectedDay,
   scrollViewRef,
   resetToTodayTrigger,
+  onPersonalPress,
 }) {
   const insets = useSafeAreaInsets();
-  const today = getTodayMayanDate();
-  const [currentDay, setCurrentDay] = useState(today.day);
-  const dayData = getDayData(currentDay);
-  const horoscopeImage = getImageSource(currentDay, 'horoscope');
-  const backgroundColors = getBackgroundColors(currentDay);
+  const todayMayan = getTodayMayanDateSync();
+  const [currentMayanDate, setCurrentMayanDate] = useState(todayMayan);
+  const dayData = getDayData(currentMayanDate);
+  const backgroundColors = getBackgroundColors(currentMayanDate, 'horoscope');
+
+  // Get Gregorian date for current Mayan date (for display)
+  // Calculate days difference from today based on tone difference within same trecena
+  const getGregorianDate = () => {
+    const todayDate = getActualDateSync();
+    if (isToday) {
+      return todayDate;
+    }
+
+    // If same trecena, calculate day difference
+    if (currentMayanDate.trecena === todayMayan.trecena) {
+      const dayDiff = currentMayanDate.tone - todayMayan.tone;
+      const resultDate = new Date(todayDate);
+      resultDate.setDate(resultDate.getDate() + dayDiff);
+      return resultDate;
+    }
+
+    // Different trecena - for now return today's date
+    // TODO: Calculate proper date when crossing trecena boundaries
+    return todayDate;
+  };
 
   // Scroll to top helper function
   const scrollToTop = () => {
@@ -40,7 +64,7 @@ export default function TodayScreenContent({
   // Reset to today when resetToTodayTrigger changes (triggered by clicking today tab)
   useEffect(() => {
     if (resetToTodayTrigger > 0) {
-      setCurrentDay(today.day);
+      setCurrentMayanDate(todayMayan);
       scrollToTop();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,21 +81,13 @@ export default function TodayScreenContent({
     );
   }
 
-  const { horoscope, energy_of_the_day } = dayData;
-
-  // Format today's date
-  const formatDate = (date) => {
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
+  const { horoscope, energy_of_the_day, images } = dayData || {};
 
   // Handle navigation to Journey with current day selected
   const handleJoinStory = () => {
-    if (setSelectedDay && setCurrentView) {
-      setSelectedDay(currentDay);
+    if (setSelectedDay && setCurrentView && currentMayanDate) {
+      // Pass the Mayan date object instead of day number
+      setSelectedDay(currentMayanDate);
       setCurrentView('Journey');
     }
   };
@@ -79,26 +95,34 @@ export default function TodayScreenContent({
   // Navigation handlers
   const handlePreviousDay = () => {
     scrollToTop();
-    if (currentDay > 1 && isDayAvailable(currentDay - 1)) {
-      setCurrentDay(currentDay - 1);
+    const previousDay = getPreviousDay(currentMayanDate);
+    if (previousDay && isDayAvailable(previousDay)) {
+      setCurrentMayanDate(previousDay);
     }
   };
 
   const handleNextDay = () => {
     scrollToTop();
-    if (currentDay < today.day && isDayAvailable(currentDay + 1)) {
-      setCurrentDay(currentDay + 1);
+    const nextDay = getNextDay(currentMayanDate);
+    if (nextDay && isDayAvailable(nextDay)) {
+      setCurrentMayanDate(nextDay);
     }
   };
 
   const handleResetToToday = () => {
     scrollToTop();
-    setCurrentDay(today.day);
+    setCurrentMayanDate(todayMayan);
   };
 
-  const canGoPrevious = currentDay > 1 && isDayAvailable(currentDay - 1);
-  const canGoNext = currentDay < today.day && isDayAvailable(currentDay + 1);
-  const isToday = currentDay === today.day;
+  const previousDay = getPreviousDay(currentMayanDate);
+  const nextDay = getNextDay(currentMayanDate);
+  const canGoPrevious = previousDay !== null && isDayAvailable(previousDay);
+  const canGoNext = nextDay !== null && isDayAvailable(nextDay);
+  const isToday =
+    currentMayanDate.tone === todayMayan.tone && currentMayanDate.trecena === todayMayan.trecena;
+
+  // Get day number for display (from dayData)
+  const currentDayNumber = dayData?.day || currentMayanDate.tone;
 
   return (
     <View style={styles.container}>
@@ -107,27 +131,32 @@ export default function TodayScreenContent({
 
       {/* Header - Fixed at top */}
       <View style={styles.headerContainer}>
-        <SimpleHeader
-          title='Energy of the Day'
-          onAccountPress={() => setCurrentView && setCurrentView('Personal')}
-        />
+        <SimpleHeader title='Energy of the Day' onAccountPress={onPersonalPress} />
       </View>
 
       {/* Scrollable Content */}
       <ScrollView
         ref={scrollViewRef}
         style={styles.scrollView}
-        contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 48 }]}
+        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <View style={[styles.content, { paddingBottom: bottomPadding }]}>
+        <View
+          style={[styles.content, { paddingBottom: bottomPadding, paddingTop: insets.top + 56 }]}
+        >
           {/* Horoscope Section */}
-          <HoroscopeSection horoscopeImage={horoscopeImage} horoscopeText={horoscope} />
-
-          {/* Separator */}
-          <View style={styles.contentSection}>
-            <View style={styles.separator} />
-          </View>
+          <HoroscopeSection
+            horoscopeImage={
+              images?.horoscope
+                ? typeof images.horoscope === 'string'
+                  ? { uri: images.horoscope }
+                  : images.horoscope
+                : null
+            }
+            horoscopeText={horoscope}
+            date={getGregorianDate()}
+            flushTop={true}
+          />
 
           {/* Energy of the Day Section */}
           <View style={styles.contentSection}>
@@ -143,18 +172,18 @@ export default function TodayScreenContent({
             <View style={styles.bottomDayNavigationContainer}>
               <DayNavigationButton
                 direction='prev'
-                dayNumber={currentDay - 1}
+                dayNumber={previousDay?.tone || currentDayNumber - 1}
                 onPress={handlePreviousDay}
                 disabled={!canGoPrevious}
               />
               <Pressable onPress={handleResetToToday} style={styles.bottomDayButtonCenter}>
                 <Text style={styles.bottomDayButtonText}>
-                  {isToday ? 'TODAY' : `Day ${currentDay}`}
+                  {isToday ? 'TODAY' : `Day ${currentDayNumber}`}
                 </Text>
               </Pressable>
               <DayNavigationButton
                 direction='next'
-                dayNumber={currentDay + 1}
+                dayNumber={nextDay?.tone || currentDayNumber + 1}
                 onPress={handleNextDay}
                 disabled={!canGoNext}
               />

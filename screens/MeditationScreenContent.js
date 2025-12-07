@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions, ScrollView, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ScrollView, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
@@ -8,23 +8,24 @@ import Card from '../components/Card';
 import SimpleHeader from '../components/SimpleHeader';
 import DayNavigationButton from '../components/DayNavigationButton';
 import DynamicBackground from '../components/DynamicBackground';
+import ImageWithPlaceholder from '../components/ImageWithPlaceholder';
 import {
-  getTodayMayanDate,
+  getTodayMayanDateSync,
   getDayData,
-  getImageSource,
+  getPreviousDay,
+  getNextDay,
   isDayAvailable,
   getBackgroundColors,
-} from '../utils/mayanCalendar';
+} from '../utils/calendarUtils';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
-export default function MeditationScreenContent({ scrollViewRef, resetMeditationTrigger, setCurrentView }) {
+export default function MeditationScreenContent({ scrollViewRef, resetMeditationTrigger, setCurrentView, onPersonalPress }) {
   const insets = useSafeAreaInsets();
-  const today = getTodayMayanDate();
-  const [currentDay, setCurrentDay] = useState(today.day);
-  const dayData = getDayData(currentDay);
-  const affirmationImage = getImageSource(currentDay, 'affirmation');
-  const affirmationColors = getBackgroundColors(currentDay, 'affirmation');
+  const todayMayan = getTodayMayanDateSync();
+  const [currentMayanDate, setCurrentMayanDate] = useState(todayMayan);
+  const dayData = getDayData(currentMayanDate);
+  const affirmationColors = getBackgroundColors(currentMayanDate, 'affirmation');
 
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
@@ -39,7 +40,7 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
   // Reset to today when resetMeditationTrigger changes (triggered by clicking meditate tab)
   useEffect(() => {
     if (resetMeditationTrigger > 0) {
-      setCurrentDay(today.day);
+      setCurrentMayanDate(todayMayan);
       scrollToTop();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,26 +49,31 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
   // Navigation handlers
   const handlePreviousDay = () => {
     scrollToTop();
-    if (currentDay > 1 && isDayAvailable(currentDay - 1)) {
-      setCurrentDay(currentDay - 1);
+    const previousDay = getPreviousDay(currentMayanDate);
+    if (previousDay && isDayAvailable(previousDay)) {
+      setCurrentMayanDate(previousDay);
     }
   };
 
   const handleNextDay = () => {
     scrollToTop();
-    if (currentDay < today.day && isDayAvailable(currentDay + 1)) {
-      setCurrentDay(currentDay + 1);
+    const nextDay = getNextDay(currentMayanDate);
+    if (nextDay && isDayAvailable(nextDay)) {
+      setCurrentMayanDate(nextDay);
     }
   };
 
   const handleResetToToday = () => {
     scrollToTop();
-    setCurrentDay(today.day);
+    setCurrentMayanDate(todayMayan);
   };
 
-  const canGoPrevious = currentDay > 1 && isDayAvailable(currentDay - 1);
-  const canGoNext = currentDay < today.day && isDayAvailable(currentDay + 1);
-  const isToday = currentDay === today.day;
+  const previousDay = getPreviousDay(currentMayanDate);
+  const nextDay = getNextDay(currentMayanDate);
+  const canGoPrevious = previousDay !== null && isDayAvailable(previousDay);
+  const canGoNext = nextDay !== null && isDayAvailable(nextDay);
+  const isToday = currentMayanDate.tone === todayMayan.tone && currentMayanDate.trecena === todayMayan.trecena;
+  const currentDayNumber = dayData?.day || currentMayanDate.tone;
 
   if (!dayData) {
     return (
@@ -76,17 +82,14 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
         <ScrollView
           ref={scrollViewRef}
           style={styles.scrollView}
-          contentContainerStyle={[styles.scrollContent, { paddingTop: Math.max(insets.top, 64) }]}
+          contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 56 }]}
           showsVerticalScrollIndicator={false}
         >
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-            {affirmationImage && (
-              <Image
-                source={affirmationImage}
-                style={styles.affirmationImage}
-                resizeMode='contain'
-              />
-            )}
+            <ImageWithPlaceholder
+              source={dayData?.images?.affirmation}
+              type="square"
+            />
             <Text style={styles.errorText}>Unable to load meditation data</Text>
           </View>
         </ScrollView>
@@ -103,7 +106,7 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
       <View style={styles.headerContainer}>
         <SimpleHeader
           title='Meditation'
-          onAccountPress={() => setCurrentView && setCurrentView('Personal')}
+          onAccountPress={onPersonalPress}
         />
       </View>
 
@@ -111,18 +114,16 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
       <ScrollView
         ref={scrollViewRef}
         style={styles.scrollView}
-        contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 48 }]}
+        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <View style={[styles.content, { paddingBottom: bottomPadding }]}>
+        <View style={[styles.content, { paddingBottom: bottomPadding, paddingTop: insets.top + 56 }]}>
           {/* Affirmation Image */}
-          {affirmationImage && (
-            <Image
-              source={affirmationImage}
-              style={[styles.affirmationImage, { height: SCREEN_WIDTH }]}
-              resizeMode='cover'
-            />
-          )}
+          <ImageWithPlaceholder
+            source={dayData?.images?.affirmation}
+            type="square"
+            flushTop={true}
+          />
 
           {/* Meditation Card */}
           <View style={styles.contentSection}>
@@ -137,7 +138,7 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
             <View style={styles.bottomDayNavigationContainer}>
               <DayNavigationButton
                 direction='prev'
-                dayNumber={currentDay - 1}
+                dayNumber={previousDay?.tone || currentDayNumber - 1}
                 onPress={handlePreviousDay}
                 disabled={!canGoPrevious}
               />
@@ -146,12 +147,12 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
                 style={styles.bottomDayButtonCenter}
               >
                 <Text style={styles.bottomDayButtonText}>
-                  {isToday ? 'TODAY' : `Day ${currentDay}`}
+                  {isToday ? 'TODAY' : `Day ${currentDayNumber}`}
                 </Text>
               </Pressable>
               <DayNavigationButton
                 direction='next'
-                dayNumber={currentDay + 1}
+                dayNumber={nextDay?.tone || currentDayNumber + 1}
                 onPress={handleNextDay}
                 disabled={!canGoNext}
               />

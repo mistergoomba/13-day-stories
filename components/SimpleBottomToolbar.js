@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Path, Circle } from 'react-native-svg';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
-import { TODAY_DAY } from '../utils/mayanCalendar';
+import { getTodayMayanDateSync } from '../utils/calendarUtils';
 
 export default function SimpleBottomToolbar({
   currentView,
@@ -56,7 +56,7 @@ export default function SimpleBottomToolbar({
     scrollToTop(scrollViewRef);
     // Set to current chapter when navigating to Journey from toolbar
     if (setSelectedDay) {
-      setSelectedDay(TODAY_DAY);
+      setSelectedDay(getTodayMayanDateSync());
     }
     setCurrentView('Journey');
   };

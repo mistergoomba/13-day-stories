@@ -15,7 +15,8 @@
     "build": "npx expo export -p web",
     "convert:images": "node scripts/convert-images-to-webp.js",
     "extract:colors": "node scripts/extract-image-colors.js",
-    "images": "node scripts/convert-images-to-webp.js && node scripts/extract-image-colors.js"
+    "convert:date": "node scripts/convert-date-to-mayan.js",
+    "images": "npm run convert:images && npm run extract:colors"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",
