@@ -1,0 +1,29 @@
+# Exclude data folder - data is generated before deployment
+data/
+
+# Exclude development scripts
+scripts/
+
+# Exclude documentation
+docs/
+
+# Exclude development files
+*.md
+!README.md
+
+# Exclude test files if any
+**/__tests__/
+**/*.test.js
+**/*.spec.js
+
+# Exclude IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Exclude OS files
+.DS_Store
+Thumbs.db
+

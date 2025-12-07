@@ -28,25 +28,60 @@ export default function BirthdayScreenContent({
   const insets = useSafeAreaInsets();
   const bottomPadding = 50 + insets.bottom + 20;
   const [showEditModal, setShowEditModal] = useState(false);
+  const [mayanDate, setMayanDate] = useState(null);
+  const [dayData, setDayData] = useState(null);
+  const [birthdayColors, setBirthdayColors] = useState({
+    primary: '#12091A',
+    secondary: '#1C0F29',
+    accent: '#6E45CF',
+  });
+  const [loading, setLoading] = useState(false);
 
-  // Convert birthday date to Mayan date
-  let mayanDate = null;
-  let dayData = null;
-  let birthdayColors = null;
+  // Convert birthday date to Mayan date and load data
+  useEffect(() => {
+    let cancelled = false;
 
-  if (birthdayDate) {
-    try {
-      mayanDate = convertDateToMayan(birthdayDate);
-      dayData = getDayData(mayanDate);
-
-      if (dayData) {
-        // Get background colors for birthday
-        birthdayColors = getBackgroundColors(mayanDate, 'birthday');
+    const loadBirthdayData = async () => {
+      if (!birthdayDate) {
+        setMayanDate(null);
+        setDayData(null);
+        setBirthdayColors({
+          primary: '#12091A',
+          secondary: '#1C0F29',
+          accent: '#6E45CF',
+        });
+        return;
       }
-    } catch (error) {
-      console.error('Error converting birthday date:', error);
-    }
-  }
+
+      try {
+        setLoading(true);
+        const mayan = convertDateToMayan(birthdayDate);
+        setMayanDate(mayan);
+
+        const [day, colors] = await Promise.all([
+          getDayData(mayan),
+          getBackgroundColors(mayan, 'birthday'),
+        ]);
+
+        if (!cancelled) {
+          setDayData(day);
+          setBirthdayColors(colors);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Error loading birthday data:', error);
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadBirthdayData();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [birthdayDate]);
 
   // Format the Gregorian date for display
   const formattedGregorianDate = birthdayDate ? formatDateReadable(birthdayDate) : '';
@@ -59,17 +94,8 @@ export default function BirthdayScreenContent({
     }
   };
 
-  // Default background colors
-  if (!birthdayColors) {
-    birthdayColors = {
-      primary: '#12091A',
-      secondary: '#1C0F29',
-      accent: '#6E45CF',
-    };
-  }
-
-  // If day data is not found, show just the formatted Mayan date
-  if (!dayData) {
+  // If day data is not found or loading, show just the formatted Mayan date
+  if (loading || !dayData) {
     return (
       <View style={styles.container}>
         <DynamicBackground backgroundColors={birthdayColors} />

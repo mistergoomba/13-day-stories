@@ -19,6 +19,7 @@ import {
   convertDateToMayan,
 } from '../utils/calendarUtils';
 import { getActualDateSync } from '../utils/getActualDate';
+import { getButtonStyleFromColors } from '../theme/buttons';
 
 export default function TodayScreenContent({
   setCurrentView,
@@ -30,8 +31,51 @@ export default function TodayScreenContent({
   const insets = useSafeAreaInsets();
   const todayMayan = getTodayMayanDateSync();
   const [currentMayanDate, setCurrentMayanDate] = useState(todayMayan);
-  const dayData = getDayData(currentMayanDate);
-  const backgroundColors = getBackgroundColors(currentMayanDate, 'horoscope');
+  const [dayData, setDayData] = useState(null);
+  const [backgroundColors, setBackgroundColors] = useState({
+    primary: '#12091A',
+    secondary: '#1C0F29',
+    accent: '#6E45CF',
+  });
+  const [previousDay, setPreviousDay] = useState(null);
+  const [nextDay, setNextDay] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Load day data and related info when currentMayanDate changes
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+
+    const loadData = async () => {
+      try {
+        const [day, colors, prev, next] = await Promise.all([
+          getDayData(currentMayanDate),
+          getBackgroundColors(currentMayanDate, 'horoscope'),
+          getPreviousDay(currentMayanDate),
+          getNextDay(currentMayanDate),
+        ]);
+
+        if (!cancelled) {
+          setDayData(day);
+          setBackgroundColors(colors);
+          setPreviousDay(prev);
+          setNextDay(next);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Error loading day data:', error);
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadData();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [currentMayanDate]);
 
   // Get Gregorian date for current Mayan date (for display)
   // Calculate days difference from today based on tone difference within same trecena
@@ -73,10 +117,12 @@ export default function TodayScreenContent({
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
 
-  if (!dayData) {
+  if (loading || !dayData) {
     return (
-      <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-        <Text style={styles.errorText}>Unable to load chapter data</Text>
+      <View style={[styles.content, { paddingBottom: bottomPadding, paddingTop: insets.top + 56 }]}>
+        <Text style={styles.errorText}>
+          {loading ? 'Loading...' : 'Unable to load chapter data'}
+        </Text>
       </View>
     );
   }
@@ -93,19 +139,19 @@ export default function TodayScreenContent({
   };
 
   // Navigation handlers
-  const handlePreviousDay = () => {
+  const handlePreviousDay = async () => {
     scrollToTop();
-    const previousDay = getPreviousDay(currentMayanDate);
-    if (previousDay && isDayAvailable(previousDay)) {
-      setCurrentMayanDate(previousDay);
+    const prev = await getPreviousDay(currentMayanDate);
+    if (prev && isDayAvailable(prev)) {
+      setCurrentMayanDate(prev);
     }
   };
 
-  const handleNextDay = () => {
+  const handleNextDay = async () => {
     scrollToTop();
-    const nextDay = getNextDay(currentMayanDate);
-    if (nextDay && isDayAvailable(nextDay)) {
-      setCurrentMayanDate(nextDay);
+    const next = await getNextDay(currentMayanDate);
+    if (next && isDayAvailable(next)) {
+      setCurrentMayanDate(next);
     }
   };
 
@@ -114,8 +160,6 @@ export default function TodayScreenContent({
     setCurrentMayanDate(todayMayan);
   };
 
-  const previousDay = getPreviousDay(currentMayanDate);
-  const nextDay = getNextDay(currentMayanDate);
   const canGoPrevious = previousDay !== null && isDayAvailable(previousDay);
   const canGoNext = nextDay !== null && isDayAvailable(nextDay);
   const isToday =
@@ -175,8 +219,15 @@ export default function TodayScreenContent({
                 dayNumber={previousDay?.tone || currentDayNumber - 1}
                 onPress={handlePreviousDay}
                 disabled={!canGoPrevious}
+                backgroundColors={backgroundColors}
               />
-              <Pressable onPress={handleResetToToday} style={styles.bottomDayButtonCenter}>
+              <Pressable
+                onPress={handleResetToToday}
+                style={[
+                  styles.bottomDayButtonCenter,
+                  backgroundColors && getButtonStyleFromColors(backgroundColors),
+                ]}
+              >
                 <Text style={styles.bottomDayButtonText}>
                   {isToday ? 'TODAY' : `Day ${currentDayNumber}`}
                 </Text>
@@ -186,6 +237,7 @@ export default function TodayScreenContent({
                 dayNumber={nextDay?.tone || currentDayNumber + 1}
                 onPress={handleNextDay}
                 disabled={!canGoNext}
+                backgroundColors={backgroundColors}
               />
             </View>
           </View>
@@ -194,12 +246,21 @@ export default function TodayScreenContent({
           <View style={styles.contentSection}>
             <View style={styles.navigationContainer}>
               <Pressable
-                style={styles.navLink}
+                style={[
+                  styles.navLink,
+                  backgroundColors && getButtonStyleFromColors(backgroundColors),
+                ]}
                 onPress={() => setCurrentView && setCurrentView('Meditation')}
               >
                 <Text style={styles.navLinkText}>View Meditation / Affirmation</Text>
               </Pressable>
-              <Pressable style={styles.navLink} onPress={handleJoinStory}>
+              <Pressable
+                style={[
+                  styles.navLink,
+                  backgroundColors && getButtonStyleFromColors(backgroundColors),
+                ]}
+                onPress={handleJoinStory}
+              >
                 <Text style={styles.navLinkText}>Read Today's Chapter</Text>
               </Pressable>
             </View>

@@ -5,27 +5,14 @@
 
 import { convertToMayan } from './dateToMayan';
 import { getActualDate, getActualDateSync } from './getActualDate';
-import { aqabalTrecena } from '../data/trecena-aqabal';
-import { imoxTrecena } from '../data/trecena-imox';
-import { iqTrecena } from '../data/trecena-iq';
-import { katTrecena } from '../data/trecena-kat';
-import { tojTrecena } from '../data/trecena-toj';
-import { tzikinTrecena } from '../data/trecena-tzikin';
-import imageColors from '../data/image-colors.json';
+import { getTrecenaDataUrl, getImageUrl } from './apiConfig';
 import { getImageSource } from './imageLoader';
-
-// Trecena mapping
-const TRECENA_MAP = {
-  aqabal: aqabalTrecena,
-  imox: imoxTrecena,
-  iq: iqTrecena,
-  kat: katTrecena,
-  toj: tojTrecena,
-  tzikin: tzikinTrecena,
-};
 
 // Cache for trecena data only (not date-related)
 const trecenaCache = new Map();
+
+// Track ongoing fetch requests to avoid duplicate requests
+const fetchPromises = new Map();
 
 /**
  * Normalize trecena name to match TRECENA_MAP key
@@ -39,11 +26,11 @@ function normalizeTrecenaName(trecenaName) {
 
 
 /**
- * Get trecena data (with caching)
+ * Get trecena data from API (with caching)
  * @param {string} trecenaName - Trecena name
- * @returns {Object|null} Trecena data object
+ * @returns {Promise<Object|null>} Trecena data object
  */
-export function getTrecenaData(trecenaName) {
+export async function getTrecenaData(trecenaName) {
   const normalizedKey = normalizeTrecenaName(trecenaName);
   if (!normalizedKey) return null;
 
@@ -52,28 +39,60 @@ export function getTrecenaData(trecenaName) {
     return trecenaCache.get(normalizedKey);
   }
 
-  // Load from TRECENA_MAP
-  const trecenaData = TRECENA_MAP[normalizedKey];
-  if (!trecenaData) {
-    console.warn(`Trecena '${trecenaName}' (${normalizedKey}) not found in TRECENA_MAP`);
-    return null;
+  // Check if there's already a fetch in progress
+  if (fetchPromises.has(normalizedKey)) {
+    return fetchPromises.get(normalizedKey);
   }
 
-  // Cache it
-  trecenaCache.set(normalizedKey, trecenaData);
-  return trecenaData;
+  // Fetch from API
+  const fetchPromise = (async () => {
+    try {
+      const url = getTrecenaDataUrl(normalizedKey);
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        console.warn(`Failed to fetch trecena data for ${trecenaName}: ${response.status}`);
+        return null;
+      }
+
+      const trecenaData = await response.json();
+      
+      // Cache it
+      trecenaCache.set(normalizedKey, trecenaData);
+      
+      return trecenaData;
+    } catch (error) {
+      console.error(`Error fetching trecena data for ${trecenaName}:`, error);
+      return null;
+    } finally {
+      // Remove from fetch promises once done
+      fetchPromises.delete(normalizedKey);
+    }
+  })();
+
+  // Store the promise to avoid duplicate requests
+  fetchPromises.set(normalizedKey, fetchPromise);
+  
+  return fetchPromise;
 }
 
 /**
  * Get image source for a day and image type
- * Returns require() result for local images
+ * Returns remote URL for images
  * @param {string} trecenaKey - Normalized trecena key (e.g., "toj", "aqabal")
  * @param {number} tone - Tone number (1-13)
  * @param {string} imageType - Image type
- * @returns {Object|null} Image source (require() result) or null if not found
+ * @returns {Object|null} Image source ({ uri: string }) or null if not found
  */
 function getImagePath(trecenaKey, tone, imageType) {
-  return getImageSource(trecenaKey, tone, imageType);
+  const imageUrl = getImageUrl(trecenaKey, tone, imageType);
+  if (imageUrl) {
+    return { uri: imageUrl };
+  }
+  
+  // Fallback to local images if remote URL fails
+  const localImage = getImageSource(trecenaKey, tone, imageType);
+  return localImage;
 }
 
 /**
@@ -115,16 +134,16 @@ export function getTodayMayanDateSync() {
  * Get day data for a specific Mayan date
  * Loads trecena data (cached), finds day by tone, returns data with image paths
  * @param {Object} mayanDate - Mayan date object with { tone, sign, trecena, formatted }
- * @returns {Object|null} Day data object (without image_prompts, with image paths)
+ * @returns {Promise<Object|null>} Day data object (without image_prompts, with image paths)
  */
-export function getDayData(mayanDate) {
+export async function getDayData(mayanDate) {
   if (!mayanDate || !mayanDate.tone || !mayanDate.trecena) {
     console.error('Invalid mayanDate object:', mayanDate);
     return null;
   }
 
-  // Get trecena data (cached)
-  const trecenaData = getTrecenaData(mayanDate.trecena);
+  // Get trecena data (cached, async)
+  const trecenaData = await getTrecenaData(mayanDate.trecena);
   if (!trecenaData) {
     return null;
   }
@@ -161,11 +180,12 @@ export function getDayData(mayanDate) {
 
 /**
  * Get background colors for a specific Mayan date and image type
+ * Colors are now included in the trecena data from the API
  * @param {Object} mayanDate - Mayan date object
  * @param {string} imageType - Image type: 'horoscope', 'affirmation', 'story_primary', 'birthday'
- * @returns {Object} Object with primary, secondary, and accent colors
+ * @returns {Promise<Object>} Object with primary, secondary, and accent colors
  */
-export function getBackgroundColors(mayanDate, imageType = 'horoscope') {
+export async function getBackgroundColors(mayanDate, imageType = 'horoscope') {
   if (!mayanDate || !mayanDate.trecena || !mayanDate.tone) {
     return {
       primary: '#12091A',
@@ -174,16 +194,20 @@ export function getBackgroundColors(mayanDate, imageType = 'horoscope') {
     };
   }
 
-  const trecenaKey = normalizeTrecenaName(mayanDate.trecena);
-  const trecenaColorKey = `trecena-${trecenaKey}`;
-  const dayKey = String(mayanDate.tone);
+  // Get trecena data to access colors
+  const trecenaData = await getTrecenaData(mayanDate.trecena);
+  if (!trecenaData) {
+    return {
+      primary: '#12091A',
+      secondary: '#1C0F29',
+      accent: '#6E45CF',
+    };
+  }
 
-  if (
-    imageColors[trecenaColorKey] &&
-    imageColors[trecenaColorKey][dayKey] &&
-    imageColors[trecenaColorKey][dayKey][imageType]
-  ) {
-    return imageColors[trecenaColorKey][dayKey][imageType];
+  // Find day data
+  const dayData = trecenaData.days.find((d) => d.number === mayanDate.tone);
+  if (dayData && dayData.colors && dayData.colors[imageType]) {
+    return dayData.colors[imageType];
   }
 
   // Fallback to default colors
@@ -197,12 +221,12 @@ export function getBackgroundColors(mayanDate, imageType = 'horoscope') {
 /**
  * Get previous day in the trecena
  * @param {Object} mayanDate - Current Mayan date object
- * @returns {Object|null} Previous Mayan date object, or null if at day 1
+ * @returns {Promise<Object|null>} Previous Mayan date object, or null if at day 1
  */
-export function getPreviousDay(mayanDate) {
+export async function getPreviousDay(mayanDate) {
   if (!mayanDate || mayanDate.tone === undefined) return null;
 
-  const trecenaData = getTrecenaData(mayanDate.trecena);
+  const trecenaData = await getTrecenaData(mayanDate.trecena);
   if (!trecenaData) return null;
 
   // Find current day in trecena
@@ -235,12 +259,12 @@ export function getPreviousDay(mayanDate) {
 /**
  * Get next day in the trecena
  * @param {Object} mayanDate - Current Mayan date object
- * @returns {Object|null} Next Mayan date object, or null if at day 13
+ * @returns {Promise<Object|null>} Next Mayan date object, or null if at day 13
  */
-export function getNextDay(mayanDate) {
+export async function getNextDay(mayanDate) {
   if (!mayanDate || mayanDate.tone === undefined) return null;
 
-  const trecenaData = getTrecenaData(mayanDate.trecena);
+  const trecenaData = await getTrecenaData(mayanDate.trecena);
   if (!trecenaData) return null;
 
   // Find current day in trecena
@@ -295,12 +319,12 @@ export function isDayAvailable(mayanDate) {
 /**
  * Get all days in a trecena
  * @param {Object} mayanDate - Mayan date object (uses trecena from it)
- * @returns {Array} Array of day objects sorted by day number
+ * @returns {Promise<Array>} Array of day objects sorted by day number
  */
-export function getAllDaysInTrecena(mayanDate) {
+export async function getAllDaysInTrecena(mayanDate) {
   if (!mayanDate || !mayanDate.trecena) return [];
 
-  const trecenaData = getTrecenaData(mayanDate.trecena);
+  const trecenaData = await getTrecenaData(mayanDate.trecena);
   if (!trecenaData) return [];
 
   return [...trecenaData.days].sort((a, b) => a.day - b.day);

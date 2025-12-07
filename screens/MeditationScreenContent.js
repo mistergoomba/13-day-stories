@@ -17,6 +17,7 @@ import {
   isDayAvailable,
   getBackgroundColors,
 } from '../utils/calendarUtils';
+import { getButtonStyleFromColors } from '../theme/buttons';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -24,8 +25,51 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
   const insets = useSafeAreaInsets();
   const todayMayan = getTodayMayanDateSync();
   const [currentMayanDate, setCurrentMayanDate] = useState(todayMayan);
-  const dayData = getDayData(currentMayanDate);
-  const affirmationColors = getBackgroundColors(currentMayanDate, 'affirmation');
+  const [dayData, setDayData] = useState(null);
+  const [affirmationColors, setAffirmationColors] = useState({
+    primary: '#12091A',
+    secondary: '#1C0F29',
+    accent: '#6E45CF',
+  });
+  const [previousDay, setPreviousDay] = useState(null);
+  const [nextDay, setNextDay] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Load day data and related info when currentMayanDate changes
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+
+    const loadData = async () => {
+      try {
+        const [day, colors, prev, next] = await Promise.all([
+          getDayData(currentMayanDate),
+          getBackgroundColors(currentMayanDate, 'affirmation'),
+          getPreviousDay(currentMayanDate),
+          getNextDay(currentMayanDate),
+        ]);
+
+        if (!cancelled) {
+          setDayData(day);
+          setAffirmationColors(colors);
+          setPreviousDay(prev);
+          setNextDay(next);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Error loading day data:', error);
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadData();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [currentMayanDate]);
 
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
@@ -47,19 +91,19 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
   }, [resetMeditationTrigger]);
 
   // Navigation handlers
-  const handlePreviousDay = () => {
+  const handlePreviousDay = async () => {
     scrollToTop();
-    const previousDay = getPreviousDay(currentMayanDate);
-    if (previousDay && isDayAvailable(previousDay)) {
-      setCurrentMayanDate(previousDay);
+    const prev = await getPreviousDay(currentMayanDate);
+    if (prev && isDayAvailable(prev)) {
+      setCurrentMayanDate(prev);
     }
   };
 
-  const handleNextDay = () => {
+  const handleNextDay = async () => {
     scrollToTop();
-    const nextDay = getNextDay(currentMayanDate);
-    if (nextDay && isDayAvailable(nextDay)) {
-      setCurrentMayanDate(nextDay);
+    const next = await getNextDay(currentMayanDate);
+    if (next && isDayAvailable(next)) {
+      setCurrentMayanDate(next);
     }
   };
 
@@ -68,14 +112,12 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
     setCurrentMayanDate(todayMayan);
   };
 
-  const previousDay = getPreviousDay(currentMayanDate);
-  const nextDay = getNextDay(currentMayanDate);
   const canGoPrevious = previousDay !== null && isDayAvailable(previousDay);
   const canGoNext = nextDay !== null && isDayAvailable(nextDay);
   const isToday = currentMayanDate.tone === todayMayan.tone && currentMayanDate.trecena === todayMayan.trecena;
   const currentDayNumber = dayData?.day || currentMayanDate.tone;
 
-  if (!dayData) {
+  if (loading || !dayData) {
     return (
       <View style={styles.container}>
         <DynamicBackground backgroundColors={affirmationColors} />
@@ -86,11 +128,9 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
           showsVerticalScrollIndicator={false}
         >
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-            <ImageWithPlaceholder
-              source={dayData?.images?.affirmation}
-              type="square"
-              />
-            <Text style={styles.errorText}>Unable to load meditation data</Text>
+            <Text style={styles.errorText}>
+              {loading ? 'Loading...' : 'Unable to load meditation data'}
+            </Text>
           </View>
         </ScrollView>
       </View>
@@ -141,10 +181,14 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
                 dayNumber={previousDay?.tone || currentDayNumber - 1}
                 onPress={handlePreviousDay}
                 disabled={!canGoPrevious}
+                backgroundColors={affirmationColors}
               />
               <Pressable
                 onPress={handleResetToToday}
-                style={styles.bottomDayButtonCenter}
+                style={[
+                  styles.bottomDayButtonCenter,
+                  affirmationColors && getButtonStyleFromColors(affirmationColors),
+                ]}
               >
                 <Text style={styles.bottomDayButtonText}>
                   {isToday ? 'TODAY' : `Day ${currentDayNumber}`}
@@ -155,6 +199,7 @@ export default function MeditationScreenContent({ scrollViewRef, resetMeditation
                 dayNumber={nextDay?.tone || currentDayNumber + 1}
                 onPress={handleNextDay}
                 disabled={!canGoNext}
+                backgroundColors={affirmationColors}
               />
             </View>
           </View>

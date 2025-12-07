@@ -3,17 +3,20 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
-import { mainButton } from '../theme/buttons';
+import { mainButton, getButtonStyleFromColors } from '../theme/buttons';
 
-export default function DayNavigationButton({ direction, dayNumber, onPress, disabled }) {
+export default function DayNavigationButton({ direction, dayNumber, onPress, disabled, backgroundColors }) {
   if (disabled) {
     return <View style={styles.placeholder} />;
   }
 
   const isPrevious = direction === 'prev';
+  const buttonStyle = backgroundColors
+    ? [styles.buttonBase, getButtonStyleFromColors(backgroundColors)]
+    : styles.button;
 
   return (
-    <Pressable onPress={onPress} style={styles.button}>
+    <Pressable onPress={onPress} style={buttonStyle}>
       <View style={styles.content}>
         {isPrevious ? (
           <>
@@ -36,6 +39,12 @@ export default function DayNavigationButton({ direction, dayNumber, onPress, dis
 }
 
 const styles = StyleSheet.create({
+  buttonBase: {
+    height: 48,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    minWidth: 80,
+  },
   button: {
     ...mainButton.button,
     height: 48,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { View, Text, StyleSheet, Pressable, Dimensions, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Rect } from 'react-native-svg';
@@ -20,17 +20,61 @@ import {
   getBackgroundColors,
   getTrecenaData,
 } from '../utils/calendarUtils';
+import { getButtonStyleFromColors } from '../theme/buttons';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 // Component to render day detail view (story chapter only)
 function DayDetailView({ mayanDate, onBack, setSelectedDay, scrollViewRef, setCurrentView, onPersonalPress }) {
   const insets = useSafeAreaInsets();
-  const dayData = getDayData(mayanDate);
-  const storyPrimaryColors = getBackgroundColors(mayanDate, 'story_primary');
+  const [dayData, setDayData] = useState(null);
+  const [storyPrimaryColors, setStoryPrimaryColors] = useState({
+    primary: '#12091A',
+    secondary: '#1C0F29',
+    accent: '#6E45CF',
+  });
+  const [previousDay, setPreviousDay] = useState(null);
+  const [nextDay, setNextDay] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
+
+  // Load day data when mayanDate changes
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+
+    const loadData = async () => {
+      try {
+        const [day, colors, prev, next] = await Promise.all([
+          getDayData(mayanDate),
+          getBackgroundColors(mayanDate, 'story_primary'),
+          getPreviousDay(mayanDate),
+          getNextDay(mayanDate),
+        ]);
+
+        if (!cancelled) {
+          setDayData(day);
+          setStoryPrimaryColors(colors);
+          setPreviousDay(prev);
+          setNextDay(next);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Error loading day data:', error);
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadData();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [mayanDate]);
 
   // Scroll to top helper function
   const scrollToTop = () => {
@@ -39,11 +83,19 @@ function DayDetailView({ mayanDate, onBack, setSelectedDay, scrollViewRef, setCu
     }
   };
 
-  if (!dayData) {
+  if (loading || !dayData) {
     return (
-      <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-        <Text style={styles.errorText}>Unable to load chapter data</Text>
-        <Pressable style={styles.backButton} onPress={onBack}>
+      <View style={[styles.content, { paddingBottom: bottomPadding, paddingTop: insets.top + 56 }]}>
+        <Text style={styles.errorText}>
+          {loading ? 'Loading...' : 'Unable to load chapter data'}
+        </Text>
+        <Pressable
+          style={[
+            styles.backButton,
+            storyPrimaryColors && getButtonStyleFromColors(storyPrimaryColors),
+          ]}
+          onPress={onBack}
+        >
           <Text style={styles.backButtonText}>Back to Journey</Text>
         </Pressable>
       </View>
@@ -70,8 +122,6 @@ function DayDetailView({ mayanDate, onBack, setSelectedDay, scrollViewRef, setCu
     ));
   };
 
-  const previousDay = getPreviousDay(mayanDate);
-  const nextDay = getNextDay(mayanDate);
   const canGoPrevious = previousDay !== null && isDayAvailable(previousDay);
   const canGoNext = nextDay !== null && isDayAvailable(nextDay);
   const dayNumber = dayData?.day || mayanDate.tone;
@@ -123,7 +173,13 @@ function DayDetailView({ mayanDate, onBack, setSelectedDay, scrollViewRef, setCu
           <View style={[styles.contentSection, styles.contentSectionBeforeImage]}>
             <View style={styles.chapterTitleRow}>
               <Text style={styles.chapterTitle}>Chapter {dayNumber}</Text>
-              <Pressable onPress={onBack} style={styles.fullStoryButton}>
+              <Pressable
+                onPress={onBack}
+                style={[
+                  styles.fullStoryButton,
+                  storyPrimaryColors && getButtonStyleFromColors(storyPrimaryColors),
+                ]}
+              >
                 <Svg
                   width={16}
                   height={16}
@@ -205,13 +261,17 @@ function DayDetailView({ mayanDate, onBack, setSelectedDay, scrollViewRef, setCu
                 dayNumber={previousDay?.tone || dayNumber - 1}
                 onPress={handlePreviousDay}
                 disabled={!canGoPrevious}
+                backgroundColors={storyPrimaryColors}
               />
               <Pressable
                 onPress={() => {
                   onBack();
                   scrollToTop();
                 }}
-                style={styles.bottomDayButtonCenter}
+                style={[
+                  styles.bottomDayButtonCenter,
+                  storyPrimaryColors && getButtonStyleFromColors(storyPrimaryColors),
+                ]}
               >
                 <Text style={styles.bottomDayButtonText}>Day {dayNumber}</Text>
               </Pressable>
@@ -225,6 +285,7 @@ function DayDetailView({ mayanDate, onBack, setSelectedDay, scrollViewRef, setCu
                   }
                 }}
                 disabled={!canGoNext}
+                backgroundColors={storyPrimaryColors}
               />
             </View>
           </View>
@@ -242,10 +303,43 @@ export default function JourneyScreenContent({
   onPersonalPress,
 }) {
   const insets = useSafeAreaInsets();
-  const todayMayan = getTodayMayanDateSync();
-  const allDays = getAllDaysInTrecena(todayMayan);
-  const trecenaData = getTrecenaData(todayMayan.trecena);
+  // Memoize todayMayan to prevent infinite loops - only recalculate if date actually changes
+  const todayMayan = useMemo(() => getTodayMayanDateSync(), []);
+  const [allDays, setAllDays] = useState([]);
+  const [trecenaData, setTrecenaData] = useState(null);
   const [prologueExpanded, setPrologueExpanded] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // Load trecena data on mount - use trecena name as dependency to avoid infinite loops
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadData = async () => {
+      try {
+        const [days, data] = await Promise.all([
+          getAllDaysInTrecena(todayMayan),
+          getTrecenaData(todayMayan.trecena),
+        ]);
+
+        if (!cancelled) {
+          setAllDays(days);
+          setTrecenaData(data);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Error loading trecena data:', error);
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadData();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [todayMayan.trecena]); // Only depend on trecena name, not the whole object
 
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
@@ -339,15 +433,22 @@ export default function JourneyScreenContent({
         contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 56 }]}
         showsVerticalScrollIndicator={false}
       >
-        <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-          <View style={styles.contentSection}>
-            <Card>
-              <Text style={styles.trecenaTitle}>{trecenaData.trecena} Trecena</Text>
-              <Text style={styles.trecenaSubtitle}>
-                {trecenaData.days[0].energy_of_the_day.nawal.content}
-              </Text>
-            </Card>
+        {loading || !trecenaData ? (
+          <View style={[styles.content, { paddingBottom: bottomPadding }]}>
+            <Text style={styles.errorText}>
+              {loading ? 'Loading...' : 'Unable to load trecena data'}
+            </Text>
           </View>
+        ) : (
+          <View style={[styles.content, { paddingBottom: bottomPadding }]}>
+            <View style={styles.contentSection}>
+              <Card>
+                <Text style={styles.trecenaTitle}>{trecenaData.trecena} Trecena</Text>
+                <Text style={styles.trecenaSubtitle}>
+                  {trecenaData.days[0]?.energy_of_the_day?.nawal?.content || ''}
+                </Text>
+              </Card>
+            </View>
 
           {/* Prologue Section */}
           <View style={styles.contentSection}>
@@ -416,6 +517,7 @@ export default function JourneyScreenContent({
             </Card>
           </View>
         </View>
+        )}
       </ScrollView>
     </View>
   );
@@ -536,6 +638,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   backButton: {
+    ...mainButton.button,
     paddingVertical: 8,
     paddingHorizontal: 12,
   },
