@@ -439,27 +439,37 @@ export const qanilTrecena = {
       chapter: '',
       energy_of_the_day: {
         number: {
-          title: '',
-          content: '',
-          keywords: [],
+          title: 'The Crystal of Integration',
+          content:
+            'The number 12 represents the gathering together of experiences to gain wisdom. It is the energy of understanding, cooperation, and integrating the lessons learned throughout the cycle before the final culmination.',
+          keywords: ['comprehension', 'unity', 'cooperation', 'learning', 'integration'],
         },
         nawal: {
-          title: '',
-          content: '',
-          keywords: [],
+          title: 'The Compassionate Storm',
+          content:
+            'Kawoq is the energy of the rainstorm, the midwife, and community. It represents birth and rebirth brought about through compassionate cleansing. It is the force that heals the collective and protects the vulnerable.',
+          keywords: ['midwife', 'cleansing', 'compassion', 'rebirth', 'community'],
         },
         combined_energy: {
-          title: '',
-          content: '',
-          notes: [],
+          title: 'Integrated Collective Healing',
+          content:
+            'When the integrating wisdom of 12 meets the compassionate storm of Kawoq, the day turns toward understanding the necessity of deep cleansing for the collective good. It is a time to cooperate with others to weather the storms of transformation, understanding that the intensity is necessary for a new birth. The energy supports gathering together to heal and protect the community.',
+          notes: [
+            'Reflect on recent emotional storms to integrate their lessons',
+            'Offer compassionate support to vulnerable members of your community',
+            'Cooperate with others to create a safe container for transformation',
+            'Allow yourself to be cleansed by releasing old emotional patterns',
+            'Trust the process of rebirth, even if it feels chaotic',
+          ],
         },
       },
       horoscope: '',
       affirmation: '',
       meditation: '',
       birthday: {
-        title: '',
-        content: '',
+        title: 'The Wise Anchor',
+        content:
+          'To be born on 12 Kawoq is to be a steady presence in the storms of life. The number 12 brings the energy of deep understanding and integration of life\'s lessons, while Kawoq brings the compassionate power of the midwife and the cleansing rain. You are a natural community healer who understands that growth often requires a "storm" to clear the air. You hold space for others during their most vulnerable moments of transformation with patience and profound empathy. You have a knack for bringing people together to weather difficult times. Your challenge is not to absorb the emotions of everyone around you; remember that the midwife assists the birth but does not carry the labor pains herself.',
       },
       image_prompts: {
         story_primary: '',
@@ -468,7 +478,8 @@ export const qanilTrecena = {
         horoscope: '',
         affirmation: '',
         meditation: '',
-        birthday: '',
+        birthday:
+          'Square image. A mystical stone carving of the Mayan glyph for Kawoq (Storm/Turtle/Rain clusters) glowing with internal electric-violet and deep blue light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 12: two glowing golden bars stacked horizontally with two golden dots centered above them. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.',
       },
     },
     {
@@ -478,19 +489,28 @@ export const qanilTrecena = {
       chapter: '',
       energy_of_the_day: {
         number: {
-          title: '',
-          content: '',
-          keywords: [],
+          title: 'Transcendence and Renewal',
+          content:
+            'The number 13 represents the culmination of cycles, connection to ancestors, and spiritual rebirth. It is a day of heightened spiritual power, ascension, and completion, preparing for a new beginning at a higher level.',
+          keywords: ['ascension', 'completion', 'transformation', 'spiritual power', 'renewal'],
         },
         nawal: {
-          title: '',
-          content: '',
-          keywords: [],
+          title: 'The Solar Hero',
+          content:
+            'Ajpu is the energy of the sun, the hero, and divinity within human experience. It represents the search for truth, courage, and the purpose that uplifts the community. It is the light that overcomes darkness.',
+          keywords: ['sun', 'hero', 'divinity', 'purpose', 'clarity'],
         },
         combined_energy: {
-          title: '',
-          content: '',
-          notes: [],
+          title: 'Ascension of the Inner Light',
+          content:
+            "When the completing energy of 13 meets the solar power of Ajpu, it signifies the culmination of a hero's journey. This is a day of profound realization, where you recognize your own inner divinity and the purpose of the cycle you have just finished. It is a time to stand fully in your light, transcend past limitations, and prepare for a new level of existence.",
+          notes: [
+            'Celebrate the completion of a significant personal cycle',
+            'Acknowledge and own your inner light and power without apology',
+            'Connect with spiritual guides or ancestors for higher perspective',
+            "Reflect on the 'hero's journey' you have navigated over the last 13 days",
+            'Prepare your spirit for a new beginning with a sense of royalty and grace',
+          ],
         },
       },
       horoscope: '',

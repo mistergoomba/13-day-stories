@@ -196,29 +196,53 @@
       "chapter": "",
       "energy_of_the_day": {
         "number": {
-          "title": "",
-          "content": "",
-          "keywords": []
+          "title": "The Summit of Reflection",
+          "content": "The number 7 represents the midpoint of the 13-day cycle, offering a vantage point for introspection and perspective. It is a day of mystical insight, where one can see both sides of a situation clearly and align with a higher vision.",
+          "keywords": [
+            "insight",
+            "clarity",
+            "reflection",
+            "vision",
+            "midpoint"
+          ]
         },
         "nawal": {
-          "title": "",
-          "content": "",
-          "keywords": []
+          "title": "The Solar Hero",
+          "content": "Ajpu is the energy of the sun, the hero, and divinity within human experience. It represents the search for truth, courage, and the purpose that uplifts the community. It is the light that overcomes darkness.",
+          "keywords": [
+            "sun",
+            "hero",
+            "divinity",
+            "purpose",
+            "illumination"
+          ]
         },
         "combined_energy": {
-          "title": "",
-          "content": "",
-          "notes": []
+          "title": "The Apex of Illumination",
+          "content": "When the reflective vantage point of 7 meets the solar illumination of Ajpu, the day offers profound clarity regarding your life's purpose. It is a moment to stand at the summit of your own journey, look back at how far you have come, and look forward with a renewed sense of divine direction. The energy supports seeing the 'big picture' truth of your heroic path.",
+          "notes": [
+            "Take time for introspection to gain perspective on your current path",
+            "Seek the higher truth in a confusing situation; the view is clear today",
+            "Connect with your sense of divine purpose and inner heroism",
+            "Stand tall and radiate your authentic light without fear",
+            "Use this midpoint energy to re-align your actions with your highest vision"
+          ]
         }
       },
       "horoscope": "",
       "affirmation": "",
       "meditation": "",
       "birthday": {
-        "title": "",
-        "content": ""
+        "title": "The Visionary Hero",
+        "content": "To be born on 7 Ajpu is to stand at the reflective summit of the hero's journey. The number 7 brings the gift of balanced perspective and deep insight, while Ajpu adds the shining energy of the sun and divine purpose. You are a visionary leader who doesn't just fight battles but understands *why* they are being fought. You have a natural ability to see the holiness in ordinary life and the truth in complex situations. People look to you for clarity when the path is confusing. Your challenge is to stay connected to the ground; your vision is so high that you might sometimes detach from mundane reality. Remember that true heroism connects heaven and earth."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#1c1c1a",
+          "secondary": "#4b4238",
+          "accent": "#daba60"
+        }
+      }
     },
     {
       "day": 8,

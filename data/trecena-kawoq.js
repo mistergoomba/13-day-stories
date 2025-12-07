@@ -478,19 +478,28 @@ export const kawoqTrecena = {
       chapter: '',
       energy_of_the_day: {
         number: {
-          title: '',
-          content: '',
-          keywords: [],
+          title: 'Transcendence and Renewal',
+          content:
+            'The number 13 represents the culmination of cycles, connection to ancestors, and spiritual rebirth. It is a day of heightened spiritual power, ascension, and completion, preparing for a new beginning at a higher level.',
+          keywords: ['ascension', 'completion', 'transformation', 'spiritual power', 'renewal'],
         },
         nawal: {
-          title: '',
-          content: '',
-          keywords: [],
+          title: 'The Master Weaver',
+          content:
+            'B’atz’ is the energy of the thread, time, and creativity. It is the artist who weaves reality through craft, rhythm, and performance, initiating new cycles and binding community together.',
+          keywords: ['creativity', 'weaving', 'time', 'artistry', 'initiation'],
         },
         combined_energy: {
-          title: '',
-          content: '',
-          notes: [],
+          title: 'Completing the Masterpiece',
+          content:
+            'This day brings the grand completion of a creative tapestry. The transcendent energy of 13 elevates the weaving power of B’atz’ to its highest expression. It is a moment to step back and see the entire pattern of time and creativity you have woven, celebrating the finished work before the loom is reset for a new design. It is a day of artistic culmination and spiritual artistry.',
+          notes: [
+            'Celebrate the completion of a creative project or life phase',
+            'Reflect on the patterns and threads that have shaped your recent reality',
+            'Honor the passage of time and the artistry of your own life',
+            "Connect with the 'divine weaver' within yourself",
+            'Prepare to release the old pattern to make way for a new weave',
+          ],
         },
       },
       horoscope: '',

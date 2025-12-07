@@ -49,19 +49,35 @@ export const ajTrecena = {
       chapter: '',
       energy_of_the_day: {
         number: {
-          title: '',
-          content: '',
-          keywords: [],
+          title: 'The Mirror of Duality',
+          content:
+            'The number 2 represents duality, balance, and the interaction between opposites—such as light and dark, or masculine and feminine. It brings choices, mirrors, and relationships into focus, emphasizing polarity and reflection.',
+          keywords: ['polarity', 'reflection', 'connection', 'balance', 'duality'],
         },
         nawal: {
-          title: '',
-          content: '',
-          keywords: [],
+          title: 'The Jaguar of Earth Magic',
+          content:
+            'Ix is the energy of the jaguar, earth magic, and sacred sites. It represents gratitude, manifestation through the Heart of the Earth, and nurturing power. It governs stealth, intuition, and connection to the spirit world.',
+          keywords: [
+            'earth magic',
+            'gratitude',
+            'intuition',
+            'manifestation',
+            'jaguar',
+            'sacred sites',
+          ],
         },
         combined_energy: {
-          title: '',
-          content: '',
-          notes: [],
+          title: 'Balancing the Invisible Forces',
+          content:
+            'When the dualistic energy of 2 meets the mystical force of Ix, the day highlights the need for balance within magical and intuitive realms. It is a time to recognize the interplay between the seen and unseen, the physical earth and the spirit world. Relationships today act as powerful mirrors, reflecting your own intuitive gifts and connection to nature back to you.',
+          notes: [
+            'Use your relationships as mirrors to understand your own intuitive powers',
+            'Find balance between being grounded on earth and connected to spirit',
+            'Practice gratitude for both the light and shadow aspects of your reality',
+            'Trust your gut instinct when faced with a choice between two options',
+            'Seek harmony in the dualities of nature',
+          ],
         },
       },
       horoscope: '',

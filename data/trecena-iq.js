@@ -13,27 +13,27 @@ export const iqTrecena = {
         'You stand on the first floating island, a small disc of white stone hovering in the blue. The air is still, but charged with potential, like the moment before a conductor raises a baton.\n\nIn the center of the platform stands a single, crystalline wind chime, taller than you. It hangs from nothing, suspended in the air. Its tubes are made of glass so clear they are almost invisible, etched with symbols that seem to shift when you look away.\n\nIt is silent.\n\nYou approach it, feeling the static electricity prickle on your skin. You understand that this chime is the tuning fork for the entire trecena. It cannot ring itself. It needs a catalyst.\n\nIt needs breath.\n\nYou stand before the chime. You realize how shallow your breathing usually is—short sips of air, just enough to survive. Here, that is not enough. To move the glass, you must breathe from the root of your being.\n\nYou inhale. You pull the air down past your throat, past your chest, into your belly. You feel your lungs expand, pushing against your ribs. You hold it for a second, feeling the oxygen race through your blood.\n\nThen, you exhale. You blow a steady, focused stream of air toward the chime.\n\nThe glass shivers. Slowly, one tube swings and strikes another.\n\n*Cling.*\n\nThe sound is pure and piercing. It vibrates through the platform, through the soles of your feet, and straight into the center of your skull. It clears the fog in your mind instantly.\n\nThe vibration triggers a chain reaction. A breeze kicks up from nowhere, swirling around the platform. The mist clears, revealing a path of floating stones stretching out into the clouds.\n\nYou have initiated the cycle. You have proven that your breath has power.\n\nThe wind is awake now. It tugs at your clothes, playful and insistent. It wants to show you where the sound goes.',
       energy_of_the_day: {
         number: {
-          title: 'The Breath of Beginning',
+          title: 'The Seed of Unity',
           content:
-            'The number 1 represents the spark, the seed, and the unity of all things. It is the first impulse. Today, it combines with the wind to create the first breath of inspiration.',
-          keywords: ['unity', 'breath', 'inspiration', 'beginning'],
+            'The number 1 represents the spark of creation, the seed containing infinite potential, and unity. It is a day of initiation, focusing intent, and planting the seeds for new cycles.',
+          keywords: ['beginnings', 'focus', 'creation', 'potential', 'seed'],
         },
         nawal: {
-          title: 'The Wind and The Word',
+          title: 'The Breath of Spirit',
           content:
-            'Iq’ is the energy of breath, communication, and the spirit. It is the divine wind that clears stagnation and carries truth. It governs the respiratory system and the power of words.',
-          keywords: ['communication', 'breath', 'spirit', 'cleansing', 'words'],
+            'Iq’ is the energy of wind, breath, and communication representing the breath of life itself. It governs inspiration, clarity, change, and the purification that comes through movement and words.',
+          keywords: ['breath', 'words', 'clarity', 'change', 'communication', 'inspiration'],
         },
         combined_energy: {
-          title: 'Inhaling Inspiration',
+          title: 'The First Breath of Inspiration',
           content:
-            'When the initiating force of 1 meets the wind of Iq’, we experience a moment of pure inspiration. It is the "lightbulb moment," the sudden clarity, the fresh start. Today is for opening the windows of your mind and letting the fresh air in.',
+            "This day marks the absolute beginning of a new creative cycle, fueled by the unifying seed energy of 1 and the inspiring breath of Iq'. It is the moment an idea is conceived, a word is spoken that sets things in motion, or a new perspective arrives like a fresh breeze. The energy is potent, pure, and centered on initiating change through clear intent and communication.",
           notes: [
-            'Take deep, conscious breaths today',
-            'Start a conversation you have been avoiding',
-            'Open windows in your home to clear the air',
-            'Write down a sudden idea before it blows away',
-            'Speak your intention out loud to the universe',
+            'Set a clear intention for the new 13-day cycle',
+            'Pay close attention to sudden ideas or inspirations',
+            'Use your words with precision to initiate what you desire',
+            'Practice conscious breathing to connect with the new energy',
+            'Be open to a sudden shift in perspective or a new beginning',
           ],
         },
       },
