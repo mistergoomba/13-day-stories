@@ -188,6 +188,8 @@ const styles = StyleSheet.create({
     ...mainButton.text,
     fontSize: 16,
     fontWeight: '600',
+    flex: 1,
+    textAlign: 'left',
   },
   errorText: {
     ...type.body,

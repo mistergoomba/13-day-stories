@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { View, Text, StyleSheet, Pressable, Dimensions, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Svg, { Rect } from 'react-native-svg';
+import Svg, { Rect, Path } from 'react-native-svg';
 import Card from '../components/Card';
 import SimpleHeader from '../components/SimpleHeader';
-import DayNavigationButton from '../components/DayNavigationButton';
 import DynamicBackground from '../components/DynamicBackground';
 import ImageWithPlaceholder from '../components/ImageWithPlaceholder';
 import colors from '../theme/colors';
@@ -25,7 +24,14 @@ import { getButtonStyleFromColors } from '../theme/buttons';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 // Component to render day detail view (story chapter only)
-function DayDetailView({ mayanDate, onBack, setSelectedDay, scrollViewRef, setCurrentView, onPersonalPress }) {
+function DayDetailView({
+  mayanDate,
+  onBack,
+  setSelectedDay,
+  scrollViewRef,
+  setCurrentView,
+  onPersonalPress,
+}) {
   const insets = useSafeAreaInsets();
   const [dayData, setDayData] = useState(null);
   const [storyPrimaryColors, setStoryPrimaryColors] = useState({
@@ -117,8 +123,8 @@ function DayDetailView({ mayanDate, onBack, setSelectedDay, scrollViewRef, setCu
   const renderTextBlock = (paragraphs, keyPrefix) => {
     return paragraphs.map((paragraph, index) => (
       <Text key={`${keyPrefix}-para-${index}`} style={styles.chapterText}>
-          {paragraph}
-        </Text>
+        {paragraph}
+      </Text>
     ));
   };
 
@@ -136,9 +142,22 @@ function DayDetailView({ mayanDate, onBack, setSelectedDay, scrollViewRef, setCu
     }
   };
 
-  const handleGoToToday = () => {
+  const handleNextDay = () => {
+    scrollToTop();
+    if (nextDay) {
+      setSelectedDay(nextDay);
+    }
+  };
+
+  const handleFullStory = () => {
     scrollToTop();
     onBack();
+  };
+
+  const handleCurrentChapter = () => {
+    scrollToTop();
+    const todayMayan = getTodayMayanDateSync();
+    setSelectedDay(todayMayan);
   };
 
   return (
@@ -148,9 +167,7 @@ function DayDetailView({ mayanDate, onBack, setSelectedDay, scrollViewRef, setCu
 
       {/* Header - Fixed at top */}
       <View style={styles.headerContainer}>
-        <SimpleHeader
-          title='Journey'
-        />
+        <SimpleHeader title='Journey' />
       </View>
 
       {/* Scrollable Content */}
@@ -160,11 +177,13 @@ function DayDetailView({ mayanDate, onBack, setSelectedDay, scrollViewRef, setCu
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <View style={[styles.content, { paddingBottom: bottomPadding, paddingTop: insets.top + 56 }]}>
+        <View
+          style={[styles.content, { paddingBottom: bottomPadding, paddingTop: insets.top + 56 }]}
+        >
           {/* Story Primary Image */}
           <ImageWithPlaceholder
             source={dayData?.images?.story_primary}
-            type="square"
+            type='square'
             flushTop={true}
           />
 
@@ -216,9 +235,9 @@ function DayDetailView({ mayanDate, onBack, setSelectedDay, scrollViewRef, setCu
           {dayData?.images?.story_wide_1 && (
             <ImageWithPlaceholder
               source={dayData.images.story_wide_1}
-              type="wide"
+              type='wide'
               contentWidth={SCREEN_WIDTH}
-              resizeMode="cover"
+              resizeMode='cover'
             />
           )}
 
@@ -237,9 +256,9 @@ function DayDetailView({ mayanDate, onBack, setSelectedDay, scrollViewRef, setCu
           {dayData?.images?.story_wide_2 && (
             <ImageWithPlaceholder
               source={dayData.images.story_wide_2}
-              type="wide"
+              type='wide'
               contentWidth={SCREEN_WIDTH}
-              resizeMode="cover"
+              resizeMode='cover'
             />
           )}
 
@@ -252,40 +271,68 @@ function DayDetailView({ mayanDate, onBack, setSelectedDay, scrollViewRef, setCu
             </Card>
           </View>
 
-          {/* Bottom Day Navigation */}
+          {/* Bottom Chapter Navigation */}
           <View style={styles.contentSection}>
-            <View style={styles.bottomDayNavigationContainer}>
-              <DayNavigationButton
-                direction='prev'
-                dayNumber={previousDay?.tone || dayNumber - 1}
-                onPress={handlePreviousDay}
-                disabled={!canGoPrevious}
-                backgroundColors={storyPrimaryColors}
-              />
-              <Pressable
-                onPress={() => {
-                  onBack();
-                  scrollToTop();
-                }}
-                style={[
-                  styles.bottomDayButtonCenter,
-                  storyPrimaryColors && getButtonStyleFromColors(storyPrimaryColors),
-                ]}
-              >
-                <Text style={styles.bottomDayButtonText}>Day {dayNumber}</Text>
-              </Pressable>
-              <DayNavigationButton
-                direction='next'
-                dayNumber={nextDay?.tone || dayNumber + 1}
-                onPress={() => {
-                  if (nextDay) {
-                    setSelectedDay(nextDay);
-                  scrollToTop();
-                  }
-                }}
-                disabled={!canGoNext}
-                backgroundColors={storyPrimaryColors}
-              />
+            <View style={styles.navigationContainer}>
+              {/* Previous/Next Chapter Links */}
+              <View style={styles.chapterNavigationRow}>
+                <Pressable
+                  onPress={handlePreviousDay}
+                  disabled={!canGoPrevious}
+                  style={styles.chapterLink}
+                >
+                  <Text
+                    style={[
+                      styles.chapterLinkText,
+                      !canGoPrevious && styles.chapterLinkTextDisabled,
+                    ]}
+                  >
+                    ← Chapter {previousDay?.tone || dayNumber - 1}
+                  </Text>
+                </Pressable>
+                <View style={styles.iconCircle}>
+                  <Svg width={24} height={24} viewBox='0 0 24 24' fill='none'>
+                    {/* Left page, angled */}
+                    <Path
+                      d='M4 12.5L11.5 14V22L4 21.5V12.5Z'
+                      stroke='currentColor'
+                      strokeWidth={2}
+                      strokeLinejoin='round'
+                    />
+                    {/* Right page, angled */}
+                    <Path
+                      d='M20 12.5L12.5 14V22L20 21.5V12.5Z'
+                      stroke='currentColor'
+                      strokeWidth={2}
+                      strokeLinejoin='round'
+                    />
+                    {/* Heart floating above the book */}
+                    <Path
+                      d='M8 3C8 1.7 9.1 0.6 10.5 0.6C11.2 0.6 11.9 1 12.3 1.6C12.7 1 13.4 0.6 14.1 0.6C15.5 0.6 16.6 1.7 16.6 3C16.6 5.2 14.7 6.8 12.3 8.4C9.9 6.8 8 5.2 8 3Z'
+                      stroke='currentColor'
+                      strokeWidth={2}
+                      strokeLinejoin='round'
+                    />
+                  </Svg>
+                </View>
+                <Pressable onPress={handleNextDay} disabled={!canGoNext} style={styles.chapterLink}>
+                  <Text
+                    style={[styles.chapterLinkText, !canGoNext && styles.chapterLinkTextDisabled]}
+                  >
+                    Chapter {nextDay?.tone || dayNumber + 1} →
+                  </Text>
+                </Pressable>
+              </View>
+
+              {/* Full Story and Current Chapter Links */}
+              <View style={styles.storyLinksRow}>
+                <Pressable onPress={handleFullStory} style={styles.storyLink}>
+                  <Text style={styles.storyLinkText}>full story</Text>
+                </Pressable>
+                <Pressable onPress={handleCurrentChapter} style={styles.storyLink}>
+                  <Text style={styles.storyLinkText}>current chapter</Text>
+                </Pressable>
+              </View>
             </View>
           </View>
         </View>
@@ -355,10 +402,11 @@ export default function JourneyScreenContent({
   // selectedDay can be a Mayan date object or null
   if (selectedDay !== null) {
     // Handle legacy case where selectedDay might be a number
-    const mayanDate = typeof selectedDay === 'number' 
-      ? todayMayan // Fallback - shouldn't happen but handle gracefully
-      : selectedDay;
-    
+    const mayanDate =
+      typeof selectedDay === 'number'
+        ? todayMayan // Fallback - shouldn't happen but handle gracefully
+        : selectedDay;
+
     return (
       <DayDetailView
         mayanDate={mayanDate}
@@ -383,7 +431,7 @@ export default function JourneyScreenContent({
     const dayMayanDate = { ...todayMayan, tone: day.number };
     return isDayAvailable(dayMayanDate);
   });
-  const firstAvailableDay = firstAvailableDayData 
+  const firstAvailableDay = firstAvailableDayData
     ? { ...todayMayan, tone: firstAvailableDayData.number }
     : { ...todayMayan, tone: 1 };
 
@@ -399,12 +447,12 @@ export default function JourneyScreenContent({
 
   const handleGoToFirstDay = () => {
     scrollToTop();
-      setSelectedDay(firstAvailableDay);
+    setSelectedDay(firstAvailableDay);
   };
 
   const handleGoToLastDay = () => {
     scrollToTop();
-      setSelectedDay(lastAvailableDay);
+    setSelectedDay(lastAvailableDay);
   };
 
   // List view
@@ -419,9 +467,7 @@ export default function JourneyScreenContent({
     <View style={styles.container}>
       {/* Header - Fixed at top */}
       <View style={styles.headerContainer}>
-        <SimpleHeader
-          title='Journey'
-        />
+        <SimpleHeader title='Journey' />
       </View>
 
       {/* Scrollable Content */}
@@ -448,73 +494,73 @@ export default function JourneyScreenContent({
               </Card>
             </View>
 
-          {/* Prologue Section */}
-          <View style={styles.contentSection}>
-            <Card>
-              <Text style={styles.sectionTitle}>Prologue</Text>
-              <Text
-                style={styles.prologueText}
-                numberOfLines={prologueExpanded ? undefined : 2}
-                ellipsizeMode='tail'
-              >
-                {trecenaData.prologue}
-              </Text>
-              <Pressable
-                style={styles.readMoreButton}
-                onPress={() => setPrologueExpanded(!prologueExpanded)}
-              >
-                <Text style={styles.readMoreText}>
-                  {prologueExpanded ? 'Read less' : 'Read more'}
+            {/* Prologue Section */}
+            <View style={styles.contentSection}>
+              <Card>
+                <Text style={styles.sectionTitle}>Prologue</Text>
+                <Text
+                  style={styles.prologueText}
+                  numberOfLines={prologueExpanded ? undefined : 2}
+                  ellipsizeMode='tail'
+                >
+                  {trecenaData.prologue}
                 </Text>
-              </Pressable>
-            </Card>
-          </View>
+                <Pressable
+                  style={styles.readMoreButton}
+                  onPress={() => setPrologueExpanded(!prologueExpanded)}
+                >
+                  <Text style={styles.readMoreText}>
+                    {prologueExpanded ? 'Read less' : 'Read more'}
+                  </Text>
+                </Pressable>
+              </Card>
+            </View>
 
-          {/* Days List */}
-          <View style={styles.contentSection}>
-            <Card>
-              <Text style={styles.sectionTitle}>Chapters</Text>
-              {allDays.map((day) => {
-                const dayMayanDate = { ...todayMayan, tone: day.number };
-                const available = isDayAvailable(dayMayanDate);
-                const isToday = day.number === todayMayan.tone;
+            {/* Days List */}
+            <View style={styles.contentSection}>
+              <Card>
+                <Text style={styles.sectionTitle}>Chapters</Text>
+                {allDays.map((day) => {
+                  const dayMayanDate = { ...todayMayan, tone: day.number };
+                  const available = isDayAvailable(dayMayanDate);
+                  const isToday = day.number === todayMayan.tone;
 
-                return (
-                  <Pressable
-                    key={day.day}
-                    style={[
-                      styles.dayCard,
-                      available ? styles.availableDay : styles.unavailableDay,
-                      isToday && styles.todayCard,
-                    ]}
-                    onPress={() => available && setSelectedDay(dayMayanDate)}
-                    disabled={!available}
-                  >
-                    <View style={styles.dayCardHeader}>
-                      <Text
-                        style={[
-                          styles.dayNumber,
-                          available ? styles.availableText : styles.unavailableText,
-                          isToday && styles.todayText,
-                        ]}
-                      >
-                        Chapter {day.day}
-                      </Text>
-                      <Text
-                        style={[
-                          styles.dayNawal,
-                          available ? styles.availableText : styles.unavailableText,
-                        ]}
-                      >
-                        {day.nawal} {day.number}
-                      </Text>
-                    </View>
-                  </Pressable>
-                );
-              })}
-            </Card>
+                  return (
+                    <Pressable
+                      key={day.day}
+                      style={[
+                        styles.dayCard,
+                        available ? styles.availableDay : styles.unavailableDay,
+                        isToday && styles.todayCard,
+                      ]}
+                      onPress={() => available && setSelectedDay(dayMayanDate)}
+                      disabled={!available}
+                    >
+                      <View style={styles.dayCardHeader}>
+                        <Text
+                          style={[
+                            styles.dayNumber,
+                            available ? styles.availableText : styles.unavailableText,
+                            isToday && styles.todayText,
+                          ]}
+                        >
+                          Chapter {day.day}
+                        </Text>
+                        <Text
+                          style={[
+                            styles.dayNawal,
+                            available ? styles.availableText : styles.unavailableText,
+                          ]}
+                        >
+                          {day.nawal} {day.number}
+                        </Text>
+                      </View>
+                    </Pressable>
+                  );
+                })}
+              </Card>
+            </View>
           </View>
-        </View>
         )}
       </ScrollView>
     </View>
@@ -733,6 +779,13 @@ const styles = StyleSheet.create({
     lineHeight: 26,
     marginBottom: 20,
   },
+  chapterNavText: {
+    ...type.subtitle,
+    color: colors.text,
+    fontSize: 18,
+    fontWeight: '600',
+    marginHorizontal: 16,
+  },
   storyWideImage: {
     width: '100%',
     height: 200,
@@ -744,17 +797,6 @@ const styles = StyleSheet.create({
     color: colors.text,
     lineHeight: 24,
     fontStyle: 'italic',
-  },
-  navigationContainer: {
-    marginTop: 24,
-  },
-  navLink: {
-    ...mainButton.button,
-    padding: 16,
-  },
-  navLinkText: {
-    ...type.subtitle,
-    ...mainButton.text,
   },
   dayNavigationContainer: {
     flexDirection: 'row',
@@ -791,24 +833,60 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 32,
   },
-  bottomDayNavigationContainer: {
+  navigationContainer: {
+    marginTop: 24,
+    alignItems: 'center',
+  },
+  chapterNavigationRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: 16,
+  },
+  chapterLink: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  chapterLinkText: {
+    ...type.body,
+    color: colors.text,
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  chapterLinkTextDisabled: {
+    color: colors.textDim,
+    opacity: 0.5,
+  },
+  chapterNavText: {
+    ...type.subtitle,
+    color: colors.text,
+    fontSize: 18,
+    fontWeight: '600',
+    marginHorizontal: 16,
+  },
+  storyLinksRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 24,
-    marginBottom: 24,
-    gap: 12,
+    gap: 24,
   },
-  bottomDayButtonCenter: {
-    ...mainButton.button,
-    height: 48,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    minWidth: 80,
+  storyLink: {
+    paddingVertical: 8,
   },
-  bottomDayButtonText: {
+  storyLinkText: {
     ...type.body,
-    ...mainButton.text,
+    color: colors.textDim,
     fontSize: 14,
+    fontWeight: '500',
+    textTransform: 'lowercase',
+  },
+  iconCircle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
