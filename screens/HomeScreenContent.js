@@ -3,26 +3,44 @@ import { View, Text, StyleSheet, Pressable, Image, Dimensions, ScrollView } from
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle, Path } from 'react-native-svg';
 import colors from '../theme/colors';
-import { type } from '../theme/typography';
-import { mainButton } from '../theme/buttons';
+import { type, headerFontFamily } from '../theme/typography';
+import { mainButton, getButtonStyleFromColors } from '../theme/buttons';
 import Card from '../components/Card';
 import SectionHeader from '../components/SectionHeader';
 import DynamicBackground from '../components/DynamicBackground';
+import ImageWithPlaceholder from '../components/ImageWithPlaceholder';
+import { getTodayMayanDateSync } from '../utils/calendarUtils';
 // Home screen doesn't need Mayan date - removed unused import
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-export default function HomeScreenContent({ setCurrentView, scrollViewRef, onPersonalPress, handlePersonalNavigation }) {
+export default function HomeScreenContent({
+  setCurrentView,
+  scrollViewRef,
+  onPersonalPress,
+  handlePersonalNavigation,
+  setSelectedDay,
+}) {
   const insets = useSafeAreaInsets();
 
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
 
-  // Default background colors for home screen
+  // Background colors extracted from main-image.webp
   const defaultBackgroundColors = {
-    primary: '#12091A',
-    secondary: '#1C0F29',
-    accent: '#6E45CF',
+    primary: '#130f1c',
+    secondary: '#55325c',
+    accent: '#cd95c8',
+  };
+
+  // Generate button styles from the extracted colors
+  const buttonStyle = getButtonStyleFromColors(defaultBackgroundColors);
+
+  // Create a lighter button style for secondary buttons
+  const lighterButtonStyle = {
+    ...buttonStyle,
+    backgroundColor: defaultBackgroundColors.secondary,
+    opacity: 0.7,
   };
 
   return (
@@ -34,97 +52,116 @@ export default function HomeScreenContent({ setCurrentView, scrollViewRef, onPer
       <ScrollView
         ref={scrollViewRef}
         style={styles.scrollView}
-        contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 20 }]}
+        contentContainerStyle={[styles.scrollContent, { paddingTop: 0 }]}
         showsVerticalScrollIndicator={false}
       >
+        {/* Main Image - Flush with top and sides, square */}
+        <ImageWithPlaceholder
+          source={require('../assets/main-image.webp')}
+          type='square'
+          flushTop={true}
+          flushBottom={true}
+          resizeMode='cover'
+        />
+
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-      <Image source={require('../assets/icon.png')} style={styles.icon} resizeMode='contain' />
+          <Card>
+            <Text style={[styles.body, { marginBottom: 0 }]}>
+              Welcome to 13-Day Stories, a journey through the sacred cycles of the Mayan calendar.
+              {'\n\n'}
+              This app is deeply influenced by ancient Mayan wisdom—a timekeeping system that has
+              guided indigenous communities for thousands of years. The Mayan calendar is not just a
+              way to mark time, but a sacred framework for understanding the rhythms of life, the
+              cycles of nature, and the patterns that shape our personal and collective journeys.
+            </Text>
+          </Card>
 
-      <Card>
-        <Text style={styles.body}>
-          Welcome to 13-Day Stories, a journey through the sacred cycles of the Mayan calendar.
-          {'\n\n'}
-          Every day carries a unique energy, guided through these 13-day stories known as trecenas.
-          Each day combines a number (1-13) and a nawal, or day sign, creating a distinct
-          vibrational quality that offers insight, guidance, and reflection.
-        </Text>
-      </Card>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionHeader}>Daily Energy</Text>
+            <Card>
+              <Text style={styles.body}>
+                Every day carries a unique energy, guided by a combination of a number (1-13) and a
+                nawal, or day sign, creating a distinct vibrational quality that offers insight,
+                guidance, and reflection.
+              </Text>
 
-      <Card>
-        <Text style={styles.body}>
-          This app is deeply influenced by ancient Mayan wisdom—a timekeeping system that has guided
-          indigenous communities for thousands of years. The Mayan calendar is not just a way to
-          mark time, but a sacred framework for understanding the rhythms of life, the cycles of
-          nature, and the patterns that shape our personal and collective journeys.
-        </Text>
-      </Card>
+              <Pressable
+                style={[buttonStyle, styles.energyButton]}
+                onPress={() => setCurrentView && setCurrentView('Today')}
+              >
+                <Text style={styles.energyButtonText}>Read Today's Energy</Text>
+                <Svg width={25} height={25} viewBox='0 0 24 24' fill='none'>
+                  <Path d='M8 4L18 12L8 20V4Z' fill={colors.text} />
+                </Svg>
+              </Pressable>
+            </Card>
+          </View>
 
-      <Card>
-        <Text style={styles.body}>
-          Through daily stories, horoscopes, meditations, and energy readings, we invite you to
-          explore how these ancient teachings can illuminate your path, offering both practical
-          guidance and spiritual depth.
-        </Text>
-      </Card>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionHeader}>The 13 Day Cycle</Text>
+            <Card>
+              <Text style={styles.body}>
+                A trecena is a 13-day cycle in the Mayan calendar. The energy of the cycle is guided
+                by the nawal sign of the first day. This journey guides you through all 13 days,
+                revealing the story and wisdom that unfolds as the cycle progresses.
+              </Text>
 
-      {/* Navigation Links */}
-      <View style={styles.navigationContainer}>
-        {/* Main Primary Buttons - Side by Side */}
-        <View style={styles.mainButtonsRow}>
-          <Pressable
-            style={styles.mainButton}
-            onPress={() => setCurrentView && setCurrentView('Today')}
-          >
-            <View style={styles.mainButtonContent}>
-              <Svg width={48} height={48} viewBox='0 0 24 24' fill='none'>
-                <Circle cx={12} cy={10} r={6} stroke={colors.text} strokeWidth={2} />
-                <Path d='M6 20H18' stroke={colors.text} strokeWidth={2} strokeLinecap='round' />
-                <Path d='M8 16H16' stroke={colors.text} strokeWidth={2} strokeLinecap='round' />
-              </Svg>
-              <Text style={styles.mainButtonText}>See the{'\n'}Energy of the Day</Text>
-            </View>
-          </Pressable>
+              <Pressable
+                style={[buttonStyle, styles.energyButton]}
+                onPress={() => {
+                  if (setSelectedDay && setCurrentView) {
+                    const todayMayan = getTodayMayanDateSync();
+                    setSelectedDay(todayMayan);
+                    setCurrentView('Journey');
+                  }
+                }}
+              >
+                <Text style={styles.energyButtonText}>Read Today's Chapter</Text>
+                <Svg width={25} height={25} viewBox='0 0 24 24' fill='none'>
+                  <Path d='M8 4L18 12L8 20V4Z' fill={colors.text} />
+                </Svg>
+              </Pressable>
 
-          <Pressable
-            style={styles.mainButton}
-            onPress={() => handlePersonalNavigation && handlePersonalNavigation()}
-          >
-            <View style={styles.mainButtonContent}>
-              <Svg width={48} height={48} viewBox='0 0 24 24' fill='none'>
-                <Circle cx={12} cy={8} r={4} stroke={colors.text} strokeWidth={2} />
-                <Path
-                  d='M6 21C6 17 9 14 12 14C15 14 18 17 18 21'
-                  stroke={colors.text}
-                  strokeWidth={2}
-                  strokeLinecap='round'
-                />
-              </Svg>
-              <Text style={styles.mainButtonText}>Find Your{'\n'}Mayan Birthday</Text>
-            </View>
-          </Pressable>
+              <Pressable
+                style={[lighterButtonStyle, styles.secondaryStoryButton]}
+                onPress={() => {
+                  if (setSelectedDay && setCurrentView) {
+                    setSelectedDay(null);
+                    if (scrollViewRef?.current) {
+                      scrollViewRef.current.scrollTo({ y: 0, animated: false });
+                    }
+                    setCurrentView('Journey');
+                  }
+                }}
+              >
+                <Text style={styles.secondaryStoryButtonText}>Read From the Start</Text>
+              </Pressable>
+            </Card>
+          </View>
+
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionHeader}>Find Your Mayan Birthday</Text>
+            <Card>
+              <Text style={styles.body}>
+                Each person has a unique Mayan birthday—the combination of a number (1-13) and a
+                nawal sign that corresponds to your birth date. This combination reveals your
+                personal energy, offering insight into your character, strengths, and the path you
+                walk through life.
+              </Text>
+
+              <Pressable
+                style={[buttonStyle, styles.energyButton]}
+                onPress={() => handlePersonalNavigation && handlePersonalNavigation()}
+              >
+                <Text style={styles.energyButtonText}>Convert Your Birth Date</Text>
+                <Svg width={25} height={25} viewBox='0 0 24 24' fill='none'>
+                  <Path d='M8 4L18 12L8 20V4Z' fill={colors.text} />
+                </Svg>
+              </Pressable>
+            </Card>
+          </View>
         </View>
-
-        {/* Story Section */}
-        <View style={styles.storySection}>
-          <Text style={styles.storySectionHeader}>Dive into the Story</Text>
-
-          <Pressable
-            style={styles.storyButton}
-            onPress={() => setCurrentView && setCurrentView('Journey')}
-          >
-            <Text style={styles.storyButtonText}>Read Today's Chapter</Text>
-          </Pressable>
-
-          <Pressable
-            style={styles.secondaryStoryButton}
-            onPress={() => setCurrentView && setCurrentView('Journey')}
-          >
-            <Text style={styles.secondaryStoryButtonText}>Start from the Beginning</Text>
-          </Pressable>
-        </View>
-      </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
     </View>
   );
 }
@@ -143,11 +180,17 @@ const styles = StyleSheet.create({
   content: {
     padding: 20,
   },
-  icon: {
-    width: '100%',
-    height: 200,
-    marginBottom: 24,
-    alignSelf: 'center',
+  sectionContainer: {
+    marginBottom: 20,
+  },
+  sectionHeader: {
+    ...type.title,
+    fontFamily: headerFontFamily,
+    color: colors.text,
+    fontSize: 28,
+    marginBottom: 16,
+    paddingTop: 35,
+    textAlign: 'center',
   },
   body: {
     ...type.body,
@@ -167,7 +210,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   mainButton: {
-    ...mainButton.button,
     flex: 1,
     aspectRatio: 1,
     borderRadius: 16,
@@ -187,6 +229,19 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'center',
   },
+  energyButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,
+    marginTop: 16,
+  },
+  energyButtonText: {
+    ...type.body,
+    color: colors.text,
+    fontSize: 16,
+    fontWeight: '600',
+  },
   storySection: {
     marginTop: 8,
   },
@@ -199,7 +254,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   storyButton: {
-    ...mainButton.button,
     padding: 18,
     marginBottom: 12,
   },
@@ -208,9 +262,11 @@ const styles = StyleSheet.create({
     ...mainButton.text,
   },
   secondaryStoryButton: {
-    ...mainButton.button,
     padding: 16,
+    marginTop: 12,
     marginBottom: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   secondaryStoryButtonText: {
     ...type.body,

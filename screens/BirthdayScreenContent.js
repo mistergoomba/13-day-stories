@@ -238,7 +238,11 @@ export default function BirthdayScreenContent({
 
       {/* Header - Fixed at top */}
       <View style={styles.headerContainer}>
-        <SimpleHeader title='Your Birthday' />
+        <SimpleHeader 
+          title='Your Birthday'
+          onAccountPress={() => setCurrentView && setCurrentView('Settings')}
+          showSettingsIcon={true}
+        />
       </View>
 
       {/* Scrollable Content */}

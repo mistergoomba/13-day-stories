@@ -179,6 +179,7 @@ function AppContent() {
             scrollViewRef={scrollViewRef}
             onPersonalPress={handlePersonalNavigation}
             handlePersonalNavigation={handlePersonalNavigation}
+            setSelectedDay={setSelectedDay}
           />
         ) : currentView === 'Settings' ? (
           <SettingsScreenContent

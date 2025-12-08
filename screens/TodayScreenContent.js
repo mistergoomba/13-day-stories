@@ -1,23 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Svg, { Path } from 'react-native-svg';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
 import { mainButton } from '../theme/buttons';
 import HoroscopeSection from '../components/HoroscopeSection';
 import EnergyOfTheDay from '../components/EnergyOfTheDay';
 import SimpleHeader from '../components/SimpleHeader';
-import DayNavigationButton from '../components/DayNavigationButton';
 import DynamicBackground from '../components/DynamicBackground';
-import {
-  getTodayMayanDateSync,
-  getDayData,
-  getPreviousDay,
-  getNextDay,
-  isDayAvailable,
-  getBackgroundColors,
-  convertDateToMayan,
-} from '../utils/calendarUtils';
+import { getTodayMayanDateSync, getDayData, getBackgroundColors } from '../utils/calendarUtils';
 import { getActualDateSync } from '../utils/getActualDate';
 import { getButtonStyleFromColors } from '../theme/buttons';
 
@@ -25,41 +17,33 @@ export default function TodayScreenContent({
   setCurrentView,
   setSelectedDay,
   scrollViewRef,
-  resetToTodayTrigger,
   onPersonalPress,
 }) {
   const insets = useSafeAreaInsets();
   const todayMayan = getTodayMayanDateSync();
-  const [currentMayanDate, setCurrentMayanDate] = useState(todayMayan);
   const [dayData, setDayData] = useState(null);
   const [backgroundColors, setBackgroundColors] = useState({
     primary: '#12091A',
     secondary: '#1C0F29',
     accent: '#6E45CF',
   });
-  const [previousDay, setPreviousDay] = useState(null);
-  const [nextDay, setNextDay] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Load day data and related info when currentMayanDate changes
+  // Load today's data
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
 
     const loadData = async () => {
       try {
-        const [day, colors, prev, next] = await Promise.all([
-          getDayData(currentMayanDate),
-          getBackgroundColors(currentMayanDate, 'horoscope'),
-          getPreviousDay(currentMayanDate),
-          getNextDay(currentMayanDate),
+        const [day, colors] = await Promise.all([
+          getDayData(todayMayan),
+          getBackgroundColors(todayMayan, 'horoscope'),
         ]);
 
         if (!cancelled) {
           setDayData(day);
           setBackgroundColors(colors);
-          setPreviousDay(prev);
-          setNextDay(next);
           setLoading(false);
         }
       } catch (error) {
@@ -75,44 +59,8 @@ export default function TodayScreenContent({
     return () => {
       cancelled = true;
     };
-  }, [currentMayanDate]);
-
-  // Get Gregorian date for current Mayan date (for display)
-  // Calculate days difference from today based on tone difference within same trecena
-  const getGregorianDate = () => {
-    const todayDate = getActualDateSync();
-    if (isToday) {
-      return todayDate;
-    }
-
-    // If same trecena, calculate day difference
-    if (currentMayanDate.trecena === todayMayan.trecena) {
-      const dayDiff = currentMayanDate.tone - todayMayan.tone;
-      const resultDate = new Date(todayDate);
-      resultDate.setDate(resultDate.getDate() + dayDiff);
-      return resultDate;
-    }
-
-    // Different trecena - for now return today's date
-    // TODO: Calculate proper date when crossing trecena boundaries
-    return todayDate;
-  };
-
-  // Scroll to top helper function
-  const scrollToTop = () => {
-    if (scrollViewRef?.current) {
-      scrollViewRef.current.scrollTo({ y: 0, animated: true });
-    }
-  };
-
-  // Reset to today when resetToTodayTrigger changes (triggered by clicking today tab)
-  useEffect(() => {
-    if (resetToTodayTrigger > 0) {
-      setCurrentMayanDate(todayMayan);
-      scrollToTop();
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resetToTodayTrigger]);
+  }, []); // Only load once on mount - always show today's data
 
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
@@ -129,44 +77,13 @@ export default function TodayScreenContent({
 
   const { horoscope, energy_of_the_day, images } = dayData || {};
 
-  // Handle navigation to Journey with current day selected
+  // Handle navigation to Journey with today selected
   const handleJoinStory = () => {
-    if (setSelectedDay && setCurrentView && currentMayanDate) {
-      // Pass the Mayan date object instead of day number
-      setSelectedDay(currentMayanDate);
+    if (setSelectedDay && setCurrentView) {
+      setSelectedDay(todayMayan);
       setCurrentView('Journey');
     }
   };
-
-  // Navigation handlers
-  const handlePreviousDay = async () => {
-    scrollToTop();
-    const prev = await getPreviousDay(currentMayanDate);
-    if (prev && isDayAvailable(prev)) {
-      setCurrentMayanDate(prev);
-    }
-  };
-
-  const handleNextDay = async () => {
-    scrollToTop();
-    const next = await getNextDay(currentMayanDate);
-    if (next && isDayAvailable(next)) {
-      setCurrentMayanDate(next);
-    }
-  };
-
-  const handleResetToToday = () => {
-    scrollToTop();
-    setCurrentMayanDate(todayMayan);
-  };
-
-  const canGoPrevious = previousDay !== null && isDayAvailable(previousDay);
-  const canGoNext = nextDay !== null && isDayAvailable(nextDay);
-  const isToday =
-    currentMayanDate.tone === todayMayan.tone && currentMayanDate.trecena === todayMayan.trecena;
-
-  // Get day number for display (from dayData)
-  const currentDayNumber = dayData?.day || currentMayanDate.tone;
 
   return (
     <View style={styles.container}>
@@ -175,7 +92,7 @@ export default function TodayScreenContent({
 
       {/* Header - Fixed at top */}
       <View style={styles.headerContainer}>
-        <SimpleHeader title='Energy of the Day' onAccountPress={onPersonalPress} />
+        <SimpleHeader title='Energy of the Day' />
       </View>
 
       {/* Scrollable Content */}
@@ -198,7 +115,7 @@ export default function TodayScreenContent({
                 : null
             }
             horoscopeText={horoscope}
-            date={getGregorianDate()}
+            date={getActualDateSync()}
             flushTop={true}
           />
 
@@ -211,59 +128,20 @@ export default function TodayScreenContent({
             />
           </View>
 
-          {/* Bottom Day Navigation */}
+          {/* Bottom Navigation Link */}
           <View style={styles.contentSection}>
-            <View style={styles.bottomDayNavigationContainer}>
-              <DayNavigationButton
-                direction='prev'
-                dayNumber={previousDay?.tone || currentDayNumber - 1}
-                onPress={handlePreviousDay}
-                disabled={!canGoPrevious}
-                backgroundColors={backgroundColors}
-              />
-              <Pressable
-                onPress={handleResetToToday}
-                style={[
-                  styles.bottomDayButtonCenter,
-                  backgroundColors && getButtonStyleFromColors(backgroundColors),
-                ]}
-              >
-                <Text style={styles.bottomDayButtonText}>
-                  {isToday ? 'TODAY' : `Day ${currentDayNumber}`}
-                </Text>
-              </Pressable>
-              <DayNavigationButton
-                direction='next'
-                dayNumber={nextDay?.tone || currentDayNumber + 1}
-                onPress={handleNextDay}
-                disabled={!canGoNext}
-                backgroundColors={backgroundColors}
-              />
-            </View>
-          </View>
-
-          {/* Bottom Navigation Links */}
-          <View style={styles.contentSection}>
-            <View style={styles.navigationContainer}>
-              <Pressable
-                style={[
-                  styles.navLink,
-                  backgroundColors && getButtonStyleFromColors(backgroundColors),
-                ]}
-                onPress={() => setCurrentView && setCurrentView('Meditation')}
-              >
-                <Text style={styles.navLinkText}>View Meditation / Affirmation</Text>
-              </Pressable>
-              <Pressable
-                style={[
-                  styles.navLink,
-                  backgroundColors && getButtonStyleFromColors(backgroundColors),
-                ]}
-                onPress={handleJoinStory}
-              >
-                <Text style={styles.navLinkText}>Read Today's Chapter</Text>
-              </Pressable>
-            </View>
+            <Pressable
+              style={[
+                styles.navLink,
+                backgroundColors && getButtonStyleFromColors(backgroundColors),
+              ]}
+              onPress={handleJoinStory}
+            >
+              <Text style={styles.navLinkText}>Read Today's Chapter</Text>
+              <Svg width={25} height={25} viewBox='0 0 24 24' fill='none'>
+                <Path d='M8 4L18 12L8 20V4Z' fill={colors.text} />
+              </Svg>
+            </Pressable>
           </View>
         </View>
       </ScrollView>
@@ -297,43 +175,19 @@ const styles = StyleSheet.create({
   contentSection: {
     paddingHorizontal: 16,
   },
-  separator: {
-    height: 1,
-    backgroundColor: colors.border,
-    marginVertical: 24,
-    opacity: 0.3,
-  },
-  bottomDayNavigationContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 24,
-    marginBottom: 24,
-    gap: 12,
-  },
-  bottomDayButtonCenter: {
-    ...mainButton.button,
-    height: 48,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    minWidth: 80,
-  },
-  bottomDayButtonText: {
-    ...type.body,
-    ...mainButton.text,
-    fontSize: 14,
-  },
-  navigationContainer: {
-    marginTop: 0,
-  },
   navLink: {
     ...mainButton.button,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 16,
-    marginBottom: 12,
+    marginTop: 24,
   },
   navLinkText: {
-    ...type.subtitle,
+    ...type.body,
     ...mainButton.text,
+    fontSize: 16,
+    fontWeight: '600',
   },
   errorText: {
     ...type.body,

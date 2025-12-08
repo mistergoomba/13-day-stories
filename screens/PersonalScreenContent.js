@@ -97,6 +97,8 @@ export default function PersonalScreenContent({ scrollViewRef, setCurrentView, s
       <View style={styles.headerContainer}>
         <SimpleHeader
           title='Personal'
+          onAccountPress={() => setCurrentView && setCurrentView('Settings')}
+          showSettingsIcon={true}
         />
       </View>
 

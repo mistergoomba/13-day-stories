@@ -150,7 +150,6 @@ function DayDetailView({ mayanDate, onBack, setSelectedDay, scrollViewRef, setCu
       <View style={styles.headerContainer}>
         <SimpleHeader
           title='Journey'
-          onAccountPress={onPersonalPress}
         />
       </View>
 
@@ -422,7 +421,6 @@ export default function JourneyScreenContent({
       <View style={styles.headerContainer}>
         <SimpleHeader
           title='Journey'
-          onAccountPress={onPersonalPress}
         />
       </View>
 

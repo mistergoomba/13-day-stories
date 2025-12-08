@@ -60,7 +60,6 @@ export default function SettingsScreenContent({ scrollViewRef, setCurrentView, s
       <View style={styles.headerContainer}>
         <SimpleHeader
           title='Settings'
-          onAccountPress={onPersonalPress}
         />
       </View>
 

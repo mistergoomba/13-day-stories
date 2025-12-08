@@ -29,6 +29,7 @@ export default function ImageWithPlaceholder({
   contentWidth = SCREEN_WIDTH - 32, // Default content width with 16px padding on each side
   resizeMode,
   flushTop = false, // If true, removes top margin to be flush with header
+  flushBottom = false, // If true, removes bottom margin
 }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -52,7 +53,12 @@ export default function ImageWithPlaceholder({
   }
 
   return (
-    <View style={[styles.container, flushTop && styles.containerFlushTop, { width, height }]}>
+    <View style={[
+      styles.container, 
+      flushTop && styles.containerFlushTop,
+      flushBottom && styles.containerFlushBottom,
+      { width, height }
+    ]}>
       {/* Placeholder - always rendered to reserve space */}
       <View style={[styles.placeholder, { width, height }]} />
       
@@ -93,6 +99,9 @@ const styles = StyleSheet.create({
   },
   containerFlushTop: {
     marginTop: 0, // No top margin when flush with header
+  },
+  containerFlushBottom: {
+    marginBottom: 0, // No bottom margin when flush
   },
   placeholder: {
     position: 'absolute',

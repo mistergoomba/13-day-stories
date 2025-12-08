@@ -61,10 +61,10 @@ export default function SimpleBottomToolbar({
     setCurrentView('Journey');
   };
 
-  const handleSettings = () => {
-    console.log('Settings button pressed');
+  const handlePersonalize = () => {
+    console.log('Personalize button pressed');
     scrollToTop(scrollViewRef);
-    setCurrentView('Settings');
+    setCurrentView('Personal');
   };
 
   return (
@@ -100,30 +100,43 @@ export default function SimpleBottomToolbar({
         >
           <View style={styles.iconContainer}>
             <Svg width={24} height={24} viewBox='0 0 24 24' fill='none'>
+              {/* Head */}
               <Circle
                 cx={12}
-                cy={6}
+                cy={5}
                 r={3}
                 stroke={currentView === 'Meditation' ? 'currentColor' : '#FFFFFF'}
                 strokeWidth={2}
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                fill='none'
               />
+              {/* Torso - U-shaped, filled */}
               <Path
-                d='M6 18C7 16 9 14 12 14C15 14 17 16 18 18'
+                d='M18 14C18 10 16 8 12 8C8 8 6 10 6 14'
                 stroke={currentView === 'Meditation' ? 'currentColor' : '#FFFFFF'}
                 strokeWidth={2}
                 strokeLinecap='round'
+                strokeLinejoin='round'
+                fill='none'
               />
+              {/* Cross-legged legs - left leg (crosses over right, carrot-shaped) */}
               <Path
-                d='M9 21L6 18'
+                d='M4 14C3 14 3 17 4 17L19 21L4 14Z'
                 stroke={currentView === 'Meditation' ? 'currentColor' : '#FFFFFF'}
                 strokeWidth={2}
                 strokeLinecap='round'
+                strokeLinejoin='round'
+                fill='none'
               />
+              {/* Right leg (under left, carrot-shaped) */}
               <Path
-                d='M15 21L18 18'
+                d='M20 14C21 14 21 17 20 17L5 21L20 14Z'
                 stroke={currentView === 'Meditation' ? 'currentColor' : '#FFFFFF'}
                 strokeWidth={2}
                 strokeLinecap='round'
+                strokeLinejoin='round'
+                fill='none'
               />
             </Svg>
             {currentView === 'Meditation' && <Text style={styles.iconLabel}>meditate</Text>}
@@ -205,28 +218,28 @@ export default function SimpleBottomToolbar({
           </View>
         </Pressable>
 
-        {/* Settings */}
+        {/* Personalize */}
         <Pressable
-          style={[styles.tabButton, currentView === 'Settings' && styles.activeTabButton]}
-          onPress={handleSettings}
+          style={[styles.tabButton, currentView === 'Personal' && styles.activeTabButton]}
+          onPress={handlePersonalize}
         >
           <View style={styles.iconContainer}>
             <Svg width={24} height={24} viewBox='0 0 24 24' fill='none'>
               <Circle
-                cx={14}
-                cy={12}
-                r={3}
-                stroke={currentView === 'Settings' ? 'currentColor' : '#FFFFFF'}
+                cx={12}
+                cy={8}
+                r={4}
+                stroke={currentView === 'Personal' ? 'currentColor' : '#FFFFFF'}
                 strokeWidth={2}
               />
               <Path
-                d='M19.4 15A7.96 7.96 0 0020 12c0-.7-.1-1.4-.3-2l2-1-2-3-2 1a8.13 8.13 0 00-1.7-1l-.3-2h-4l-.3 2a8.13 8.13 0 00-1.7 1l-2-1-2 3 2 1c-.2.6-.3 1.3-.3 2 0 .7.1 1.4.3 2l-2 1 2 3 2-1c.5.4 1.1.7 1.7 1l.3 2h4l.3-2c.6-.3 1.2-.6 1.7-1l2 1 2-3-2-1z'
-                stroke={currentView === 'Settings' ? 'currentColor' : '#FFFFFF'}
+                d='M6 21C6 17 9 14 12 14C15 14 18 17 18 21'
+                stroke={currentView === 'Personal' ? 'currentColor' : '#FFFFFF'}
                 strokeWidth={2}
-                strokeLinejoin='round'
+                strokeLinecap='round'
               />
             </Svg>
-            {currentView === 'Settings' && <Text style={styles.iconLabel}>settings</Text>}
+            {currentView === 'Personal' && <Text style={styles.iconLabel}>personalize</Text>}
           </View>
         </Pressable>
       </View>
