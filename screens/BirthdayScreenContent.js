@@ -5,6 +5,7 @@ import Svg, { Path } from 'react-native-svg';
 import colors from '../theme/colors';
 import { type, headerFontFamily } from '../theme/typography';
 import Card from '../components/Card';
+import SectionCard from '../components/SectionCard';
 import EnergyOfTheDay from '../components/EnergyOfTheDay';
 import DynamicBackground from '../components/DynamicBackground';
 import SimpleHeader from '../components/SimpleHeader';
@@ -14,7 +15,7 @@ import { convertDateToMayan, getDayData, getBackgroundColors } from '../utils/ca
 import { formatDateReadable } from '../utils/dateToMayan';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const BIRTHDAY_KEY = '@user_birthday';
+const BIRTHDAY_DATE_KEY = '@birthday_date';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -88,7 +89,7 @@ export default function BirthdayScreenContent({
 
   // Handle birthday update
   const handleBirthdayUpdate = async (newDateString) => {
-    await AsyncStorage.setItem(BIRTHDAY_KEY, newDateString);
+    await AsyncStorage.setItem(BIRTHDAY_DATE_KEY, newDateString);
     if (setBirthdayDate) {
       setBirthdayDate(newDateString);
     }
@@ -100,7 +101,7 @@ export default function BirthdayScreenContent({
       <View style={styles.container}>
         <DynamicBackground backgroundColors={birthdayColors} />
         <View style={styles.headerContainer}>
-          <SimpleHeader title='Your Birthday' />
+          <SimpleHeader title='PROFILE' />
         </View>
         <ScrollView
           ref={scrollViewRef}
@@ -172,7 +173,7 @@ export default function BirthdayScreenContent({
       <View style={styles.container}>
         <DynamicBackground backgroundColors={birthdayColors} />
         <View style={styles.headerContainer}>
-          <SimpleHeader title='Your Birthday' />
+          <SimpleHeader title='PROFILE' />
         </View>
         <ScrollView
           ref={scrollViewRef}
@@ -238,8 +239,8 @@ export default function BirthdayScreenContent({
 
       {/* Header - Fixed at top */}
       <View style={styles.headerContainer}>
-        <SimpleHeader 
-          title='Your Birthday'
+        <SimpleHeader
+          title='PROFILE'
           onAccountPress={() => setCurrentView && setCurrentView('Settings')}
           showSettingsIcon={true}
         />
@@ -257,15 +258,14 @@ export default function BirthdayScreenContent({
           <ImageWithPlaceholder source={dayData?.images?.birthday} type='square' flushTop={true} />
 
           {/* Birthday Title and Content */}
-          <View style={styles.contentSection}>
-            <Text style={[styles.birthdayTitle, { paddingTop: 0 }]}>{birthday.title}</Text>
-            <Card>
+          <View style={[styles.contentSection, { paddingBottom: 0 }]}>
+            <SectionCard headerText={birthday.title} style={{ marginBottom: 0 }}>
               <Text style={styles.birthdayContent}>{birthday.content}</Text>
-            </Card>
+            </SectionCard>
           </View>
 
           {/* Date Display Section */}
-          <View style={styles.contentSection}>
+          <View style={[styles.contentSection, { paddingBottom: 50 }]}>
             <Card>
               {/* Gregorian Date with Edit Icon */}
               <View style={styles.dateRow}>
@@ -349,15 +349,6 @@ const styles = StyleSheet.create({
   birthdayImage: {
     width: '100%',
     marginBottom: 16,
-  },
-  birthdayTitle: {
-    ...type.title,
-    fontFamily: headerFontFamily,
-    color: colors.text,
-    fontSize: 28,
-    marginBottom: 16,
-    paddingTop: 35,
-    textAlign: 'center',
   },
   birthdayContent: {
     ...type.body,

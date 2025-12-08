@@ -6,6 +6,7 @@ import colors from '../theme/colors';
 import { type, headerFontFamily } from '../theme/typography';
 import { mainButton, getButtonStyleFromColors } from '../theme/buttons';
 import Card from '../components/Card';
+import SectionCard from '../components/SectionCard';
 import SectionHeader from '../components/SectionHeader';
 import DynamicBackground from '../components/DynamicBackground';
 import ImageWithPlaceholder from '../components/ImageWithPlaceholder';
@@ -65,7 +66,7 @@ export default function HomeScreenContent({
         />
 
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-          <Card>
+          <Card style={{ marginBottom: 50 }}>
             <Text style={[styles.body, { marginBottom: 0 }]}>
               Welcome to 13-Day Stories, a journey through the sacred cycles of the Mayan calendar.
               {'\n\n'}
@@ -76,90 +77,81 @@ export default function HomeScreenContent({
             </Text>
           </Card>
 
-          <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeader}>Daily Energy</Text>
-            <Card>
-              <Text style={styles.body}>
-                Every day carries a unique energy, guided by a combination of a number (1-13) and a
-                nawal, or day sign, creating a distinct vibrational quality that offers insight,
-                guidance, and reflection.
-              </Text>
+          <SectionCard headerText='Daily Energy'>
+            <Text style={styles.body}>
+              Every day carries a unique energy, guided by a combination of a number (1-13) and a
+              nawal, or day sign, creating a distinct vibrational quality that offers insight,
+              guidance, and reflection.
+            </Text>
 
-              <Pressable
-                style={[buttonStyle, styles.energyButton]}
-                onPress={() => setCurrentView && setCurrentView('Today')}
-              >
-                <Text style={styles.energyButtonText}>Read Today's Energy</Text>
-                <Svg width={25} height={25} viewBox='0 0 24 24' fill='none'>
-                  <Path d='M8 4L18 12L8 20V4Z' fill={colors.text} />
-                </Svg>
-              </Pressable>
-            </Card>
-          </View>
+            <Pressable
+              style={[buttonStyle, styles.energyButton]}
+              onPress={() => setCurrentView && setCurrentView('Today')}
+            >
+              <Text style={styles.energyButtonText}>Read Today's Energy</Text>
+              <Svg width={25} height={25} viewBox='0 0 24 24' fill='none'>
+                <Path d='M8 4L18 12L8 20V4Z' fill={colors.text} />
+              </Svg>
+            </Pressable>
+          </SectionCard>
 
-          <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeader}>The 13 Day Cycle</Text>
-            <Card>
-              <Text style={styles.body}>
-                A trecena is a 13-day cycle in the Mayan calendar. The energy of the cycle is guided
-                by the nawal sign of the first day. This journey guides you through all 13 days,
-                revealing the story and wisdom that unfolds as the cycle progresses.
-              </Text>
+          <SectionCard headerText='The 13 Day Cycle'>
+            <Text style={styles.body}>
+              A trecena is a 13-day cycle in the Mayan calendar. The energy of the cycle is guided
+              by the nawal sign of the first day. This journey guides you through all 13 days,
+              revealing the story and wisdom that unfolds as the cycle progresses.
+            </Text>
 
-              <Pressable
-                style={[buttonStyle, styles.energyButton]}
-                onPress={() => {
-                  if (setSelectedDay && setCurrentView) {
-                    const todayMayan = getTodayMayanDateSync();
-                    setSelectedDay(todayMayan);
-                    setCurrentView('Journey');
+            <Pressable
+              style={[buttonStyle, styles.energyButton]}
+              onPress={() => {
+                if (setSelectedDay && setCurrentView) {
+                  const todayMayan = getTodayMayanDateSync();
+                  setSelectedDay(todayMayan);
+                  setCurrentView('Journey');
+                }
+              }}
+            >
+              <Text style={styles.energyButtonText}>Read Today's Chapter</Text>
+              <Svg width={25} height={25} viewBox='0 0 24 24' fill='none'>
+                <Path d='M8 4L18 12L8 20V4Z' fill={colors.text} />
+              </Svg>
+            </Pressable>
+
+            <Pressable
+              style={[lighterButtonStyle, styles.secondaryStoryButton]}
+              onPress={() => {
+                if (setSelectedDay && setCurrentView) {
+                  setSelectedDay(null);
+                  if (scrollViewRef?.current) {
+                    scrollViewRef.current.scrollTo({ y: 0, animated: false });
                   }
-                }}
-              >
-                <Text style={styles.energyButtonText}>Read Today's Chapter</Text>
-                <Svg width={25} height={25} viewBox='0 0 24 24' fill='none'>
-                  <Path d='M8 4L18 12L8 20V4Z' fill={colors.text} />
-                </Svg>
-              </Pressable>
+                  setCurrentView('Journey');
+                }
+              }}
+            >
+              <Text style={styles.secondaryStoryButtonText}>Read From the Start</Text>
+            </Pressable>
+          </SectionCard>
 
-              <Pressable
-                style={[lighterButtonStyle, styles.secondaryStoryButton]}
-                onPress={() => {
-                  if (setSelectedDay && setCurrentView) {
-                    setSelectedDay(null);
-                    if (scrollViewRef?.current) {
-                      scrollViewRef.current.scrollTo({ y: 0, animated: false });
-                    }
-                    setCurrentView('Journey');
-                  }
-                }}
-              >
-                <Text style={styles.secondaryStoryButtonText}>Read From the Start</Text>
-              </Pressable>
-            </Card>
-          </View>
+          <SectionCard headerText='Find Your Mayan Birthday'>
+            <Text style={styles.body}>
+              Each person has a unique Mayan birthday—the combination of a number (1-13) and a nawal
+              sign that corresponds to your birth date. This combination reveals your personal
+              energy, offering insight into your character, strengths, and the path you walk through
+              life.
+            </Text>
 
-          <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeader}>Find Your Mayan Birthday</Text>
-            <Card>
-              <Text style={styles.body}>
-                Each person has a unique Mayan birthday—the combination of a number (1-13) and a
-                nawal sign that corresponds to your birth date. This combination reveals your
-                personal energy, offering insight into your character, strengths, and the path you
-                walk through life.
-              </Text>
-
-              <Pressable
-                style={[buttonStyle, styles.energyButton]}
-                onPress={() => handlePersonalNavigation && handlePersonalNavigation()}
-              >
-                <Text style={styles.energyButtonText}>Convert Your Birth Date</Text>
-                <Svg width={25} height={25} viewBox='0 0 24 24' fill='none'>
-                  <Path d='M8 4L18 12L8 20V4Z' fill={colors.text} />
-                </Svg>
-              </Pressable>
-            </Card>
-          </View>
+            <Pressable
+              style={[buttonStyle, styles.energyButton]}
+              onPress={() => handlePersonalNavigation && handlePersonalNavigation()}
+            >
+              <Text style={styles.energyButtonText}>Convert Your Birth Date</Text>
+              <Svg width={25} height={25} viewBox='0 0 24 24' fill='none'>
+                <Path d='M8 4L18 12L8 20V4Z' fill={colors.text} />
+              </Svg>
+            </Pressable>
+          </SectionCard>
         </View>
       </ScrollView>
     </View>
@@ -179,18 +171,6 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 20,
-  },
-  sectionContainer: {
-    marginBottom: 20,
-  },
-  sectionHeader: {
-    ...type.title,
-    fontFamily: headerFontFamily,
-    color: colors.text,
-    fontSize: 28,
-    marginBottom: 16,
-    paddingTop: 35,
-    textAlign: 'center',
   },
   body: {
     ...type.body,

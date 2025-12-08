@@ -7,7 +7,6 @@ import { mainButton } from '../theme/buttons';
 
 const HAS_OPENED_APP_KEY = '@has_opened_app';
 const BIRTHDAY_DATE_KEY = '@birthday_date';
-const BIRTHDAY_KEY = '@user_birthday';
 const NOTIFICATIONS_ENABLED_KEY = '@notifications_enabled';
 const NOTIFICATION_TIME_KEY = '@notification_time';
 
@@ -66,7 +65,6 @@ export default function DataStorageModal({ visible, onClose, onDataCleared }) {
                 key.startsWith('@') && 
                 (key === HAS_OPENED_APP_KEY ||
                  key === BIRTHDAY_DATE_KEY ||
-                 key === BIRTHDAY_KEY ||
                  key === NOTIFICATIONS_ENABLED_KEY ||
                  key === NOTIFICATION_TIME_KEY ||
                  key.startsWith('@today_') ||

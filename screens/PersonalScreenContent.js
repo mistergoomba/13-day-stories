@@ -5,6 +5,7 @@ import colors from '../theme/colors';
 import { type } from '../theme/typography';
 import { mainButton } from '../theme/buttons';
 import Card from '../components/Card';
+import SectionCard from '../components/SectionCard';
 import SimpleHeader from '../components/SimpleHeader';
 import DynamicBackground from '../components/DynamicBackground';
 
@@ -96,7 +97,7 @@ export default function PersonalScreenContent({ scrollViewRef, setCurrentView, s
       {/* Header - Fixed at top */}
       <View style={styles.headerContainer}>
         <SimpleHeader
-          title='Personal'
+          title='PROFILE'
           onAccountPress={() => setCurrentView && setCurrentView('Settings')}
           showSettingsIcon={true}
         />
@@ -110,28 +111,8 @@ export default function PersonalScreenContent({ scrollViewRef, setCurrentView, s
       >
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           <View style={styles.contentSection}>
-            <Card>
-              <Text style={styles.title}>Find Your Mayan Birthday</Text>
-              <Text style={styles.introText}>
-                The Mayan calendar is a sacred 260-day cycle that combines 13 tones (numbers 1-13)
-                with 20 day signs (nawales). Each day represents a unique combination of tone and
-                sign, creating a distinct energetic quality.
-              </Text>
-              <Text style={styles.introText}>
-                The tones cycle from 1 to 13, while the signs cycle through 20 different nawales.
-                Together, they create a complete cycle of 260 days. Each 13-day period is called a
-                trecena, named after the sign on Day 1.
-              </Text>
-              <Text style={styles.introText}>
-                Enter your birthday below to discover your Mayan calendar day sign and receive
-                personalized insights based on your birth energy.
-              </Text>
-            </Card>
-
             {/* Date Picker */}
             <View style={styles.datePickerContainer}>
-              <Text style={styles.datePickerLabel}>Select Your Birthday</Text>
-
               <View style={styles.datePickerRow}>
                 {/* Month Picker */}
                 <Pressable
@@ -195,6 +176,23 @@ export default function PersonalScreenContent({ scrollViewRef, setCurrentView, s
                 </Text>
               </Pressable>
             </View>
+
+            <SectionCard headerText='Find Your Mayan Birthday'>
+              <Text style={styles.introText}>
+                The Mayan calendar is a sacred 260-day cycle that combines 13 tones (numbers 1-13)
+                with 20 day signs (nawales). Each day represents a unique combination of tone and
+                sign, creating a distinct energetic quality.
+              </Text>
+              <Text style={styles.introText}>
+                The tones cycle from 1 to 13, while the signs cycle through 20 different nawales.
+                Together, they create a complete cycle of 260 days. Each 13-day period is called a
+                trecena, named after the sign on Day 1.
+              </Text>
+              <Text style={styles.introText}>
+                Enter your birthday above to discover your Mayan calendar day sign and receive
+                personalized insights based on your birth energy.
+              </Text>
+            </SectionCard>
           </View>
         </View>
       </ScrollView>
@@ -341,13 +339,7 @@ const styles = StyleSheet.create({
   },
   datePickerContainer: {
     marginTop: 24,
-  },
-  datePickerLabel: {
-    ...type.subtitle,
-    color: colors.text,
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 16,
+    marginBottom: 24,
   },
   datePickerRow: {
     flexDirection: 'row',

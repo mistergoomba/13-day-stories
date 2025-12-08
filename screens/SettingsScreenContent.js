@@ -13,7 +13,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
 
-const BIRTHDAY_KEY = '@user_birthday';
 const BIRTHDAY_DATE_KEY = '@birthday_date';
 
 export default function SettingsScreenContent({ scrollViewRef, setCurrentView, setBirthdayDate, birthdayDate, onPersonalPress }) {
@@ -37,7 +36,6 @@ export default function SettingsScreenContent({ scrollViewRef, setCurrentView, s
   const [showTermsModal, setShowTermsModal] = useState(false);
 
   const handleUpdateBirthday = async (newDateString) => {
-    await AsyncStorage.setItem(BIRTHDAY_KEY, newDateString);
     await AsyncStorage.setItem(BIRTHDAY_DATE_KEY, newDateString);
     if (setBirthdayDate) {
       setBirthdayDate(newDateString);

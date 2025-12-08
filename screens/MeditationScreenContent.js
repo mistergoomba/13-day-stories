@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '../theme/colors';
 import { type, headerFontFamily } from '../theme/typography';
 import Card from '../components/Card';
+import SectionCard from '../components/SectionCard';
 import SimpleHeader from '../components/SimpleHeader';
 import DynamicBackground from '../components/DynamicBackground';
 import ImageWithPlaceholder from '../components/ImageWithPlaceholder';
@@ -105,10 +106,9 @@ export default function MeditationScreenContent({ scrollViewRef, onPersonalPress
 
           {/* Meditation Title and Content */}
           <View style={styles.contentSection}>
-            <Text style={styles.meditationTitle}>Meditation</Text>
-            <Card>
+            <SectionCard headerText='Meditation'>
               <Text style={styles.meditationText}>{dayData.meditation}</Text>
-            </Card>
+            </SectionCard>
           </View>
         </View>
       </ScrollView>
@@ -144,14 +144,6 @@ const styles = StyleSheet.create({
   contentSection: {
     paddingHorizontal: 16,
     paddingBottom: 16,
-  },
-  meditationTitle: {
-    ...type.title,
-    fontFamily: headerFontFamily,
-    color: colors.text,
-    fontSize: 28,
-    marginBottom: 16,
-    textAlign: 'center',
   },
   meditationText: {
     ...type.body,

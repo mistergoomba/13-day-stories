@@ -5,7 +5,12 @@ import colors from '../theme/colors';
 import { type } from '../theme/typography';
 import ImageWithPlaceholder from './ImageWithPlaceholder';
 
-export default function HoroscopeSection({ horoscopeImage, horoscopeText, date, flushTop = false }) {
+export default function HoroscopeSection({
+  horoscopeImage,
+  horoscopeText,
+  date,
+  flushTop = false,
+}) {
   // Format date for display
   const formatDate = (date) => {
     if (!date) return '';
@@ -19,11 +24,7 @@ export default function HoroscopeSection({ horoscopeImage, horoscopeText, date, 
   return (
     <>
       {/* Horoscope Image */}
-      <ImageWithPlaceholder
-          source={horoscopeImage}
-        type="square"
-        flushTop={flushTop}
-      />
+      <ImageWithPlaceholder source={horoscopeImage} type='square' flushTop={flushTop} />
 
       {/* Date Display */}
       {date && (
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
   },
   horoscopeTextContainer: {
     paddingHorizontal: 16,
-    paddingBottom: 16,
+    paddingBottom: 50,
   },
   horoscopeText: {
     ...type.body,

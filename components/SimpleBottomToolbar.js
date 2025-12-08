@@ -15,6 +15,7 @@ export default function SimpleBottomToolbar({
   meditationScrollViewRef,
   setResetToTodayTrigger,
   setResetMeditationTrigger,
+  birthdayDate,
 }) {
   const insets = useSafeAreaInsets();
 
@@ -61,10 +62,15 @@ export default function SimpleBottomToolbar({
     setCurrentView('Journey');
   };
 
-  const handlePersonalize = () => {
-    console.log('Personalize button pressed');
+  const handleProfile = () => {
+    console.log('Profile button pressed');
     scrollToTop(scrollViewRef);
-    setCurrentView('Personal');
+    // Navigate to Birthday if birthday exists, otherwise Personal
+    if (birthdayDate) {
+      setCurrentView('Birthday');
+    } else {
+      setCurrentView('Personal');
+    }
   };
 
   return (
@@ -218,10 +224,13 @@ export default function SimpleBottomToolbar({
           </View>
         </Pressable>
 
-        {/* Personalize */}
+        {/* Profile */}
         <Pressable
-          style={[styles.tabButton, currentView === 'Personal' && styles.activeTabButton]}
-          onPress={handlePersonalize}
+          style={[
+            styles.tabButton,
+            (currentView === 'Personal' || currentView === 'Birthday') && styles.activeTabButton,
+          ]}
+          onPress={handleProfile}
         >
           <View style={styles.iconContainer}>
             <Svg width={24} height={24} viewBox='0 0 24 24' fill='none'>
@@ -229,17 +238,27 @@ export default function SimpleBottomToolbar({
                 cx={12}
                 cy={8}
                 r={4}
-                stroke={currentView === 'Personal' ? 'currentColor' : '#FFFFFF'}
+                stroke={
+                  currentView === 'Personal' || currentView === 'Birthday'
+                    ? 'currentColor'
+                    : '#FFFFFF'
+                }
                 strokeWidth={2}
               />
               <Path
                 d='M6 21C6 17 9 14 12 14C15 14 18 17 18 21'
-                stroke={currentView === 'Personal' ? 'currentColor' : '#FFFFFF'}
+                stroke={
+                  currentView === 'Personal' || currentView === 'Birthday'
+                    ? 'currentColor'
+                    : '#FFFFFF'
+                }
                 strokeWidth={2}
                 strokeLinecap='round'
               />
             </Svg>
-            {currentView === 'Personal' && <Text style={styles.iconLabel}>personalize</Text>}
+            {(currentView === 'Personal' || currentView === 'Birthday') && (
+              <Text style={styles.iconLabel}>profile</Text>
+            )}
           </View>
         </Pressable>
       </View>

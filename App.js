@@ -212,6 +212,7 @@ function AppContent() {
         meditationScrollViewRef={meditationScrollViewRef}
         setResetToTodayTrigger={setResetToTodayTrigger}
         setResetMeditationTrigger={setResetMeditationTrigger}
+        birthdayDate={birthdayDate}
       />
     </View>
   );
