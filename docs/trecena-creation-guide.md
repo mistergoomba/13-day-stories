@@ -44,7 +44,7 @@ The following uploaded files are ALWAYS the sources of truth:
 
 When creating new trecenas, refer to these completed examples for format and structure:
 
-- **`data/trecena-toj.js`** — Complete JSON output for the Toj trecena, showing the full structure including prologue, epilogue, all 13 days with stories, energies, horoscopes, meditations, affirmations, birthdays, and all 6 image prompts per day.
+- **`data/trecena-toj.js`** — Complete JSON output for the Toj trecena, showing the full structure including prologue, epilogue, all 13 days with stories, energies, horoscopes, meditations, affirmations, birthdays, and all 6 image prompts per day (story_primary, story_wide_1, story_wide_2, horoscope, affirmation, birthday). Note: Meditation images are NOT generated.
 
 - **`docs/trecena-rules-toj.md`** — Complete documentation of the creative decisions made during the Toj trecena creation process, including world module, prologue/epilogue choices, day-by-day decisions, and continuity notes. This serves as a template for the trecena-specific rules file created in Phase 6 of the workflow.
 
@@ -319,7 +319,7 @@ notes: []
 ```json
 birthday: {
   title: "Poetic Title",
-  content: "100-150 words explanation"
+  content: "150-200 words explanation (2-3 paragraphs)"
 }
 ```
 
@@ -327,6 +327,11 @@ birthday: {
 
   - Direct address ("To be born on X is to...")
   - Must blend the Number's meaning (e.g., 13 = Ascension/Completion) with the Nawal's meaning (e.g., Ajpu = Sun/Hero).
+  - **Comprehensive coverage**: Birthday profiles should encompass all different modalities around the symbols. It is acceptable and encouraged to use 3 paragraphs when needed to provide complete coverage.
+  - **Paragraph structure**:
+    - Paragraph 1: Core identity (number + nawal blend)
+    - Paragraph 2: Modalities, expressions, and how the energy manifests
+    - Paragraph 3 (optional but encouraged): Challenges, growth opportunities, or deeper symbolism
   - Tone: Empowering, insightful, identity-focused. Deeply respectful of the user's soul path.
 
 ---
@@ -352,16 +357,24 @@ birthday: {
 
 # 🧘‍♀️ **10. Meditation Rules**
 
-- 150–250 words
-- Guided visualization
-- Must reference symbols from the story
-- Gentle, accessible language
-- Invoke ancestors/lineage respectfully and subtly
-- Never culturally appropriate or overstep
+- **Length**: 150–250 words
+- **Structure**: Two-paragraph format
+  - **First paragraph**: Simple, accessible meditation that users can do with eyes closed. Focus on breath, basic body awareness, or simple visualization. No complex memorization required—users should be able to close their eyes and follow along easily.
+  - **Second paragraph**: Always included, but starts with "Optionally," to indicate it's an optional deeper layer. This paragraph can include more complex/fantastical visualizations, deeper symbolic journeys, or more elaborate imagery (like the 9 Noj crystal mind example). This allows for both simple and fantastical meditations while keeping the first part accessible.
+- **Content requirements**:
+  - Must reference symbols from the story
+  - Gentle, accessible language
+  - Invoke ancestors/lineage respectfully and subtly
+  - Never culturally appropriate or overstep
+- **Example structure**:
+  - Paragraph 1: "Sit comfortably... Close your eyes... [simple breath/light/body awareness]"
+  - Paragraph 2: "Optionally, if you wish to go deeper, [more complex visualization with story symbols]"
 
 ---
 
 # 🖼 **11. Image Prompt Rules**
+
+**Important**: Meditation images are NOT generated. Only 6 image types are created per day.
 
 For each day:
 
@@ -375,6 +388,8 @@ image_prompts: {
   birthday: ""
 }
 ```
+
+**Note**: Image prompts are automatically inferred from the content choices (chapter, horoscope, affirmation, meditation, birthday) and do not need to be presented as separate options during the day-by-day planning phase.
 
 ### **Image Prompt Requirements**
 
@@ -631,52 +646,44 @@ When user says "I want to build [Nawal] trecena":
 
 **For EACH day, you must present ALL of the following for user review:**
 
-#### **A. Story Scene Options (2–3 options)**
+#### **A. Story Chapter Options (2–3 options)**
 
 - Brief scene concept (1–2 sentences)
 - Emotional arc position (emergence/revelation/integration/culmination)
 - Key symbols/motifs that will appear
 - How it builds on previous days
 
-#### **B. Image Prompt Directions (All 6 images)**
-
-For each of the 6 image types, present 2–3 visual concept options:
-
-- **story_primary**: Square establishing shot options
-- **story_wide_1**: 16:9 cinematic wide options
-- **story_wide_2**: 16:9 symbolic close/detail options
-- **horoscope**: Square mystical symbolic options
-- **affirmation**: Square with text (must include affirmation) options
-- **birthday**: Square Mayan glyph + numeral options
-
-#### **C. Horoscope Direction (2–3 options)**
+#### **B. Horoscope Direction (2–3 options)**
 
 - Brief thematic direction (1 sentence each)
 - Emotional tone options
 - Key insights to explore
 
-#### **D. Meditation Direction (2–3 options)**
+#### **C. Meditation Direction (2–3 options)**
 
 - Visualization concept (1 sentence each)
 - Symbols to invoke
 - Emotional journey for the meditation
+- Remember: First paragraph should be simple (breath/body awareness), second paragraph starts with "Optionally," for deeper work
 
-#### **E. Affirmation Direction (2–3 options)**
+#### **D. Affirmation Direction (2–3 options)**
 
 - Brief affirmation concept (not full text yet)
 - Core message to express
 - Energy to embody
 
-#### **F. Birthday Profile Direction (2–3 options)**
+#### **E. Birthday Profile Direction (2–3 options)**
 
 - Title concept (poetic direction)
 - Core identity theme to explore
 - How number + nawal blend
+- Remember: Can be 2-3 paragraphs, 150-200 words, comprehensive coverage of all modalities
 
 **Important:**
 
 - **Energy of the Day** (number, nawal, combined) will be auto-generated based on canonical sources—no user supervision needed
-- Wait for user selections/feedback on ALL aspects (A–F) before moving to the next day
+- **Image Prompts**: Will be automatically generated based on your content choices (chapter, horoscope, affirmation, meditation, birthday). They do not need to be presented as separate options. The 6 image types (story_primary, story_wide_1, story_wide_2, horoscope, affirmation, birthday) will be inferred from the content during JSON generation.
+- Wait for user selections/feedback on ALL aspects (A–E) before moving to the next day
 - User may request revisions to earlier days as the story develops—this is expected and welcome
 
 **Incremental JSON Export Schedule**
@@ -718,7 +725,8 @@ After all 13 days are planned:
 
 - Follow ALL rules in trecena-creation-guide.md
 - Generate full trecena with prologue, all 13 days, epilogue
-- Include all content: stories, energies, horoscopes, meditations, affirmations, birthdays, all 6 image prompts per day
+- Include all content: stories, energies, horoscopes, meditations, affirmations, birthdays, all 6 image prompts per day (story_primary, story_wide_1, story_wide_2, horoscope, affirmation, birthday)
+- **Image prompts**: Generate these automatically based on the content choices made during planning. They should reflect the chapter scenes, horoscope energy, affirmation message, and birthday symbolism.
 - Ensure JSON is valid and parseable
 
 **Step 2: Create Trecena-Specific Rules File**
@@ -747,13 +755,13 @@ This file must document:
 
 ### Day 1: [Number] [Nawal]
 
-- Story Scene: [Selected option]
-- Image Prompts: [Selected directions for all 6]
+- Story Chapter: [Selected option]
 - Horoscope: [Selected direction]
 - Meditation: [Selected direction]
 - Affirmation: [Selected direction]
 - Birthday: [Selected direction]
 - Notes: [Any special decisions or refinements]
+- Image Prompts: [Generated automatically based on content choices - note key visual themes]
 
 [... repeat for all 13 days ...]
 
