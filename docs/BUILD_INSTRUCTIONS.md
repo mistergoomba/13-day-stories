@@ -1,5 +1,88 @@
 # Building and Distributing Your App
 
+## Database Setup (Local Development)
+
+The app uses PostgreSQL for local development to manage trecena data. The database is only used by the `generate-data.js` script and is not deployed.
+
+### Step 1: Install PostgreSQL
+
+Install PostgreSQL on your system:
+- **macOS**: `brew install postgresql@14` or download from [postgresql.org](https://www.postgresql.org/download/)
+- **Linux**: `sudo apt-get install postgresql` (Ubuntu/Debian) or use your package manager
+- **Windows**: Download installer from [postgresql.org](https://www.postgresql.org/download/windows/)
+
+### Step 2: Create Database
+
+```bash
+# Start PostgreSQL service (if not running)
+# macOS with Homebrew:
+brew services start postgresql@14
+
+# Linux:
+sudo systemctl start postgresql
+
+# Create database
+createdb thirteen_day_stories
+```
+
+### Step 3: Configure Database Connection
+
+1. Copy the example config file:
+   ```bash
+   cp database/config.example.json database/config.json
+   ```
+
+2. Edit `database/config.json` with your PostgreSQL credentials:
+   ```json
+   {
+     "host": "localhost",
+     "port": 5432,
+     "database": "thirteen_day_stories",
+     "user": "postgres",
+     "password": "your_password_here"
+   }
+   ```
+
+### Step 4: Initialize Database Schema
+
+```bash
+# Connect to PostgreSQL and run schema
+psql thirteen_day_stories < database/schema.sql
+```
+
+Or the schema will be automatically created when you run the migration script.
+
+### Step 5: Migrate Data from JS Files
+
+Import all trecena data from JS files into the database:
+
+```bash
+node scripts/migrate-to-database.js
+```
+
+This script will:
+- Read all `data/trecena-*.js` files
+- Insert data into PostgreSQL
+- Validate that all 13 days are present for each trecena
+
+### Step 6: Generate JSON Files
+
+After data is in the database, generate the JSON files for deployment:
+
+```bash
+npm run generate:data
+```
+
+This script will:
+- Read trecena data from PostgreSQL
+- Process images from `images-hd/` folder (skip already-converted images)
+- Extract colors from images and store in database
+- Generate JSON files in `assets/api/` directory
+
+**Note:** The script will skip images that have already been converted to WebP, making subsequent runs faster.
+
+---
+
 ## Quick Start - Build for Android (Easiest)
 
 ### Step 1: Login to Expo

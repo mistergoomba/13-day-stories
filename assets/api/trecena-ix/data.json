@@ -238,9 +238,9 @@
       },
       "colors": {
         "birthday": {
-          "primary": "#1b1b19",
-          "secondary": "#494137",
-          "accent": "#d9b960"
+          "primary": "#1c1d1a",
+          "secondary": "#4e4439",
+          "accent": "#dcbb61"
         }
       }
     },

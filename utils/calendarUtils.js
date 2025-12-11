@@ -21,7 +21,7 @@ const fetchPromises = new Map();
  */
 function normalizeTrecenaName(trecenaName) {
   if (!trecenaName) return null;
-  return trecenaName.replace(/'/g, '').replace(/'/g, '').toLowerCase();
+  return trecenaName.replace(/[^a-zA-Z]/g, '').toLowerCase();
 }
 
 

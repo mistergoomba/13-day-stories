@@ -40,5 +40,5 @@ yarn-error.*
 /ios
 /android
 
-# data
-data/images-hd
+# high-res images
+images-hd
