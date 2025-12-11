@@ -333,10 +333,10 @@ async function loadTrecenaData(pool, trecenaName) {
 
     const trecenaRow = trecenaResult.rows[0];
 
-    // Get all days for this trecena
+    // Get all days for this trecena (exclude image_prompts - not needed for API output)
     const daysQuery = `
       SELECT day, number, nawal, chapter, horoscope, affirmation, meditation,
-             energy_of_the_day, birthday, image_prompts, colors
+             energy_of_the_day, birthday, colors
       FROM days
       WHERE trecena_id = $1
       ORDER BY day ASC
@@ -354,7 +354,6 @@ async function loadTrecenaData(pool, trecenaName) {
       meditation: row.meditation || '',
       energy_of_the_day: row.energy_of_the_day || {},
       birthday: row.birthday || {},
-      image_prompts: row.image_prompts || {},
     }));
 
     return {

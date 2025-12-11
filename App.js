@@ -250,6 +250,7 @@ function AppContent() {
             scrollViewRef={scrollViewRef}
             onPersonalPress={handlePersonalNavigation}
             onHeaderPress={isDevMode() ? handleDevHeaderPress : undefined}
+            resetToTodayTrigger={resetToTodayTrigger}
           />
         ) : currentView === 'Today' ? (
           <TodayScreenContent

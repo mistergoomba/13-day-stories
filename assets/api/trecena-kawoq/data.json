@@ -424,9 +424,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#ccb992",
           "primary": "#10130e",
-          "secondary": "#414436",
-          "accent": "#ccb992"
+          "secondary": "#414436"
         }
       }
     }

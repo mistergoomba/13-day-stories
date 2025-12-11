@@ -175,37 +175,78 @@ async function processBirthdaysFile(pool, filePath) {
       // Prepare JSONB data
       const energyOfTheDay = JSON.stringify(dayData.energy_of_the_day || {});
       const birthday = JSON.stringify(dayData.birthday || {});
-      const imagePrompts = JSON.stringify(dayData.image_prompts || {});
 
-      // Insert or update day data
-      // Smart merge for image_prompts: preserve existing fields, only update/add birthday
-      const insertQuery = `
-        INSERT INTO days (trecena_id, day, number, nawal, energy_of_the_day, birthday, image_prompts)
-        VALUES ($1, $2, $3, $4, $5::jsonb, $6::jsonb, $7::jsonb)
+      // Insert or update day data (no longer includes image_prompts)
+      const insertDayQuery = `
+        INSERT INTO days (trecena_id, day, number, nawal, energy_of_the_day, birthday)
+        VALUES ($1, $2, $3, $4, $5::jsonb, $6::jsonb)
         ON CONFLICT (trecena_id, day) 
         DO UPDATE SET
           number = EXCLUDED.number,
           nawal = EXCLUDED.nawal,
           energy_of_the_day = EXCLUDED.energy_of_the_day,
           birthday = EXCLUDED.birthday,
-          image_prompts = CASE
-            WHEN days.image_prompts IS NULL OR days.image_prompts = '{}'::jsonb THEN
-              EXCLUDED.image_prompts
-            ELSE
-              days.image_prompts || jsonb_build_object('birthday', EXCLUDED.image_prompts->>'birthday')
-          END,
           updated_at = NOW()
+        RETURNING id
       `;
 
-      await pool.query(insertQuery, [
+      const dayResult = await pool.query(insertDayQuery, [
         trecenaRow.id,
         day,
         number,
         nawal,
         energyOfTheDay,
         birthday,
-        imagePrompts,
       ]);
+
+      const dayId = dayResult.rows[0].id;
+
+      // Insert or update image_prompts in separate table
+      // Extract image prompt fields from dayData.image_prompts
+      const imagePrompts = dayData.image_prompts || {};
+      const storyPrimary = imagePrompts.story_primary || null;
+      const storyWide1 = imagePrompts.story_wide_1 || null;
+      const storyWide2 = imagePrompts.story_wide_2 || null;
+      const horoscopePrompt = imagePrompts.horoscope || null;
+      const affirmationPrompt = imagePrompts.affirmation || null;
+      // birthdayPrompt was already extracted above for nawal extraction
+
+      // Only insert/update if we have at least one prompt
+      if (
+        storyPrimary ||
+        storyWide1 ||
+        storyWide2 ||
+        horoscopePrompt ||
+        affirmationPrompt ||
+        birthdayPrompt
+      ) {
+        const insertImagePromptsQuery = `
+          INSERT INTO image_prompts (
+            day_id, story_primary, story_wide_1, story_wide_2,
+            horoscope, affirmation, birthday, updated_at
+          )
+          VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
+          ON CONFLICT (day_id)
+          DO UPDATE SET
+            story_primary = COALESCE(EXCLUDED.story_primary, image_prompts.story_primary),
+            story_wide_1 = COALESCE(EXCLUDED.story_wide_1, image_prompts.story_wide_1),
+            story_wide_2 = COALESCE(EXCLUDED.story_wide_2, image_prompts.story_wide_2),
+            horoscope = COALESCE(EXCLUDED.horoscope, image_prompts.horoscope),
+            affirmation = COALESCE(EXCLUDED.affirmation, image_prompts.affirmation),
+            birthday = COALESCE(EXCLUDED.birthday, image_prompts.birthday),
+            updated_at = NOW()
+        `;
+
+        await pool.query(insertImagePromptsQuery, [
+          dayId,
+          storyPrimary,
+          storyWide1,
+          storyWide2,
+          horoscopePrompt,
+          affirmationPrompt,
+          birthdayPrompt || null,
+        ]);
+      }
 
       successCount++;
     } catch (error) {

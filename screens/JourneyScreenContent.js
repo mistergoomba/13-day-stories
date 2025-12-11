@@ -31,6 +31,7 @@ function DayDetailView({
   scrollViewRef,
   setCurrentView,
   onPersonalPress,
+  onHeaderPress,
 }) {
   const insets = useSafeAreaInsets();
   const [dayData, setDayData] = useState(null);
@@ -360,18 +361,20 @@ export default function JourneyScreenContent({
   scrollViewRef,
   onPersonalPress,
   onHeaderPress,
+  resetToTodayTrigger,
 }) {
   const insets = useSafeAreaInsets();
-  // Memoize todayMayan to prevent infinite loops - only recalculate if date actually changes
-  const todayMayan = useMemo(() => getTodayMayanDateSync(), []);
+  // Recalculate todayMayan when reset trigger changes (when dev date changes)
+  const todayMayan = useMemo(() => getTodayMayanDateSync(), [resetToTodayTrigger]);
   const [allDays, setAllDays] = useState([]);
   const [trecenaData, setTrecenaData] = useState(null);
   const [prologueExpanded, setPrologueExpanded] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Load trecena data on mount - use trecena name as dependency to avoid infinite loops
+  // Load trecena data - reload when todayMayan changes (via resetToTodayTrigger)
   useEffect(() => {
     let cancelled = false;
+    setLoading(true);
 
     const loadData = async () => {
       try {
@@ -398,7 +401,7 @@ export default function JourneyScreenContent({
     return () => {
       cancelled = true;
     };
-  }, [todayMayan.trecena]); // Only depend on trecena name, not the whole object
+  }, [todayMayan.trecena, resetToTodayTrigger]); // Reload when trecena changes or reset trigger changes
 
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
@@ -428,6 +431,7 @@ export default function JourneyScreenContent({
         scrollViewRef={scrollViewRef}
         setCurrentView={setCurrentView}
         onPersonalPress={onPersonalPress}
+        onHeaderPress={onHeaderPress}
       />
     );
   }

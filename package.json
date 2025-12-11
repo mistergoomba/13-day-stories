@@ -13,8 +13,9 @@
     "clean": "rm -rf node_modules/.cache .expo && npm start",
     "build:android": "eas build --platform android --profile preview",
     "build": "npx expo export -p web",
-    "generate:data": "node scripts/generate-data.js",
-    "generate:birthdays": "node scripts/insert-birthdays.js"
+    "generate": "npm run generate:birthdays && npm run generate:data",
+    "generate:birthdays": "node scripts/insert-birthdays.js",
+    "generate:data": "node scripts/generate-data.js"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",
