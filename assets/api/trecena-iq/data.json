@@ -52,10 +52,25 @@
         "content": "To be born on 1 Iq’ is to be the first breath of a new creation. The number 1 represents the seed and the unified potential, while Iq’ is the wind, the voice, and the spirit of change. You are the initiator. When you speak, you aren't just conveying information; you are setting energy in motion.\n\nYou have a quick, agile mind and a spirit that refuses to be contained. You are here to bring fresh ideas, new perspectives, and vital inspiration to the world. Like the wind, you can be gentle or tempestuous, and your moods may shift rapidly. Your power lies in your voice—whether written or spoken. Your life lesson is focus; you have the power to start a thousand storms, but you must learn to direct your breath to fill a single sail."
       },
       "colors": {
+        "horoscope": {
+          "primary": "#0a1326",
+          "secondary": "#3e5c7a",
+          "accent": "#9dbbc9"
+        },
+        "affirmation": {
+          "primary": "#93c2db",
+          "secondary": "#bfdce9",
+          "accent": "#e2eef5"
+        },
+        "story_primary": {
+          "primary": "#082f47",
+          "secondary": "#2a758f",
+          "accent": "#a2cfd8"
+        },
         "birthday": {
-          "primary": "#19140f",
-          "secondary": "#444d43",
-          "accent": "#85c5c2"
+          "primary": "#17140e",
+          "secondary": "#42493e",
+          "accent": "#84c3c0"
         }
       }
     },
@@ -104,7 +119,13 @@
         "title": "The Keeper of the Threshold",
         "content": "To be born on 2 Aq’ab’al is to live in the beautiful tension between worlds. The number 2 brings duality, partnership, and reflection. Aq’ab’al is the Dawn, the Twilight, and the House. You are a person who sees both sides of every story.\n\nYou are naturally diplomatic and deeply empathetic. You understand that light cannot exist without shadow, and this makes you a comforting presence for people going through difficult transitions. You are likely drawn to relationships and may find your greatest growth through partnership. Your challenge is indecision; you can see so many valid perspectives that you sometimes hesitate to act. Trust that your ability to bridge opposites is your superpower, not your weakness."
       },
-      "colors": {}
+      "colors": {
+        "story_primary": {
+          "primary": "#13213c",
+          "secondary": "#94908b",
+          "accent": "#e1ca9f"
+        }
+      }
     },
     {
       "day": 3,

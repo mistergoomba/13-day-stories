@@ -4,10 +4,21 @@ import Svg, { Path, Circle } from 'react-native-svg';
 import colors from '../theme/colors';
 import { type, headerTextFontFamily } from '../theme/typography';
 
-export default function SimpleHeader({ title, onAccountPress, showSettingsIcon = false }) {
+export default function SimpleHeader({
+  title,
+  onAccountPress,
+  showSettingsIcon = false,
+  onHeaderPress,
+}) {
   return (
     <View style={styles.header}>
-      <Text style={styles.title}>{title}</Text>
+      {onHeaderPress ? (
+        <Pressable onPress={onHeaderPress} style={styles.headerPressable}>
+          <Text style={styles.title}>{title}</Text>
+        </Pressable>
+      ) : (
+        <Text style={styles.title}>{title}</Text>
+      )}
       {onAccountPress && (
         <Pressable onPress={onAccountPress} style={styles.accountButton}>
           {showSettingsIcon ? (
@@ -64,5 +75,10 @@ const styles = StyleSheet.create({
     right: 8,
     padding: 8,
     paddingBottom: 6,
+  },
+  headerPressable: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

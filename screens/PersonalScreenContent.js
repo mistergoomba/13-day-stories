@@ -9,7 +9,12 @@ import SectionCard from '../components/SectionCard';
 import SimpleHeader from '../components/SimpleHeader';
 import DynamicBackground from '../components/DynamicBackground';
 
-export default function PersonalScreenContent({ scrollViewRef, setCurrentView, setBirthdayDate }) {
+export default function PersonalScreenContent({
+  scrollViewRef,
+  setCurrentView,
+  setBirthdayDate,
+  onHeaderPress,
+}) {
   const insets = useSafeAreaInsets();
   const bottomPadding = 50 + insets.bottom + 20;
 
@@ -106,6 +111,7 @@ export default function PersonalScreenContent({ scrollViewRef, setCurrentView, s
             title='PROFILE'
             onAccountPress={() => setCurrentView && setCurrentView('Settings')}
             showSettingsIcon={true}
+            onHeaderPress={onHeaderPress}
           />
         </View>
 

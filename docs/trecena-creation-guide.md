@@ -254,6 +254,16 @@ notes: []
 - **Combined energy notes**: MUST contain exactly **5 notes**. Each note must be actionable or reflective, providing practical guidance or insight related to the combined energy.
 - Language must be modern and non-dogmatic
 
+### **Content Length Requirements**:
+
+**CRITICAL**: All energy descriptions must be complete and comprehensive. Descriptions should be thorough, exploring the full depth of each energy.
+
+- **Number content**: **120–200 words** (6–10 sentences). Must include: core essence, position in the 13-day cycle, how it manifests experientially, both light and shadow aspects, and practical examples or imagery.
+- **Nawal content**: **140–200 words** (7–10 sentences). Must include: archetypal identity, elemental/natural connections, how it manifests in human experience, both aligned and misaligned expressions, and connection to sacred wisdom.
+- **Combined energy content**: **200–300 words** (10–15 sentences). Must include: how the number and nawal energies interact and synthesize, the unique quality that emerges, what this day feels like experientially, connection to the trecena theme, practical implications, both opportunities and challenges, and connection to the chapter's emotional lesson.
+
+**Note**: These are minimum targets. Descriptions should be as complete as needed to fully capture the energy's essence. Quality and completeness take precedence over strict word counts.
+
 ### **Title Format Requirements**:
 
 **CRITICAL**: Energy titles must be **descriptive, poetic, mystical phrases**—NOT formulaic labels.
@@ -286,7 +296,8 @@ notes: []
 
 - Grounded mystical tone
 - Poetic but direct
-- ~120–200 words
+- **~240–400 words** (considerably longer, immersive experience)
+- **Must include fantastical metaphors and vivid imagery** — rich symbolic storytelling with metaphorical language
 - Tones: mystical, psychological, encouraging, honest
 - Must match the chapter + combined energy
 - No astrology clichés
@@ -309,7 +320,8 @@ notes: []
 
 ### 3. Create the Message
 
-- **Sharable Version:** Remove specific Mayan numbers/nawales and translate the energy into poetic, mystical, universal language. Blend in a bit of Libra balance and artistry.
+- **Sharable Version:** Remove specific Mayan numbers/nawales and translate the energy into poetic, mystical, universal language. Blend in a bit of balance and artistry.
+- **Must be considerably longer** with fantastical metaphors, vivid imagery, and rich symbolic storytelling that creates an immersive experience for the reader.
 
 ### 5. Generate the Image
 
@@ -324,7 +336,8 @@ notes: []
 
 1. Translate the full reading into **symbolic storytelling** without mentioning numbers or nawales.
 2. Keep it poetic, whimsical, and grounded in fantasy or emotion.
-3. End with empowerment or humor.
+3. **Use fantastical metaphors and vivid imagery** to create an immersive, longer-form experience.
+4. End with empowerment or humor.
 
 **Example (Sharable):**  
 "The day cracks open like a geode, spilling strange light across your path. Something within you remembers how to glow, even when the world forgets how to look. The cosmos is laughing softly — take the hint and create something wild."
@@ -610,18 +623,56 @@ Use `docs/trecena-rules-toj.md` as the exemplar format for trecena-specific rule
 
 ## 💼 **16. Types of User Requests**
 
-The user may ask for one of four things. Each has different requirements:
+The user may ask for one of seven things. Each has different requirements:
 
-### **Request Type 1: Build a Full Trecena**
+### **Request Type 1: Build a Story**
 
-When the user says "I want to build [Nawal] trecena" or similar, follow the complete collaborative workflow outlined in **Section 18: Collaborative Trecena Building Workflow**.
+When the user says "I want to build a story for [Nawal] trecena" or similar, follow the collaborative workflow outlined in **Section 18: Collaborative Story Building Workflow**.
 
-- This includes world building, prologue/epilogue planning, day-by-day planning with options
+- This includes world building, prologue planning, day-by-day chapter planning with options
+- **Only presents chapter options** — no horoscope, affirmation, meditation, or birthday options
+- Epilogue options are presented later (after all chapters are complete)
+- Story image prompts (story_primary, story_wide_1, story_wide_2) are automatically inferred from chapter choices
 - Always present options and wait for user feedback
 - Never generate JSON until explicitly approved
-- Follow all phases 1-6
+- Output: Story JSON only (prologue, epilogue, chapters, story image prompts)
 
-### **Request Type 2: Build Images for a Particular Day**
+### **Request Type 2: Build Horoscopes**
+
+When the user asks to build horoscopes for a trecena:
+
+- User will provide the trecena data (or reference existing trecena)
+- **Present 3 options for each day's horoscope** (one day at a time)
+- User selects one option per day
+- Continue through all 13 days
+- Output: JSON with horoscopes + horoscope image prompts for all 13 days
+- Follow Section 8 Horoscope Rules (240-400 words, fantastical metaphors required)
+- Reference `image-creation-guide.md` for horoscope image aesthetic
+
+### **Request Type 3: Build Affirmations**
+
+When the user asks to build affirmations for a trecena:
+
+- User will provide the trecena data (or reference existing trecena)
+- **Present 3 options for each day's affirmation** (one day at a time)
+- User selects one option per day
+- Continue through all 13 days
+- Output: JSON with affirmations + affirmation image prompts for all 13 days
+- Follow Section 9 Affirmation Rules
+- Reference `image-creation-guide.md` for affirmation image aesthetic
+
+### **Request Type 4: Build Meditations**
+
+When the user asks to build meditations for a trecena:
+
+- User will provide the trecena data (or reference existing trecena)
+- **Present 3 options for each day's meditation** (one day at a time)
+- User selects one option per day
+- Continue through all 13 days
+- Output: JSON with meditations for all 13 days (no meditation images are generated)
+- Follow Section 10 Meditation Rules
+
+### **Request Type 5: Build Images for a Particular Day**
 
 When the user asks to generate images for a day, they will upload a day's worth of data.
 
@@ -638,7 +689,7 @@ When the user asks to generate images for a day, they will upload a day's worth 
 - Continue until all 13 days have been done
 - Reference `image-creation-guide.md` for aesthetic and composition principles
 
-### **Request Type 3: Generate Birthday Data Only (No Options)**
+### **Request Type 6: Generate Birthday Data Only (No Options)**
 
 When the user asks for "just the birthday data, energy of the day data, and birthday image prompt" for a trecena:
 
@@ -652,7 +703,7 @@ When the user asks for "just the birthday data, energy of the day data, and birt
 - Reference existing data files (e.g., `data/trecena-toj.js`) for format structure
 - Output in JSON format matching the structure
 
-### **Request Type 4: Generate All Birthday Images**
+### **Request Type 7: Generate All Birthday Images**
 
 When the user asks for "all the birthday images in a JSON with birthday image prompts":
 
@@ -678,17 +729,23 @@ The following files are uploaded and serve as the source of truth:
 
 Additionally, reference existing data files in the `data/` directory (e.g., `data/trecena-toj.js`) for format structure and examples.
 
-When starting a new chat, the user will specify which type of request they need (see Section 16 above).
+When starting a new chat, the user will specify which type of request they need (see Section 16 above). Each request type has its own workflow:
+
+- **Request Type 1 (Build Story):** See Section 18
+- **Request Type 2 (Build Horoscopes):** See Section 19
+- **Request Type 3 (Build Affirmations):** See Section 20
+- **Request Type 4 (Build Meditations):** See Section 21
+- **Request Types 5-7:** See Section 16 for instructions
 
 ---
 
-## 🤝 **18. Collaborative Trecena Building Workflow**
+## 🤝 **18. Collaborative Story Building Workflow**
 
-When the user requests to build a new trecena, you MUST follow this collaborative workflow. **Never generate JSON until explicitly approved.** Always present options and wait for user feedback.
+When the user requests to build a story for a trecena, you MUST follow this collaborative workflow. **Never generate JSON until explicitly approved.** Always present options and wait for user feedback.
 
 ### **Phase 1: Trecena Discovery & Overview**
 
-When user says "I want to build [Nawal] trecena":
+When user says "I want to build a story for [Nawal] trecena":
 
 1. **Acknowledge the request** and confirm the nawal name
 2. **Provide brief overview**:
@@ -728,9 +785,9 @@ When user says "I want to build [Nawal] trecena":
 - Define: core theme, world essence, recurring motifs, symbolic presences, color palette progression
 - Get user approval/refinement before proceeding
 
-### **Phase 3: Prologue & Epilogue Planning**
+### **Phase 3: Prologue Planning**
 
-**Present 2–3 options for each:**
+**Present 2–3 prologue options:**
 
 **Prologue Options:**
 
@@ -739,6 +796,46 @@ When user says "I want to build [Nawal] trecena":
 - Emotional tone
 - Opening symbols/motifs
 
+**Wait for user selection/refinement** before moving to day-by-day planning.
+
+**Note:** Epilogue options will be presented later, after all 13 chapters are complete.
+
+### **Phase 4: Day-by-Day Planning (Days 1–13)**
+
+**For EACH day, present Story Chapter Options (2–3 options) for user review:**
+
+#### **Story Chapter Options (2–3 options)**
+
+- Brief scene concept (1–2 sentences)
+- Emotional arc position (emergence/revelation/integration/culmination)
+- Key symbols/motifs that will appear
+- How it builds on previous days
+
+**Important:**
+
+- **Only chapter options are presented** — no horoscope, affirmation, meditation, or birthday options
+- **Story image prompts** (story_primary, story_wide_1, story_wide_2) are automatically inferred from the chosen chapter content
+- Wait for user selection/feedback before moving to the next day
+- User may request revisions to earlier days as the story develops—this is expected and welcome
+
+**Incremental JSON Export Schedule**
+
+To prevent context loss and keep the process clean, you must **generate and present the JSON code block** at the following specific milestones. Do not wait for the very end to generate code.
+
+- **Milestone 1 (After Day 1 is approved):** Generate JSON containing trecena data, `prologue`, and `day 1`.
+- **Milestone 2 (After Day 4 is approved):** Generate JSON containing `days 2–4`.
+- **Milestone 3 (After Day 7 is approved):** Generate JSON containing `days 5–7`.
+- **Milestone 4 (After Day 10 is approved):** Generate JSON containing `days 8–10`.
+- **Milestone 5 (After Day 13 is approved):** Generate JSON containing `days 11–13`.
+
+_Note: Continue the standard planning process (presenting chapter options) for every single day. The export happens only after the specific days listed above are finalized._
+
+### **Phase 5: Epilogue Planning**
+
+After all 13 chapters are planned:
+
+**Present 2–3 epilogue options:**
+
 **Epilogue Options:**
 
 - Each option: 1–2 sentence scene concept
@@ -746,67 +843,11 @@ When user says "I want to build [Nawal] trecena":
 - Emotional resolution
 - Closing symbols that echo the arc
 
-**Wait for user selections/refinements** before moving to day-by-day planning.
+**Wait for user selection/refinement** before proceeding to review.
 
-### **Phase 4: Day-by-Day Planning (Days 1–13)**
+### **Phase 6: Review & Refinement**
 
-**For EACH day, you must present ALL of the following for user review:**
-
-#### **A. Story Chapter Options (2–3 options)**
-
-- Brief scene concept (1–2 sentences)
-- Emotional arc position (emergence/revelation/integration/culmination)
-- Key symbols/motifs that will appear
-- How it builds on previous days
-
-#### **B. Horoscope Direction (2–3 options)**
-
-- Brief thematic direction (1 sentence each)
-- Emotional tone options
-- Key insights to explore
-
-#### **C. Meditation Direction (2–3 options)**
-
-- Visualization concept (1 sentence each)
-- Symbols to invoke
-- Emotional journey for the meditation
-- Remember: First paragraph should be simple (breath/body awareness), second paragraph starts with "Optionally," for deeper work
-
-#### **D. Affirmation Direction (2–3 options)**
-
-- Brief affirmation concept (not full text yet)
-- Core message to express
-- Energy to embody
-
-#### **E. Birthday Profile Direction (2–3 options)**
-
-- Title concept (poetic direction)
-- Core identity theme to explore
-- How number + nawal blend
-- Remember: Can be 2-3 paragraphs, 150-200 words, comprehensive coverage of all modalities
-
-**Important:**
-
-- **Energy of the Day** (number, nawal, combined) will be auto-generated based on canonical sources—no user supervision needed
-- **Image Prompts**: Will be automatically generated based on your content choices (chapter, horoscope, affirmation, meditation, birthday). They do not need to be presented as separate options. The 6 image types (story_primary, story_wide_1, story_wide_2, horoscope, affirmation, birthday) will be inferred from the content during JSON generation.
-- Wait for user selections/feedback on ALL aspects (A–E) before moving to the next day
-- User may request revisions to earlier days as the story develops—this is expected and welcome
-
-**Incremental JSON Export Schedule**
-
-To prevent context loss and keep the process clean, you must **generate and present the JSON code block** at the following specific milestones. Do not wait for the very end to generate code.
-
-- **Milestone 1 (After Day 1 is approved):** Generate JSON containing trecena data, `prologue`, `epilogue` and `day 1`.
-- **Milestone 2 (After Day 4 is approved):** Generate JSON containing `days 2–4`.
-- **Milestone 3 (After Day 7 is approved):** Generate JSON containing `days 5–7`.
-- **Milestone 4 (After Day 10 is approved):** Generate JSON containing `days 8–10`.
-- **Milestone 5 (After Day 13 is approved):** Generate JSON containing `days 11–13`.
-
-_Note: Continue the standard planning process (presenting options A–F) for every single day. The export happens only after the specific days listed above are finalized._
-
-### **Phase 5: Review & Refinement**
-
-After all 13 days are planned:
+After prologue, all 13 chapters, and epilogue are planned:
 
 1. **Present arc summary**:
 
@@ -823,17 +864,18 @@ After all 13 days are planned:
 
 3. **Wait for explicit approval** before JSON generation
 
-### **Phase 6: JSON Generation & Trecena Rules Creation**
+### **Phase 7: JSON Generation & Trecena Rules Creation**
 
 **Only proceed when user explicitly approves** (e.g., "Generate the JSON now" or "Let's build it").
 
-**Step 1: Generate Complete JSON**
+**Step 1: Generate Story JSON**
 
 - Follow ALL rules in trecena-creation-guide.md
-- Generate full trecena with prologue, all 13 days, epilogue
-- Include all content: stories, energies, horoscopes, meditations, affirmations, birthdays, all 6 image prompts per day (story_primary, story_wide_1, story_wide_2, horoscope, affirmation, birthday)
-- **Image prompts**: Generate these automatically based on the content choices made during planning. They should reflect the chapter scenes, horoscope energy, affirmation message, and birthday symbolism.
+- Generate story JSON with prologue, all 13 days (chapters only), epilogue
+- Include story content: prologue, chapters, epilogue
+- **Story image prompts**: Generate story_primary, story_wide_1, story_wide_2 automatically based on the chapter content choices made during planning. They should reflect the chapter scenes, symbols, and emotional tone.
 - Ensure JSON is valid and parseable
+- **Note:** This JSON contains story content only. Horoscopes, affirmations, meditations, and birthdays are built separately using other request types.
 
 **Step 2: Create Trecena-Specific Rules File**
 After JSON generation, create a new file: `docs/trecena-rules-[nawal].md`
@@ -862,12 +904,8 @@ This file must document:
 ### Day 1: [Number] [Nawal]
 
 - Story Chapter: [Selected option]
-- Horoscope: [Selected direction]
-- Meditation: [Selected direction]
-- Affirmation: [Selected direction]
-- Birthday: [Selected direction]
 - Notes: [Any special decisions or refinements]
-- Image Prompts: [Generated automatically based on content choices - note key visual themes]
+- Story Image Prompts: [Generated automatically based on chapter content - note key visual themes for story_primary, story_wide_1, story_wide_2]
 
 [... repeat for all 13 days ...]
 
@@ -901,7 +939,89 @@ This file must document:
 
 ---
 
-## 🌟 **19. What the Model Must Always Remember**
+## 🔮 **19. Collaborative Horoscope Building Workflow**
+
+When the user requests to build horoscopes for a trecena, follow this collaborative workflow. **Never generate JSON until explicitly approved.** Always present options and wait for user feedback.
+
+### **Process:**
+
+1. **User provides trecena data** (or reference existing trecena)
+2. **For each day (1-13), present 3 horoscope options:**
+   - Each option should be a complete horoscope draft (240-400 words)
+   - Must include fantastical metaphors and vivid imagery
+   - Must match the day's chapter + combined energy
+   - Follow Section 8 Horoscope Rules
+3. **User selects one option per day**
+4. **Continue through all 13 days**
+5. **After all selections, generate JSON** containing:
+   - All 13 horoscopes
+   - Horoscope image prompts for each day (follow image-creation-guide.md)
+6. **Output:** JSON with horoscopes + horoscope image prompts
+
+### **Important:**
+
+- Each horoscope must be considerably longer (240-400 words)
+- Must include fantastical metaphors and rich symbolic storytelling
+- Horoscope image prompts are generated automatically based on the horoscope content
+- Reference Section 8 for complete horoscope rules
+
+---
+
+## 💬 **20. Collaborative Affirmation Building Workflow**
+
+When the user requests to build affirmations for a trecena, follow this collaborative workflow. **Never generate JSON until explicitly approved.** Always present options and wait for user feedback.
+
+### **Process:**
+
+1. **User provides trecena data** (or reference existing trecena)
+2. **For each day (1-13), present 3 affirmation options:**
+   - Each option should be a complete affirmation (follow Section 9 rules)
+   - Must reflect the synergy of the day's number + nawal
+   - Must express the combined-energy lesson in warm, first-person form
+3. **User selects one option per day**
+4. **Continue through all 13 days**
+5. **After all selections, generate JSON** containing:
+   - All 13 affirmations
+   - Affirmation image prompts for each day (follow image-creation-guide.md)
+6. **Output:** JSON with affirmations + affirmation image prompts
+
+### **Important:**
+
+- Each affirmation must be ~1 sentence, first-person, present tense
+- Affirmation image prompts must include the exact affirmation text
+- Reference Section 9 for complete affirmation rules
+
+---
+
+## 🧘‍♀️ **21. Collaborative Meditation Building Workflow**
+
+When the user requests to build meditations for a trecena, follow this collaborative workflow. **Never generate JSON until explicitly approved.** Always present options and wait for user feedback.
+
+### **Process:**
+
+1. **User provides trecena data** (or reference existing trecena)
+2. **For each day (1-13), present 3 meditation options:**
+   - Each option should be a complete meditation (150-250 words)
+   - Must follow two-paragraph format (simple first paragraph, "Optionally," second paragraph)
+   - Must reference symbols from the story
+   - Follow Section 10 Meditation Rules
+3. **User selects one option per day**
+4. **Continue through all 13 days**
+5. **After all selections, generate JSON** containing:
+   - All 13 meditations
+   - **Note:** Meditation images are NOT generated (only 6 image types per day)
+6. **Output:** JSON with meditations only
+
+### **Important:**
+
+- Each meditation must be 150-250 words, two-paragraph format
+- First paragraph: Simple, accessible (breath/body awareness)
+- Second paragraph: Starts with "Optionally," for deeper work
+- Reference Section 10 for complete meditation rules
+
+---
+
+## 🌟 **22. What the Model Must Always Remember**
 
 - Stories are rituals
 - Worlds mirror inner transformation

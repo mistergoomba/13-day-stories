@@ -5,6 +5,7 @@ import { useFonts } from 'expo-font';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SimpleBottomToolbar from './components/SimpleBottomToolbar';
 import NebulaBackground from './components/NebulaBackground';
+import DevDatePickerPanel from './components/DevDatePickerPanel';
 import TodayScreenContent from './screens/TodayScreenContent';
 import HomeScreenContent from './screens/HomeScreenContent';
 import MeditationScreenContent from './screens/MeditationScreenContent';
@@ -12,10 +13,21 @@ import SettingsScreenContent from './screens/SettingsScreenContent';
 import JourneyScreenContent from './screens/JourneyScreenContent';
 import PersonalScreenContent from './screens/PersonalScreenContent';
 import BirthdayScreenContent from './screens/BirthdayScreenContent';
+import {
+  setDevDateOverride,
+  getDevDateOverride,
+  setDevMayanOverride,
+  getDevMayanOverride,
+} from './utils/getActualDate';
 import colors from './theme/colors';
 
 const HAS_OPENED_APP_KEY = '@has_opened_app';
 const BIRTHDAY_DATE_KEY = '@birthday_date';
+
+// Check if we're in dev mode
+const isDevMode = () => {
+  return typeof __DEV__ !== 'undefined' && __DEV__;
+};
 
 function AppContent() {
   const insets = useSafeAreaInsets();
@@ -24,10 +36,12 @@ function AppContent() {
   const [birthdayDate, setBirthdayDate] = useState(null); // Selected birthday date (YYYY-MM-DD format)
   const [resetToTodayTrigger, setResetToTodayTrigger] = useState(0); // Trigger to reset Day screen to today
   const [resetMeditationTrigger, setResetMeditationTrigger] = useState(0); // Trigger to reset Meditation screen to today
+  const [showDevPanel, setShowDevPanel] = useState(false); // Dev-only date picker panel
+  const [currentMayanOverride, setCurrentMayanOverride] = useState(null); // Current Mayan override state
   const scrollViewRef = useRef(null);
   const meditationScrollViewRef = useRef(null);
 
-  // Load saved birthday on mount
+  // Load saved birthday and dev date override on mount
   useEffect(() => {
     const loadBirthday = async () => {
       try {
@@ -40,7 +54,37 @@ function AppContent() {
       }
     };
 
+    const loadDevDateOverride = async () => {
+      if (isDevMode()) {
+        try {
+          const override = await getDevDateOverride();
+          if (override) {
+            // Update the global cache for sync access
+            global.__devDateOverride = override;
+          }
+        } catch (error) {
+          console.error('Error loading dev date override:', error);
+        }
+      }
+    };
+
+    const loadDevMayanOverride = async () => {
+      if (isDevMode()) {
+        try {
+          const override = await getDevMayanOverride();
+          if (override) {
+            global.__devMayanOverride = override;
+            setCurrentMayanOverride(override);
+          }
+        } catch (error) {
+          console.error('Error loading dev Mayan override:', error);
+        }
+      }
+    };
+
     loadBirthday();
+    loadDevDateOverride();
+    loadDevMayanOverride();
   }, []);
 
   // Save birthday when it changes
@@ -91,6 +135,59 @@ function AppContent() {
     }
   };
 
+  // Dev-only: Handle header click to show dev panel
+  const handleDevHeaderPress = () => {
+    if (isDevMode()) {
+      setShowDevPanel(true);
+    }
+  };
+
+  // Dev-only: Handle date picker save - clears Mayan override, sets Gregorian date override
+  const handleDevDateSave = async (dateString) => {
+    if (!isDevMode()) {
+      return;
+    }
+    try {
+      // Clear Mayan override
+      await setDevMayanOverride(null);
+      global.__devMayanOverride = null;
+      setCurrentMayanOverride(null);
+
+      // Set dev date override (affects "today" calculations)
+      await setDevDateOverride(dateString);
+      // Also update birthday date
+      await AsyncStorage.setItem(BIRTHDAY_DATE_KEY, dateString);
+      setBirthdayDate(dateString);
+      // Trigger refresh of screens that depend on "today"
+      setResetToTodayTrigger((prev) => prev + 1);
+      setResetMeditationTrigger((prev) => prev + 1);
+    } catch (error) {
+      console.error('Error saving dev date:', error);
+    }
+  };
+
+  // Dev-only: Handle Mayan picker save - clears Gregorian override, sets Mayan override
+  const handleDevMayanSave = async (mayanOverride) => {
+    if (!isDevMode()) {
+      return;
+    }
+    try {
+      // Clear Gregorian date override
+      await setDevDateOverride(null);
+      global.__devDateOverride = null;
+
+      // Set Mayan override
+      await setDevMayanOverride(mayanOverride);
+      setCurrentMayanOverride(mayanOverride);
+
+      // Trigger refresh of screens that depend on "today"
+      setResetToTodayTrigger((prev) => prev + 1);
+      setResetMeditationTrigger((prev) => prev + 1);
+    } catch (error) {
+      console.error('Error saving dev Mayan override:', error);
+    }
+  };
+
   // Scroll to top when view changes
   useEffect(() => {
     if (scrollViewRef.current) {
@@ -116,14 +213,23 @@ function AppContent() {
   const CurrentComponent = viewComponents[currentView];
 
   // Screens that handle their own scrolling (with sticky headers)
-  const screensWithOwnScrollView = ['Meditation', 'Today', 'Journey', 'Personal', 'Birthday', 'Home', 'Settings'];
+  const screensWithOwnScrollView = [
+    'Meditation',
+    'Today',
+    'Journey',
+    'Personal',
+    'Birthday',
+    'Home',
+    'Settings',
+  ];
 
   // Screens that use DynamicBackground (should not show NebulaBackground)
   // Journey only uses DynamicBackground when showing a chapter detail (selectedDay !== null)
   // Birthday always uses DynamicBackground when viewing a birthday
   const screensWithDynamicBackground = ['Today', 'Meditation', 'Birthday', 'Home', 'Settings'];
   const journeyHasDynamicBackground = currentView === 'Journey' && selectedDay !== null;
-  const shouldShowNebulaBackground = !screensWithDynamicBackground.includes(currentView) && !journeyHasDynamicBackground;
+  const shouldShowNebulaBackground =
+    !screensWithDynamicBackground.includes(currentView) && !journeyHasDynamicBackground;
 
   // Don't render until we've checked first time status
   if (currentView === null) {
@@ -143,6 +249,7 @@ function AppContent() {
             setCurrentView={setCurrentView}
             scrollViewRef={scrollViewRef}
             onPersonalPress={handlePersonalNavigation}
+            onHeaderPress={isDevMode() ? handleDevHeaderPress : undefined}
           />
         ) : currentView === 'Today' ? (
           <TodayScreenContent
@@ -151,6 +258,7 @@ function AppContent() {
             scrollViewRef={scrollViewRef}
             resetToTodayTrigger={resetToTodayTrigger}
             onPersonalPress={handlePersonalNavigation}
+            onHeaderPress={isDevMode() ? handleDevHeaderPress : undefined}
           />
         ) : currentView === 'Meditation' ? (
           <MeditationScreenContent
@@ -158,12 +266,14 @@ function AppContent() {
             scrollViewRef={meditationScrollViewRef}
             resetMeditationTrigger={resetMeditationTrigger}
             onPersonalPress={handlePersonalNavigation}
+            onHeaderPress={isDevMode() ? handleDevHeaderPress : undefined}
           />
         ) : currentView === 'Personal' ? (
           <PersonalScreenContent
             scrollViewRef={scrollViewRef}
             setCurrentView={setCurrentView}
             setBirthdayDate={setBirthdayDate}
+            onHeaderPress={isDevMode() ? handleDevHeaderPress : undefined}
           />
         ) : currentView === 'Birthday' ? (
           <BirthdayScreenContent
@@ -172,6 +282,7 @@ function AppContent() {
             birthdayDate={birthdayDate}
             setBirthdayDate={setBirthdayDate}
             onPersonalPress={handlePersonalNavigation}
+            onHeaderPress={isDevMode() ? handleDevHeaderPress : undefined}
           />
         ) : currentView === 'Home' ? (
           <HomeScreenContent
@@ -180,6 +291,7 @@ function AppContent() {
             onPersonalPress={handlePersonalNavigation}
             handlePersonalNavigation={handlePersonalNavigation}
             setSelectedDay={setSelectedDay}
+            onHeaderPress={isDevMode() ? handleDevHeaderPress : undefined}
           />
         ) : currentView === 'Settings' ? (
           <SettingsScreenContent
@@ -188,6 +300,7 @@ function AppContent() {
             setBirthdayDate={setBirthdayDate}
             birthdayDate={birthdayDate}
             onPersonalPress={handlePersonalNavigation}
+            onHeaderPress={isDevMode() ? handleDevHeaderPress : undefined}
           />
         ) : (
           <CurrentComponent
@@ -214,14 +327,27 @@ function AppContent() {
         setResetMeditationTrigger={setResetMeditationTrigger}
         birthdayDate={birthdayDate}
       />
+
+      {/* Dev-only: Date Picker Panel */}
+      {isDevMode() && (
+        <DevDatePickerPanel
+          visible={showDevPanel}
+          onClose={() => setShowDevPanel(false)}
+          onDateSave={handleDevDateSave}
+          onMayanSave={handleDevMayanSave}
+          initialDate={birthdayDate || undefined}
+          initialTone={currentMayanOverride?.tone}
+          initialNawal={currentMayanOverride?.nawal}
+        />
+      )}
     </View>
   );
 }
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    'BlackChancery': require('./assets/fonts/black_chancery/black_chancery.ttf'),
-    'Bromolek': require('./assets/fonts/bromolek/bromolek.ttf'),
+    BlackChancery: require('./assets/fonts/black_chancery/black_chancery.ttf'),
+    Bromolek: require('./assets/fonts/bromolek/bromolek.ttf'),
   });
 
   if (!fontsLoaded) {

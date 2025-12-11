@@ -18,9 +18,10 @@ export default function TodayScreenContent({
   setSelectedDay,
   scrollViewRef,
   onPersonalPress,
+  onHeaderPress,
+  resetToTodayTrigger,
 }) {
   const insets = useSafeAreaInsets();
-  const todayMayan = getTodayMayanDateSync();
   const [dayData, setDayData] = useState(null);
   const [backgroundColors, setBackgroundColors] = useState({
     primary: '#12091A',
@@ -29,10 +30,13 @@ export default function TodayScreenContent({
   });
   const [loading, setLoading] = useState(true);
 
-  // Load today's data
+  // Load today's data - recalculate when reset trigger changes
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
+
+    // Recalculate today's Mayan date inside useEffect to get latest dev override
+    const todayMayan = getTodayMayanDateSync();
 
     const loadData = async () => {
       try {
@@ -60,7 +64,7 @@ export default function TodayScreenContent({
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Only load once on mount - always show today's data
+  }, [resetToTodayTrigger]); // Reload when reset trigger changes
 
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
@@ -80,6 +84,7 @@ export default function TodayScreenContent({
   // Handle navigation to Journey with today selected
   const handleJoinStory = () => {
     if (setSelectedDay && setCurrentView) {
+      const todayMayan = getTodayMayanDateSync();
       setSelectedDay(todayMayan);
       setCurrentView('Journey');
     }
@@ -99,7 +104,7 @@ export default function TodayScreenContent({
       >
         {/* Header - Part of scroll flow */}
         <View style={{ paddingTop: insets.top }}>
-          <SimpleHeader title='Energy of the Day' />
+          <SimpleHeader title='Energy of the Day' onHeaderPress={onHeaderPress} />
         </View>
 
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>

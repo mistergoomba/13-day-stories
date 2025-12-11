@@ -21,6 +21,7 @@ export default function SettingsScreenContent({
   setBirthdayDate,
   birthdayDate,
   onPersonalPress,
+  onHeaderPress,
 }) {
   const insets = useSafeAreaInsets();
 
@@ -69,7 +70,7 @@ export default function SettingsScreenContent({
       >
         {/* Header - Part of scroll flow */}
         <View style={{ paddingTop: insets.top }}>
-          <SimpleHeader title='Settings' />
+          <SimpleHeader title='Settings' onHeaderPress={onHeaderPress} />
         </View>
 
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>

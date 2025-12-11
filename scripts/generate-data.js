@@ -19,6 +19,7 @@ const IMAGE_TYPES = ['horoscope', 'affirmation', 'story_primary', 'birthday'];
 // Statistics
 const stats = {
   converted: 0,
+  skipped: 0,
   failed: 0,
   colorsExtracted: 0,
   colorsFailed: 0,
@@ -161,13 +162,30 @@ function isWideImage(filename) {
 
 /**
  * Convert a PNG file to WebP and extract colors
- * Skips conversion if output file already exists
+ * Skips conversion if output file already exists and is newer than source
  */
 async function convertImageToWebP(pngPath, outputPath) {
-  // Skip if output already exists
+  // Skip if output already exists and is newer than or equal to source
   if (fs.existsSync(outputPath)) {
-    console.log(`⊘ Skipped (already exists): ${path.relative(DATA_IMAGES_DIR, pngPath)}`);
-    return true;
+    try {
+      const sourceStats = fs.statSync(pngPath);
+      const outputStats = fs.statSync(outputPath);
+
+      // If output is newer than or equal to source, skip conversion
+      if (outputStats.mtime >= sourceStats.mtime) {
+        stats.skipped++;
+        console.log(`⊘ Skipped (already exists): ${path.relative(DATA_IMAGES_DIR, pngPath)}`);
+        return true;
+      } else {
+        // Source is newer, need to reconvert
+        console.log(`↻ Source updated, reconverting: ${path.relative(DATA_IMAGES_DIR, pngPath)}`);
+      }
+    } catch (error) {
+      // If we can't check stats, proceed with conversion
+      console.log(
+        `⚠ Could not check file stats, converting: ${path.relative(DATA_IMAGES_DIR, pngPath)}`
+      );
+    }
   }
 
   try {
@@ -195,7 +213,12 @@ async function convertImageToWebP(pngPath, outputPath) {
     await image.resize(resizeOptions).webp({ quality: WEBP_QUALITY }).toFile(outputPath);
 
     stats.converted++;
-    console.log(`✓ Converted: ${path.relative(DATA_IMAGES_DIR, pngPath)} → ${path.relative(API_DIR, outputPath)}`);
+    console.log(
+      `✓ Converted: ${path.relative(DATA_IMAGES_DIR, pngPath)} → ${path.relative(
+        API_DIR,
+        outputPath
+      )}`
+    );
     return true;
   } catch (error) {
     stats.failed++;
@@ -213,12 +236,8 @@ async function updateDayColors(pool, trecenaId, dayNumber, dayColors) {
     SET colors = $1, updated_at = NOW()
     WHERE trecena_id = $2 AND day = $3
   `;
-  
-  await pool.query(query, [
-    JSON.stringify(dayColors),
-    trecenaId,
-    dayNumber,
-  ]);
+
+  await pool.query(query, [JSON.stringify(dayColors), trecenaId, dayNumber]);
 }
 
 /**
@@ -264,7 +283,9 @@ async function processDirectory(dirPath, trecenaName, dayNumber, pool, trecenaId
 
           stats.colorsExtracted++;
           const colorData = colors[trecenaName][dayNumber][basename];
-          console.log(`  Colors: ${colorData.primary}, ${colorData.secondary}, ${colorData.accent}`);
+          console.log(
+            `  Colors: ${colorData.primary}, ${colorData.secondary}, ${colorData.accent}`
+          );
         } else {
           stats.colorsFailed++;
           console.log(`  ⚠ Failed to extract colors from ${basename}`);
@@ -297,7 +318,7 @@ function normalizeTrecenaName(trecenaName) {
 async function loadTrecenaData(pool, trecenaName) {
   try {
     const normalizedName = normalizeTrecenaName(trecenaName);
-    
+
     // Get trecena metadata
     const trecenaQuery = `
       SELECT id, name, display_name, prologue, epilogue
@@ -305,13 +326,13 @@ async function loadTrecenaData(pool, trecenaName) {
       WHERE name = $1
     `;
     const trecenaResult = await pool.query(trecenaQuery, [normalizedName]);
-    
+
     if (trecenaResult.rows.length === 0) {
       return null;
     }
-    
+
     const trecenaRow = trecenaResult.rows[0];
-    
+
     // Get all days for this trecena
     const daysQuery = `
       SELECT day, number, nawal, chapter, horoscope, affirmation, meditation,
@@ -321,7 +342,7 @@ async function loadTrecenaData(pool, trecenaName) {
       ORDER BY day ASC
     `;
     const daysResult = await pool.query(daysQuery, [trecenaRow.id]);
-    
+
     // Transform database rows to match original structure
     const days = daysResult.rows.map((row) => ({
       day: row.day,
@@ -335,7 +356,7 @@ async function loadTrecenaData(pool, trecenaName) {
       birthday: row.birthday || {},
       image_prompts: row.image_prompts || {},
     }));
-    
+
     return {
       id: trecenaRow.id,
       trecena: trecenaRow.display_name,
@@ -357,7 +378,7 @@ async function getDayColors(pool, trecenaId, dayNumber, trecenaName) {
   if (colors[trecenaName]?.[dayNumber]) {
     return colors[trecenaName][dayNumber];
   }
-  
+
   // Fall back to database
   if (pool && trecenaId) {
     const query = `
@@ -370,7 +391,7 @@ async function getDayColors(pool, trecenaId, dayNumber, trecenaName) {
       return result.rows[0].colors;
     }
   }
-  
+
   return {};
 }
 
@@ -430,7 +451,7 @@ async function transformTrecenaData(trecenaData, trecenaName, pool) {
     days: await Promise.all(
       trecenaData.days.map(async (day) => {
         const dayColors = await getDayColors(pool, trecenaData.id, day.day, trecenaName);
-        
+
         // Build colors object for this day
         const dayColorsObj = {};
         for (const imageType of IMAGE_TYPES) {
@@ -490,11 +511,7 @@ async function main() {
     });
     console.log('');
 
-    // Clear and recreate API directory
-    if (fs.existsSync(API_DIR)) {
-      console.log('Clearing existing API directory...');
-      fs.rmSync(API_DIR, { recursive: true, force: true });
-    }
+    // Ensure API directory exists (don't delete - preserve existing converted images)
     fs.mkdirSync(API_DIR, { recursive: true });
 
     // Process each trecena
@@ -559,7 +576,7 @@ async function main() {
     console.log('Generation Summary:');
     console.log('='.repeat(60));
     console.log(`  ✓ Images converted: ${stats.converted}`);
-    console.log(`  ⊘ Images skipped (already exists): ${stats.converted > 0 ? 'some' : 'none'}`);
+    console.log(`  ⊘ Images skipped (already exists): ${stats.skipped}`);
     console.log(`  ✗ Images failed: ${stats.failed}`);
     console.log(`  ✓ Colors extracted: ${stats.colorsExtracted}`);
     console.log(`  ✗ Colors failed: ${stats.colorsFailed}`);
@@ -581,4 +598,3 @@ main().catch((error) => {
   console.error('Fatal error:', error);
   process.exit(1);
 });
-

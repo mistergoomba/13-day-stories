@@ -101,7 +101,7 @@ function DayDetailView({
         >
           {/* Header - Part of scroll flow */}
           <View style={{ paddingTop: insets.top }}>
-            <SimpleHeader title='Journey' />
+            <SimpleHeader title='Journey' onHeaderPress={onHeaderPress} />
           </View>
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
             <Text style={styles.errorText}>
@@ -359,6 +359,7 @@ export default function JourneyScreenContent({
   setCurrentView,
   scrollViewRef,
   onPersonalPress,
+  onHeaderPress,
 }) {
   const insets = useSafeAreaInsets();
   // Memoize todayMayan to prevent infinite loops - only recalculate if date actually changes

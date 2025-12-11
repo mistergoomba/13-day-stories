@@ -25,6 +25,7 @@ export default function BirthdayScreenContent({
   birthdayDate,
   setBirthdayDate,
   onPersonalPress,
+  onHeaderPress,
 }) {
   const insets = useSafeAreaInsets();
   const bottomPadding = 50 + insets.bottom + 20;
@@ -107,7 +108,7 @@ export default function BirthdayScreenContent({
         >
           {/* Header - Part of scroll flow */}
           <View style={{ paddingTop: insets.top }}>
-            <SimpleHeader title='PROFILE' />
+            <SimpleHeader title='PROFILE' onHeaderPress={onHeaderPress} />
           </View>
 
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
@@ -181,7 +182,7 @@ export default function BirthdayScreenContent({
         >
           {/* Header - Part of scroll flow */}
           <View style={{ paddingTop: insets.top }}>
-            <SimpleHeader title='PROFILE' />
+            <SimpleHeader title='PROFILE' onHeaderPress={onHeaderPress} />
           </View>
 
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
@@ -254,6 +255,7 @@ export default function BirthdayScreenContent({
             title='PROFILE'
             onAccountPress={() => setCurrentView && setCurrentView('Settings')}
             showSettingsIcon={true}
+            onHeaderPress={onHeaderPress}
           />
         </View>
 

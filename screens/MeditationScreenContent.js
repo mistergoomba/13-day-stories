@@ -10,9 +10,13 @@ import DynamicBackground from '../components/DynamicBackground';
 import ImageWithPlaceholder from '../components/ImageWithPlaceholder';
 import { getTodayMayanDateSync, getDayData, getBackgroundColors } from '../utils/calendarUtils';
 
-export default function MeditationScreenContent({ scrollViewRef, onPersonalPress }) {
+export default function MeditationScreenContent({
+  scrollViewRef,
+  onPersonalPress,
+  onHeaderPress,
+  resetMeditationTrigger,
+}) {
   const insets = useSafeAreaInsets();
-  const todayMayan = getTodayMayanDateSync();
   const [dayData, setDayData] = useState(null);
   const [affirmationColors, setAffirmationColors] = useState({
     primary: '#12091A',
@@ -21,10 +25,13 @@ export default function MeditationScreenContent({ scrollViewRef, onPersonalPress
   });
   const [loading, setLoading] = useState(true);
 
-  // Load today's data
+  // Load today's data - recalculate when reset trigger changes
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
+
+    // Recalculate today's Mayan date inside useEffect to get latest dev override
+    const todayMayan = getTodayMayanDateSync();
 
     const loadData = async () => {
       try {
@@ -52,7 +59,7 @@ export default function MeditationScreenContent({ scrollViewRef, onPersonalPress
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Only load once on mount - always show today's data
+  }, [resetMeditationTrigger]); // Reload when reset trigger changes
 
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
@@ -69,7 +76,7 @@ export default function MeditationScreenContent({ scrollViewRef, onPersonalPress
         >
           {/* Header - Part of scroll flow */}
           <View style={{ paddingTop: insets.top }}>
-            <SimpleHeader title='Meditation' />
+            <SimpleHeader title='Meditation' onHeaderPress={onHeaderPress} />
           </View>
 
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
@@ -96,7 +103,7 @@ export default function MeditationScreenContent({ scrollViewRef, onPersonalPress
       >
         {/* Header - Part of scroll flow */}
         <View style={{ paddingTop: insets.top }}>
-          <SimpleHeader title='Meditation' />
+          <SimpleHeader title='Meditation' onHeaderPress={onHeaderPress} />
         </View>
 
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>

@@ -4,7 +4,7 @@
  */
 
 import { convertToMayan } from './dateToMayan';
-import { getActualDate, getActualDateSync } from './getActualDate';
+import { getActualDate, getActualDateSync, getDevMayanOverrideSync } from './getActualDate';
 import { getTrecenaDataUrl, getImageUrl } from './apiConfig';
 import { getImageSource } from './imageLoader';
 
@@ -23,7 +23,6 @@ function normalizeTrecenaName(trecenaName) {
   if (!trecenaName) return null;
   return trecenaName.replace(/[^a-zA-Z]/g, '').toLowerCase();
 }
-
 
 /**
  * Get trecena data from API (with caching)
@@ -49,17 +48,17 @@ export async function getTrecenaData(trecenaName) {
     try {
       const url = getTrecenaDataUrl(normalizedKey);
       const response = await fetch(url);
-      
+
       if (!response.ok) {
         console.warn(`Failed to fetch trecena data for ${trecenaName}: ${response.status}`);
         return null;
       }
 
       const trecenaData = await response.json();
-      
+
       // Cache it
       trecenaCache.set(normalizedKey, trecenaData);
-      
+
       return trecenaData;
     } catch (error) {
       console.error(`Error fetching trecena data for ${trecenaName}:`, error);
@@ -72,7 +71,7 @@ export async function getTrecenaData(trecenaName) {
 
   // Store the promise to avoid duplicate requests
   fetchPromises.set(normalizedKey, fetchPromise);
-  
+
   return fetchPromise;
 }
 
@@ -89,7 +88,7 @@ function getImagePath(trecenaKey, tone, imageType) {
   if (imageUrl) {
     return { uri: imageUrl };
   }
-  
+
   // Fallback to local images if remote URL fails
   const localImage = getImageSource(trecenaKey, tone, imageType);
   return localImage;
@@ -99,10 +98,22 @@ function getImagePath(trecenaKey, tone, imageType) {
  * Convert a date to Mayan date object
  * For string dates (birthdays), uses UTC normalization
  * For Date objects (today/navigation), uses local normalization
+ * In dev mode, checks for Mayan override first
  * @param {Date|string} date - Gregorian date (Date object or YYYY-MM-DD string)
  * @returns {Object} Mayan date object with { tone, sign, trecena, formatted }
  */
 export function convertDateToMayan(date) {
+  // Check for dev Mayan override first (affects all dates including birthdays)
+  const mayanOverride = getDevMayanOverrideSync();
+  if (mayanOverride && mayanOverride.tone && mayanOverride.nawal) {
+    try {
+      return createMayanDateFromToneAndNawal(mayanOverride.tone, mayanOverride.nawal);
+    } catch (error) {
+      console.error('Error creating Mayan date from override:', error);
+      // Fall through to date-based calculation
+    }
+  }
+
   const isString = typeof date === 'string';
   const useUTC = isString; // Use UTC for strings (birthdays), local for Date objects
   return convertToMayan(date, useUTC);
@@ -111,21 +122,207 @@ export function convertDateToMayan(date) {
 /**
  * Get today's Mayan date
  * Uses device date, converts to Mayan
+ * Checks for dev Mayan override first
  * @returns {Object} Mayan date object with { tone, sign, trecena, formatted }
  */
 export async function getTodayMayanDate() {
+  // Check for dev Mayan override first (tone/nawal override)
+  const { getDevMayanOverride } = require('./getActualDate');
+  const mayanOverride = await getDevMayanOverride();
+  if (mayanOverride && mayanOverride.tone && mayanOverride.nawal) {
+    try {
+      return createMayanDateFromToneAndNawal(mayanOverride.tone, mayanOverride.nawal);
+    } catch (error) {
+      console.error('Error creating Mayan date from override:', error);
+      // Fall through to date-based calculation
+    }
+  }
+
   // Get actual date and convert (use local normalization for today)
+  // This will use dev date override if set, otherwise actual device date
   const actualDate = await getActualDate();
   const mayanDate = convertToMayan(actualDate, false);
   return mayanDate;
 }
 
 /**
+ * Increment a Mayan date by one day
+ * @param {number} tone - Current tone (1-13)
+ * @param {string} nawal - Current nawal
+ * @returns {Object} Next Mayan date object with { tone, sign, trecena, formatted }
+ */
+export function incrementMayanDate(tone, nawal) {
+  const NAWALES = [
+    'Imox',
+    "Iq'",
+    "Aq'ab'al",
+    "K'at",
+    'Kan',
+    'Kame',
+    'Kej',
+    "Q'anil",
+    'Toj',
+    "Tz'i'",
+    "B'atz'",
+    "E'",
+    'Aj',
+    'Ix',
+    "Tz'ikin",
+    'Ajmaq',
+    "No'j",
+    'Tijax',
+    'Kawoq',
+    'Ajpu',
+  ];
+
+  // Increment tone (wraps from 13 to 1)
+  const nextTone = (tone % 13) + 1;
+
+  // Increment nawal (wraps from last to first)
+  const currentNawalIndex = NAWALES.indexOf(nawal);
+  if (currentNawalIndex === -1) {
+    throw new Error(`Invalid nawal: ${nawal}`);
+  }
+  const nextNawalIndex = (currentNawalIndex + 1) % 20;
+  const nextNawal = NAWALES[nextNawalIndex];
+
+  // Calculate trecena
+  const { getTrecenaFromDate } = require('./dateToMayan');
+  const trecena = getTrecenaFromDate({ tone: nextTone, sign: nextNawal });
+
+  return {
+    tone: nextTone,
+    sign: nextNawal,
+    trecena,
+    formatted: `${nextTone} ${nextNawal}`,
+  };
+}
+
+/**
+ * Decrement a Mayan date by one day
+ * @param {number} tone - Current tone (1-13)
+ * @param {string} nawal - Current nawal
+ * @returns {Object} Previous Mayan date object with { tone, sign, trecena, formatted }
+ */
+export function decrementMayanDate(tone, nawal) {
+  const NAWALES = [
+    'Imox',
+    "Iq'",
+    "Aq'ab'al",
+    "K'at",
+    'Kan',
+    'Kame',
+    'Kej',
+    "Q'anil",
+    'Toj',
+    "Tz'i'",
+    "B'atz'",
+    "E'",
+    'Aj',
+    'Ix',
+    "Tz'ikin",
+    'Ajmaq',
+    "No'j",
+    'Tijax',
+    'Kawoq',
+    'Ajpu',
+  ];
+
+  // Decrement tone (wraps from 1 to 13)
+  const prevTone = ((tone - 2 + 13) % 13) + 1;
+
+  // Decrement nawal (wraps from first to last)
+  const currentNawalIndex = NAWALES.indexOf(nawal);
+  if (currentNawalIndex === -1) {
+    throw new Error(`Invalid nawal: ${nawal}`);
+  }
+  const prevNawalIndex = (currentNawalIndex - 1 + 20) % 20;
+  const prevNawal = NAWALES[prevNawalIndex];
+
+  // Calculate trecena
+  const { getTrecenaFromDate } = require('./dateToMayan');
+  const trecena = getTrecenaFromDate({ tone: prevTone, sign: prevNawal });
+
+  return {
+    tone: prevTone,
+    sign: prevNawal,
+    trecena,
+    formatted: `${prevTone} ${prevNawal}`,
+  };
+}
+
+/**
+ * Create a Mayan date object directly from tone and nawal
+ * @param {number} tone - Tone (1-13)
+ * @param {string} nawal - Nawal name
+ * @returns {Object} Mayan date object with { tone, sign, trecena, formatted }
+ */
+function createMayanDateFromToneAndNawal(tone, nawal) {
+  // Import getTrecenaFromDate from dateToMayan
+  const { getTrecenaFromDate } = require('./dateToMayan');
+  const NAWALES = [
+    'Imox',
+    "Iq'",
+    "Aq'ab'al",
+    "K'at",
+    'Kan',
+    'Kame',
+    'Kej',
+    "Q'anil",
+    'Toj',
+    "Tz'i'",
+    "B'atz'",
+    "E'",
+    'Aj',
+    'Ix',
+    "Tz'ikin",
+    'Ajmaq',
+    "No'j",
+    'Tijax',
+    'Kawoq',
+    'Ajpu',
+  ];
+
+  // Validate tone
+  if (tone < 1 || tone > 13) {
+    throw new Error(`Invalid tone: ${tone}. Must be between 1 and 13.`);
+  }
+
+  // Validate nawal
+  if (!NAWALES.includes(nawal)) {
+    throw new Error(`Invalid nawal: ${nawal}. Must be one of: ${NAWALES.join(', ')}`);
+  }
+
+  // Calculate trecena
+  const trecena = getTrecenaFromDate({ tone, sign: nawal });
+
+  return {
+    tone,
+    sign: nawal,
+    trecena,
+    formatted: `${tone} ${nawal}`,
+  };
+}
+
+/**
  * Get today's Mayan date synchronously (uses device date)
+ * Checks for dev Mayan override first, then dev date override, then device date
  * @returns {Object} Mayan date object
  */
 export function getTodayMayanDateSync() {
+  // Check for dev Mayan override first (tone/nawal override)
+  const mayanOverride = getDevMayanOverrideSync();
+  if (mayanOverride && mayanOverride.tone && mayanOverride.nawal) {
+    try {
+      return createMayanDateFromToneAndNawal(mayanOverride.tone, mayanOverride.nawal);
+    } catch (error) {
+      console.error('Error creating Mayan date from override:', error);
+      // Fall through to date-based calculation
+    }
+  }
+
   // Use device date (use local normalization for today)
+  // This will use dev date override if set, otherwise actual device date
   const deviceDate = getActualDateSync();
   return convertToMayan(deviceDate, false);
 }
@@ -241,8 +438,26 @@ export async function getPreviousDay(mayanDate) {
 
   // Calculate previous sign (go back 1 in the 20-sign cycle)
   const NAWALES = [
-    'Imox', "Iq'", "Aq'ab'al", "K'at", 'Kan', 'Kame', 'Kej', "Q'anil", 'Toj',
-    "Tz'i'", "B'atz'", "E'", 'Aj', 'Ix', "Tz'ikin", 'Ajmaq', "No'j", 'Tijax', 'Kawoq', 'Ajpu',
+    'Imox',
+    "Iq'",
+    "Aq'ab'al",
+    "K'at",
+    'Kan',
+    'Kame',
+    'Kej',
+    "Q'anil",
+    'Toj',
+    "Tz'i'",
+    "B'atz'",
+    "E'",
+    'Aj',
+    'Ix',
+    "Tz'ikin",
+    'Ajmaq',
+    "No'j",
+    'Tijax',
+    'Kawoq',
+    'Ajpu',
   ];
   const currentSignIndex = NAWALES.indexOf(mayanDate.sign);
   const previousSignIndex = (currentSignIndex - 1 + 20) % 20;
@@ -279,8 +494,26 @@ export async function getNextDay(mayanDate) {
 
   // Calculate next sign (go forward 1 in the 20-sign cycle)
   const NAWALES = [
-    'Imox', "Iq'", "Aq'ab'al", "K'at", 'Kan', 'Kame', 'Kej', "Q'anil", 'Toj',
-    "Tz'i'", "B'atz'", "E'", 'Aj', 'Ix', "Tz'ikin", 'Ajmaq', "No'j", 'Tijax', 'Kawoq', 'Ajpu',
+    'Imox',
+    "Iq'",
+    "Aq'ab'al",
+    "K'at",
+    'Kan',
+    'Kame',
+    'Kej',
+    "Q'anil",
+    'Toj',
+    "Tz'i'",
+    "B'atz'",
+    "E'",
+    'Aj',
+    'Ix',
+    "Tz'ikin",
+    'Ajmaq',
+    "No'j",
+    'Tijax',
+    'Kawoq',
+    'Ajpu',
   ];
   const currentSignIndex = NAWALES.indexOf(mayanDate.sign);
   const nextSignIndex = (currentSignIndex + 1) % 20;
@@ -329,4 +562,3 @@ export async function getAllDaysInTrecena(mayanDate) {
 
   return [...trecenaData.days].sort((a, b) => a.day - b.day);
 }
-
