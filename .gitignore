@@ -43,6 +43,7 @@ yarn-error.*
 # high-res images
 images-hd
 
-# database output
+# database stuff
+database/input/
 database/output/
 database/queries/

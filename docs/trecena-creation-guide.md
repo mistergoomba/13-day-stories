@@ -251,8 +251,30 @@ notes: []
 - The **number meaning** must match the traditional Mayan numerological energy
 - The **nawal meaning** must match the Mayan calendar spec
 - The **combined meaning** must unify the chapter’s emotional lesson with the nawal + number
-- All bullet points must be actionable or reflective
+- **Combined energy notes**: MUST contain exactly **5 notes**. Each note must be actionable or reflective, providing practical guidance or insight related to the combined energy.
 - Language must be modern and non-dogmatic
+
+### **Title Format Requirements**:
+
+**CRITICAL**: Energy titles must be **descriptive, poetic, mystical phrases**—NOT formulaic labels.
+
+- ❌ **WRONG**: `"2 – The Partner"` or `"Ix – The Jaguar"` or `"2 Ix: The Magic of Connection"`
+- ✅ **CORRECT**: `"The Mirror of Duality"` (for number 2), `"The Jaguar of Earth Magic"` (for nawal Ix), `"Balancing the Invisible Forces"` (for combined)
+
+**Number titles** should be poetic descriptions of the number's essence (e.g., "The Seed of Fire" for 1, "The Mirror of Duality" for 2, "The Rhythm of Movement" for 3).
+
+**Nawal titles** should be poetic descriptions incorporating the nawal's essence (e.g., "The Jaguar of Earth Magic" for Ix, "The Weaver of Time" for B'atz').
+
+**Combined energy titles** should be conceptual phrases that capture the synthesis, not formulaic "Number Nawal: Title" format (e.g., "Balancing the Invisible Forces" not "2 Ix: The Magic of Connection").
+
+**Examples from completed trecenas:**
+
+- Number 1: "The Seed of Fire"
+- Number 2: "The Mirror of Duality"
+- Number 3: "The Rhythm of Movement"
+- Nawal Ix: "The Jaguar of Earth Magic"
+- Nawal B'atz': "The Weaver of Time"
+- Combined: "Untangling the Knots", "Balancing the Invisible Forces"
 
 ---
 
@@ -469,13 +491,38 @@ When writing image prompts, use this structure:
 ### **Birthday Image Prompt Specifics**
 
 - **Subject**: MUST depict the **Mayan Glyph** for the day's nawal AND the **Mayan Numeral** for the day's number.
+- **Position**: The numeral MUST be described as **"Hovering directly above the glyph"**—NOT "alongside" or "next to". This is the standard format.
 - **Numeral format**:
   - Dots (•) = 1 (up to 4)
   - Bars (—) = 5 (up to 3)
   - Shell = 0
   - Example: Number 13 = Two bars with three dots above them.
+  - Example: Number 2 = Two glowing golden dots arranged horizontally
 - **Style**: Ancient stone carving, glowing energy, mystical realism. No English text.
 - **Location**: Inside `image_prompts.birthday`.
+
+**Required Prompt Structure:**
+
+The birthday image prompt MUST follow this exact format:
+
+```
+Square image. A mystical stone carving of the Mayan glyph for [Nawal] ([Nawal meaning/description]) glowing with internal [COLOR] light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral [Number]: [specific numeral description]. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.
+```
+
+**Example:**
+
+```
+Square image. A mystical stone carving of the Mayan glyph for Ix (Jaguar/Spots) glowing with internal jungle-green and amber light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 2: two glowing golden dots arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text.
+```
+
+**Key Requirements:**
+
+- Start with "Square image."
+- Use "Hovering directly above the glyph" (not "alongside" or "next to")
+- Include specific color description for the glyph's glow
+- Include specific numeral description (e.g., "two glowing golden dots arranged horizontally" for 2)
+- End with "The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
+- Do NOT add extra decorative elements like "jaguar spots" or "jungle leaf textures" unless they are part of the glyph itself
 
 ### **Aspect Ratios**
 
@@ -561,22 +608,81 @@ Use `docs/trecena-rules-toj.md` as the exemplar format for trecena-specific rule
 
 ---
 
-## 💼 **16. How to Start a New Chat**
+## 💼 **16. Types of User Requests**
 
-Provide:
+The user may ask for one of four things. Each has different requirements:
 
-- trecena-creation-guide.md
-- mayan-calendar-reference.md
-- writing-style-guide.md
-- any completed trecena files (e.g., `data/trecena-toj.js` and `docs/trecena-rules-toj.md` as examples)
+### **Request Type 1: Build a Full Trecena**
 
-Then say:
+When the user says "I want to build [Nawal] trecena" or similar, follow the complete collaborative workflow outlined in **Section 18: Collaborative Trecena Building Workflow**.
 
-"I am generating the **X trecena**, starting on Day Y. Follow all rules in trecena-creation-guide.md."
+- This includes world building, prologue/epilogue planning, day-by-day planning with options
+- Always present options and wait for user feedback
+- Never generate JSON until explicitly approved
+- Follow all phases 1-6
+
+### **Request Type 2: Build Images for a Particular Day**
+
+When the user asks to generate images for a day, they will upload a day's worth of data.
+
+- Take in the data and generate images from the `image_prompts` JSON in order:
+  1. story_primary
+  2. story_wide_1
+  3. story_wide_2
+  4. horoscope
+  5. affirmation
+  6. birthday
+- Generate one image, then ask to generate the next one
+- Continue until all 6 images are generated
+- User will then feed you the next day
+- Continue until all 13 days have been done
+- Reference `image-creation-guide.md` for aesthetic and composition principles
+
+### **Request Type 3: Generate Birthday Data Only (No Options)**
+
+When the user asks for "just the birthday data, energy of the day data, and birthday image prompt" for a trecena:
+
+- **Do NOT present options or ask questions**
+- Generate full 13 days of data immediately
+- For each day, provide:
+  - `energy_of_the_day` (number, nawal, combined_energy) — use `mayan-calendar-reference.md` for meanings
+  - `birthday` (title and content) — follow Section 8B rules (150-200 words, 2-3 paragraphs, comprehensive coverage)
+  - `image_prompts.birthday` — follow Section 11 Birthday Image Prompt Specifics (Mayan glyph + numeral)
+- Follow all rules in this document, but skip the collaborative workflow
+- Reference existing data files (e.g., `data/trecena-toj.js`) for format structure
+- Output in JSON format matching the structure
+
+### **Request Type 4: Generate All Birthday Images**
+
+When the user asks for "all the birthday images in a JSON with birthday image prompts":
+
+- User will provide a trecena name or data
+- Generate all 13 birthday images (one for each day)
+- Create a JSON structure containing:
+  - Each day's `image_prompts.birthday` prompt
+  - The generated birthday image for that day
+- Follow Section 11 Birthday Image Prompt Specifics (Mayan glyph + numeral for each day)
+- Reference `image-creation-guide.md` for aesthetic and composition principles
+- Output in JSON format with all 13 days
 
 ---
 
-## 🤝 **17. Collaborative Trecena Building Workflow**
+## 💼 **17. How to Start a New Chat**
+
+The following files are uploaded and serve as the source of truth:
+
+- **`@docs/trecena-creation-guide.md`** — Complete rules, workflow, JSON format, all requirements
+- **`@docs/mayan-calendar-reference.md`** — All Mayan calendar data (Numbers, Nawales, trecenas, cycling mechanism)
+- **`@docs/writing-style-guide.md`** — Writing style for all content types
+- **`@docs/image-creation-guide.md`** — Image creation aesthetic and composition principles
+
+Additionally, reference existing data files in the `data/` directory (e.g., `data/trecena-toj.js`) for format structure and examples.
+
+When starting a new chat, the user will specify which type of request they need (see Section 16 above).
+
+---
+
+## 🤝 **18. Collaborative Trecena Building Workflow**
 
 When the user requests to build a new trecena, you MUST follow this collaborative workflow. **Never generate JSON until explicitly approved.** Always present options and wait for user feedback.
 
@@ -795,7 +901,7 @@ This file must document:
 
 ---
 
-## 🌟 **18. What the Model Must Always Remember**
+## 🌟 **19. What the Model Must Always Remember**
 
 - Stories are rituals
 - Worlds mirror inner transformation
