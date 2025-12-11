@@ -90,11 +90,6 @@ export default function TodayScreenContent({
       {/* Dynamic Background */}
       <DynamicBackground backgroundColors={backgroundColors} />
 
-      {/* Header - Fixed at top */}
-      <View style={styles.headerContainer}>
-        <SimpleHeader title='Energy of the Day' />
-      </View>
-
       {/* Scrollable Content */}
       <ScrollView
         ref={scrollViewRef}
@@ -102,9 +97,12 @@ export default function TodayScreenContent({
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <View
-          style={[styles.content, { paddingBottom: bottomPadding, paddingTop: insets.top + 56 }]}
-        >
+        {/* Header - Part of scroll flow */}
+        <View style={{ paddingTop: insets.top }}>
+          <SimpleHeader title='Energy of the Day' />
+        </View>
+
+        <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           {/* Horoscope Section */}
           <HoroscopeSection
             horoscopeImage={
@@ -153,13 +151,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'transparent',
-  },
-  headerContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 10,
   },
   scrollView: {
     flex: 1,

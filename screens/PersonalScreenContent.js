@@ -94,21 +94,21 @@ export default function PersonalScreenContent({ scrollViewRef, setCurrentView, s
       {/* Dynamic Background */}
       <DynamicBackground backgroundColors={defaultBackgroundColors} />
 
-      {/* Header - Fixed at top */}
-      <View style={styles.headerContainer}>
-        <SimpleHeader
-          title='PROFILE'
-          onAccountPress={() => setCurrentView && setCurrentView('Settings')}
-          showSettingsIcon={true}
-        />
-      </View>
-
       <ScrollView
         ref={scrollViewRef}
         style={styles.scrollView}
-        contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 56 }]}
+        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
+        {/* Header - Part of scroll flow */}
+        <View style={{ paddingTop: insets.top }}>
+          <SimpleHeader
+            title='PROFILE'
+            onAccountPress={() => setCurrentView && setCurrentView('Settings')}
+            showSettingsIcon={true}
+          />
+        </View>
+
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           <View style={styles.contentSection}>
             {/* Date Picker */}
@@ -301,13 +301,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'transparent',
-  },
-  headerContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 10,
   },
   scrollView: {
     flex: 1,

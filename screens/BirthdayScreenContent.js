@@ -100,14 +100,16 @@ export default function BirthdayScreenContent({
     return (
       <View style={styles.container}>
         <DynamicBackground backgroundColors={birthdayColors} />
-        <View style={styles.headerContainer}>
-          <SimpleHeader title='PROFILE' />
-        </View>
         <ScrollView
           ref={scrollViewRef}
           style={styles.scrollView}
-          contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 56 }]}
+          contentContainerStyle={styles.scrollContent}
         >
+          {/* Header - Part of scroll flow */}
+          <View style={{ paddingTop: insets.top }}>
+            <SimpleHeader title='PROFILE' />
+          </View>
+
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
             {/* Birthday Image - always show, uses fallback if not found */}
             <ImageWithPlaceholder
@@ -172,14 +174,16 @@ export default function BirthdayScreenContent({
     return (
       <View style={styles.container}>
         <DynamicBackground backgroundColors={birthdayColors} />
-        <View style={styles.headerContainer}>
-          <SimpleHeader title='PROFILE' />
-        </View>
         <ScrollView
           ref={scrollViewRef}
           style={styles.scrollView}
-          contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 56 }]}
+          contentContainerStyle={styles.scrollContent}
         >
+          {/* Header - Part of scroll flow */}
+          <View style={{ paddingTop: insets.top }}>
+            <SimpleHeader title='PROFILE' />
+          </View>
+
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
             {/* Birthday Image - always show, uses fallback if not found */}
             <ImageWithPlaceholder
@@ -237,22 +241,22 @@ export default function BirthdayScreenContent({
       {/* Dynamic Background */}
       <DynamicBackground backgroundColors={birthdayColors} />
 
-      {/* Header - Fixed at top */}
-      <View style={styles.headerContainer}>
-        <SimpleHeader
-          title='PROFILE'
-          onAccountPress={() => setCurrentView && setCurrentView('Settings')}
-          showSettingsIcon={true}
-        />
-      </View>
-
       {/* Scrollable Content */}
       <ScrollView
         ref={scrollViewRef}
         style={styles.scrollView}
-        contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 56 }]}
+        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
+        {/* Header - Part of scroll flow */}
+        <View style={{ paddingTop: insets.top }}>
+          <SimpleHeader
+            title='PROFILE'
+            onAccountPress={() => setCurrentView && setCurrentView('Settings')}
+            showSettingsIcon={true}
+          />
+        </View>
+
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           {/* Birthday Image - always show, uses fallback if specific image not found */}
           <ImageWithPlaceholder source={dayData?.images?.birthday} type='square' flushTop={true} />
@@ -323,13 +327,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'transparent',
-  },
-  headerContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 10,
   },
   scrollView: {
     flex: 1,

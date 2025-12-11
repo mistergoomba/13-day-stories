@@ -91,19 +91,33 @@ function DayDetailView({
 
   if (loading || !dayData) {
     return (
-      <View style={[styles.content, { paddingBottom: bottomPadding, paddingTop: insets.top + 56 }]}>
-        <Text style={styles.errorText}>
-          {loading ? 'Loading...' : 'Unable to load chapter data'}
-        </Text>
-        <Pressable
-          style={[
-            styles.backButton,
-            storyPrimaryColors && getButtonStyleFromColors(storyPrimaryColors),
-          ]}
-          onPress={onBack}
+      <View style={styles.container}>
+        <DynamicBackground backgroundColors={storyPrimaryColors} />
+        <ScrollView
+          ref={scrollViewRef}
+          style={styles.scrollView}
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
         >
-          <Text style={styles.backButtonText}>Back to Journey</Text>
-        </Pressable>
+          {/* Header - Part of scroll flow */}
+          <View style={{ paddingTop: insets.top }}>
+            <SimpleHeader title='Journey' />
+          </View>
+          <View style={[styles.content, { paddingBottom: bottomPadding }]}>
+            <Text style={styles.errorText}>
+              {loading ? 'Loading...' : 'Unable to load chapter data'}
+            </Text>
+            <Pressable
+              style={[
+                styles.backButton,
+                storyPrimaryColors && getButtonStyleFromColors(storyPrimaryColors),
+              ]}
+              onPress={onBack}
+            >
+              <Text style={styles.backButtonText}>Back to Journey</Text>
+            </Pressable>
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -165,11 +179,6 @@ function DayDetailView({
       {/* Dynamic Background */}
       <DynamicBackground backgroundColors={storyPrimaryColors} />
 
-      {/* Header - Fixed at top */}
-      <View style={styles.headerContainer}>
-        <SimpleHeader title='Journey' />
-      </View>
-
       {/* Scrollable Content */}
       <ScrollView
         ref={scrollViewRef}
@@ -177,9 +186,12 @@ function DayDetailView({
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <View
-          style={[styles.content, { paddingBottom: bottomPadding, paddingTop: insets.top + 56 }]}
-        >
+        {/* Header - Part of scroll flow */}
+        <View style={{ paddingTop: insets.top }}>
+          <SimpleHeader title='Journey' />
+        </View>
+
+        <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           {/* Story Primary Image */}
           <ImageWithPlaceholder
             source={dayData?.images?.story_primary}
@@ -465,18 +477,17 @@ export default function JourneyScreenContent({
 
   return (
     <View style={styles.container}>
-      {/* Header - Fixed at top */}
-      <View style={styles.headerContainer}>
-        <SimpleHeader title='Journey' />
-      </View>
-
       {/* Scrollable Content */}
       <ScrollView
         ref={scrollViewRef}
         style={styles.scrollView}
-        contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 56 }]}
+        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
+        {/* Header - Part of scroll flow */}
+        <View style={{ paddingTop: insets.top }}>
+          <SimpleHeader title='Journey' />
+        </View>
         {loading || !trecenaData ? (
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
             <Text style={styles.errorText}>
@@ -571,13 +582,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'transparent',
-  },
-  headerContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 10,
   },
   scrollView: {
     flex: 1,

@@ -64,9 +64,14 @@ export default function MeditationScreenContent({ scrollViewRef, onPersonalPress
         <ScrollView
           ref={scrollViewRef}
           style={styles.scrollView}
-          contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 56 }]}
+          contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
+          {/* Header - Part of scroll flow */}
+          <View style={{ paddingTop: insets.top }}>
+            <SimpleHeader title='Meditation' />
+          </View>
+
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
             <Text style={styles.errorText}>
               {loading ? 'Loading...' : 'Unable to load meditation data'}
@@ -82,11 +87,6 @@ export default function MeditationScreenContent({ scrollViewRef, onPersonalPress
       {/* Dynamic Background */}
       <DynamicBackground backgroundColors={affirmationColors} />
 
-      {/* Header - Fixed at top */}
-      <View style={styles.headerContainer}>
-        <SimpleHeader title='Meditation' />
-      </View>
-
       {/* Scrollable Content */}
       <ScrollView
         ref={scrollViewRef}
@@ -94,9 +94,12 @@ export default function MeditationScreenContent({ scrollViewRef, onPersonalPress
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <View
-          style={[styles.content, { paddingBottom: bottomPadding, paddingTop: insets.top + 56 }]}
-        >
+        {/* Header - Part of scroll flow */}
+        <View style={{ paddingTop: insets.top }}>
+          <SimpleHeader title='Meditation' />
+        </View>
+
+        <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           {/* Affirmation Image */}
           <ImageWithPlaceholder
             source={dayData?.images?.affirmation}
@@ -121,13 +124,6 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'relative',
     backgroundColor: 'transparent',
-  },
-  headerContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 10,
   },
   scrollView: {
     flex: 1,

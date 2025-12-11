@@ -15,9 +15,15 @@ import { type } from '../theme/typography';
 
 const BIRTHDAY_DATE_KEY = '@birthday_date';
 
-export default function SettingsScreenContent({ scrollViewRef, setCurrentView, setBirthdayDate, birthdayDate, onPersonalPress }) {
+export default function SettingsScreenContent({
+  scrollViewRef,
+  setCurrentView,
+  setBirthdayDate,
+  birthdayDate,
+  onPersonalPress,
+}) {
   const insets = useSafeAreaInsets();
-  
+
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
 
@@ -48,26 +54,24 @@ export default function SettingsScreenContent({ scrollViewRef, setCurrentView, s
       setBirthdayDate(null);
     }
   };
-  
+
   return (
     <View style={styles.container}>
       {/* Dynamic Background */}
       <DynamicBackground backgroundColors={defaultBackgroundColors} />
 
-      {/* Header - Fixed at top */}
-      <View style={styles.headerContainer}>
-        <SimpleHeader
-          title='Settings'
-        />
-      </View>
-
       {/* Scrollable Content */}
       <ScrollView
         ref={scrollViewRef}
         style={styles.scrollView}
-        contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 56 }]}
+        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
+        {/* Header - Part of scroll flow */}
+        <View style={{ paddingTop: insets.top }}>
+          <SimpleHeader title='Settings' />
+        </View>
+
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           <Card>
             <Text style={styles.sectionTitle}>App Preferences</Text>
@@ -119,16 +123,10 @@ export default function SettingsScreenContent({ scrollViewRef, setCurrentView, s
       />
 
       {/* Privacy Modal */}
-      <PrivacyModal
-        visible={showPrivacyModal}
-        onClose={() => setShowPrivacyModal(false)}
-      />
+      <PrivacyModal visible={showPrivacyModal} onClose={() => setShowPrivacyModal(false)} />
 
       {/* Terms of Service Modal */}
-      <TermsOfServiceModal
-        visible={showTermsModal}
-        onClose={() => setShowTermsModal(false)}
-      />
+      <TermsOfServiceModal visible={showTermsModal} onClose={() => setShowTermsModal(false)} />
     </View>
   );
 }
@@ -137,13 +135,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'transparent',
-  },
-  headerContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 10,
   },
   scrollView: {
     flex: 1,

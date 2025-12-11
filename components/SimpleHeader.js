@@ -1,15 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Path, Circle } from 'react-native-svg';
 import colors from '../theme/colors';
 import { type, headerTextFontFamily } from '../theme/typography';
 
 export default function SimpleHeader({ title, onAccountPress, showSettingsIcon = false }) {
-  const insets = useSafeAreaInsets();
-
   return (
-    <View style={[styles.header, { paddingTop: insets.top }]}>
+    <View style={styles.header}>
       <Text style={styles.title}>{title}</Text>
       {onAccountPress && (
         <Pressable onPress={onAccountPress} style={styles.accountButton}>
@@ -52,20 +49,13 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     minHeight: 56,
     width: '100%',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 10,
   },
   title: {
     ...type.subtitle,
     fontFamily: headerTextFontFamily,
     color: colors.text,
     fontSize: 26,
-    position: 'absolute',
-    left: 0,
-    right: 0,
+    flex: 1,
     textAlign: 'center',
     paddingBottom: 6,
   },
