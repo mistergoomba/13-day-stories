@@ -123,10 +123,10 @@
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Aq'ab'al (Bat/Dawn/Face) glowing with internal orange and indigo dawn-light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 2: two glowing golden dots arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
       "colors": {
-        "story_primary": {
-          "accent": "#e1ca9f",
-          "primary": "#13213c",
-          "secondary": "#94908b"
+        "birthday": {
+          "accent": "#b29685",
+          "primary": "#0e1516",
+          "secondary": "#403c3d"
         }
       }
     },
@@ -178,7 +178,13 @@
         "content": "To be born on 3 K'at is to be a social dynamo and a master of networks. You are the 'Active Gatherer'—someone who instinctively knows how to bring people and resources together in a rhythmic, harmonious way. You are likely very popular, with a wide circle of friends and a talent for organization. You are always in motion, spinning webs of connection that benefit everyone around you. You are the person who knows 'a guy for that' and who loves to facilitate introductions.\n\nYour life path is one of abundance through connection. The number 3 gives you a playful, expressive nature, preventing the 'net' of K'at from becoming too heavy or serious. However, you may struggle with over-commitment or feeling trapped by the very networks you create. Your challenge is to learn when to stop weaving and rest, and to ensure that you are gathering things that truly nourish your soul. You are here to show us that we are all connected in the great web of life.",
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for K'at (Net/Lizard/Seed) glowing with internal golden-yellow and fire-red light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 3: three glowing golden dots arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#d4a46f",
+          "primary": "#121514",
+          "secondary": "#513c34"
+        }
+      }
     },
     {
       "day": 4,
@@ -228,7 +234,13 @@
         "content": "To be born on 4 Kan is to be a powerhouse of grounded energy. You are the 'Stable Serpent'—a soul who possesses immense strength and charisma, but who keeps it under disciplined control. You are likely physically robust, with a natural talent for athletics, healing, or leadership. People are drawn to you because you radiate a sense of calm power; you don't need to show off because your presence speaks for itself. You are a builder of wisdom, someone who takes ancient truths and applies them to create a stable life.\n\nYour life path is one of mastering the physical and spiritual energies. You are here to learn how to hold high-frequency energy in a human body. The number 4 gives you a practical, earthy nature that grounds the fiery Kan. Your challenge is to ensure that you don't become too rigid or suppressed, allowing your fire to burn freely within the hearth you have built. You are here to show us that true power is not explosive, but enduring.",
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Kan (Serpent/Snake) glowing with internal electric-red and emerald-green light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 4: four glowing golden dots arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#d1ba6d",
+          "primary": "#1d1c1b",
+          "secondary": "#43432c"
+        }
+      }
     },
     {
       "day": 5,
@@ -278,7 +290,13 @@
         "content": "To be born on 5 Kame is to be a catalyst for profound change. You are the 'Active Transformer'—a soul who is not afraid to get their hands dirty in the work of life and death. You have a resilient spirit and a practical approach to the mysteries. You are likely the person who helps others rebuild their lives after a crisis, offering not just sympathy but concrete solutions. You understand that transformation requires effort, and you are willing to do the heavy lifting.\n\nYour life path is one of constant evolution through work. You may face many 'deaths' and 'rebirths' in your lifetime—career changes, identity shifts, or deep spiritual awakenings. The number 5 gives you the strength and discipline to navigate these changes successfully. Your challenge is to not become hardened by the struggle, but to remain soft enough to feel the beauty of the cycle. You are here to show us that we have the power to reshape our destiny.",
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Kame (Skull/Eyes closed) glowing with internal white, bone, and pale yellow light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 5: a single glowing golden bar. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#dad0b3",
+          "primary": "#0f110f",
+          "secondary": "#3f3930"
+        }
+      }
     },
     {
       "day": 6,
@@ -328,7 +346,13 @@
         "content": "To be born on 6 Kej is to be a steward of the earth and a pillar of strength. You are the 'Flowing Deer'—a soul who embodies the grace and power of the natural world. You have a calm, stabilizing presence that makes others feel safe. You are likely very connected to the environment and may feel a calling to protect it. You are a natural leader who prefers consensus and harmony over dominance. You move through life with a sure-footed rhythm, rarely losing your balance.\n\nYour life path is one of living in harmony with natural law. The number 6 gives you a love for family and community, which you integrate with the independence of the Deer. You are the person who brings the outdoors in, or who takes the family out. Your challenge is to ensure that your desire for harmony doesn't stop you from standing your ground when necessary. You are here to remind us that we are not separate from nature, but a vital part of its flow.",
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Kej (Deer/Hand/Four Directions) glowing with internal earthy-brown and forest-green light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 6: a glowing golden bar with one glowing dot above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#ccbd8f",
+          "primary": "#121a18",
+          "secondary": "#4d4b3d"
+        }
+      }
     },
     {
       "day": 7,
@@ -378,7 +402,13 @@
         "content": "To be born on 7 Q'anil is to be a soul who sees the potential in everything. You are the 'Mystic Gardener'—someone who knows intuitively what seeds will grow and what they need to thrive. Situated at the top of the pyramid (7), you have a broad view of life's cycles, allowing you to plan for the future with uncanny accuracy. You are likely artistic, creative, and appreciative of beauty in all its forms. You carry a seed of genius within you that is destined to ripen.\n\nYour life path is one of cultivating abundance through vision. You are here to plant ideas, projects, or communities and watch them grow. The number 7 gives you a spiritual depth that prevents you from being purely materialistic. Your challenge is to trust the timing of the harvest and not to dig up the seeds out of anxiety. You are here to remind us that if we align with the vision of nature, abundance is inevitable.",
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Q'anil (Seed/Rabbit/Star) glowing with internal golden-yellow and harvest-gold light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 7: a glowing golden bar with two glowing dots above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#dccb95",
+          "primary": "#121817",
+          "secondary": "#50483c"
+        }
+      }
     },
     {
       "day": 8,
@@ -428,7 +458,13 @@
         "content": "To be born on 8 Toj is to be a ceremonial guardian of the balance. You are the 'Sacred Official'—a soul who instinctively understands the laws of karma and reciprocity. You have a dignified, authoritative presence and a deep desire to be of service. You are likely the person who organizes the rituals, manages the funds, or ensures that everyone is treated fairly. You carry a heavy load at times, as Toj often involves paying the debts of the lineage, but the strength of the number 8 gives you the power to carry it with grace.\n\nYour life path is one of restoring harmony through offering. You are a natural healer, often working through heat, fire, or blood (the life force). Your challenge is to ensure that you do not become a martyr, giving until you have nothing left. You must learn to receive as well as you give. You are here to keep the sacred fire burning for all of us.",
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Toj (Fire/Offering/Drop) glowing with internal ember-red and warm orange light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 8: a glowing golden bar with three glowing dots above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#d88b6e",
+          "primary": "#140e0c",
+          "secondary": "#462d27"
+        }
+      }
     },
     {
       "day": 9,
@@ -478,7 +514,13 @@
         "content": "To be born on 9 Tz'i' is to be a protector of the vulnerable and a keeper of the heart's law. You are the 'Nurturing Guide'—a soul who combines a fierce sense of justice with deep, feminine compassion. You are likely the person who rescues stray animals (literally or metaphorically) and fights for the underdog. You have a patient, enduring nature; you don't give up on people easily. Your loyalty is legendary, but it is not blind—you see the truth, yet you choose to love anyway.\n\nYour life path is one of evolving the concept of justice. You are here to show that the law is not just cold rules, but a living structure meant to protect life. The number 9 gives you a creative, gestating energy, making you a wonderful mentor or parent. Your challenge is to ensure that your loyalty doesn't keep you trapped in situations that have outlived their purpose. You are here to teach us that love is the highest law.",
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Tz'i' (Dog/Staff) glowing with internal white and silver light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 9: a glowing golden bar with four glowing dots above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#cbcbc3",
+          "primary": "#121414",
+          "secondary": "#4f4f49"
+        }
+      }
     },
     {
       "day": 10,
@@ -528,7 +570,13 @@
         "content": "To be born on 10 B'atz' is to be a master of destiny and a creator of community. You are the 'Manifested Artist'—someone who has the talent not only to dream up beautiful designs but to bring them into physical reality. You are likely very charismatic, social, and talented in the arts or organization. People are drawn to you because you make life feel like a celebration. You have a gift for bringing people together and weaving them into a cohesive group.\n\nYour life path is one of tangible creation. You are not a starving artist; you are a successful one (10). You understand how to work within the structures of reality to manifest your vision. Your challenge is to manage the many threads you hold without getting tangled in over-responsibility. Remember that you don't have to weave the whole world, just your part of it. You are here to show us that life is a work of art.",
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for B'atz' (Monkey/Thread) glowing with internal electric-blue and gold light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 10: two glowing golden bars arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#91c1a5",
+          "primary": "#0d1919",
+          "secondary": "#37534d"
+        }
+      }
     },
     {
       "day": 11,
@@ -578,7 +626,13 @@
         "content": "To be born on 11 E' is to be a traveler of the unknown. You are the 'Path Breaker'—a soul who is not content with the paved roads of society. You have a restless, adventurous spirit that drives you to constantly seek new experiences and new truths. You are likely an innovator, a nomad, or a pioneer in your field. The number 11 gives you a non-conformist edge; you don't just walk the path, you change it.\n\nYour life path is one of discovery through disruption. You may have a life filled with sudden changes of direction, but each twist leads you closer to your true destiny. Your challenge is to find stability within the movement, to carry your home in your heart so that you don't feel lost in the chaos. You are here to blaze trails for others to follow, showing us that the most beautiful destinations are often found off the map.",
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for E' (Path/Tooth/Ear) glowing with internal white and pale blue light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 11: two glowing golden bars with one glowing dot above them. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#d0d3ca",
+          "primary": "#111818",
+          "secondary": "#484d4d"
+        }
+      }
     },
     {
       "day": 12,
@@ -628,7 +682,13 @@
         "content": "To be born on 12 Aj is to be a cornerstone of your community. You are the 'Collective Authority'—a soul who naturally takes on the role of leader, protector, or elder. You have a deep love for home and tradition, but the number 12 makes you inclusive and expansive. You want everyone to have a seat at the table. People look to you for strength and guidance because you embody integrity and fairness.\n\nYour life path is one of building structures that support the many. You are a natural organizer and a harmonizer, able to bring different viewpoints together under one roof. Your challenge is to not let the weight of the community rest too heavily on your shoulders (spine). Remember that a true pillar is part of a larger structure; you don't have to hold up the roof alone. You are here to show us the power of unity.",
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Aj (Cornstalk/Cane) glowing with internal chocolate-brown and green light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 12: two glowing golden bars with two glowing dots above them. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#a4a56c",
+          "primary": "#0e0f0e",
+          "secondary": "#3f382d"
+        }
+      }
     },
     {
       "day": 13,
@@ -678,7 +738,13 @@
         "content": "To be born on 13 Ix is to be a soul of deep, ancient power. You are the 'Ascended Jaguar'—a mystic who walks between the worlds with ease. You possess a profound intuition and a natural connection to the magical arts, healing, and the forces of nature. The number 13 connects you to the spirit world and the ancestors, while Ix grounds that power in the Earth. You are a conduit for high-frequency energy.\n\nYour life path is one of spiritual mastery. You are here to bring the magic of the invisible world into the visible one. You may be drawn to shamanism, energy work, or environmental protection. Your presence is often intense and magnetic; people can feel that you 'know' things. Your challenge is to stay grounded in your body and not get lost in the spirit realms. You are here to remind us that the world is far more mysterious and beautiful than we dare to imagine.",
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Ix (Jaguar/Spots) glowing with internal jungle-green and amber light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 13: two glowing golden bars with three glowing dots above them. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#8cd3a0",
+          "primary": "#0d1a17",
+          "secondary": "#365d46"
+        }
+      }
     }
   ]
 }

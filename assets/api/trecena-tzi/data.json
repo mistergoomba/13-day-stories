@@ -50,7 +50,13 @@
         "title": "The Initiator of Divine Justice",
         "content": "To be born on 1 Tz'i' is to be a natural leader in the realms of law, ethics, and community protection. You possess a strong internal compass and the will to follow it, regardless of external pressure. Tone 1 gives you a sense of independence and new beginnings, while Tz'i' grants you the instincts of the faithful guide. You are often the 'first' to spot an injustice and the first to speak up about it. You carry a natural authority that makes people listen when you speak on matters of right and wrong.\n\nYour life path is one of establishing order and protecting the vulnerable. You are here to initiate new ways of being that are aligned with spiritual truth. You may be drawn to legal professions, advocacy, or spiritual leadership—any role where you can set the standard. You are fiercely loyal to your 'pack,' whether that is your family, your team, or your cause. However, your definition of loyalty is not blind; it is rooted in integrity.\n\nThe challenge for a 1 Tz'i' soul is the risk of becoming self-righteous or isolated. Because you trust your own instincts so implicitly (Tone 1), you may struggle to take advice from others or see nuance in complex situations. You might feel that you are the only one who cares about the 'truth.' Your lesson is to lead with compassion. When you use your authority to serve rather than to judge, you become a beacon of divine law, showing others that true justice is an act of love."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#16191a",
+          "secondary": "#44525c",
+          "accent": "#b0d0dd"
+        }
+      }
     },
     {
       "day": 2,
@@ -99,7 +105,13 @@
         "title": "The Weaver of Shared Destiny",
         "content": "To be born on 2 B'atz' is to be a master of connection and a creative diplomat. You possess a soul that thrives on interaction and artistic expression. Tone 2 gives you a deep understanding of duality and partnership, while B'atz' gifts you with the skills of the weaver and the charm of the monkey. You are likely the person who connects people, weaving social circles together with ease. You view relationships as an art form, constantly adjusting the threads to create harmony and beauty.\n\nYour life path is one of co-creation. You are not meant to weave alone. Your greatest works—whether they are businesses, families, or art—will come from collaboration. You have a talent for seeing the potential in others and helping them weave their destiny into yours. You may be drawn to wedding planning, matchmaking, collaborative arts, or counseling. You are a natural mediator, able to see both sides of the pattern and find the thread that unites them.\n\nThe challenge for a 2 B'atz' soul is the potential for entanglement. You may become so wrapped up in others' lives that you lose the thread of your own story. You might also struggle with indecision, seeing the beauty in every option and fearing to choose one. There is a risk of using your charm to manipulate relationships rather than to nurture them. Your lesson is to maintain your own center while weaving with others. When you honor your own creative sovereignty, your partnerships become a dance of two wholes rather than a merging of two halves."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#141716",
+          "secondary": "#4f3c39",
+          "accent": "#cd9a84"
+        }
+      }
     },
     {
       "day": 3,
@@ -148,7 +160,13 @@
         "title": "The Communicator of the Path",
         "content": "To be born on 3 E' is to be a restless seeker and a gifted communicator of the journey. You possess a spirit that cannot be contained; you need to move, explore, and share what you find. Tone 3 gives you a rhythmic, expressive nature, while E' calls you to the road. You are the travel writer, the tour guide, the inspirational speaker who uses the metaphor of the journey to teach others. You learn by doing and by going. You likely have a talent for languages or for bridging cultural gaps.\n\nYour life path is one of movement and expression. You are not meant to stay in one place for too long, either physically or mentally. You are a collector of experiences. Your nervous system is highly tuned (Tone 3), making you sensitive to the energy of places and people. You are a natural guide because you are always a few steps ahead, scouting the terrain. You inspire others to take the first step, to leave their comfort zones, and to trust the road.\n\nThe challenge for a 3 E' soul is anxiety and lack of focus. You may feel like you are always running but never arriving. The grass may always look greener on the other side. You might struggle to commit to a home, a job, or a partner because you fear missing out on what's around the bend. Your lesson is to find the stillness within the movement. When you realize that the ultimate destination is your own center, your wandering transforms into a sacred pilgrimage, and your words become maps for the soul."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#121414",
+          "secondary": "#2a4f60",
+          "accent": "#b2d7dc"
+        }
+      }
     },
     {
       "day": 4,
@@ -197,7 +215,13 @@
         "title": "The Architect of Sanctuary",
         "content": "To be born on 4 Aj is to be a person of immense stability and a builder of safe havens. You possess a soul that craves order, tradition, and a place to belong. Tone 4 gives you a love for structure and the four directions, while Aj connects you to the home and the community. You are the rock of your family, the one who keeps the traditions alive and ensures that everyone has a roof over their head. You are likely drawn to architecture, real estate, interior design, or community planning—any field where you can create containers for life.\n\nYour life path is one of establishing roots. You are not a wanderer; you build your castle and invite others in. You have a quiet authority that comes from your reliability. People trust you because you are consistent and fair. You understand that freedom requires a strong foundation, and you work hard to provide that for yourself and your loved ones. You are the spine of your community, upright and unbreaking.\n\nThe challenge for a 4 Aj soul is rigidity. You can be so focused on the structure that you forget the life inside it. You may struggle with change, viewing it as a threat to your carefully built security. You might also become authoritarian, imposing your rules on others 'for their own good.' Your lesson is to learn the flexibility of the reed. When you allow your structures to breathe and adapt, your sanctuary becomes a living, growing space rather than a fortress."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#141915",
+          "secondary": "#57482f",
+          "accent": "#d0b771"
+        }
+      }
     },
     {
       "day": 5,
@@ -246,7 +270,13 @@
         "title": "The Practitioner of Earth Magic",
         "content": "To be born on 5 Ix is to be a natural shaman with a roll-up-your-sleeves attitude. You possess a unique blend of mystical intuition and practical capability. Tone 5 gives you a drive to work and to see results, while Ix connects you to the invisible forces of nature and the night. You are not the mystic on the mountain top; you are the village healer who is mixing the poultice, the environmentalist planting the trees, the artist carving the totem. You believe that magic is real, but you also know it requires effort.\n\nYour life path is one of active service to the Earth and the Spirit. You are here to bridge the gap between the seen and unseen worlds through your labor. You may be drawn to bodywork, herbalism, geology, or conservation. You have a magnetism that can be intense; like the Jaguar, you have a presence that commands respect. You are unafraid of the dark places in the human psyche, often helping others to navigate their own shadows through your practical guidance.\n\nThe challenge for a 5 Ix soul is the temptation of power. Because you can make things happen, you may try to force outcomes or manipulate situations to your will. You might also become a workaholic, driven by a restless energy that finds it hard to settle. There is a risk of becoming isolated, preferring the company of nature to the complexity of humans. Your lesson is to use your power with humility. When you serve the life force rather than trying to control it, your work becomes a sacred offering that heals the world."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#111a12",
+          "secondary": "#454e2d",
+          "accent": "#c9bc64"
+        }
+      }
     },
     {
       "day": 6,
@@ -295,7 +325,13 @@
         "title": "The Harmonious Visionary",
         "content": "To be born on 6 Tz'ikin is to be a magnet for luck and a bringer of good news. You possess a naturally optimistic and expansive soul. Tone 6 gives you a rhythmic, easy-going nature, while Tz'ikin grants you the vision of the Eagle and the Midas touch. You are likely the person who always lands on their feet, who finds the parking spot, who gets the job. You flow through life with a sense of trust that the universe will provide. You are a visionary who can see the potential in people and situations that others miss.\n\nYour life path is one of demonstrating flow and abundance. You are here to show that life does not have to be a struggle. You may be drawn to business, the arts, philanthropy, or motivational speaking. You inspire others simply by your presence, lifting their spirits and helping them see a brighter future. You are a natural networker, connecting people and resources in a way that benefits everyone. Your generosity is a key part of your flow.\n\nThe challenge for a 6 Tz'ikin soul is discipline. Because things often come easily to you, you may lack the grit to push through when times get tough. You might be prone to laziness or superficiality, skimming the surface of life rather than diving deep. There is a risk of becoming addicted to the 'high' of new opportunities and failing to follow through. Your lesson is to ground your vision. When you combine your natural luck with steady effort, you can manifest a reality that is not only prosperous for you but uplifting for the whole world."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#121717",
+          "secondary": "#404e50",
+          "accent": "#b8cec7"
+        }
+      }
     },
     {
       "day": 7,
@@ -344,7 +380,13 @@
         "title": "The Mystic of Reconciliation",
         "content": "To be born on 7 Ajmaq is to be a bridge between the past and the future, the human and the divine. You possess a soul that is deeply reflective and compassionate. Tone 7 places you at the center of the mystery, giving you a 360-degree perspective on life, while Ajmaq connects you to the wisdom of the ancestors and the power of forgiveness. You are the one who understands the 'why' behind human behavior. You do not judge; you observe, you understand, and you heal. You are likely a natural counselor, medium, or historian.\n\nYour life path is one of spiritual integration. You are here to reconcile opposites—to find the light in the dark, the saint in the sinner. You have a profound curiosity about the hidden side of life. You may experience strong intuition or psychic flashes, as the veil is thin for you. You are a peacemaker, not by avoiding conflict, but by understanding the deep roots of it. You help others to accept their imperfections and to find grace in their struggles.\n\nThe challenge for a 7 Ajmaq soul is the weight of the collective unconscious. You feel the pain of the world and the unresolved issues of your lineage as if they were your own. You may struggle with a sense of unworthiness or existential guilt. There is a risk of getting lost in the 'other world,' dissociating from the present moment. Your lesson is to use your mystical sight to bring healing to the here and now. When you ground your compassion in the present, you become a powerful agent of redemption, helping the world to forgive itself and move forward."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#13181b",
+          "secondary": "#42424f",
+          "accent": "#aba5ba"
+        }
+      }
     },
     {
       "day": 8,
@@ -393,7 +435,13 @@
         "title": "The Resonant Sage",
         "content": "To be born on 8 No'j is to be a person of brilliant intellect and deep integrity. You possess a mind that is structured, harmonious, and capable of grasping complex systems. Tone 8 gives you a love for balance and justice, while No'j grants you the wisdom of the scholar and the innovator. You are not just smart; you are wise. You use your knowledge to create harmony and to solve problems in a way that benefits the whole. You are likely drawn to science, law, philosophy, or education—fields where you can bring order to chaos through thought.\n\nYour life path is one of intellectual mastery. You are here to demonstrate the proper use of the mind. You have a resonant voice (8) and your words carry weight. People listen to you because your ideas are sound and your logic is impeccable. You are a lifelong student and a natural teacher. You understand that true knowledge is not just about facts, but about the interrelationship of all things.\n\nThe challenge for an 8 No'j soul is arrogance or rigidity. You may become so attached to your own ideas that you cannot see other perspectives. You might struggle to connect with your emotions, preferring to live in the safe tower of the intellect. There is a risk of becoming dogmatic, believing that your logic is the only truth. Your lesson is to keep your mind open and fluid. When you unite your head with your heart, your wisdom becomes a resonant force that heals and harmonizes the world."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#121b20",
+          "secondary": "#40456e",
+          "accent": "#c1c3d8"
+        }
+      }
     },
     {
       "day": 9,
@@ -442,7 +490,13 @@
         "title": "The Healer of Deep Wounds",
         "content": "To be born on 9 Tijax is to be a soul surgeon, capable of reaching the deepest roots of pain and suffering. You possess a profound capacity for healing, both for yourself and others. Tone 9 gives you patience, empathy, and a connection to the feminine mysteries, while Tijax grants you the discernment and the tools to cut away illness. You are not interested in band-aid solutions; you want to cure the disease. You are likely drawn to depth psychology, surgery, shamanic healing, or investigative work—anything that requires digging deep to find the truth.\n\nYour life path is one of purification. You often undergo intense personal transformations, shedding skins and healing old wounds. This makes you an incredibly empathetic guide for others who are suffering. You have a 'laser' vision that can see right to the heart of a problem. You are a warrior for the light, but your battleground is often the internal world of the psyche. You protect the vulnerable by cutting away the lies that bind them.\n\nThe challenge for a 9 Tijax soul is the intensity of your own process. You may carry a heavy load of suffering, feeling that you must heal the whole world. You can be prone to depression or self-harm if you turn your blade inward without compassion. There is a risk of becoming addicted to the 'drama' of healing, always looking for something wrong to fix. Your lesson is to learn when to put the knife down. When you balance your capacity for surgery with the capacity for rest and joy, you become a true healer who restores wholeness."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#1a1b19",
+          "secondary": "#66463f",
+          "accent": "#d2b7a0"
+        }
+      }
     },
     {
       "day": 10,
@@ -491,7 +545,13 @@
         "title": "The Manifestor of Compassion",
         "content": "To be born on 10 Kawoq is to be a pillar of emotional strength and a builder of community. You possess a soul that is both nurturing and capable. Tone 10 gives you the ability to manifest results and work well with others, while Kawoq connects you to the deep waters of empathy and the family line. You are the 'Midwife of the Community,' the one who helps birth new projects, new families, and new ways of being. You are the person everyone turns to when they are in crisis because you know how to handle the storm.\n\nYour life path is one of creating compassionate structures. You are not just a feeler; you are a doer. You may be drawn to social work, healthcare, community organizing, or education. You have a natural authority when it comes to emotional matters. You build families—biological or chosen—that are strong, resilient, and loving. You are a protector of the vulnerable, using your strength to shield those who cannot shield themselves.\n\nThe challenge for a 10 Kawoq soul is the weight of the world's emotions. You can take on too much responsibility for others' feelings, becoming the 'fixer' who burns out. You might struggle to distinguish your own needs from the needs of the group. There is a risk of becoming over-protective or smothering. Your lesson is to learn that you can facilitate healing without doing it *for* others. When you empower people to navigate their own storms, you create a community of strength rather than dependency."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#0d1616",
+          "secondary": "#264446",
+          "accent": "#5aa88f"
+        }
+      }
     },
     {
       "day": 11,
@@ -540,7 +600,13 @@
         "title": "The Liberated Hero",
         "content": "To be born on 11 Ajpu is to be a rebel with a divine cause. You possess a spirit that is fierce, free, and radiantly alive. Tone 11 gives you a non-conformist nature and a love for freedom, while Ajpu grants you the charisma and purpose of the Sun Hero. You are here to challenge the status quo, to break the rules, and to show the world what true authenticity looks like. You are not afraid to shine, even if your light makes others uncomfortable. You are a natural leader, but your leadership style is unconventional and transformative.\n\nYour life path is one of shedding skins to reveal the light within. You will likely go through many changes in your life, constantly reinventing yourself as you move closer to your core truth. You are an artist of life, using your existence as a canvas for divine expression. You inspire others to break their own chains and to claim their sovereignty. You are a warrior for freedom—spiritual, artistic, and personal.\n\nThe challenge for an 11 Ajpu soul is stability. You can be so focused on breaking free that you never build anything lasting. You may struggle with ego, believing that you are above the laws of the common world. There is a risk of burning out, consuming your own fuel in a blaze of glory. Your lesson is to find the sun's steady burn. When you anchor your liberation in a deep sense of purpose, your chaotic light focuses into a laser beam that cuts through darkness and illuminates the path for all."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#17191a",
+          "secondary": "#574034",
+          "accent": "#d2ad58"
+        }
+      }
     },
     {
       "day": 12,
@@ -589,7 +655,13 @@
         "title": "The Universal Dreamer",
         "content": "To be born on 12 Imox is to be a vessel for the collective soul. You possess a psychic sensitivity and an artistic genius that is rare. Tone 12 gives you the ability to understand the whole picture, while Imox connects you to the deep, swirling waters of the subconscious. You are the artist who paints the world's pain and beauty, the musician who plays the song of the universe. You feel everything—the joy, the sorrow, the madness of humanity. You are here to help us understand our shared emotional reality.\n\nYour life path is one of translating the invisible into the visible. You are a natural medium, often picking up on thoughts and feelings that are not your own. You have a gift for bringing people together through shared emotion or vision. You may be drawn to the arts, psychology, or spiritual leadership—roles where you can guide others through the depths. You are a compassionate soul, always seeking to merge and connect.\n\nThe challenge for a 12 Imox soul is boundaries. You can easily lose yourself in the collective, becoming overwhelmed by the noise of the world. You might struggle with mental health, as your reality is so fluid. There is a risk of escapism, preferring the dream world to the hard edges of physical life. Your lesson is to build a strong container for your gifts. When you learn to filter the input and ground your energy, you become a visionary leader who can help the world dream a new and better dream."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#0e1c1a",
+          "secondary": "#2d5852",
+          "accent": "#8ecdb5"
+        }
+      }
     },
     {
       "day": 13,
@@ -638,7 +710,13 @@
         "title": "The Spirit Messenger",
         "content": "To be born on 13 Iq' is to be a voice for the spirit world. You possess a mind that is quick, agile, and connected to the divine source. Tone 13 places you at the end of the cycle, giving you a foot in the unseen realms, while Iq' grants you the power of communication and the breath of life. You are a messenger, a catalyst, a bringer of change. You often speak truths that come from 'somewhere else,' surprising even yourself with your wisdom. You are here to circulate energy, ideas, and inspiration.\n\nYour life path is one of spiritual transmission. You are not meant to hold onto things; you are meant to let them flow through you. You may be drawn to writing, speaking, media, or travel—ways to spread the word. You have a restless spirit that craves freedom and novelty. You are a natural innovator, always catching the next wave before anyone else sees it. Your presence is like a fresh breeze, clearing the air and waking people up.\n\nThe challenge for a 13 Iq' soul is grounding. You can be so ethereal and changeable that you struggle to maintain relationships or finish projects. You may be prone to anxiety, as your nervous system is highly sensitive to the 'winds' of the collective. There is a risk of speaking without thinking, causing chaos with your words. Your lesson is to anchor your breath. When you connect your high-flying inspiration with the stability of the earth, your voice becomes a powerful instrument of divine will, capable of healing and transforming the world."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#1b1a17",
+          "secondary": "#5c4944",
+          "accent": "#d8c7ca"
+        }
+      }
     }
   ]
 }

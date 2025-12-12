@@ -162,9 +162,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#7dab6c",
           "primary": "#0f1716",
-          "secondary": "#344036",
-          "accent": "#7dab6c"
+          "secondary": "#344036"
         }
       }
     },
@@ -217,9 +217,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#bcba7c",
           "primary": "#101413",
-          "secondary": "#424033",
-          "accent": "#bcba7c"
+          "secondary": "#424033"
         }
       }
     },
@@ -272,9 +272,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#cb9275",
           "primary": "#0f100f",
-          "secondary": "#453530",
-          "accent": "#cb9275"
+          "secondary": "#453530"
         }
       }
     },
@@ -327,9 +327,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#9cb6c2",
           "primary": "#0f181a",
-          "secondary": "#33434c",
-          "accent": "#9cb6c2"
+          "secondary": "#33434c"
         }
       }
     },
@@ -382,9 +382,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#d09693",
           "primary": "#171413",
-          "secondary": "#60363a",
-          "accent": "#d09693"
+          "secondary": "#60363a"
         }
       }
     },
@@ -437,9 +437,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#afd4cf",
           "primary": "#0e1a19",
-          "secondary": "#354f4b",
-          "accent": "#afd4cf"
+          "secondary": "#354f4b"
         }
       }
     },
@@ -492,9 +492,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#d8bd78",
           "primary": "#141615",
-          "secondary": "#544636",
-          "accent": "#d8bd78"
+          "secondary": "#544636"
         }
       }
     },
@@ -547,9 +547,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#96c3a1",
           "primary": "#101a19",
-          "secondary": "#404c43",
-          "accent": "#96c3a1"
+          "secondary": "#404c43"
         }
       }
     },
@@ -602,9 +602,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#8cdace",
           "primary": "#0e1a19",
-          "secondary": "#305552",
-          "accent": "#8cdace"
+          "secondary": "#305552"
         }
       }
     },
@@ -657,9 +657,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#c5a6ba",
           "primary": "#131618",
-          "secondary": "#5d4559",
-          "accent": "#c5a6ba"
+          "secondary": "#5d4559"
         }
       }
     },

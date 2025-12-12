@@ -50,7 +50,13 @@
         "title": "The Sovereign of Nature",
         "content": "To be born on 1 Kej is to be a natural leader with a wild heart. You carry the energy of the 'first deer,' the pioneer of the forest. You possess a strong physical presence and a natural authority that commands respect without needing to shout. You are deeply connected to the earth and the four directions, often feeling a need to be outdoors to feel like yourself. You are a guardian of the natural order, with an instinct for balance and harmony.\n\nYour life path is one of reclaiming sovereignty. You are independent and may struggle with authority figures because you answer to a higher, more natural law. You have a sensitive nervous system, alert to the slightest change in your environment. You are here to lead by example, showing others how to walk with strength and grace.\n\nYour challenge is dominance vs. grace. The strong energy of the 1 combined with the power of Kej can sometimes make you forceful or stubborn. You may struggle to compromise. Your lesson is to lead with the gentleness of the deer, not just the strength of the stag. When you balance your power with sensitivity, you become a majestic leader who protects the wild and the vulnerable."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#7b8558",
+          "primary": "#0e1511",
+          "secondary": "#383b2d"
+        }
+      }
     },
     {
       "day": 2,
@@ -99,7 +105,13 @@
         "title": "The Fertile Partner",
         "content": "To be born on 2 Q'anil is to be a nurturer of potential in others. You possess a warm, generative energy that makes things grow. You thrive in one-on-one relationships where you can pour your golden light into another person. You are patient, optimistic, and deeply connected to the cycles of life. You understand that relationship is a garden that needs constant tending.\n\nYour life path is one of shared abundance. You are not a solitary grower; you need a co-gardener. You are likely drawn to parenting, teaching, or collaborative arts. You have a natural talent for spotting talent or potential in others and helping to bring it out.\n\nYour challenge is dependency. You can become so focused on the other's growth that you neglect your own garden. You may also struggle with conflict, preferring to keep the peace even at a cost. Your lesson is that healthy plants need space. When you balance your nurturing instinct with healthy boundaries, you create relationships that are truly abundant and mutually sustaining."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#b7c090",
+          "primary": "#111a19",
+          "secondary": "#444c40"
+        }
+      }
     },
     {
       "day": 3,
@@ -148,7 +160,13 @@
         "title": "The Fire Dancer",
         "content": "To be born on 3 Toj is to be a spark of divine gratitude in motion. You possess a dynamic, expressive energy that seeks to balance the world through joy and offering. You are not a silent payer of debts; you are a celebrant of the exchange. You understand that life is a dance of giving and receiving. You are likely artistic, musical, or drawn to ceremonial practices involving fire and movement.\n\nYour life path is one of active service. You pay your karmic debts through your creativity and your ability to inspire others. You have a warm, infectious spirit that warms those around you. However, the 3 energy can make you restless, and Toj can make you feel indebted.\n\nYour challenge is consistency. You may burn bright and hot, then burn out. You may struggle to stick with the mundane payments of life. Your lesson is to tend your inner fire steadily. When you channel your expressive energy into consistent acts of gratitude, you become a living offering, reminding the world that service is a form of joy."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#cc996c",
+          "primary": "#101111",
+          "secondary": "#413530"
+        }
+      }
     },
     {
       "day": 4,
@@ -197,7 +215,13 @@
         "title": "The Pillar of Justice",
         "content": "To be born on 4 Tz'i' is to be a bedrock of integrity for your community. You possess an unshakable sense of right and wrong and a deep commitment to fairness. You are the reliable friend, the loyal partner, and the trustworthy guide. You build your life on a solid foundation of ethics. You are likely drawn to law, administration, or any role where you can uphold the structure of society.\n\nYour life path is one of maintaining order. You are a stabilizer. People come to you when their lives are chaotic because you offer a clear, grounded perspective. You have an instinct for truth that cuts through confusion.\n\nYour challenge is rigidity. The double stability of 4 and Tz'i' can make you inflexible or overly judgmental. You may struggle to forgive mistakes or to adapt to change. Your lesson is that justice must be tempered with mercy. When you learn to apply the law with a soft heart, you become a true pillar of the community, upholding the right without crushing the human spirit."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#7fbec2",
+          "primary": "#151f1c",
+          "secondary": "#315355"
+        }
+      }
     },
     {
       "day": 5,
@@ -246,7 +270,13 @@
         "title": "The Active Creator",
         "content": "To be born on 5 B'atz' is to be a dynamo of creative energy. You are not just a dreamer; you are a maker. You possess the Monkey's artistic vision combined with the 5's drive to work. You are prolific, often juggling multiple projects at once. You have a talent for bringing people together and initiating new ventures. You are the one who starts the dance, organizes the festival, or launches the startup.\n\nYour life path is one of active expression. You learn by doing, by making, by weaving. You are likely charming, clever, and persuasive. You have a knack for timing and for seeing the patterns in things.\n\nYour challenge is scattered energy. You can be so busy starting things that you never finish them. The Monkey mind can be restless, and the 5 can be impulsive. Your lesson is discipline. When you focus your considerable energy on a single thread, you can weave a masterpiece that stands the test of time."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#d28a85",
+          "primary": "#1e191e",
+          "secondary": "#73353e"
+        }
+      }
     },
     {
       "day": 6,
@@ -295,7 +325,13 @@
         "title": "The Steady Traveler",
         "content": "To be born on 6 E' is to be a soul on a blessed journey. You possess a natural flow and a sense of direction that others envy. You are not the frantic explorer; you are the steady pilgrim. You move through life with a calm assurance that you are on the right path. You are a natural diplomat and guide, smoothing the way for others. You have a talent for navigating different cultures and ideas with grace.\n\nYour life path is one of harmonious discovery. You learn through experience, but your lessons tend to be gentle rather than harsh. You are adaptable and responsive to the road. You are likely well-traveled and open-minded.\n\nYour challenge is complacency. Because the road is often smooth for you, you may avoid the steep climbs that lead to the best views. You may drift rather than drive. Your lesson is to choose a destination worthy of your journey. When you align your steady flow with a high purpose, you become a guide who can lead others safely through any terrain."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#9ebec7",
+          "primary": "#0f1a1a",
+          "secondary": "#384a50"
+        }
+      }
     },
     {
       "day": 7,
@@ -344,7 +380,13 @@
         "title": "The Spiritual Leader",
         "content": "To be born on 7 Aj is to be a conduit of divine authority. You possess a regal, upright energy that commands respect. You are the spiritual head of your household or community, whether you chose the role or not. You have a direct line to higher wisdom and a talent for bringing that wisdom down to earth. You are a pillar of strength, but you are also a mystic who understands the unseen worlds.\n\nYour life path is one of balancing power and service. You are here to support others, but you do so from a place of high alignment. You have a natural dignity and a strong sense of ethics. You are likely drawn to roles where you can protect and guide.\n\nYour challenge is the weight of the crown. You can feel responsible for everyone's spiritual well-being. You may also struggle with being too 'high up' to relate to everyday problems. Your lesson is to remain flexible like the reed. When you bend with the wind while keeping your roots deep, you become a bridge between heaven and earth, sheltering all who gather under your branches."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#cdb372",
+          "primary": "#101717",
+          "secondary": "#434139"
+        }
+      }
     },
     {
       "day": 8,
@@ -393,7 +435,13 @@
         "title": "The Earth Shaman",
         "content": "To be born on 8 Ix is to be a guardian of the earth's magic. You possess a deep, resonant connection to nature and the invisible realms. You are a natural shaman, healer, or earth-keeper. You have a wholeness about you, a sense of being completely at home in your own skin and on the planet. You are independent and powerful, with a quiet intensity that draws others to you.\n\nYour life path is one of sacred service to the earth. You are here to remember the old ways and to keep the magic alive. You have a talent for ritual and for sensing the energies of a place. You are a protector of the wild.\n\nYour challenge is secrecy. The Jaguar is solitary and stealthy; you may struggle to share your inner world or to trust others. You may also feel the pain of the earth more acuteley than most. Your lesson is to bring your magic into the light. When you share your deep wisdom with the community, you become a powerful healer, restoring the sacred bond between humanity and the earth."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#9ec27c",
+          "primary": "#0e1917",
+          "secondary": "#3b4a3a"
+        }
+      }
     },
     {
       "day": 9,
@@ -442,7 +490,13 @@
         "title": "The Nurturing Visionary",
         "content": "To be born on 9 Tz'ikin is to be a dreamer who births new realities. You possess a vast, soaring imagination and the patience to bring it to life. You are a natural entrepreneur or artist, but your approach is feminine and organic. You understand that great things take time to grow. You have a gift for seeing the potential in people and situations and helping them ripen.\n\nYour life path is one of bringing abundance into the world. You are a bridge between the spiritual vision and the physical manifestation. You are generous and nurturing, often sharing your prosperity with others. You have a deep trust in the universe's ability to provide.\n\nYour challenge is impatience with the process. Even though you have the 9 energy, the Eagle wants to fly *now*. You may struggle when the gestation period feels too long. Your lesson is to trust the egg. When you allow your visions to fully mature before launching them, you create success that is sustainable and deeply nourishing for the world."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#a0ccbb",
+          "primary": "#101c1b",
+          "secondary": "#445d53"
+        }
+      }
     },
     {
       "day": 10,
@@ -491,7 +545,13 @@
         "title": "The Community Healer",
         "content": "To be born on 10 Ajmaq is to be a pillar of compassion for your community. You possess a deep understanding of the human condition and a heart big enough to hold everyone's flaws. You are the peacemaker, the confessor, and the one who reminds us that we are all in this together. You have a natural authority, but it is soft and approachable. You build community through vulnerability and forgiveness.\n\nYour life path is one of reconciliation. You are here to heal the rifts between people and to manifest a more compassionate world. You have a talent for seeing the wisdom in mistakes. You are a bridge between the generations, honoring the ancestors while supporting the youth.\n\nYour challenge is carrying the collective burden. You can feel responsible for everyone's pain. You may also struggle to forgive yourself even as you forgive others. Your lesson is that you are human too. When you embrace your own imperfections with the same love you give to others, you become a true saint of the everyday, teaching the world the power of grace."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#c7a6c3",
+          "primary": "#121218",
+          "secondary": "#4a3c4e"
+        }
+      }
     },
     {
       "day": 11,
@@ -540,7 +600,13 @@
         "title": "The Radical Thinker",
         "content": "To be born on 11 No'j is to be a revolutionary of the mind. You possess a brilliant, restless intellect that is constantly questioning the status quo. You are not satisfied with easy answers; you want to know the truth, even if it shakes the foundations. You are a natural innovator, scientist, or philosopher who sees the world differently. You have a high-frequency mental energy that can be both genius and chaotic.\n\nYour life path is one of expanding human knowledge. You are here to break the molds of conventional thinking. You learn through dissonance, often finding your greatest insights in the midst of confusion. You have a deep connection to the earth's wisdom, but you process it through a highly active mind.\n\nYour challenge is mental overload. Your brain never stops, which can lead to anxiety or burnout. You may also be misunderstood by those who prefer linear thinking. Your lesson is to ground your brilliance. When you connect your high-flying ideas with the practical needs of the earth, you become a visionary sage, solving the problems of the future with the wisdom of the ages."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#c1d7d7",
+          "primary": "#182223",
+          "secondary": "#4e6874"
+        }
+      }
     },
     {
       "day": 12,
@@ -589,7 +655,13 @@
         "title": "The Master Healer",
         "content": "To be born on 12 Tijax is to be a surgeon of the soul. You possess a sharp intellect and a deep, accumulated wisdom about healing. You are not a dabbler; you are a master. You see the truth instantly and have the courage to name it. You are here to help humanity cut away the illusions that cause suffering. You have a stable, authoritative presence that inspires trust in those who are broken.\n\nYour life path is one of refinement and restoration. You may be drawn to medicine, therapy, or critical analysis. You have a talent for seeing the diamond in the rough and cutting away the excess to reveal it. You understand that healing is a holistic process.\n\nYour challenge is harshness. Your truth is so sharp that it can wound if not delivered with care. You may also struggle with perfectionism. Your lesson is to wield the blade with love. When you combine your discernment with the wisdom of the heart, you become a miraculous healer, helping the world become whole again."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#c4a087",
+          "primary": "#0f100f",
+          "secondary": "#493932"
+        }
+      }
     },
     {
       "day": 13,
@@ -638,7 +710,13 @@
         "title": "The Cosmic Midwife",
         "content": "To be born on 13 Kawoq is to be a guardian of collective evolution. You possess a powerful, storm-like energy that is tempered by infinite compassion. You are here to help birth a new world. You are a natural community leader, a healer, and a protector of the vulnerable. You have a psychic connection to the spirit world and the ability to channel vast amounts of energy.\n\nYour life path is one of transformation through love. You are the eye of the storm, holding a space of peace while the world changes around you. You are deeply connected to the feminine mysteries and the power of the family. You are a catalyst for healing on a massive scale.\n\nYour challenge is overwhelm. You feel the pain of the world as your own. You may struggle to separate your energy from the collective. Your lesson is to be the turtle. When you carry your own sanctuary within you, you can navigate any storm, guiding humanity safely to the other side."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#7dcbb4",
+          "primary": "#0f1c1a",
+          "secondary": "#305c57"
+        }
+      }
     }
   ]
 }
