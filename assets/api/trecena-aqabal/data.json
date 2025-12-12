@@ -52,20 +52,10 @@
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Aq'ab'al (Bat/Dawn) glowing with internal sunrise-orange and twilight-indigo light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 1: a single glowing golden dot. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
       "colors": {
-        "horoscope": {
-          "accent": "#5a4236",
-          "primary": "#0b1014",
-          "secondary": "#1d242f"
-        },
-        "affirmation": {
-          "accent": "#e8933b",
-          "primary": "#4e3a68",
-          "secondary": "#856f83"
-        },
-        "story_primary": {
-          "accent": "#66626d",
-          "primary": "#1a252e",
-          "secondary": "#3f4246"
+        "birthday": {
+          "accent": "#beae8b",
+          "primary": "#0d1515",
+          "secondary": "#443e3b"
         }
       }
     },
@@ -118,20 +108,10 @@
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for K'at (Net/Lizard) glowing with internal harvest-gold and earthy-green light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 2: two glowing golden dots arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
       "colors": {
-        "horoscope": {
-          "accent": "#853b35",
-          "primary": "#060a1a",
-          "secondary": "#211938"
-        },
-        "affirmation": {
-          "accent": "#7b6e52",
-          "primary": "#0c162a",
-          "secondary": "#273947"
-        },
-        "story_primary": {
-          "accent": "#3b334a",
-          "primary": "#020e22",
-          "secondary": "#091c3a"
+        "birthday": {
+          "accent": "#b7b77e",
+          "primary": "#121311",
+          "secondary": "#484330"
         }
       }
     },
@@ -184,20 +164,10 @@
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Kan (Serpent) glowing with internal emerald-green and magma-red light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 3: three glowing golden dots arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
       "colors": {
-        "horoscope": {
-          "accent": "#cd8b33",
-          "primary": "#1c1a1f",
-          "secondary": "#523d34"
-        },
-        "affirmation": {
-          "accent": "#c28622",
-          "primary": "#08141a",
-          "secondary": "#4d4021"
-        },
-        "story_primary": {
-          "accent": "#d2960f",
-          "primary": "#02261b",
-          "secondary": "#17512e"
+        "birthday": {
+          "accent": "#7d998b",
+          "primary": "#0c1616",
+          "secondary": "#32423f"
         }
       }
     },
@@ -250,20 +220,10 @@
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Kame (Skull/Closed Eyes) glowing with internal bone-white and soft violet light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 4: four glowing golden dots arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
       "colors": {
-        "horoscope": {
-          "accent": "#a46d9c",
-          "primary": "#20285e",
-          "secondary": "#463c92"
-        },
-        "affirmation": {
-          "accent": "#c16f66",
-          "primary": "#110d3b",
-          "secondary": "#4c245f"
-        },
-        "story_primary": {
-          "accent": "#5b556b",
-          "primary": "#1e2130",
-          "secondary": "#33344a"
+        "birthday": {
+          "accent": "#d1c7c7",
+          "primary": "#111819",
+          "secondary": "#46454a"
         }
       }
     },
@@ -316,20 +276,10 @@
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Kej (Deer/Hand) glowing with internal forest-green and earth-brown light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 5: a single glowing golden bar. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
       "colors": {
-        "horoscope": {
-          "accent": "#853b35",
-          "primary": "#060a1a",
-          "secondary": "#211938"
-        },
-        "affirmation": {
-          "accent": "#8b7551",
-          "primary": "#0d172b",
-          "secondary": "#32444e"
-        },
-        "story_primary": {
-          "accent": "#72464b",
-          "primary": "#020f24",
-          "secondary": "#0e2040"
+        "birthday": {
+          "accent": "#828f55",
+          "primary": "#0f110f",
+          "secondary": "#3d3e2d"
         }
       }
     },
@@ -382,20 +332,10 @@
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Q'anil (Rabbit/Star/Seed) glowing with internal harvest-gold and earthy-green light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 6: one glowing golden bar with one glowing dot above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
       "colors": {
-        "horoscope": {
-          "accent": "#cd8c33",
-          "primary": "#1c1a1f",
-          "secondary": "#533d34"
-        },
-        "affirmation": {
-          "accent": "#c98b21",
-          "primary": "#0a161a",
-          "secondary": "#624d22"
-        },
-        "story_primary": {
-          "accent": "#d2970f",
-          "primary": "#02271c",
-          "secondary": "#18522e"
+        "birthday": {
+          "accent": "#c1c18b",
+          "primary": "#151a19",
+          "secondary": "#4b4a3a"
         }
       }
     },
@@ -448,20 +388,10 @@
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Toj (Fire/Offering) glowing with internal ember-orange and smoky-grey light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 7: one glowing golden bar with two glowing dots above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
       "colors": {
-        "horoscope": {
-          "accent": "#a26c9c",
-          "primary": "#20285e",
-          "secondary": "#453b91"
-        },
-        "affirmation": {
-          "accent": "#c67666",
-          "primary": "#120e3d",
-          "secondary": "#5a2761"
-        },
-        "story_primary": {
-          "accent": "#5e566d",
-          "primary": "#1f2231",
-          "secondary": "#36364d"
+        "birthday": {
+          "accent": "#d6a883",
+          "primary": "#0f1413",
+          "secondary": "#433e39"
         }
       }
     },
@@ -514,20 +444,10 @@
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Tz'i' (Dog/Staff) glowing with internal white and judicial-blue light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 8: one glowing golden bar with three glowing dots above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
       "colors": {
-        "horoscope": {
-          "accent": "#af737f",
-          "primary": "#2d3367",
-          "secondary": "#534884"
-        },
-        "affirmation": {
-          "accent": "#b67226",
-          "primary": "#0c071f",
-          "secondary": "#4f2f31"
-        },
-        "story_primary": {
-          "accent": "#ab635f",
-          "primary": "#2a2637",
-          "secondary": "#664156"
+        "birthday": {
+          "accent": "#9fccc8",
+          "primary": "#101c1c",
+          "secondary": "#374f50"
         }
       }
     },
@@ -579,7 +499,13 @@
         "content": "To be born on 9 B'atz' is to be a creator of deep beauty and a weaver of souls. You possess a unique blend of playful creativity (B'atz') and profound emotional depth (Nine). You are not just an entertainer; you are an artist who touches the heart. You have a natural intuition and a connection to the mysteries of time and destiny. You are likely drawn to the arts, healing, or counseling—any field where you can help weave the broken threads of life back together.\n\nYour life path is one of bringing the sacred into the creative. You understand that art is not just decoration, but a form of prayer. You may struggle with the timing of things, wanting your creations to manifest before they are ready. Your lesson is to trust the gestation process. You are here to show the world that true beauty takes time and that every life is a masterpiece in the making.",
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for B'atz' (Monkey/Thread) glowing with internal creative-magenta and rich gold light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 9: one glowing golden bar with four glowing dots above it. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#d69fa8",
+          "primary": "#1a1919",
+          "secondary": "#654148"
+        }
+      }
     },
     {
       "day": 10,
@@ -629,7 +555,13 @@
         "content": "To be born on 10 E' is to be a leader on the path of life. You possess a restless spirit (E') that is grounded by a deep sense of purpose and responsibility (Ten). You are not a wanderer who gets lost; you are an explorer who draws the map for others. You have a natural authority and a talent for guiding groups, whether on physical journeys or spiritual ones. People follow you because you seem to know exactly where you are going.\n\nYour life path is one of manifestation through movement. You learn by doing and by going. You may have a career that involves travel, trade, or diplomacy. Your challenge is to not become too rigid in your itinerary. The road has twists and turns. Your lesson is to remain open to the detour while keeping your eyes on the destination. You are here to show us that the journey is real and that we can walk it together.",
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for E' (Path/Tooth/Head) glowing with internal road-dust-white and sky-blue light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 10: two glowing golden bars arranged horizontally. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#a0cfcc",
+          "primary": "#0e1a19",
+          "secondary": "#334d4c"
+        }
+      }
     },
     {
       "day": 11,
@@ -679,7 +611,13 @@
         "content": "To be born on 11 Aj is to be a challenger of the established order within the home and community. You have a deep love for family and tradition (Aj), but the number Eleven makes you a non-conformist who cannot abide by rules that don't make sense. You are the 'black sheep' who ends up healing the family line. You see where the cracks are in the foundation and you aren't afraid to point them out. You have a natural authority, but it is a revolutionary authority.\n\nYour life path is one of redefining what 'home' and 'leadership' mean. You may experience upheaval in your early life that forces you to build your own sense of stability from the inside out. Your challenge is to not simply destroy for the sake of destruction. Your lesson is to use your power to renovate, not demolish. You are here to build a new kind of home—one that is strong enough to hold the truth.",
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Aj (Cornstalk/Staff) glowing with internal golden-yellow and woody-brown light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 11: two glowing golden bars with one glowing dot above them. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#d1b67b",
+          "primary": "#0f1413",
+          "secondary": "#443c35"
+        }
+      }
     },
     {
       "day": 12,
@@ -729,7 +667,13 @@
         "content": "To be born on 12 Ix is to be a powerful conduit for earth magic and community healing. You possess a deep, intuitive wisdom (Ix) backed by a broad understanding of human nature (Twelve). You are likely a healer, a counselor, or an environmentalist—someone who works to restore the balance between people and the planet. You have a mysterious, magnetic quality that draws people to you, but you also love your solitude. You are the 'village witch' or the 'wise elder' archetype, regardless of your age.\n\nYour life path is one of integrating the spiritual and the social. You are not meant to practice your magic in a cave; you are meant to bring it into the council circle. Your challenge is to manage your sensitivity. You feel the pain of the earth and the people deeply. Your lesson is to use your magic not to escape reality, but to transform it. You are here to remind us that the earth is sacred and that we are all connected.",
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Ix (Jaguar/Spots) glowing with internal jungle-green and amber light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 12: two glowing golden bars with two glowing dots above them. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#c5d2ae",
+          "primary": "#111c1c",
+          "secondary": "#435752"
+        }
+      }
     },
     {
       "day": 13,
@@ -779,7 +723,13 @@
         "content": "To be born on 13 Tz'ikin is to be a master of manifestation and a seer of high destinies. You possess a limitless imagination (Tz'ikin) backed by the power of the spirit world (Thirteen). You are a person who can make things happen simply by envisioning them. You have a natural connection to abundance and often live a life of freedom and prosperity. People are drawn to your optimism and your ability to see the best in everyone.\n\nYour life path is one of soaring above the mundane. You are not meant for smallness; you are meant for the sky. You may be a visionary entrepreneur, a spiritual teacher, or a philanthropist. Your challenge is to not lose touch with the ground. You can be so focused on the horizon that you trip over the stone in front of you. Your lesson is to bring your vision down to earth—to use your abundance to uplift others. You are here to show us that we are all meant to fly.",
         "image_prompt": "Square image. A mystical stone carving of the Mayan glyph for Tz'ikin (Eagle/Bird) glowing with internal sky-blue and prosperity-gold light against a dark obsidian background. Hovering directly above the glyph is the Mayan numeral 13: two glowing golden bars with three glowing dots above them. The style is ancient, tactile, and magical, emphasizing the texture of the stone and the luminescence of the symbols. No English text."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "accent": "#b2cdb9",
+          "primary": "#0f1c1c",
+          "secondary": "#3b5855"
+        }
+      }
     }
   ]
 }

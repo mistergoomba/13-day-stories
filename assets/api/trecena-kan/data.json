@@ -50,7 +50,13 @@
         "title": "The Initiator of Evolution",
         "content": "To be born on 1 Kan is to be a spark of evolutionary fire in human form. You carry the potent energy of the 'first serpent'—the initial impulse of life to grow, learn, and ascend. You are a natural leader, not necessarily through command, but through the sheer force of your vitality and presence. You have a deep, instinctive wisdom that often seems beyond your years, and you are driven by a constant need to transform and shed old versions of yourself. You are the person who starts the revolution, whether it is in a community, a field of study, or within a family dynamic.\n\nYour life path is one of mastering your own power. You are likely gifted with high energy, charisma, and a strong physical constitution. You may be drawn to the healing arts, athletics, or spiritual teaching—anywhere that allows you to channel your intense life force. You are a teacher by nature, but you teach through example; people watch how you navigate your own transformations and are inspired to do the same.\n\nYour challenge is to manage the intensity of your energy. The 1 Kan vibration can be overwhelming if not grounded, leading to impulsiveness or a tendency to burn out. You may also struggle with the patience required for slow growth, wanting to evolve instantly. Your soul's lesson is to trust the process of the shed. When you learn to channel your fire with discipline and compassion, you become a powerful catalyst for the evolution of consciousness, helping others ignite their own inner light."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#0d0f0d",
+          "secondary": "#37362d",
+          "accent": "#96a37e"
+        }
+      }
     },
     {
       "day": 2,
@@ -99,7 +105,13 @@
         "title": "The Bridge Between Worlds",
         "content": "To be born on 2 Kame is to be a diplomat of the soul, standing comfortably between the visible and invisible worlds. You possess a sensitive, dual nature that understands both the joy of life and the sanctity of death. You are a natural medium, counselor, or bridge-builder, able to help others navigate their own transitions with grace. Your presence is calming; you are the one people call during a crisis because you do not fear the dark.\n\nYour life path involves mastering the art of letting go. You may find that your relationships are the primary arena for your spiritual growth. You learn deeply through partnership, and you often attract people who are going through profound transformations. You are a 'midwife' for the soul, helping to birth new versions of people and projects. You have a deep respect for history and lineage, often carrying on the work of your ancestors.\n\nYour challenge is to not get stuck in the grief or the heaviness of others. Because you feel the duality of life so keenly, you can sometimes struggle with decision-making or mood fluctuations. Your lesson is to trust that the cycle always turns toward the light. When you balance your sensitivity with your inner strength, you become a powerful healer who teaches the world that death is not an end, but a necessary and beautiful part of the eternal dance."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#0e100f",
+          "secondary": "#3a3637",
+          "accent": "#b2a4a8"
+        }
+      }
     },
     {
       "day": 3,
@@ -638,7 +650,13 @@
         "title": "The Cosmic Philosopher",
         "content": "To be born on 13 No'j is to be a keeper of the cosmic library. You possess an intellect that is not just sharp, but transcendent. You are connected to the universal mind, often receiving downloads of information or ideas that are ahead of your time. You are a visionary thinker, a scientist of the soul, and a natural teacher. You have the ability to understand the most complex systems of the universe and translate them into language that others can understand.\n\nYour life path is one of expanding human consciousness. You are here to bridge the gap between science and spirituality, between logic and intuition. You are a problem-solver on a global or even cosmic scale. You carry the energy of the ancestors' wisdom raised to its highest octave. You are likely drawn to philosophy, technology, or ancient wisdom traditions.\n\nYour challenge is to stay connected to the human experience. You can live so much in your head or in the spirit world that you forget to eat, sleep, or relate to people on an emotional level. You may also feel overwhelmed by the noise of the world's thoughts. Your lesson is to ground your cosmic wisdom in the earth. When you use your brilliant mind to serve the heart of humanity, you become a true luminary, lighting the way for the collective evolution."
       },
-      "colors": {}
+      "colors": {
+        "birthday": {
+          "primary": "#10191a",
+          "secondary": "#414552",
+          "accent": "#b8bcc3"
+        }
+      }
     }
   ]
 }
