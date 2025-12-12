@@ -53,9 +53,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#c1d1d7",
           "primary": "#0e1214",
-          "secondary": "#3d464c",
-          "accent": "#c1d1d7"
+          "secondary": "#3d464c"
         }
       }
     },
@@ -109,9 +109,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#ab9960",
           "primary": "#11100d",
-          "secondary": "#473a25",
-          "accent": "#ab9960"
+          "secondary": "#473a25"
         }
       }
     },
@@ -165,9 +165,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#bdce89",
           "primary": "#101d18",
-          "secondary": "#3d533a",
-          "accent": "#bdce89"
+          "secondary": "#3d533a"
         }
       }
     },
@@ -221,9 +221,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#b0c6ba",
           "primary": "#0f1a1b",
-          "secondary": "#354b57",
-          "accent": "#b0c6ba"
+          "secondary": "#354b57"
         }
       }
     },
@@ -277,9 +277,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#a59eb4",
           "primary": "#11181b",
-          "secondary": "#40414d",
-          "accent": "#a59eb4"
+          "secondary": "#40414d"
         }
       }
     },
@@ -333,9 +333,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#bfc1d7",
           "primary": "#121717",
-          "secondary": "#3b445c",
-          "accent": "#bfc1d7"
+          "secondary": "#3b445c"
         }
       }
     },
@@ -389,9 +389,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#a59080",
           "primary": "#141412",
-          "secondary": "#4d352e",
-          "accent": "#a59080"
+          "secondary": "#4d352e"
         }
       }
     },
@@ -445,9 +445,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#88cebc",
           "primary": "#0c1513",
-          "secondary": "#294b46",
-          "accent": "#88cebc"
+          "secondary": "#294b46"
         }
       }
     },
@@ -501,9 +501,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#d5b66d",
           "primary": "#1a140d",
-          "secondary": "#66401f",
-          "accent": "#d5b66d"
+          "secondary": "#66401f"
         }
       }
     },
@@ -557,9 +557,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#aadcbc",
           "primary": "#151d17",
-          "secondary": "#496952",
-          "accent": "#aadcbc"
+          "secondary": "#496952"
         }
       }
     },
@@ -613,9 +613,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#d0c5bf",
           "primary": "#141717",
-          "secondary": "#534e54",
-          "accent": "#d0c5bf"
+          "secondary": "#534e54"
         }
       }
     },
@@ -669,9 +669,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#d8b177",
           "primary": "#111719",
-          "secondary": "#493f3f",
-          "accent": "#d8b177"
+          "secondary": "#493f3f"
         }
       }
     },
@@ -725,9 +725,9 @@
       },
       "colors": {
         "birthday": {
+          "accent": "#d7b557",
           "primary": "#141514",
-          "secondary": "#593b2b",
-          "accent": "#d7b557"
+          "secondary": "#593b2b"
         }
       }
     }
