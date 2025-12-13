@@ -4,8 +4,11 @@ import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-cont
 import { useFonts } from 'expo-font';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SimpleBottomToolbar from './components/SimpleBottomToolbar';
+import AdBanner from './components/AdBanner';
 import NebulaBackground from './components/NebulaBackground';
 import DevDatePickerPanel from './components/DevDatePickerPanel';
+import { initialize as initializeAdMob } from './utils/adManager';
+import { initialize as initializeIAP, cleanup as cleanupIAP } from './utils/iapManager';
 import TodayScreenContent from './screens/TodayScreenContent';
 import HomeScreenContent from './screens/HomeScreenContent';
 import MeditationScreenContent from './screens/MeditationScreenContent';
@@ -149,6 +152,20 @@ function AppContent() {
 
     return () => {
       subscription?.remove();
+    };
+  }, []);
+
+  // Initialize AdMob and IAP on mount
+  useEffect(() => {
+    // Initialize AdMob
+    initializeAdMob();
+
+    // Initialize IAP
+    initializeIAP();
+
+    // Cleanup IAP listeners on unmount
+    return () => {
+      cleanupIAP();
     };
   }, []);
 
@@ -417,6 +434,7 @@ function AppContent() {
           <CurrentComponent setCurrentView={setCurrentView} />
         </ScrollView>
       )}
+      <AdBanner />
       <SimpleBottomToolbar
         currentView={currentView}
         setCurrentView={setCurrentView}

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, Pressable, Alert, ActivityIndicator, AppState } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Card from '../components/Card';
 import SimpleHeader from '../components/SimpleHeader';
@@ -10,8 +10,11 @@ import DataStorageModal from '../components/DataStorageModal';
 import PrivacyModal from '../components/PrivacyModal';
 import TermsOfServiceModal from '../components/TermsOfServiceModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { isPremium } from '../utils/premiumManager';
+import { getProducts, purchaseLifetimePremium, restorePurchases } from '../utils/iapManager';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
+import { mainButton } from '../theme/buttons';
 
 const BIRTHDAY_DATE_KEY = '@birthday_date';
 
@@ -42,6 +45,48 @@ export default function SettingsScreenContent({
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
 
+  // Premium states
+  const [isPremiumUser, setIsPremiumUser] = useState(false);
+  const [premiumProduct, setPremiumProduct] = useState(null);
+  const [isRestoring, setIsRestoring] = useState(false);
+  const [isPurchasing, setIsPurchasing] = useState(false);
+
+  // Check premium status and fetch product info on mount
+  useEffect(() => {
+    const checkPremiumStatus = async () => {
+      const premium = await isPremium();
+      setIsPremiumUser(premium);
+    };
+
+    const fetchProductInfo = async () => {
+      try {
+        const products = await getProducts();
+        if (products.length > 0) {
+          setPremiumProduct(products[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching product info:', error);
+      }
+    };
+
+    checkPremiumStatus();
+    fetchProductInfo();
+  }, []);
+
+  // Re-check premium status when app comes to foreground
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', async (nextAppState) => {
+      if (nextAppState === 'active') {
+        const premium = await isPremium();
+        setIsPremiumUser(premium);
+      }
+    });
+
+    return () => {
+      subscription?.remove();
+    };
+  }, []);
+
   const handleUpdateBirthday = async (newDateString) => {
     await AsyncStorage.setItem(BIRTHDAY_DATE_KEY, newDateString);
     if (setBirthdayDate) {
@@ -54,6 +99,49 @@ export default function SettingsScreenContent({
     if (setBirthdayDate) {
       setBirthdayDate(null);
     }
+  };
+
+  const handlePurchasePremium = async () => {
+    if (isPurchasing) return;
+
+    setIsPurchasing(true);
+    try {
+      await purchaseLifetimePremium();
+      // Purchase will be handled by IAP listener, which will update premium status
+      // We'll check status again when app comes to foreground
+    } catch (error) {
+      console.error('Error purchasing premium:', error);
+      Alert.alert('Purchase Error', 'Unable to complete purchase. Please try again.');
+    } finally {
+      setIsPurchasing(false);
+    }
+  };
+
+  const handleRestorePurchases = async () => {
+    if (isRestoring) return;
+
+    setIsRestoring(true);
+    try {
+      const restored = await restorePurchases();
+      if (restored) {
+        setIsPremiumUser(true);
+        Alert.alert('Success', 'Your premium purchase has been restored!');
+      } else {
+        Alert.alert('No Purchases Found', 'No previous purchases were found to restore.');
+      }
+    } catch (error) {
+      console.error('Error restoring purchases:', error);
+      Alert.alert('Restore Error', 'Unable to restore purchases. Please try again.');
+    } finally {
+      setIsRestoring(false);
+    }
+  };
+
+  const getPremiumPrice = () => {
+    if (premiumProduct && premiumProduct.localizedPrice) {
+      return premiumProduct.localizedPrice;
+    }
+    return '$4.99';
   };
 
   return (
@@ -72,6 +160,51 @@ export default function SettingsScreenContent({
         <SimpleHeader title='Settings' onHeaderPress={onHeaderPress} />
 
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
+          {/* Premium Card */}
+          <Card>
+            <Text style={styles.sectionTitle}>Premium</Text>
+            {isPremiumUser ? (
+              <>
+                <View style={styles.premiumActiveContainer}>
+                  <Text style={styles.premiumActiveText}>✓ Premium Active</Text>
+                  <Text style={styles.premiumBenefitsText}>
+                    • Ad-free experience{'\n'}• AI Oracle feature (coming soon)
+                  </Text>
+                </View>
+              </>
+            ) : (
+              <>
+                <Pressable
+                  style={[mainButton.button, styles.purchaseButton]}
+                  onPress={handlePurchasePremium}
+                  disabled={isPurchasing}
+                >
+                  {isPurchasing ? (
+                    <ActivityIndicator color={colors.text} />
+                  ) : (
+                    <Text style={[mainButton.text, styles.purchaseButtonText]}>
+                      Unlock Premium - {getPremiumPrice()}
+                    </Text>
+                  )}
+                </Pressable>
+                <Text style={styles.premiumBenefitsText}>
+                  • Remove all ads{'\n'}• Unlock AI Oracle feature (coming soon)
+                </Text>
+                <Pressable
+                  style={styles.restoreButton}
+                  onPress={handleRestorePurchases}
+                  disabled={isRestoring}
+                >
+                  {isRestoring ? (
+                    <ActivityIndicator color={colors.textDim} size="small" />
+                  ) : (
+                    <Text style={styles.restoreButtonText}>Restore Purchases</Text>
+                  )}
+                </Pressable>
+              </>
+            )}
+          </Card>
+
           <Card>
             <Text style={styles.sectionTitle}>App Preferences</Text>
             <Pressable onPress={() => setShowBirthdayModal(true)}>
@@ -160,5 +293,41 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
+  },
+  premiumActiveContainer: {
+    marginTop: 8,
+  },
+  premiumActiveText: {
+    ...type.body,
+    color: colors.accent,
+    fontWeight: '600',
+    marginBottom: 8,
+  },
+  premiumBenefitsText: {
+    ...type.body,
+    color: colors.textDim,
+    fontSize: 13,
+    lineHeight: 20,
+    marginTop: 8,
+  },
+  purchaseButton: {
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    marginTop: 8,
+    marginBottom: 8,
+  },
+  purchaseButtonText: {
+    fontSize: 16,
+  },
+  restoreButton: {
+    marginTop: 12,
+    paddingVertical: 8,
+    alignItems: 'center',
+  },
+  restoreButtonText: {
+    ...type.body,
+    color: colors.textDim,
+    fontSize: 14,
+    textDecorationLine: 'underline',
   },
 });
