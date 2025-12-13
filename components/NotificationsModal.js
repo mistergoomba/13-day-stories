@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Pressable, Modal, Animated, Switch,
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
-import { scheduleAllNotifications } from '../utils/notificationScheduler';
+import { scheduleAllNotifications, testNotification } from '../utils/notificationScheduler';
 import { NOTIFICATION_CONFIG } from '../utils/notificationConfig';
 
 const NOTIFICATIONS_ENABLED_KEY = '@notifications_enabled';
@@ -38,6 +38,8 @@ export default function NotificationsModal({ visible, onClose }) {
   const [eveningTime, setEveningTime] = useState('20:00'); // Default 8 PM
   const [hasPermission, setHasPermission] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [showMorningTimePicker, setShowMorningTimePicker] = useState(false);
+  const [showEveningTimePicker, setShowEveningTimePicker] = useState(false);
   const slideAnim = useRef(new Animated.Value(0)).current;
 
   // Load saved notification settings and check permission
@@ -255,6 +257,32 @@ export default function NotificationsModal({ visible, onClose }) {
     }
   };
 
+  const handleTestNotification = async () => {
+    if (!Notifications) {
+      Alert.alert(
+        'Notifications Not Available',
+        'Notification support is not available in this environment. Please use a development build or production build.',
+        [{ text: 'OK' }]
+      );
+      return;
+    }
+
+    const result = await testNotification();
+    if (result.success) {
+      Alert.alert(
+        'Test Notification Scheduled',
+        result.message,
+        [{ text: 'OK' }]
+      );
+    } else {
+      Alert.alert(
+        'Test Failed',
+        result.error || 'Failed to schedule test notification',
+        [{ text: 'OK' }]
+      );
+    }
+  };
+
   const handleClose = () => {
     if (isClosing) return;
     setIsClosing(true);
@@ -273,14 +301,7 @@ export default function NotificationsModal({ visible, onClose }) {
     outputRange: [600, 0],
   });
 
-  // Generate time options (every hour from 6 AM to 10 PM)
-  const timeOptions = [];
-  for (let hour = 6; hour <= 22; hour++) {
-    const timeStr = `${String(hour).padStart(2, '0')}:00`;
-    timeOptions.push(timeStr);
-  }
-  
-  // Also generate 30-minute options for more granularity
+  // Generate 30-minute time options (from 6 AM to 10 PM)
   const detailedTimeOptions = [];
   for (let hour = 6; hour <= 22; hour++) {
     detailedTimeOptions.push(`${String(hour).padStart(2, '0')}:00`);
@@ -341,35 +362,24 @@ export default function NotificationsModal({ visible, onClose }) {
                         trackColor={{ false: colors.border, true: colors.accent }}
                         thumbColor={morningEnabled ? colors.text : colors.textDim}
                       />
-                      <ScrollView 
-                        horizontal 
-                        showsHorizontalScrollIndicator={false}
-                        style={styles.timeScrollView}
-                        contentContainerStyle={styles.timeScrollContent}
+                      <Pressable
+                        style={[
+                          styles.timeSelector,
+                          !morningEnabled && styles.timeSelectorDisabled,
+                        ]}
+                        onPress={() => morningEnabled && setShowMorningTimePicker(true)}
+                        disabled={!morningEnabled}
                       >
-                        {detailedTimeOptions.map((time) => (
-                          <Pressable
-                            key={time}
-                            style={[
-                              styles.timeButton,
-                              morningTime === time && styles.timeButtonActive,
-                              !morningEnabled && styles.timeButtonDisabled,
-                            ]}
-                            onPress={() => handleMorningTimeChange(time)}
-                            disabled={!morningEnabled}
-                          >
-                            <Text
-                              style={[
-                                styles.timeButtonText,
-                                morningTime === time && styles.timeButtonTextActive,
-                                !morningEnabled && styles.timeButtonTextDisabled,
-                              ]}
-                            >
-                              {formatTime(time)}
-                            </Text>
-                          </Pressable>
-                        ))}
-                      </ScrollView>
+                        <Text
+                          style={[
+                            styles.timeSelectorText,
+                            !morningEnabled && styles.timeSelectorTextDisabled,
+                          ]}
+                        >
+                          {formatTime(morningTime)}
+                        </Text>
+                        <Text style={styles.timeSelectorArrow}>▼</Text>
+                      </Pressable>
                     </View>
                   </View>
 
@@ -383,35 +393,24 @@ export default function NotificationsModal({ visible, onClose }) {
                         trackColor={{ false: colors.border, true: colors.accent }}
                         thumbColor={eveningEnabled ? colors.text : colors.textDim}
                       />
-                      <ScrollView 
-                        horizontal 
-                        showsHorizontalScrollIndicator={false}
-                        style={styles.timeScrollView}
-                        contentContainerStyle={styles.timeScrollContent}
+                      <Pressable
+                        style={[
+                          styles.timeSelector,
+                          !eveningEnabled && styles.timeSelectorDisabled,
+                        ]}
+                        onPress={() => eveningEnabled && setShowEveningTimePicker(true)}
+                        disabled={!eveningEnabled}
                       >
-                        {detailedTimeOptions.map((time) => (
-                          <Pressable
-                            key={time}
-                            style={[
-                              styles.timeButton,
-                              eveningTime === time && styles.timeButtonActive,
-                              !eveningEnabled && styles.timeButtonDisabled,
-                            ]}
-                            onPress={() => handleEveningTimeChange(time)}
-                            disabled={!eveningEnabled}
-                          >
-                            <Text
-                              style={[
-                                styles.timeButtonText,
-                                eveningTime === time && styles.timeButtonTextActive,
-                                !eveningEnabled && styles.timeButtonTextDisabled,
-                              ]}
-                            >
-                              {formatTime(time)}
-                            </Text>
-                          </Pressable>
-                        ))}
-                      </ScrollView>
+                        <Text
+                          style={[
+                            styles.timeSelectorText,
+                            !eveningEnabled && styles.timeSelectorTextDisabled,
+                          ]}
+                        >
+                          {formatTime(eveningTime)}
+                        </Text>
+                        <Text style={styles.timeSelectorArrow}>▼</Text>
+                      </Pressable>
                     </View>
                   </View>
                 </>
@@ -424,10 +423,125 @@ export default function NotificationsModal({ visible, onClose }) {
                   </Text>
                 </View>
               )}
+
+              {/* Test Notification Button */}
+              {notificationsEnabled && hasPermission && (
+                <View style={styles.testButtonContainer}>
+                  <Pressable
+                    style={styles.testButton}
+                    onPress={handleTestNotification}
+                  >
+                    <Text style={styles.testButtonText}>🧪 Send Test Notification</Text>
+                  </Pressable>
+                  <Text style={styles.testButtonDescription}>
+                    Sends a test notification in 5 seconds
+                  </Text>
+                </View>
+              )}
             </View>
           </ScrollView>
         </Animated.View>
       </View>
+
+      {/* Morning Time Picker Modal */}
+      <Modal
+        visible={showMorningTimePicker}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowMorningTimePicker(false)}
+      >
+        <View style={styles.timePickerOverlay}>
+          <Pressable 
+            style={styles.timePickerBackdrop}
+            onPress={() => setShowMorningTimePicker(false)}
+          />
+          <View style={styles.timePickerModal}>
+            <View style={styles.timePickerHeader}>
+              <Text style={styles.timePickerTitle}>Select Morning Time</Text>
+              <Pressable onPress={() => setShowMorningTimePicker(false)}>
+                <Text style={styles.timePickerClose}>✕</Text>
+              </Pressable>
+            </View>
+            <ScrollView style={styles.timePickerList}>
+              {detailedTimeOptions.map((time) => (
+                <Pressable
+                  key={time}
+                  style={[
+                    styles.timePickerItem,
+                    morningTime === time && styles.timePickerItemActive,
+                  ]}
+                  onPress={() => {
+                    handleMorningTimeChange(time);
+                    setShowMorningTimePicker(false);
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.timePickerItemText,
+                      morningTime === time && styles.timePickerItemTextActive,
+                    ]}
+                  >
+                    {formatTime(time)}
+                  </Text>
+                  {morningTime === time && (
+                    <Text style={styles.timePickerCheckmark}>✓</Text>
+                  )}
+                </Pressable>
+              ))}
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Evening Time Picker Modal */}
+      <Modal
+        visible={showEveningTimePicker}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowEveningTimePicker(false)}
+      >
+        <View style={styles.timePickerOverlay}>
+          <Pressable 
+            style={styles.timePickerBackdrop}
+            onPress={() => setShowEveningTimePicker(false)}
+          />
+          <View style={styles.timePickerModal}>
+            <View style={styles.timePickerHeader}>
+              <Text style={styles.timePickerTitle}>Select Evening Time</Text>
+              <Pressable onPress={() => setShowEveningTimePicker(false)}>
+                <Text style={styles.timePickerClose}>✕</Text>
+              </Pressable>
+            </View>
+            <ScrollView style={styles.timePickerList}>
+              {detailedTimeOptions.map((time) => (
+                <Pressable
+                  key={time}
+                  style={[
+                    styles.timePickerItem,
+                    eveningTime === time && styles.timePickerItemActive,
+                  ]}
+                  onPress={() => {
+                    handleEveningTimeChange(time);
+                    setShowEveningTimePicker(false);
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.timePickerItemText,
+                      eveningTime === time && styles.timePickerItemTextActive,
+                    ]}
+                  >
+                    {formatTime(time)}
+                  </Text>
+                  {eveningTime === time && (
+                    <Text style={styles.timePickerCheckmark}>✓</Text>
+                  )}
+                </Pressable>
+              ))}
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
     </Modal>
   );
 }
@@ -524,41 +638,100 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12,
   },
-  timeScrollView: {
+  timeSelector: {
     flex: 1,
-    marginHorizontal: -20,
-  },
-  timeScrollContent: {
-    paddingHorizontal: 20,
-    gap: 8,
-  },
-  timeButton: {
-    paddingHorizontal: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: colors.border,
     backgroundColor: colors.surface,
-    marginRight: 8,
   },
-  timeButtonActive: {
-    borderColor: colors.accent,
-    backgroundColor: colors.accent + '20',
+  timeSelectorDisabled: {
+    opacity: 0.5,
   },
-  timeButtonText: {
+  timeSelectorText: {
     ...type.body,
+    color: colors.text,
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  timeSelectorTextDisabled: {
+    opacity: 0.5,
+  },
+  timeSelectorArrow: {
     color: colors.textDim,
+    fontSize: 12,
+    marginLeft: 8,
+  },
+  timePickerOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  timePickerBackdrop: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  timePickerModal: {
+    backgroundColor: colors.bg,
+    borderRadius: 20,
+    width: '80%',
+    maxWidth: 400,
+    maxHeight: SCREEN_HEIGHT * 0.7,
+    overflow: 'hidden',
+  },
+  timePickerHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  timePickerTitle: {
+    ...type.subtitle,
+    color: colors.text,
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  timePickerClose: {
+    ...type.title,
+    color: colors.text,
+    fontSize: 24,
+    fontWeight: '300',
+  },
+  timePickerList: {
+    maxHeight: SCREEN_HEIGHT * 0.5,
+  },
+  timePickerItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  timePickerItemActive: {
+    backgroundColor: colors.accent + '15',
+  },
+  timePickerItemText: {
+    ...type.body,
+    color: colors.text,
     fontSize: 16,
   },
-  timeButtonTextActive: {
+  timePickerItemTextActive: {
     color: colors.accent,
     fontWeight: '600',
   },
-  timeButtonDisabled: {
-    opacity: 0.5,
-  },
-  timeButtonTextDisabled: {
-    opacity: 0.5,
+  timePickerCheckmark: {
+    color: colors.accent,
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   permissionWarning: {
     marginTop: 16,
@@ -572,6 +745,33 @@ const styles = StyleSheet.create({
     ...type.body,
     color: colors.textDim,
     fontSize: 14,
+  },
+  testButtonContainer: {
+    marginTop: 24,
+    paddingTop: 24,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+  },
+  testButton: {
+    backgroundColor: colors.accent,
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  testButtonText: {
+    ...type.subtitle,
+    color: colors.bg,
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  testButtonDescription: {
+    ...type.body,
+    color: colors.textDim,
+    fontSize: 12,
+    marginTop: 8,
+    textAlign: 'center',
   },
 });
 

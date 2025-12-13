@@ -12,6 +12,7 @@ import DynamicBackground from '../components/DynamicBackground';
 import { getTodayMayanDateSync, getDayData, getBackgroundColors } from '../utils/calendarUtils';
 import { getActualDateSync } from '../utils/getActualDate';
 import { getButtonStyleFromColors } from '../theme/buttons';
+import { shareHoroscope } from '../utils/shareUtils';
 
 export default function TodayScreenContent({
   setCurrentView,
@@ -90,6 +91,12 @@ export default function TodayScreenContent({
     }
   };
 
+  // Handle share
+  const handleShare = async () => {
+    const todayMayan = getTodayMayanDateSync();
+    await shareHoroscope(dayData, todayMayan);
+  };
+
   return (
     <View style={styles.container}>
       {/* Dynamic Background */}
@@ -103,7 +110,7 @@ export default function TodayScreenContent({
         showsVerticalScrollIndicator={false}
       >
         {/* Header - Part of scroll flow */}
-        <SimpleHeader title='Energy of the Day' onHeaderPress={onHeaderPress} />
+        <SimpleHeader title='Energy of the Day' onHeaderPress={onHeaderPress} onSharePress={handleShare} />
 
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           {/* Horoscope Section */}

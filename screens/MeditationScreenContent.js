@@ -9,6 +9,7 @@ import SimpleHeader from '../components/SimpleHeader';
 import DynamicBackground from '../components/DynamicBackground';
 import ImageWithPlaceholder from '../components/ImageWithPlaceholder';
 import { getTodayMayanDateSync, getDayData, getBackgroundColors } from '../utils/calendarUtils';
+import { shareMeditationAffirmation } from '../utils/shareUtils';
 
 export default function MeditationScreenContent({
   scrollViewRef,
@@ -64,6 +65,12 @@ export default function MeditationScreenContent({
   // Bottom padding for toolbar (50px min height + safe area bottom + extra spacing)
   const bottomPadding = 50 + insets.bottom + 20;
 
+  // Handle share
+  const handleShare = async () => {
+    const todayMayan = getTodayMayanDateSync();
+    await shareMeditationAffirmation(dayData, todayMayan);
+  };
+
   if (loading || !dayData) {
     return (
       <View style={styles.container}>
@@ -100,7 +107,7 @@ export default function MeditationScreenContent({
         showsVerticalScrollIndicator={false}
       >
         {/* Header - Part of scroll flow */}
-        <SimpleHeader title='Meditation' onHeaderPress={onHeaderPress} />
+        <SimpleHeader title='Meditation' onHeaderPress={onHeaderPress} onSharePress={handleShare} />
 
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           {/* Affirmation Image */}

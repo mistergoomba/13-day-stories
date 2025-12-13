@@ -20,6 +20,7 @@ import {
   getTrecenaData,
 } from '../utils/calendarUtils';
 import { getButtonStyleFromColors } from '../theme/buttons';
+import { shareStoryChapter } from '../utils/shareUtils';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -35,6 +36,7 @@ function DayDetailView({
 }) {
   const insets = useSafeAreaInsets();
   const [dayData, setDayData] = useState(null);
+  const [trecenaData, setTrecenaData] = useState(null);
   const [storyPrimaryColors, setStoryPrimaryColors] = useState({
     primary: '#12091A',
     secondary: '#1C0F29',
@@ -54,15 +56,17 @@ function DayDetailView({
 
     const loadData = async () => {
       try {
-        const [day, colors, prev, next] = await Promise.all([
+        const [day, colors, prev, next, trecena] = await Promise.all([
           getDayData(mayanDate),
           getBackgroundColors(mayanDate, 'story_primary'),
           getPreviousDay(mayanDate),
           getNextDay(mayanDate),
+          getTrecenaData(mayanDate.trecena),
         ]);
 
         if (!cancelled) {
           setDayData(day);
+          setTrecenaData(trecena);
           setStoryPrimaryColors(colors);
           setPreviousDay(prev);
           setNextDay(next);
@@ -173,6 +177,11 @@ function DayDetailView({
     setSelectedDay(todayMayan);
   };
 
+  // Handle share
+  const handleShare = async () => {
+    await shareStoryChapter(dayData, mayanDate, trecenaData);
+  };
+
   return (
     <View style={styles.container}>
       {/* Dynamic Background */}
@@ -186,7 +195,7 @@ function DayDetailView({
         showsVerticalScrollIndicator={false}
       >
         {/* Header - Part of scroll flow */}
-        <SimpleHeader title='Journey' />
+        <SimpleHeader title='Journey' onSharePress={handleShare} />
 
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           {/* Story Primary Image */}

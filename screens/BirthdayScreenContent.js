@@ -14,6 +14,7 @@ import ImageWithPlaceholder from '../components/ImageWithPlaceholder';
 import { convertDateToMayan, getDayData, getBackgroundColors } from '../utils/calendarUtils';
 import { formatDateReadable } from '../utils/dateToMayan';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { shareBirthday } from '../utils/shareUtils';
 
 const BIRTHDAY_DATE_KEY = '@birthday_date';
 
@@ -101,6 +102,13 @@ export default function BirthdayScreenContent({
     }
   };
 
+  // Handle share
+  const handleShare = async () => {
+    if (dayData && mayanDate) {
+      await shareBirthday(dayData, mayanDate);
+    }
+  };
+
   // Show loading screen while data.json is loading
   if (loading || (birthdayDate && !dayData)) {
     return (
@@ -113,7 +121,11 @@ export default function BirthdayScreenContent({
           showsVerticalScrollIndicator={false}
         >
           {/* Header - Part of scroll flow */}
-          <SimpleHeader title='PROFILE' onHeaderPress={onHeaderPress} />
+          <SimpleHeader 
+            title='PROFILE' 
+            onHeaderPress={onHeaderPress} 
+            onSharePress={dayData && mayanDate ? handleShare : undefined} 
+          />
 
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
             <Text style={styles.errorText}>
@@ -137,7 +149,11 @@ export default function BirthdayScreenContent({
           showsVerticalScrollIndicator={false}
         >
           {/* Header - Part of scroll flow */}
-          <SimpleHeader title='PROFILE' onHeaderPress={onHeaderPress} />
+          <SimpleHeader 
+            title='PROFILE' 
+            onHeaderPress={onHeaderPress} 
+            onSharePress={dayData && mayanDate ? handleShare : undefined} 
+          />
 
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
             <Text style={styles.errorText}>Please set your birthday to view your profile</Text>
@@ -159,7 +175,11 @@ export default function BirthdayScreenContent({
           contentContainerStyle={styles.scrollContent}
         >
           {/* Header - Part of scroll flow */}
-          <SimpleHeader title='PROFILE' onHeaderPress={onHeaderPress} />
+          <SimpleHeader 
+            title='PROFILE' 
+            onHeaderPress={onHeaderPress} 
+            onSharePress={dayData && mayanDate ? handleShare : undefined} 
+          />
 
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
             {/* Birthday Image - always show, uses fallback if not found */}

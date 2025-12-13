@@ -10,7 +10,16 @@
       "resizeMode": "cover",
       "backgroundColor": "#12091A"
     },
-    "plugins": [],
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#12091A",
+          "sounds": []
+        }
+      ]
+    ],
     "ios": {
       "supportsTablet": false
     },

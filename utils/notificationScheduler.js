@@ -199,6 +199,7 @@ export async function scheduleAllNotifications() {
                 sound: true,
               },
               trigger: {
+                type: 'date',
                 date: morningDateTime,
               },
             });
@@ -225,6 +226,7 @@ export async function scheduleAllNotifications() {
                 sound: true,
               },
               trigger: {
+                type: 'date',
                 date: eveningDateTime,
               },
             });
@@ -257,6 +259,7 @@ export async function scheduleAllNotifications() {
               sound: true,
             },
             trigger: {
+              type: 'date',
               date: new Date(
                 first13th.getFullYear(),
                 first13th.getMonth(),
@@ -290,6 +293,7 @@ export async function scheduleAllNotifications() {
                 sound: true,
               },
               trigger: {
+                type: 'date',
                 date: new Date(
                   second13th.getFullYear(),
                   second13th.getMonth(),
@@ -307,6 +311,52 @@ export async function scheduleAllNotifications() {
     console.log('Notifications scheduled successfully');
   } catch (error) {
     console.error('Error scheduling notifications:', error);
+  }
+}
+
+/**
+ * Test notification - schedules a notification for 5 seconds in the future
+ * Useful for testing notification functionality
+ */
+export async function testNotification() {
+  if (!Notifications) {
+    console.log('Notifications not available');
+    return { success: false, error: 'Notifications not available' };
+  }
+
+  try {
+    // Check if we have permission
+    const { status } = await Notifications.getPermissionsAsync();
+    if (status !== 'granted') {
+      // Request permission if not granted
+      const { status: newStatus } = await Notifications.requestPermissionsAsync();
+      if (newStatus !== 'granted') {
+        return { success: false, error: 'Notification permission not granted' };
+      }
+    }
+
+    // Schedule a test notification for 5 seconds from now
+    const testDate = new Date();
+    testDate.setSeconds(testDate.getSeconds() + 5);
+
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: '🧪 Test Notification',
+        body: 'This is a test notification! If you see this, notifications are working correctly.',
+        sound: true,
+        data: { test: true },
+      },
+      trigger: {
+        type: 'date',
+        date: testDate,
+      },
+    });
+
+    console.log('Test notification scheduled for 5 seconds from now');
+    return { success: true, message: 'Test notification scheduled! Check your device in 5 seconds.' };
+  } catch (error) {
+    console.error('Error scheduling test notification:', error);
+    return { success: false, error: error.message };
   }
 }
 
