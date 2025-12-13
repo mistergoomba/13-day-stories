@@ -75,7 +75,7 @@ export const PRIVACY_POLICY_DATA = {
     {
       title: '7. Children\'s Privacy',
       content: [
-        'Our app is not intended for children under the age of 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us at 13daystories@gmail.com so we can delete such information.',
+        'Our app is not intended for children under the age of 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us through our contact page at https://13daystories.com/contact so we can delete such information.',
       ],
     },
     {
@@ -100,10 +100,10 @@ export const PRIVACY_POLICY_DATA = {
     {
       title: '10. Contact Us',
       content: [
-        'If you have any questions about this Privacy Policy, please contact us:',
+        'If you have any questions about this Privacy Policy, please contact us through our contact page:',
       ],
       listItems: [
-        'Email: 13daystories@gmail.com',
+        'Contact Form: https://13daystories.com/contact',
         'Website: https://13daystories.com',
       ],
     },

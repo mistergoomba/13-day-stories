@@ -61,6 +61,17 @@ try {
     console.warn(`Warning: Privacy policy page not found at ${privacyPagePath}`);
   }
 
+  // Copy contact page
+  const contactPagePath = path.join(__dirname, '..', 'vercel', 'contact.html');
+  const distContactPath = path.join(__dirname, '..', 'dist', 'contact.html');
+  
+  if (fs.existsSync(contactPagePath)) {
+    fs.copyFileSync(contactPagePath, distContactPath);
+    console.log('✓ Contact page copied successfully');
+  } else {
+    console.warn(`Warning: Contact page not found at ${contactPagePath}`);
+  }
+
   console.log('\nBuild completed successfully!');
   console.log('✓ Assets are served from Cloudflare R2 CDN (cdn.13daystories.com)');
   console.log('✓ /cdn, /data, and /images-hd folders are excluded from builds');
