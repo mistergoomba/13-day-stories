@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, ScrollView, Text, StyleSheet, StatusBar } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, StatusBar, AppState } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -19,6 +19,7 @@ import {
   setDevMayanOverride,
   getDevMayanOverride,
 } from './utils/getActualDate';
+import { scheduleAllNotifications } from './utils/notificationScheduler';
 import colors from './theme/colors';
 
 const HAS_OPENED_APP_KEY = '@has_opened_app';
@@ -124,6 +125,23 @@ function AppContent() {
     };
 
     checkFirstTime();
+  }, []);
+
+  // Schedule notifications on mount and when app enters foreground
+  useEffect(() => {
+    // Schedule on mount
+    scheduleAllNotifications();
+
+    // Listen for app state changes
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (nextAppState === 'active') {
+        scheduleAllNotifications();
+      }
+    });
+
+    return () => {
+      subscription?.remove();
+    };
   }, []);
 
   // Handle Personal icon click - navigate to Birthday if birthday exists, otherwise Personal

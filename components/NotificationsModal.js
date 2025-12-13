@@ -3,9 +3,14 @@ import { View, Text, StyleSheet, ScrollView, Pressable, Modal, Animated, Switch,
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
+import { scheduleAllNotifications } from '../utils/notificationScheduler';
+import { NOTIFICATION_CONFIG } from '../utils/notificationConfig';
 
 const NOTIFICATIONS_ENABLED_KEY = '@notifications_enabled';
-const NOTIFICATION_TIME_KEY = '@notification_time';
+const MORNING_ENABLED_KEY = '@morning_notifications_enabled';
+const EVENING_ENABLED_KEY = '@evening_notifications_enabled';
+const MORNING_TIME_KEY = '@morning_notification_time';
+const EVENING_TIME_KEY = '@evening_notification_time';
 
 // Lazy load notifications module
 let Notifications = null;
@@ -27,7 +32,10 @@ try {
 
 export default function NotificationsModal({ visible, onClose }) {
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
-  const [notificationTime, setNotificationTime] = useState('09:00'); // Default 9 AM
+  const [morningEnabled, setMorningEnabled] = useState(true);
+  const [eveningEnabled, setEveningEnabled] = useState(true);
+  const [morningTime, setMorningTime] = useState('08:00'); // Default 8 AM
+  const [eveningTime, setEveningTime] = useState('20:00'); // Default 8 PM
   const [hasPermission, setHasPermission] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const slideAnim = useRef(new Animated.Value(0)).current;
@@ -62,13 +70,37 @@ export default function NotificationsModal({ visible, onClose }) {
   const loadNotificationSettings = async () => {
     try {
       const enabled = await AsyncStorage.getItem(NOTIFICATIONS_ENABLED_KEY);
-      const time = await AsyncStorage.getItem(NOTIFICATION_TIME_KEY);
+      const morningEnabledValue = await AsyncStorage.getItem(MORNING_ENABLED_KEY);
+      const eveningEnabledValue = await AsyncStorage.getItem(EVENING_ENABLED_KEY);
+      const morningTimeValue = await AsyncStorage.getItem(MORNING_TIME_KEY);
+      const eveningTimeValue = await AsyncStorage.getItem(EVENING_TIME_KEY);
       
       if (enabled === 'true') {
         setNotificationsEnabled(true);
       }
-      if (time) {
-        setNotificationTime(time);
+      if (morningEnabledValue === 'true') {
+        setMorningEnabled(true);
+      } else if (morningEnabledValue === 'false') {
+        setMorningEnabled(false);
+      }
+      if (eveningEnabledValue === 'true') {
+        setEveningEnabled(true);
+      } else if (eveningEnabledValue === 'false') {
+        setEveningEnabled(false);
+      }
+      if (morningTimeValue) {
+        setMorningTime(morningTimeValue);
+      } else {
+        // Set default
+        const defaultTime = `${String(NOTIFICATION_CONFIG.defaultMorningTime.hour).padStart(2, '0')}:${String(NOTIFICATION_CONFIG.defaultMorningTime.minute).padStart(2, '0')}`;
+        setMorningTime(defaultTime);
+      }
+      if (eveningTimeValue) {
+        setEveningTime(eveningTimeValue);
+      } else {
+        // Set default
+        const defaultTime = `${String(NOTIFICATION_CONFIG.defaultEveningTime.hour).padStart(2, '0')}:${String(NOTIFICATION_CONFIG.defaultEveningTime.minute).padStart(2, '0')}`;
+        setEveningTime(defaultTime);
       }
     } catch (error) {
       console.error('Error loading notification settings:', error);
@@ -118,40 +150,7 @@ export default function NotificationsModal({ visible, onClose }) {
     }
   };
 
-  const scheduleDailyNotification = async () => {
-    if (!Notifications) {
-      return;
-    }
-    try {
-      // Cancel any existing notifications
-      await Notifications.cancelAllScheduledNotificationsAsync();
-
-      if (!notificationsEnabled) {
-        return;
-      }
-
-      // Parse time (HH:MM format)
-      const [hours, minutes] = notificationTime.split(':').map(Number);
-
-      // Schedule daily notification
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: 'Your Daily Story',
-          body: 'Check your daily Mayan calendar reading',
-          sound: true,
-        },
-        trigger: {
-          hour: hours,
-          minute: minutes,
-          repeats: true,
-        },
-      });
-    } catch (error) {
-      console.error('Error scheduling notification:', error);
-    }
-  };
-
-  const handleToggle = async (value) => {
+  const handleMasterToggle = async (value) => {
     if (value && !hasPermission) {
       const granted = await requestPermission();
       if (!granted) {
@@ -170,7 +169,7 @@ export default function NotificationsModal({ visible, onClose }) {
 
     // Schedule or cancel notifications
     if (value) {
-      await scheduleDailyNotification();
+      await scheduleAllNotifications();
     } else {
       if (Notifications && Notifications.cancelAllScheduledNotificationsAsync) {
         await Notifications.cancelAllScheduledNotificationsAsync();
@@ -178,19 +177,81 @@ export default function NotificationsModal({ visible, onClose }) {
     }
   };
 
-  const handleTimeChange = async (newTime) => {
-    setNotificationTime(newTime);
+  const handleMorningToggle = async (value) => {
+    if (value && !hasPermission) {
+      const granted = await requestPermission();
+      if (!granted) {
+        return; // Don't enable if permission not granted
+      }
+    }
+
+    setMorningEnabled(value);
     
     // Save to AsyncStorage
     try {
-      await AsyncStorage.setItem(NOTIFICATION_TIME_KEY, newTime);
+      await AsyncStorage.setItem(MORNING_ENABLED_KEY, value ? 'true' : 'false');
     } catch (error) {
-      console.error('Error saving notification time:', error);
+      console.error('Error saving morning notification setting:', error);
     }
 
-    // Reschedule notification if enabled
+    // Reschedule notifications
     if (notificationsEnabled) {
-      await scheduleDailyNotification();
+      await scheduleAllNotifications();
+    }
+  };
+
+  const handleEveningToggle = async (value) => {
+    if (value && !hasPermission) {
+      const granted = await requestPermission();
+      if (!granted) {
+        return; // Don't enable if permission not granted
+      }
+    }
+
+    setEveningEnabled(value);
+    
+    // Save to AsyncStorage
+    try {
+      await AsyncStorage.setItem(EVENING_ENABLED_KEY, value ? 'true' : 'false');
+    } catch (error) {
+      console.error('Error saving evening notification setting:', error);
+    }
+
+    // Reschedule notifications
+    if (notificationsEnabled) {
+      await scheduleAllNotifications();
+    }
+  };
+
+  const handleMorningTimeChange = async (newTime) => {
+    setMorningTime(newTime);
+    
+    // Save to AsyncStorage
+    try {
+      await AsyncStorage.setItem(MORNING_TIME_KEY, newTime);
+    } catch (error) {
+      console.error('Error saving morning notification time:', error);
+    }
+
+    // Reschedule notifications if enabled
+    if (notificationsEnabled && morningEnabled) {
+      await scheduleAllNotifications();
+    }
+  };
+
+  const handleEveningTimeChange = async (newTime) => {
+    setEveningTime(newTime);
+    
+    // Save to AsyncStorage
+    try {
+      await AsyncStorage.setItem(EVENING_TIME_KEY, newTime);
+    } catch (error) {
+      console.error('Error saving evening notification time:', error);
+    }
+
+    // Reschedule notifications if enabled
+    if (notificationsEnabled && eveningEnabled) {
+      await scheduleAllNotifications();
     }
   };
 
@@ -217,6 +278,13 @@ export default function NotificationsModal({ visible, onClose }) {
   for (let hour = 6; hour <= 22; hour++) {
     const timeStr = `${String(hour).padStart(2, '0')}:00`;
     timeOptions.push(timeStr);
+  }
+  
+  // Also generate 30-minute options for more granularity
+  const detailedTimeOptions = [];
+  for (let hour = 6; hour <= 22; hour++) {
+    detailedTimeOptions.push(`${String(hour).padStart(2, '0')}:00`);
+    detailedTimeOptions.push(`${String(hour).padStart(2, '0')}:30`);
   }
 
   return (
@@ -245,51 +313,108 @@ export default function NotificationsModal({ visible, onClose }) {
 
           <ScrollView style={styles.modalScrollView} showsVerticalScrollIndicator={false}>
             <View style={styles.modalBody}>
+              {/* Master Toggle */}
               <View style={styles.settingRow}>
                 <View style={styles.settingInfo}>
-                  <Text style={styles.settingLabel}>Daily Notifications</Text>
+                  <Text style={styles.settingLabel}>Enable Notifications</Text>
                   <Text style={styles.settingDescription}>
-                    Receive a daily reminder to check your Mayan calendar reading
+                    Receive daily reminders to check your Mayan calendar reading
                   </Text>
                 </View>
                 <Switch
                   value={notificationsEnabled}
-                  onValueChange={handleToggle}
+                  onValueChange={handleMasterToggle}
                   trackColor={{ false: colors.border, true: colors.accent }}
                   thumbColor={notificationsEnabled ? colors.text : colors.textDim}
                 />
               </View>
 
               {notificationsEnabled && (
-                <View style={styles.timeSection}>
-                  <Text style={styles.timeLabel}>Notification Time</Text>
-                  <ScrollView 
-                    horizontal 
-                    showsHorizontalScrollIndicator={false}
-                    style={styles.timeScrollView}
-                    contentContainerStyle={styles.timeScrollContent}
-                  >
-                    {timeOptions.map((time) => (
-                      <Pressable
-                        key={time}
-                        style={[
-                          styles.timeButton,
-                          notificationTime === time && styles.timeButtonActive,
-                        ]}
-                        onPress={() => handleTimeChange(time)}
+                <>
+                  {/* Morning Notifications */}
+                  <View style={styles.notificationSection}>
+                    <Text style={styles.sectionLabel}>Morning Notifications</Text>
+                    <View style={styles.toggleTimeRow}>
+                      <Switch
+                        value={morningEnabled}
+                        onValueChange={handleMorningToggle}
+                        trackColor={{ false: colors.border, true: colors.accent }}
+                        thumbColor={morningEnabled ? colors.text : colors.textDim}
+                      />
+                      <ScrollView 
+                        horizontal 
+                        showsHorizontalScrollIndicator={false}
+                        style={styles.timeScrollView}
+                        contentContainerStyle={styles.timeScrollContent}
                       >
-                        <Text
-                          style={[
-                            styles.timeButtonText,
-                            notificationTime === time && styles.timeButtonTextActive,
-                          ]}
-                        >
-                          {formatTime(time)}
-                        </Text>
-                      </Pressable>
-                    ))}
-                  </ScrollView>
-                </View>
+                        {detailedTimeOptions.map((time) => (
+                          <Pressable
+                            key={time}
+                            style={[
+                              styles.timeButton,
+                              morningTime === time && styles.timeButtonActive,
+                              !morningEnabled && styles.timeButtonDisabled,
+                            ]}
+                            onPress={() => handleMorningTimeChange(time)}
+                            disabled={!morningEnabled}
+                          >
+                            <Text
+                              style={[
+                                styles.timeButtonText,
+                                morningTime === time && styles.timeButtonTextActive,
+                                !morningEnabled && styles.timeButtonTextDisabled,
+                              ]}
+                            >
+                              {formatTime(time)}
+                            </Text>
+                          </Pressable>
+                        ))}
+                      </ScrollView>
+                    </View>
+                  </View>
+
+                  {/* Evening Notifications */}
+                  <View style={styles.notificationSection}>
+                    <Text style={styles.sectionLabel}>Evening Notifications</Text>
+                    <View style={styles.toggleTimeRow}>
+                      <Switch
+                        value={eveningEnabled}
+                        onValueChange={handleEveningToggle}
+                        trackColor={{ false: colors.border, true: colors.accent }}
+                        thumbColor={eveningEnabled ? colors.text : colors.textDim}
+                      />
+                      <ScrollView 
+                        horizontal 
+                        showsHorizontalScrollIndicator={false}
+                        style={styles.timeScrollView}
+                        contentContainerStyle={styles.timeScrollContent}
+                      >
+                        {detailedTimeOptions.map((time) => (
+                          <Pressable
+                            key={time}
+                            style={[
+                              styles.timeButton,
+                              eveningTime === time && styles.timeButtonActive,
+                              !eveningEnabled && styles.timeButtonDisabled,
+                            ]}
+                            onPress={() => handleEveningTimeChange(time)}
+                            disabled={!eveningEnabled}
+                          >
+                            <Text
+                              style={[
+                                styles.timeButtonText,
+                                eveningTime === time && styles.timeButtonTextActive,
+                                !eveningEnabled && styles.timeButtonTextDisabled,
+                              ]}
+                            >
+                              {formatTime(time)}
+                            </Text>
+                          </Pressable>
+                        ))}
+                      </ScrollView>
+                    </View>
+                  </View>
+                </>
               )}
 
               {!hasPermission && notificationsEnabled && (
@@ -379,17 +504,24 @@ const styles = StyleSheet.create({
     color: colors.textDim,
     fontSize: 14,
   },
-  timeSection: {
-    marginTop: 8,
+  notificationSection: {
+    marginTop: 24,
+    marginBottom: 8,
   },
-  timeLabel: {
+  sectionLabel: {
     ...type.subtitle,
     color: colors.text,
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 12,
   },
+  toggleTimeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
   timeScrollView: {
+    flex: 1,
     marginHorizontal: -20,
   },
   timeScrollContent: {
@@ -417,6 +549,12 @@ const styles = StyleSheet.create({
   timeButtonTextActive: {
     color: colors.accent,
     fontWeight: '600',
+  },
+  timeButtonDisabled: {
+    opacity: 0.5,
+  },
+  timeButtonTextDisabled: {
+    opacity: 0.5,
   },
   permissionWarning: {
     marginTop: 16,
