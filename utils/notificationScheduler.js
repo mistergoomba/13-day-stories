@@ -126,6 +126,15 @@ export async function scheduleAllNotifications() {
       return;
     }
 
+    // Check if we have permission to send notifications
+    const { status } = await Notifications.getPermissionsAsync();
+    if (status !== 'granted') {
+      // Cancel all notifications if permission not granted
+      await Notifications.cancelAllScheduledNotificationsAsync();
+      console.log('Notification permission not granted, cancelling scheduled notifications');
+      return;
+    }
+
     // Check individual toggles
     const morningEnabled = await AsyncStorage.getItem(MORNING_ENABLED_KEY);
     const eveningEnabled = await AsyncStorage.getItem(EVENING_ENABLED_KEY);

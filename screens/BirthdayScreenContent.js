@@ -37,7 +37,7 @@ export default function BirthdayScreenContent({
     secondary: '#1C0F29',
     accent: '#6E45CF',
   });
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // Convert birthday date to Mayan date and load data
   useEffect(() => {
@@ -52,6 +52,7 @@ export default function BirthdayScreenContent({
           secondary: '#1C0F29',
           accent: '#6E45CF',
         });
+        setLoading(false);
         return;
       }
 
@@ -94,10 +95,14 @@ export default function BirthdayScreenContent({
     if (setBirthdayDate) {
       setBirthdayDate(newDateString);
     }
+    // Scroll to top after updating birthday
+    if (scrollViewRef?.current) {
+      scrollViewRef.current.scrollTo({ y: 0, animated: true });
+    }
   };
 
-  // If day data is not found or loading, show just the formatted Mayan date
-  if (loading || !dayData) {
+  // Show loading screen while data.json is loading
+  if (loading || (birthdayDate && !dayData)) {
     return (
       <View style={styles.container}>
         <DynamicBackground backgroundColors={birthdayColors} />
@@ -105,62 +110,37 @@ export default function BirthdayScreenContent({
           ref={scrollViewRef}
           style={styles.scrollView}
           contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
         >
           {/* Header - Part of scroll flow */}
           <SimpleHeader title='PROFILE' onHeaderPress={onHeaderPress} />
 
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-            {/* Birthday Image - always show, uses fallback if not found */}
-            <ImageWithPlaceholder
-              source={dayData?.images?.birthday}
-              type='square'
-              flushTop={true}
-            />
+            <Text style={styles.errorText}>
+              {loading ? 'Loading...' : 'Unable to load birthday data'}
+            </Text>
+          </View>
+        </ScrollView>
+      </View>
+    );
+  }
 
-            {/* Date Display Section */}
-            <View style={styles.contentSection}>
-              <Card>
-                {/* Gregorian Date with Edit Icon */}
-                <View style={styles.dateRow}>
-                  <Text style={styles.gregorianDate}>{formattedGregorianDate}</Text>
-                  <Pressable onPress={() => setShowEditModal(true)} style={styles.editButton}>
-                    <Svg width={20} height={20} viewBox='0 0 24 24' fill='none'>
-                      <Path
-                        d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'
-                        stroke={colors.textDim}
-                        strokeWidth={2}
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                      />
-                      <Path
-                        d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z'
-                        stroke={colors.textDim}
-                        strokeWidth={2}
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                      />
-                    </Svg>
-                  </Pressable>
-                </View>
+  // If no birthday date is set, show empty state
+  if (!birthdayDate) {
+    return (
+      <View style={styles.container}>
+        <DynamicBackground backgroundColors={birthdayColors} />
+        <ScrollView
+          ref={scrollViewRef}
+          style={styles.scrollView}
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* Header - Part of scroll flow */}
+          <SimpleHeader title='PROFILE' onHeaderPress={onHeaderPress} />
 
-                {/* Formatted Mayan Date */}
-                {mayanDate && <Text style={styles.mayanDateDisplay}>{mayanDate.formatted}</Text>}
-              </Card>
-            </View>
-
-            <Card>
-              <Text style={styles.mayanDateTitle}>Your Mayan Birthday</Text>
-              {mayanDate ? (
-                <>
-                  <Text style={styles.mayanDateDetails}>Trecena: {mayanDate.trecena}</Text>
-                  <Text style={styles.fallbackText}>
-                    Detailed birthday information for this trecena is not yet available.
-                  </Text>
-                </>
-              ) : (
-                <Text style={styles.errorText}>Unable to calculate Mayan date</Text>
-              )}
-            </Card>
+          <View style={[styles.content, { paddingBottom: bottomPadding }]}>
+            <Text style={styles.errorText}>Please set your birthday to view your profile</Text>
           </View>
         </ScrollView>
       </View>

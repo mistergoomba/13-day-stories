@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Modal, Animated } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Modal, Animated, Dimensions } from 'react-native';
 import { mainButton } from '../theme/buttons';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
@@ -334,6 +334,8 @@ export default function BirthdayDatePickerModal({
   );
 }
 
+const { height: SCREEN_HEIGHT } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
@@ -347,7 +349,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bg,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    maxHeight: '80%',
+    maxHeight: SCREEN_HEIGHT * 0.8, // 80% of screen height
+    minHeight: 300, // Ensure minimum height so content is visible
     paddingTop: 20,
   },
   modalHeader: {
@@ -372,7 +375,8 @@ const styles = StyleSheet.create({
     fontWeight: '300',
   },
   modalScrollView: {
-    flex: 1,
+    // Calculate height: modal max height minus header height and padding
+    maxHeight: SCREEN_HEIGHT * 0.8 - 100, // Account for header and padding
   },
   modalBody: {
     padding: 20,

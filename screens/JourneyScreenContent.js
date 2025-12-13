@@ -101,9 +101,7 @@ function DayDetailView({
           showsVerticalScrollIndicator={false}
         >
           {/* Header - Part of scroll flow */}
-          <View style={{ paddingTop: insets.top }}>
-            <SimpleHeader title='Journey' onHeaderPress={onHeaderPress} />
-          </View>
+          <SimpleHeader title='Journey' onHeaderPress={onHeaderPress} />
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
             <Text style={styles.errorText}>
               {loading ? 'Loading...' : 'Unable to load chapter data'}
@@ -188,9 +186,7 @@ function DayDetailView({
         showsVerticalScrollIndicator={false}
       >
         {/* Header - Part of scroll flow */}
-        <View style={{ paddingTop: insets.top }}>
-          <SimpleHeader title='Journey' />
-        </View>
+        <SimpleHeader title='Journey' />
 
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           {/* Story Primary Image */}
@@ -490,9 +486,7 @@ export default function JourneyScreenContent({
         showsVerticalScrollIndicator={false}
       >
         {/* Header - Part of scroll flow */}
-        <View style={{ paddingTop: insets.top }}>
-          <SimpleHeader title='Journey' />
-        </View>
+        <SimpleHeader title='Journey' />
         {loading || !trecenaData ? (
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
             <Text style={styles.errorText}>
