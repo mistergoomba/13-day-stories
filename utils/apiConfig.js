@@ -3,8 +3,8 @@
  * Determines base URL for API calls based on environment
  */
 
-// Production domain
-const PRODUCTION_DOMAIN = 'https://app.meowtin.com';
+// CDN domain for assets
+const CDN_DOMAIN = 'https://cdn.13daystories.com';
 
 // Deployment configuration
 // Set to true to block web access in production and show download page instead
@@ -30,16 +30,15 @@ function isDevelopment() {
 // Determine API base URL
 export function getApiBaseUrl() {
   if (isDevelopment()) {
-    // In development, use localhost with the port Expo is running on
-    // Default Expo web port is 8081, but we'll try to detect it
+    // In development, use localhost with symlinked cdn folder
     if (typeof window !== 'undefined' && window.location.origin) {
-      return `${window.location.origin}/assets/api`;
+      return `${window.location.origin}/cdn`;
     }
-    return 'http://localhost:8081/assets/api';
+    return 'http://localhost:8081/cdn';
   }
 
-  // Production: use the production domain
-  return `${PRODUCTION_DOMAIN}/assets/api`;
+  // Production: use CDN domain (no path prefix needed)
+  return CDN_DOMAIN;
 }
 
 /**

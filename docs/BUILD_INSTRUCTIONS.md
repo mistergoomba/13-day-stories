@@ -77,7 +77,7 @@ This script will:
 - Read trecena data from PostgreSQL
 - Process images from `images-hd/` folder (skip already-converted images)
 - Extract colors from images and store in database
-- Generate JSON files in `assets/api/` directory
+- Generate JSON files in `cdn/` directory (for local dev and CDN upload)
 
 **Note:** The script will skip images that have already been converted to WebP, making subsequent runs faster.
 

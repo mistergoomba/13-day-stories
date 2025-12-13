@@ -10,8 +10,8 @@ config.resolver.assetExts.push('ttf', 'otf', 'woff', 'woff2');
 config.server = config.server || {};
 config.server.enhanceMiddleware = (middleware) => {
   return (req, res, next) => {
-    // Serve static files from public directory
-    if (req.url.startsWith('/assets/api/')) {
+    // Serve static files from public/cdn directory (symlinked in dev mode)
+    if (req.url.startsWith('/cdn/')) {
       const fs = require('fs');
       const publicPath = path.join(__dirname, 'public', req.url);
       

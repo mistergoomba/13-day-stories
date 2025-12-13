@@ -41,9 +41,15 @@ yarn-error.*
 /android
 
 # high-res images
-images-hd
+images-hd/
 
 # database stuff
 database/input/
 database/output/
 database/queries/
+
+# CDN assets (served from Cloudflare R2)
+cdn/
+
+# wrangler config
+.wrangler

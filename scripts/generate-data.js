@@ -6,15 +6,43 @@ const sharp = require('sharp');
 const { getPool, closePool } = require('../database/connection');
 
 const DATA_IMAGES_DIR = path.join(__dirname, '..', 'images-hd');
-const API_DIR = path.join(__dirname, '..', 'assets', 'api');
-const TARGET_WIDTH = 800;
+const API_DIR = path.join(__dirname, '..', 'cdn');
+const TARGET_WIDTH = 1080;
 const WEBP_QUALITY = 85;
+const JPEG_QUALITY = 85;
 
-// Wide images that should be resized to 800px width (maintaining aspect ratio)
+// Wide images that should be resized to 1080px width (maintaining aspect ratio)
 const WIDE_IMAGES = ['story_wide_1', 'story_wide_2'];
 
 // Image types to extract colors from
 const IMAGE_TYPES = ['horoscope', 'affirmation', 'story_primary', 'birthday'];
+
+// Image types that should also have JPEG versions with watermark
+const JPEG_IMAGE_TYPES = ['horoscope', 'affirmation', 'story_primary', 'birthday'];
+
+// Font path for watermark - try .ttf first, then .otf
+const FONT_DIR = path.join(__dirname, '..', 'assets', 'fonts', 'bromolek');
+const FONT_PATH_TTF = path.join(FONT_DIR, 'bromolek.ttf');
+const FONT_PATH_OTF = path.join(FONT_DIR, 'bromolek.otf');
+const FONT_PATH = fs.existsSync(FONT_PATH_TTF) ? FONT_PATH_TTF : FONT_PATH_OTF;
+
+/**
+ * Read font file and convert to base64 data URI for SVG embedding
+ */
+function getFontDataURI() {
+  if (!fs.existsSync(FONT_PATH)) {
+    return null;
+  }
+  try {
+    const fontBuffer = fs.readFileSync(FONT_PATH);
+    const base64 = fontBuffer.toString('base64');
+    const mimeType = FONT_PATH.endsWith('.ttf') ? 'font/truetype' : 'font/opentype';
+    return `data:${mimeType};charset=utf-8;base64,${base64}`;
+  } catch (error) {
+    console.warn(`Warning: Could not read font file ${FONT_PATH}: ${error.message}`);
+    return null;
+  }
+}
 
 // Statistics
 const stats = {
@@ -23,6 +51,9 @@ const stats = {
   failed: 0,
   colorsExtracted: 0,
   colorsFailed: 0,
+  jpegConverted: 0,
+  jpegSkipped: 0,
+  jpegFailed: 0,
 };
 
 // Color data storage: colors[trecena][day][imageType] = { primary, secondary, accent }
@@ -161,6 +192,149 @@ function isWideImage(filename) {
 }
 
 /**
+ * Check if an image type should have a JPEG version
+ */
+function shouldGenerateJPEG(basename) {
+  return JPEG_IMAGE_TYPES.includes(basename);
+}
+
+/**
+ * Create watermark SVG with embedded font
+ */
+function createWatermarkSVG(textColor, strokeColor, width, height) {
+  const fontSize = Math.round(width * 0.04); // 4% of image width
+  const padding = Math.round(width * 0.03); // 3% padding
+  const strokeWidth = Math.round(fontSize * 0.15); // 15% of font size for stroke
+  
+  // Calculate text position (bottom right)
+  const x = width - padding;
+  const y = height - padding;
+  
+  // Try to get font data URI
+  const fontDataURI = getFontDataURI();
+  
+  // Build SVG with optional embedded font
+  let svg = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">`;
+  
+  // Embed font if available
+  if (fontDataURI) {
+    svg += `
+    <defs>
+      <style>
+        @font-face {
+          font-family: 'Bromolek';
+          src: url('${fontDataURI}') format('${FONT_PATH.endsWith('.ttf') ? 'truetype' : 'opentype'}');
+        }
+      </style>
+    </defs>`;
+  }
+  
+  // Add text with stroke and fill
+  svg += `
+    <text
+      x="${x}"
+      y="${y}"
+      font-family="${fontDataURI ? 'Bromolek' : 'Arial, sans-serif'}"
+      font-size="${fontSize}"
+      fill="${textColor}"
+      stroke="${strokeColor}"
+      stroke-width="${strokeWidth}"
+      text-anchor="end"
+      dominant-baseline="text-before-edge"
+      style="font-weight: normal; paint-order: stroke fill;"
+    >@13DayStories</text>
+  </svg>`;
+  
+  return Buffer.from(svg);
+}
+
+/**
+ * Convert a PNG file to JPEG with watermark
+ * Skips conversion if output file already exists and is newer than source
+ */
+async function convertImageToJPEG(pngPath, outputPath, extractedColors) {
+  // Skip if output already exists and is newer than or equal to source
+  if (fs.existsSync(outputPath)) {
+    try {
+      const sourceStats = fs.statSync(pngPath);
+      const outputStats = fs.statSync(outputPath);
+
+      // If output is newer than or equal to source, skip conversion
+      if (outputStats.mtime >= sourceStats.mtime) {
+        stats.jpegSkipped++;
+        console.log(`⊘ JPEG skipped (already exists): ${path.relative(DATA_IMAGES_DIR, pngPath)}`);
+        return true;
+      } else {
+        // Source is newer, need to reconvert
+        console.log(`↻ Source updated, reconverting JPEG: ${path.relative(DATA_IMAGES_DIR, pngPath)}`);
+      }
+    } catch (error) {
+      // If we can't check stats, proceed with conversion
+      console.log(
+        `⚠ Could not check file stats, converting JPEG: ${path.relative(DATA_IMAGES_DIR, pngPath)}`
+      );
+    }
+  }
+
+  try {
+    const image = sharp(pngPath);
+    const metadata = await image.metadata();
+
+    // Square images: resize to 1080x1080
+    const resizedImage = await image
+      .resize({
+        width: TARGET_WIDTH,
+        height: TARGET_WIDTH,
+        fit: 'cover', // Cover ensures square, may crop if not perfectly square
+      })
+      .toBuffer();
+
+    // Get colors for watermark
+    let lightestColor = '#FFFFFF'; // Default fallback
+    let darkestColor = '#000000'; // Default fallback
+
+    if (extractedColors && extractedColors.length > 0) {
+      // Colors are already sorted by brightness (darkest to lightest)
+      darkestColor = extractedColors[0]; // First is darkest
+      lightestColor = extractedColors[extractedColors.length - 1]; // Last is lightest
+    }
+
+    // Create watermark SVG
+    const watermarkSVG = createWatermarkSVG(
+      lightestColor,
+      darkestColor,
+      TARGET_WIDTH,
+      TARGET_WIDTH
+    );
+
+    // Composite watermark onto image
+    await sharp(resizedImage)
+      .composite([
+        {
+          input: watermarkSVG,
+          top: 0,
+          left: 0,
+        },
+      ])
+      .jpeg({ quality: JPEG_QUALITY })
+      .toFile(outputPath);
+
+    stats.jpegConverted++;
+    console.log(
+      `✓ JPEG converted: ${path.relative(DATA_IMAGES_DIR, pngPath)} → ${path.relative(
+        API_DIR,
+        outputPath
+      )}`
+    );
+    return true;
+  } catch (error) {
+    stats.jpegFailed++;
+    console.error(`✗ JPEG failed: ${path.relative(DATA_IMAGES_DIR, pngPath)} - ${error.message}`);
+    return false;
+  }
+}
+
+/**
  * Convert a PNG file to WebP and extract colors
  * Skips conversion if output file already exists and is newer than source
  */
@@ -195,14 +369,14 @@ async function convertImageToWebP(pngPath, outputPath) {
     let resizeOptions;
 
     if (isWideImage(pngPath)) {
-      // Wide images: resize to 800px width, maintain aspect ratio
+      // Wide images: resize to 1080px width, maintain aspect ratio
       resizeOptions = {
         width: TARGET_WIDTH,
         height: undefined, // Let sharp calculate based on aspect ratio
         fit: 'inside',
       };
     } else {
-      // Square images: resize to 800x800
+      // Square images: resize to 1080x1080
       resizeOptions = {
         width: TARGET_WIDTH,
         height: TARGET_WIDTH,
@@ -262,9 +436,31 @@ async function processDirectory(dirPath, trecenaName, dayNumber, pool, trecenaId
       fs.mkdirSync(outputDir, { recursive: true });
 
       // Extract colors if this is one of the image types we care about
-      // Only extract if image is being converted (not already exists)
-      if (IMAGE_TYPES.includes(basename) && !fs.existsSync(outputPath)) {
-        const extractedColors = await extractDominantColors(fullPath, 3);
+      // Extract if: (1) WebP doesn't exist (needed for WebP), OR (2) JPEG needs to be generated and colors aren't in cache
+      let extractedColors = null;
+      const webpExists = fs.existsSync(outputPath);
+      const needsJPEG = shouldGenerateJPEG(basename);
+      const jpegOutputPath = needsJPEG ? path.join(outputDir, `${basename}.jpg`) : null;
+      const jpegExists = jpegOutputPath ? fs.existsSync(jpegOutputPath) : true;
+      
+      // Check if we need colors from cache/db first (for JPEG generation)
+      if (needsJPEG && !jpegExists && !extractedColors) {
+        // Try to get colors from in-memory cache or database
+        const dayColors = colors[trecenaName]?.[dayNumber];
+        if (dayColors && dayColors[basename]) {
+          // Reconstruct color array from stored colors (darkest to lightest)
+          const colorData = dayColors[basename];
+          extractedColors = [
+            colorData.primary,
+            colorData.secondary,
+            colorData.accent,
+          ].filter(Boolean);
+        }
+      }
+      
+      // Extract colors if needed (WebP doesn't exist OR JPEG needs colors and we don't have them)
+      if (IMAGE_TYPES.includes(basename) && (!webpExists || (needsJPEG && !jpegExists && !extractedColors))) {
+        extractedColors = await extractDominantColors(fullPath, 3);
         if (extractedColors && extractedColors.length >= 2) {
           // Initialize structure if needed
           if (!colors[trecenaName]) {
@@ -294,6 +490,12 @@ async function processDirectory(dirPath, trecenaName, dayNumber, pool, trecenaId
 
       // Convert to WebP (will skip if already exists)
       await convertImageToWebP(fullPath, outputPath);
+
+      // Convert to JPEG with watermark if this image type requires it
+      // JPEG generation is independent - it checks if jpg exists separately
+      if (needsJPEG) {
+        await convertImageToJPEG(fullPath, jpegOutputPath, extractedColors);
+      }
     }
   }
 
@@ -577,6 +779,9 @@ async function main() {
     console.log(`  ✓ Images converted: ${stats.converted}`);
     console.log(`  ⊘ Images skipped (already exists): ${stats.skipped}`);
     console.log(`  ✗ Images failed: ${stats.failed}`);
+    console.log(`  ✓ JPEG converted: ${stats.jpegConverted}`);
+    console.log(`  ⊘ JPEG skipped (already exists): ${stats.jpegSkipped}`);
+    console.log(`  ✗ JPEG failed: ${stats.jpegFailed}`);
     console.log(`  ✓ Colors extracted: ${stats.colorsExtracted}`);
     console.log(`  ✗ Colors failed: ${stats.colorsFailed}`);
     console.log('='.repeat(60));

@@ -4,26 +4,7 @@
   "devCommand": "npx expo start --web",
   "installCommand": "npm install",
   "framework": null,
-  "headers": [
-    {
-      "source": "/assets/api/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600"
-        }
-      ]
-    }
-  ],
   "rewrites": [
-    {
-      "source": "/assets/api/(.*)",
-      "destination": "/assets/api/$1"
-    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

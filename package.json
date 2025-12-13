@@ -8,14 +8,15 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "dev": "mkdir -p public/assets && rm -rf public/assets/api && ln -sf ../../assets/api public/assets/api && npm run web",
+    "dev": "mkdir -p public && rm -rf public/cdn && ln -sf ../cdn public/cdn && npm run web",
     "stop": "pkill -f 'expo start' || true",
     "clean": "rm -rf node_modules/.cache .expo && npm start",
     "build:android": "eas build --platform android --profile preview",
     "build": "npx expo export -p web",
     "generate": "npm run generate:birthdays && npm run generate:data",
     "generate:birthdays": "node scripts/insert-birthdays.js",
-    "generate:data": "node scripts/generate-data.js"
+    "generate:data": "node scripts/generate-data.js",
+    "upload:cdn": "node scripts/upload-to-r2.js"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",
