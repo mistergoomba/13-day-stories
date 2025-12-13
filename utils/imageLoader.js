@@ -18,10 +18,12 @@ const FALLBACK_IMAGES = {
 /**
  * Get fallback image source for a specific image type
  * Used when remote images fail to load
+ * @param {string} _trecenaKey - Unused (kept for API compatibility)
+ * @param {number} _tone - Unused (kept for API compatibility)
  * @param {string} imageType - Image type
  * @returns {Object|null} Image source (require() result) or null if not found
  */
-export function getImageSource(trecenaKey, tone, imageType) {
+export function getImageSource(_trecenaKey, _tone, imageType) {
   // Return fallback if available
   if (FALLBACK_IMAGES[imageType]) {
     return FALLBACK_IMAGES[imageType];

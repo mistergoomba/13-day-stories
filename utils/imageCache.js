@@ -1,21 +1,27 @@
 /**
- * Share Image Cache Utility
- * Caches share images until midnight to avoid re-downloading
+ * Image Cache Utility
+ * Caches images to disk with expiration:
+ * - Regular images (webp): 1 hour
+ * - Share images (jpg): 1 hour
+ * - Birthday images (webp): 1 month
  */
 
 import * as FileSystem from 'expo-file-system/legacy';
 
-const CACHE_DIR = `${FileSystem.cacheDirectory}share-images/`;
+const CACHE_DIR = `${FileSystem.cacheDirectory}images/`;
+const ONE_HOUR_MS = 60 * 60 * 1000;
+const ONE_MONTH_MS = 30 * 24 * 60 * 60 * 1000;
 
 /**
- * Get cache expiry timestamp (midnight of current day)
- * @returns {number} Timestamp for midnight
+ * Get file extension from URL or default to webp
+ * @param {string} imageUrl - Image URL
+ * @returns {string} File extension (webp or jpg)
  */
-function getCacheExpiry() {
-  const now = new Date();
-  const midnight = new Date(now);
-  midnight.setHours(24, 0, 0, 0);
-  return midnight.getTime();
+function getFileExtension(imageUrl) {
+  if (imageUrl && imageUrl.endsWith('.jpg')) {
+    return 'jpg';
+  }
+  return 'webp';
 }
 
 /**
@@ -23,10 +29,11 @@ function getCacheExpiry() {
  * @param {string} trecenaKey - Normalized trecena key
  * @param {number} day - Day number (1-13)
  * @param {string} imageType - Image type
+ * @param {string} extension - File extension (webp or jpg)
  * @returns {string} Cache key
  */
-function getCacheKey(trecenaKey, day, imageType) {
-  return `share_${trecenaKey}_${day}_${imageType}.jpg`;
+function getCacheKey(trecenaKey, day, imageType, extension = 'webp') {
+  return `${trecenaKey}_${day}_${imageType}.${extension}`;
 }
 
 /**
@@ -39,26 +46,28 @@ function getCachedFilePath(cacheKey) {
 }
 
 /**
- * Check if cache is valid (file was created today, before midnight)
+ * Check if cache is valid based on file modification time and image type
  * @param {string} filePath - Path to cached file
- * @returns {Promise<boolean>} True if cache is valid (created today)
+ * @param {string} imageType - Image type
+ * @returns {Promise<boolean>} True if cache is valid
  */
-async function isCacheValid(filePath) {
+async function isCacheValid(filePath, imageType) {
   try {
     const fileInfo = await FileSystem.getInfoAsync(filePath);
     if (!fileInfo.exists) {
       return false;
     }
 
-    // Check if file was created today (before midnight)
+    // Check if file is within expiration time
     const fileModTime = fileInfo.modificationTime * 1000; // Convert to milliseconds
     const now = Date.now();
-    const todayStart = new Date(now);
-    todayStart.setHours(0, 0, 0, 0);
-    const todayStartTime = todayStart.getTime();
     
-    // File is valid if it was created today (after midnight today, before midnight tomorrow)
-    return fileModTime >= todayStartTime && fileModTime < getCacheExpiry();
+    // File is valid if it was modified after (now - cache duration)
+    // i.e., if it's newer than the expiry threshold
+    const cacheDuration = imageType === 'birthday' ? ONE_MONTH_MS : ONE_HOUR_MS;
+    const minModTime = now - cacheDuration;
+    
+    return fileModTime >= minModTime;
   } catch (error) {
     console.error('Error checking cache validity:', error);
     return false;
@@ -84,13 +93,14 @@ async function ensureCacheDir() {
  * @param {string} trecenaKey - Normalized trecena key
  * @param {number} day - Day number
  * @param {string} imageType - Image type
+ * @param {string} [extension] - File extension (webp or jpg), auto-detected if not provided
  * @returns {Promise<string|null>} Cached file path or null
  */
-export async function getCachedImagePath(trecenaKey, day, imageType) {
-  const cacheKey = getCacheKey(trecenaKey, day, imageType);
+export async function getCachedImagePath(trecenaKey, day, imageType, extension = 'webp') {
+  const cacheKey = getCacheKey(trecenaKey, day, imageType, extension);
   const filePath = getCachedFilePath(cacheKey);
   
-  const isValid = await isCacheValid(filePath);
+  const isValid = await isCacheValid(filePath, imageType);
   if (isValid) {
     return filePath;
   }
@@ -104,17 +114,20 @@ export async function getCachedImagePath(trecenaKey, day, imageType) {
  * @param {string} trecenaKey - Normalized trecena key
  * @param {number} day - Day number
  * @param {string} imageType - Image type
+ * @param {string} [extension] - File extension (webp or jpg), auto-detected from URL if not provided
  * @returns {Promise<string>} Local file path to cached image
  */
-export async function downloadAndCacheImage(imageUrl, trecenaKey, day, imageType) {
+export async function downloadAndCacheImage(imageUrl, trecenaKey, day, imageType, extension = null) {
   await ensureCacheDir();
   
-  const cacheKey = getCacheKey(trecenaKey, day, imageType);
+  // Auto-detect extension from URL if not provided
+  const fileExtension = extension || getFileExtension(imageUrl);
+  const cacheKey = getCacheKey(trecenaKey, day, imageType, fileExtension);
   const filePath = getCachedFilePath(cacheKey);
   
   try {
     // Check if already cached and valid
-    const cachedPath = await getCachedImagePath(trecenaKey, day, imageType);
+    const cachedPath = await getCachedImagePath(trecenaKey, day, imageType, fileExtension);
     if (cachedPath) {
       return cachedPath;
     }

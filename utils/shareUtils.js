@@ -4,31 +4,8 @@
  */
 
 import Share from 'react-native-share';
-import { getApiBaseUrl } from './apiConfig';
-import { downloadAndCacheImage } from './shareImageCache';
-
-/**
- * Normalize trecena name to match trecena key format
- * @param {string} trecenaName - Trecena name (e.g., "Q'anil", "Aq'ab'al")
- * @returns {string} Normalized key
- */
-function normalizeTrecenaName(trecenaName) {
-  if (!trecenaName) return null;
-  return trecenaName.replace(/[^a-zA-Z]/g, '').toLowerCase();
-}
-
-/**
- * Get the share image URL for a specific day and image type
- * Uses single source of truth from apiConfig.js
- * @param {string} trecenaKey - Normalized trecena key (e.g., "toj", "aqabal")
- * @param {number} day - Day number (1-13)
- * @param {string} imageType - Image type (e.g., "horoscope", "affirmation", "story_primary", "birthday")
- * @returns {string} Full URL to share image
- */
-export function getShareImageUrl(trecenaKey, day, imageType) {
-  const baseUrl = getApiBaseUrl();
-  return `${baseUrl}/trecena-${trecenaKey}/${day}/${imageType}.jpg`;
-}
+import { normalizeTrecenaName, getShareImageUrl } from './calendarUtils';
+import { downloadAndCacheImage } from './imageCache';
 
 /**
  * Extract first paragraph from text (split by \n\n or \n)
@@ -38,7 +15,7 @@ export function getShareImageUrl(trecenaKey, day, imageType) {
  */
 function getFirstParagraph(text, maxLength = 200) {
   if (!text) return '';
-  
+
   // Try splitting by double newline first
   const paragraphs = text.split(/\n\n/);
   if (paragraphs.length > 0 && paragraphs[0].trim()) {
@@ -46,7 +23,7 @@ function getFirstParagraph(text, maxLength = 200) {
     if (first.length <= maxLength) return first;
     return first.substring(0, maxLength - 3) + '...';
   }
-  
+
   // Fallback to single newline
   const lines = text.split(/\n/);
   if (lines.length > 0 && lines[0].trim()) {
@@ -54,7 +31,7 @@ function getFirstParagraph(text, maxLength = 200) {
     if (first.length <= maxLength) return first;
     return first.substring(0, maxLength - 3) + '...';
   }
-  
+
   // Fallback to truncate entire text
   if (text.length <= maxLength) return text.trim();
   return text.trim().substring(0, maxLength - 3) + '...';
@@ -153,7 +130,7 @@ Read today's full forecast and check your Mayan Energy reading at @13DayStories.
     await Share.open({
       url: localImagePath, // downloadAsync already returns file:// URI
       message: caption,
-      title: 'Share Today\'s Horoscope',
+      title: "Share Today's Horoscope",
     });
   } catch (error) {
     if (error.message !== 'User did not share') {
@@ -230,7 +207,8 @@ export async function shareBirthday(dayData, mayanDate) {
 
   const number = dayData.number;
   const nawal = dayData.nawal;
-  const combinedEnergyTitle = dayData.energy_of_the_day?.combined_energy?.title || `${number} ${nawal}`;
+  const combinedEnergyTitle =
+    dayData.energy_of_the_day?.combined_energy?.title || `${number} ${nawal}`;
   const birthdayText = getFirstParagraph(dayData.birthday?.content || '', 200);
 
   const caption = `I just found out my Mayan Birthday energy is ${number} ${nawal} (${combinedEnergyTitle}). 🌑
@@ -265,4 +243,3 @@ What is your ancient energy sign? Find out for free at @13DayStories.
     }
   }
 }
-

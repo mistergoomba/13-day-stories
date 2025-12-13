@@ -1,31 +1,81 @@
 /**
  * Simplified Calendar Utilities
  * Single source of truth for all Mayan calendar date and data operations
+ * Also handles all URL generation for data and images
  */
 
 import { convertToMayan } from './dateToMayan';
 import { getActualDate, getActualDateSync, getDevMayanOverrideSync } from './getActualDate';
-import { getTrecenaDataUrl, getImageUrl } from './apiConfig';
 import { getImageSource } from './imageLoader';
+import { getCachedImagePath, downloadAndCacheImage } from './imageCache';
 
-// Cache for trecena data only (not date-related)
+// CDN domain for assets
+const CDN_DOMAIN = 'https://cdn.13daystories.com';
+
+// Cache for trecena data with expiration (1 hour)
+// Structure: Map<key, { data: Object, timestamp: number }>
 const trecenaCache = new Map();
 
 // Track ongoing fetch requests to avoid duplicate requests
 const fetchPromises = new Map();
+
+// Cache expiration: 1 hour in milliseconds
+const CACHE_EXPIRY_MS = 60 * 60 * 1000;
+
+/**
+ * Get API base URL (CDN domain)
+ * @returns {string} CDN domain URL
+ */
+export function getApiBaseUrl() {
+  return CDN_DOMAIN;
+}
 
 /**
  * Normalize trecena name to match TRECENA_MAP key
  * @param {string} trecenaName - Trecena name (e.g., "Q'anil", "Aq'ab'al")
  * @returns {string} Normalized key
  */
-function normalizeTrecenaName(trecenaName) {
+export function normalizeTrecenaName(trecenaName) {
   if (!trecenaName) return null;
   return trecenaName.replace(/[^a-zA-Z]/g, '').toLowerCase();
 }
 
 /**
- * Get trecena data from API (with caching)
+ * Get the full URL for a trecena data file
+ * @param {string} trecenaKey - Normalized trecena key (e.g., "toj", "aqabal")
+ * @returns {string} Full URL to data.json
+ */
+function getTrecenaDataUrl(trecenaKey) {
+  const baseUrl = getApiBaseUrl();
+  return `${baseUrl}/trecena-${trecenaKey}/data.json`;
+}
+
+/**
+ * Get the full URL for an image (webp format)
+ * @param {string} trecenaKey - Normalized trecena key (e.g., "toj", "aqabal")
+ * @param {number} day - Day number (1-13)
+ * @param {string} imageType - Image type (e.g., "horoscope", "affirmation")
+ * @returns {string} Full URL to image
+ */
+function getImageUrl(trecenaKey, day, imageType) {
+  const baseUrl = getApiBaseUrl();
+  return `${baseUrl}/trecena-${trecenaKey}/${day}/${imageType}.webp`;
+}
+
+/**
+ * Get the full URL for a share image (jpg format)
+ * @param {string} trecenaKey - Normalized trecena key (e.g., "toj", "aqabal")
+ * @param {number} day - Day number (1-13)
+ * @param {string} imageType - Image type (e.g., "horoscope", "affirmation", "story_primary", "birthday")
+ * @returns {string} Full URL to share image
+ */
+export function getShareImageUrl(trecenaKey, day, imageType) {
+  const baseUrl = getApiBaseUrl();
+  return `${baseUrl}/trecena-${trecenaKey}/${day}/${imageType}.jpg`;
+}
+
+/**
+ * Get trecena data from API (with 1-hour caching)
  * @param {string} trecenaName - Trecena name
  * @returns {Promise<Object|null>} Trecena data object
  */
@@ -35,7 +85,16 @@ export async function getTrecenaData(trecenaName) {
 
   // Check cache first
   if (trecenaCache.has(normalizedKey)) {
-    return trecenaCache.get(normalizedKey);
+    const cached = trecenaCache.get(normalizedKey);
+    const now = Date.now();
+
+    // Check if cache is still valid (within 1 hour)
+    if (now - cached.timestamp < CACHE_EXPIRY_MS) {
+      return cached.data;
+    } else {
+      // Cache expired, remove it
+      trecenaCache.delete(normalizedKey);
+    }
   }
 
   // Check if there's already a fetch in progress
@@ -56,8 +115,11 @@ export async function getTrecenaData(trecenaName) {
 
       const trecenaData = await response.json();
 
-      // Cache it
-      trecenaCache.set(normalizedKey, trecenaData);
+      // Cache it with timestamp
+      trecenaCache.set(normalizedKey, {
+        data: trecenaData,
+        timestamp: Date.now(),
+      });
 
       return trecenaData;
     } catch (error) {
@@ -77,21 +139,38 @@ export async function getTrecenaData(trecenaName) {
 
 /**
  * Get image source for a day and image type
- * Returns remote URL for images
+ * Returns cached local path if available, otherwise downloads and caches
+ * Falls back to remote URL if caching fails, then to local fallback
  * @param {string} trecenaKey - Normalized trecena key (e.g., "toj", "aqabal")
  * @param {number} tone - Tone number (1-13)
  * @param {string} imageType - Image type
- * @returns {Object|null} Image source ({ uri: string }) or null if not found
+ * @returns {Promise<Object|null>} Image source ({ uri: string }) or null if not found
  */
-function getImagePath(trecenaKey, tone, imageType) {
+async function getImagePath(trecenaKey, tone, imageType) {
   const imageUrl = getImageUrl(trecenaKey, tone, imageType);
-  if (imageUrl) {
-    return { uri: imageUrl };
+  if (!imageUrl) {
+    // Fallback to local images if remote URL fails
+    return getImageSource(trecenaKey, tone, imageType);
   }
 
-  // Fallback to local images if remote URL fails
-  const localImage = getImageSource(trecenaKey, tone, imageType);
-  return localImage;
+  try {
+    // Try to get cached image first
+    const cachedPath = await getCachedImagePath(trecenaKey, tone, imageType);
+    if (cachedPath) {
+      return { uri: cachedPath };
+    }
+
+    // If not cached, download and cache it
+    const localPath = await downloadAndCacheImage(imageUrl, trecenaKey, tone, imageType);
+    return { uri: localPath };
+  } catch (error) {
+    console.warn(
+      `Failed to cache image ${imageType} for ${trecenaKey}/${tone}, using remote URL:`,
+      error
+    );
+    // Fallback to remote URL if caching fails
+    return { uri: imageUrl };
+  }
 }
 
 /**
@@ -358,15 +437,26 @@ export async function getDayData(mayanDate) {
   // Create day data object with image paths (omit image_prompts)
   const { image_prompts, ...dayDataWithoutPrompts } = dayData;
 
-  // Get image paths
+  // Get image paths (async - cache images, fetch in parallel for better performance)
+  const [horoscope, affirmation, meditation, birthday, story_primary, story_wide_1, story_wide_2] =
+    await Promise.all([
+      getImagePath(trecenaKey, mayanDate.tone, 'horoscope'),
+      getImagePath(trecenaKey, mayanDate.tone, 'affirmation'),
+      getImagePath(trecenaKey, mayanDate.tone, 'meditation'),
+      getImagePath(trecenaKey, mayanDate.tone, 'birthday'),
+      getImagePath(trecenaKey, mayanDate.tone, 'story_primary'),
+      getImagePath(trecenaKey, mayanDate.tone, 'story_wide_1'),
+      getImagePath(trecenaKey, mayanDate.tone, 'story_wide_2'),
+    ]);
+
   const imagePaths = {
-    horoscope: getImagePath(trecenaKey, mayanDate.tone, 'horoscope'),
-    affirmation: getImagePath(trecenaKey, mayanDate.tone, 'affirmation'),
-    meditation: getImagePath(trecenaKey, mayanDate.tone, 'meditation'),
-    birthday: getImagePath(trecenaKey, mayanDate.tone, 'birthday'),
-    story_primary: getImagePath(trecenaKey, mayanDate.tone, 'story_primary'),
-    story_wide_1: getImagePath(trecenaKey, mayanDate.tone, 'story_wide_1'),
-    story_wide_2: getImagePath(trecenaKey, mayanDate.tone, 'story_wide_2'),
+    horoscope,
+    affirmation,
+    meditation,
+    birthday,
+    story_primary,
+    story_wide_1,
+    story_wide_2,
   };
 
   return {

@@ -17,7 +17,6 @@ export default function DataStorageModal({ visible, onClose, onDataCleared }) {
   // Animate modal content slide up/down
   React.useEffect(() => {
     if (visible && !isClosing) {
-      setIsClosing(false);
       Animated.spring(slideAnim, {
         toValue: 1,
         useNativeDriver: true,
