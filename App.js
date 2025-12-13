@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, ScrollView, Text, StyleSheet, StatusBar, AppState } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, StatusBar, AppState, Platform } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -364,10 +364,20 @@ function AppContent() {
 }
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    BlackChancery: require('./assets/fonts/black_chancery/black_chancery.ttf'),
+  const [fontsLoaded, fontError] = useFonts({
+    // Register with multiple name variations for Android compatibility
+    // The font file's internal name is "Black Chancery" (with space)
+    'Black Chancery': require('./assets/fonts/black_chancery/black_chancery.ttf'),
+    BlackChancery: require('./assets/fonts/black_chancery/black_chancery.ttf'), // Fallback
     Bromolek: require('./assets/fonts/bromolek/bromolek.ttf'),
   });
+
+  // Log font loading errors if any
+  useEffect(() => {
+    if (fontError) {
+      console.error('Font loading error:', fontError);
+    }
+  }, [fontError]);
 
   if (!fontsLoaded) {
     return null; // Or a loading screen

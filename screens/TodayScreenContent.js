@@ -103,9 +103,7 @@ export default function TodayScreenContent({
         showsVerticalScrollIndicator={false}
       >
         {/* Header - Part of scroll flow */}
-        <View style={{ paddingTop: insets.top }}>
-          <SimpleHeader title='Energy of the Day' onHeaderPress={onHeaderPress} />
-        </View>
+        <SimpleHeader title='Energy of the Day' onHeaderPress={onHeaderPress} />
 
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           {/* Horoscope Section */}

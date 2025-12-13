@@ -75,9 +75,7 @@ export default function MeditationScreenContent({
           showsVerticalScrollIndicator={false}
         >
           {/* Header - Part of scroll flow */}
-          <View style={{ paddingTop: insets.top }}>
-            <SimpleHeader title='Meditation' onHeaderPress={onHeaderPress} />
-          </View>
+          <SimpleHeader title='Meditation' onHeaderPress={onHeaderPress} />
 
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
             <Text style={styles.errorText}>
@@ -102,9 +100,7 @@ export default function MeditationScreenContent({
         showsVerticalScrollIndicator={false}
       >
         {/* Header - Part of scroll flow */}
-        <View style={{ paddingTop: insets.top }}>
-          <SimpleHeader title='Meditation' onHeaderPress={onHeaderPress} />
-        </View>
+        <SimpleHeader title='Meditation' onHeaderPress={onHeaderPress} />
 
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           {/* Affirmation Image */}

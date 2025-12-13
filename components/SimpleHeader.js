@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Path, Circle } from 'react-native-svg';
 import colors from '../theme/colors';
 import { type, headerTextFontFamily } from '../theme/typography';
@@ -9,9 +10,14 @@ export default function SimpleHeader({
   onAccountPress,
   showSettingsIcon = false,
   onHeaderPress,
+  topPadding, // Optional override for top padding (defaults to insets.top + 5)
 }) {
+  const insets = useSafeAreaInsets();
+  // Use provided topPadding or calculate from safe area insets
+  const headerTopPadding = topPadding !== undefined ? topPadding : insets.top + 5;
+
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, { paddingTop: headerTopPadding }]}>
       {onHeaderPress ? (
         <Pressable onPress={onHeaderPress} style={styles.headerPressable}>
           <Text style={styles.title}>{title}</Text>
@@ -57,7 +63,7 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     paddingBottom: 8,
-    paddingTop: 5,
+    // paddingTop is now dynamic based on safe area insets
     minHeight: 56,
     width: '100%',
   },
@@ -73,8 +79,15 @@ const styles = StyleSheet.create({
   accountButton: {
     position: 'absolute',
     right: 8,
+    // Align icon center with title text center
+    // Title: fontSize 26px, paddingBottom 6px, so center ≈ 13px from text bottom + 6px = 19px from container bottom
+    // Header paddingBottom 8px, so text center at 8 + 19 = 27px from header bottom
+    // Icon: 24px tall, center is 12px from edges, button padding 8px, so icon center at 8 + 12 = 20px from button bottom
+    // Therefore: button bottom = 27 - 20 = 7px from header bottom
+    bottom: 7,
     padding: 8,
-    paddingBottom: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   headerPressable: {
     flex: 1,

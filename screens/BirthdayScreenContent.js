@@ -107,9 +107,7 @@ export default function BirthdayScreenContent({
           contentContainerStyle={styles.scrollContent}
         >
           {/* Header - Part of scroll flow */}
-          <View style={{ paddingTop: insets.top }}>
-            <SimpleHeader title='PROFILE' onHeaderPress={onHeaderPress} />
-          </View>
+          <SimpleHeader title='PROFILE' onHeaderPress={onHeaderPress} />
 
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
             {/* Birthday Image - always show, uses fallback if not found */}
@@ -181,9 +179,7 @@ export default function BirthdayScreenContent({
           contentContainerStyle={styles.scrollContent}
         >
           {/* Header - Part of scroll flow */}
-          <View style={{ paddingTop: insets.top }}>
-            <SimpleHeader title='PROFILE' onHeaderPress={onHeaderPress} />
-          </View>
+          <SimpleHeader title='PROFILE' onHeaderPress={onHeaderPress} />
 
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
             {/* Birthday Image - always show, uses fallback if not found */}
@@ -250,14 +246,12 @@ export default function BirthdayScreenContent({
         showsVerticalScrollIndicator={false}
       >
         {/* Header - Part of scroll flow */}
-        <View style={{ paddingTop: insets.top }}>
-          <SimpleHeader
-            title='PROFILE'
-            onAccountPress={() => setCurrentView && setCurrentView('Settings')}
-            showSettingsIcon={true}
-            onHeaderPress={onHeaderPress}
-          />
-        </View>
+        <SimpleHeader
+          title='PROFILE'
+          onAccountPress={() => setCurrentView && setCurrentView('Settings')}
+          showSettingsIcon={true}
+          onHeaderPress={onHeaderPress}
+        />
 
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           {/* Birthday Image - always show, uses fallback if specific image not found */}

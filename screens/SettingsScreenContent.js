@@ -69,9 +69,7 @@ export default function SettingsScreenContent({
         showsVerticalScrollIndicator={false}
       >
         {/* Header - Part of scroll flow */}
-        <View style={{ paddingTop: insets.top }}>
-          <SimpleHeader title='Settings' onHeaderPress={onHeaderPress} />
-        </View>
+        <SimpleHeader title='Settings' onHeaderPress={onHeaderPress} />
 
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           <Card>

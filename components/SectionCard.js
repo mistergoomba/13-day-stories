@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import Card from './Card';
 import colors from '../theme/colors';
 import { type, headerFontFamily } from '../theme/typography';
@@ -24,5 +24,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     marginBottom: 16,
     textAlign: 'center',
+    // On Android, remove fontWeight - BlackChancery font doesn't support explicit weights
+    ...(Platform.OS === 'android' && { fontWeight: undefined }),
   },
 });

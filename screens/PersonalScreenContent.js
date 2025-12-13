@@ -106,14 +106,12 @@ export default function PersonalScreenContent({
         showsVerticalScrollIndicator={false}
       >
         {/* Header - Part of scroll flow */}
-        <View style={{ paddingTop: insets.top }}>
-          <SimpleHeader
-            title='PROFILE'
-            onAccountPress={() => setCurrentView && setCurrentView('Settings')}
-            showSettingsIcon={true}
-            onHeaderPress={onHeaderPress}
-          />
-        </View>
+        <SimpleHeader
+          title='PROFILE'
+          onAccountPress={() => setCurrentView && setCurrentView('Settings')}
+          showSettingsIcon={true}
+          onHeaderPress={onHeaderPress}
+        />
 
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           <View style={styles.contentSection}>

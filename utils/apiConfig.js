@@ -30,11 +30,13 @@ function isDevelopment() {
 // Determine API base URL
 export function getApiBaseUrl() {
   if (isDevelopment()) {
-    // In development, use localhost with symlinked cdn folder
-    if (typeof window !== 'undefined' && window.location.origin) {
+    // In development web, use localhost with symlinked cdn folder
+    // For React Native (Android/iOS), always use CDN domain (no local dev server)
+    if (typeof window !== 'undefined' && window.location && window.location.origin) {
       return `${window.location.origin}/cdn`;
     }
-    return 'http://localhost:8081/cdn';
+    // React Native dev mode: use CDN domain (Metro doesn't serve CDN files)
+    return CDN_DOMAIN;
   }
 
   // Production: use CDN domain (no path prefix needed)
