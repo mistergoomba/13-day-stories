@@ -8,6 +8,7 @@ import SectionCard from '../components/SectionCard';
 import SimpleHeader from '../components/SimpleHeader';
 import DynamicBackground from '../components/DynamicBackground';
 import ImageWithPlaceholder from '../components/ImageWithPlaceholder';
+import SharePrompt from '../components/SharePrompt';
 import { getTodayMayanDateSync, getDayData, getBackgroundColors } from '../utils/calendarUtils';
 import { shareMeditationAffirmation } from '../utils/shareUtils';
 
@@ -116,6 +117,15 @@ export default function MeditationScreenContent({
             type='square'
             flushTop={true}
           />
+
+          {/* Share Prompt */}
+          <View style={styles.contentSection}>
+            <SharePrompt
+              microCopy="Someone needs to hear this today."
+              buttonText="Share the Light"
+              onShare={handleShare}
+            />
+          </View>
 
           {/* Meditation Title and Content */}
           <View style={styles.contentSection}>

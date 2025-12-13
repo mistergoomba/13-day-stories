@@ -6,6 +6,7 @@ import Card from '../components/Card';
 import SimpleHeader from '../components/SimpleHeader';
 import DynamicBackground from '../components/DynamicBackground';
 import ImageWithPlaceholder from '../components/ImageWithPlaceholder';
+import SharePrompt from '../components/SharePrompt';
 import colors from '../theme/colors';
 import { type, headerFontFamily } from '../theme/typography';
 import { mainButton } from '../theme/buttons';
@@ -287,6 +288,15 @@ function DayDetailView({
                 {renderTextBlock(textAfterImage2, 'block3')}
               </View>
             </Card>
+          </View>
+
+          {/* Share Prompt */}
+          <View style={styles.contentSection}>
+            <SharePrompt
+              microCopy="Don't walk the path alone."
+              buttonText="Invite to the Journey"
+              onShare={handleShare}
+            />
           </View>
 
           {/* Bottom Chapter Navigation */}

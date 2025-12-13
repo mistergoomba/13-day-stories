@@ -9,6 +9,7 @@ import HoroscopeSection from '../components/HoroscopeSection';
 import EnergyOfTheDay from '../components/EnergyOfTheDay';
 import SimpleHeader from '../components/SimpleHeader';
 import DynamicBackground from '../components/DynamicBackground';
+import SharePrompt from '../components/SharePrompt';
 import { getTodayMayanDateSync, getDayData, getBackgroundColors } from '../utils/calendarUtils';
 import { getActualDateSync } from '../utils/getActualDate';
 import { getButtonStyleFromColors } from '../theme/buttons';
@@ -126,6 +127,15 @@ export default function TodayScreenContent({
             date={getActualDateSync()}
             flushTop={true}
           />
+
+          {/* Share Prompt */}
+          <View style={styles.contentSection}>
+            <SharePrompt
+              microCopy="Align your tribe."
+              buttonText="Sync the Squad"
+              onShare={handleShare}
+            />
+          </View>
 
           {/* Energy of the Day Section */}
           <View style={styles.contentSection}>

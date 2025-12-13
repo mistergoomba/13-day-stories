@@ -11,6 +11,7 @@ import DynamicBackground from '../components/DynamicBackground';
 import SimpleHeader from '../components/SimpleHeader';
 import BirthdayDatePickerModal from '../components/BirthdayDatePickerModal';
 import ImageWithPlaceholder from '../components/ImageWithPlaceholder';
+import SharePrompt from '../components/SharePrompt';
 import { convertDateToMayan, getDayData, getBackgroundColors } from '../utils/calendarUtils';
 import { formatDateReadable } from '../utils/dateToMayan';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -121,10 +122,10 @@ export default function BirthdayScreenContent({
           showsVerticalScrollIndicator={false}
         >
           {/* Header - Part of scroll flow */}
-          <SimpleHeader 
-            title='PROFILE' 
-            onHeaderPress={onHeaderPress} 
-            onSharePress={dayData && mayanDate ? handleShare : undefined} 
+          <SimpleHeader
+            title='PROFILE'
+            onHeaderPress={onHeaderPress}
+            onSharePress={dayData && mayanDate ? handleShare : undefined}
           />
 
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
@@ -149,10 +150,10 @@ export default function BirthdayScreenContent({
           showsVerticalScrollIndicator={false}
         >
           {/* Header - Part of scroll flow */}
-          <SimpleHeader 
-            title='PROFILE' 
-            onHeaderPress={onHeaderPress} 
-            onSharePress={dayData && mayanDate ? handleShare : undefined} 
+          <SimpleHeader
+            title='PROFILE'
+            onHeaderPress={onHeaderPress}
+            onSharePress={dayData && mayanDate ? handleShare : undefined}
           />
 
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
@@ -175,10 +176,10 @@ export default function BirthdayScreenContent({
           contentContainerStyle={styles.scrollContent}
         >
           {/* Header - Part of scroll flow */}
-          <SimpleHeader 
-            title='PROFILE' 
-            onHeaderPress={onHeaderPress} 
-            onSharePress={dayData && mayanDate ? handleShare : undefined} 
+          <SimpleHeader
+            title='PROFILE'
+            onHeaderPress={onHeaderPress}
+            onSharePress={dayData && mayanDate ? handleShare : undefined}
           />
 
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
@@ -256,16 +257,14 @@ export default function BirthdayScreenContent({
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           {/* Birthday Image - always show, uses fallback if specific image not found */}
           <ImageWithPlaceholder source={dayData?.images?.birthday} type='square' flushTop={true} />
-
           {/* Birthday Title and Content */}
           <View style={[styles.contentSection, { paddingBottom: 0 }]}>
             <SectionCard headerText={birthday.title} style={{ marginBottom: 0 }}>
               <Text style={styles.birthdayContent}>{birthday.content}</Text>
             </SectionCard>
           </View>
-
           {/* Date Display Section */}
-          <View style={[styles.contentSection, { paddingBottom: 50 }]}>
+          <View style={styles.contentSection}>
             <Card>
               {/* Gregorian Date with Edit Icon */}
               <View style={styles.dateRow}>
@@ -293,6 +292,14 @@ export default function BirthdayScreenContent({
               {/* Formatted Mayan Date */}
               {mayanDate && <Text style={styles.mayanDateDisplay}>{mayanDate.formatted}</Text>}
             </Card>
+          </View>
+          {/* Share Prompt */}
+          <View style={styles.contentSection}>
+            <SharePrompt
+              microCopy='Uncover the true energy of your inner circle.'
+              buttonText="Ask: What's Your Sign?"
+              onShare={handleShare}
+            />
           </View>
 
           {/* Energy of the Day Section */}
