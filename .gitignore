@@ -50,6 +50,7 @@ database/queries/
 
 # CDN assets (served from Cloudflare R2)
 cdn/
+public/cdn
 
 # wrangler config
 .wrangler
