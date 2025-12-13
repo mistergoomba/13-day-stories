@@ -30,10 +30,6 @@
       },
       "package": "com.mistergoomba.x13daystories"
     },
-    "web": {
-      "bundler": "metro",
-      "backgroundColor": "#12091A"
-    },
     "extra": {
       "easterEgg": false,
       "eas": {
