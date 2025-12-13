@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   horoscopeTextContainer: {
     paddingHorizontal: 16,
-    paddingBottom: 50,
+    paddingBottom: 15,
   },
   horoscopeText: {
     ...type.body,

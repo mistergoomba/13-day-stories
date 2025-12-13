@@ -293,8 +293,9 @@ export default function BirthdayScreenContent({
               {mayanDate && <Text style={styles.mayanDateDisplay}>{mayanDate.formatted}</Text>}
             </Card>
           </View>
+
           {/* Share Prompt */}
-          <View style={styles.contentSection}>
+          <View style={[styles.contentSection, { paddingBottom: 25 }]}>
             <SharePrompt
               microCopy='Uncover the true energy of your inner circle.'
               buttonText="Ask: What's Your Sign?"

@@ -73,10 +73,23 @@ export default function TodayScreenContent({
 
   if (loading || !dayData) {
     return (
-      <View style={[styles.content, { paddingBottom: bottomPadding, paddingTop: insets.top + 56 }]}>
-        <Text style={styles.errorText}>
-          {loading ? 'Loading...' : 'Unable to load chapter data'}
-        </Text>
+      <View style={styles.container}>
+        <DynamicBackground backgroundColors={backgroundColors} />
+        <ScrollView
+          ref={scrollViewRef}
+          style={styles.scrollView}
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* Header - Part of scroll flow */}
+          <SimpleHeader title='Energy of the Day' onHeaderPress={onHeaderPress} />
+
+          <View style={[styles.content, { paddingBottom: bottomPadding }]}>
+            <Text style={styles.errorText}>
+              {loading ? 'Loading...' : 'Unable to load chapter data'}
+            </Text>
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -111,7 +124,11 @@ export default function TodayScreenContent({
         showsVerticalScrollIndicator={false}
       >
         {/* Header - Part of scroll flow */}
-        <SimpleHeader title='Energy of the Day' onHeaderPress={onHeaderPress} onSharePress={handleShare} />
+        <SimpleHeader
+          title='Energy of the Day'
+          onHeaderPress={onHeaderPress}
+          onSharePress={handleShare}
+        />
 
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           {/* Horoscope Section */}
@@ -129,10 +146,10 @@ export default function TodayScreenContent({
           />
 
           {/* Share Prompt */}
-          <View style={styles.contentSection}>
+          <View style={[styles.contentSection, styles.sharePromptSection]}>
             <SharePrompt
-              microCopy="Align your tribe."
-              buttonText="Sync the Squad"
+              microCopy='Align your tribe.'
+              buttonText='Sync the Squad'
               onShare={handleShare}
             />
           </View>
@@ -179,12 +196,16 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   content: {
-    paddingBottom: 16,
+    paddingBottom: 0,
     paddingTop: 0,
     width: '100%',
   },
   contentSection: {
     paddingHorizontal: 16,
+  },
+  sharePromptSection: {
+    paddingTop: 0,
+    paddingBottom: 40,
   },
   navLink: {
     ...mainButton.button,
