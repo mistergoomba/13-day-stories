@@ -17,4 +17,19 @@ config.resolver.blockList = [
   /database\/.*/,
 ];
 
+// Optimize bundle size
+config.transformer = {
+  ...config.transformer,
+  minifierConfig: {
+    ...config.transformer?.minifierConfig,
+    // Remove console statements in production
+    keep_classnames: false,
+    keep_fnames: false,
+    mangle: {
+      keep_classnames: false,
+      keep_fnames: false,
+    },
+  },
+};
+
 module.exports = config;
