@@ -22,6 +22,14 @@ import {
 import { scheduleAllNotifications } from './utils/notificationScheduler';
 import colors from './theme/colors';
 
+// Lazy load notifications module
+let Notifications = null;
+try {
+  Notifications = require('expo-notifications');
+} catch (error) {
+  console.log('expo-notifications not available:', error);
+}
+
 const HAS_OPENED_APP_KEY = '@has_opened_app';
 const BIRTHDAY_DATE_KEY = '@birthday_date';
 
@@ -141,6 +149,79 @@ function AppContent() {
 
     return () => {
       subscription?.remove();
+    };
+  }, []);
+
+  // Handle notification taps
+  useEffect(() => {
+    if (!Notifications) return;
+
+    // Function to handle notification navigation
+    const handleNotificationNavigation = (data) => {
+      if (data && data.notificationType) {
+        if (data.notificationType === 'morning' || data.notificationType === 'missYou') {
+          // Morning and "miss you" notifications -> navigate to Today
+          setCurrentView('Today');
+          // Scroll to top after view changes
+          setTimeout(() => {
+            if (scrollViewRef.current) {
+              scrollViewRef.current.scrollTo({ y: 0, animated: true });
+            }
+          }, 100);
+        } else if (data.notificationType === 'evening') {
+          // Evening notification -> navigate to Journey with specific chapter
+          if (data.mayanDate) {
+            try {
+              const mayanDate = JSON.parse(data.mayanDate);
+              setCurrentView('Journey');
+              setSelectedDay(mayanDate);
+              // Scroll to top after view changes
+              setTimeout(() => {
+                if (scrollViewRef.current) {
+                  scrollViewRef.current.scrollTo({ y: 0, animated: true });
+                }
+              }, 100);
+            } catch (error) {
+              console.error('Error parsing mayanDate from notification:', error);
+              // Fallback to Journey without specific day
+              setCurrentView('Journey');
+              setTimeout(() => {
+                if (scrollViewRef.current) {
+                  scrollViewRef.current.scrollTo({ y: 0, animated: true });
+                }
+              }, 100);
+            }
+          } else {
+            // Fallback to Journey without specific day
+            setCurrentView('Journey');
+            setTimeout(() => {
+              if (scrollViewRef.current) {
+                scrollViewRef.current.scrollTo({ y: 0, animated: true });
+              }
+            }, 100);
+          }
+        }
+      }
+    };
+
+    // Check if app was opened from a notification (when app was closed)
+    Notifications.getLastNotificationResponseAsync().then((response) => {
+      if (response) {
+        const data = response.notification.request.content.data;
+        handleNotificationNavigation(data);
+      }
+    });
+
+    // Listen for notification responses (when user taps notification while app is open)
+    const responseSubscription = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        const data = response.notification.request.content.data;
+        handleNotificationNavigation(data);
+      }
+    );
+
+    return () => {
+      responseSubscription?.remove();
     };
   }, []);
 

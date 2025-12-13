@@ -64,38 +64,40 @@ function getNext13thOfMonth(fromDate, minDays) {
   const currentYear = fromDate.getFullYear();
   const currentMonth = fromDate.getMonth();
   const currentDay = fromDate.getDate();
-  
+
   // Start checking from current month
   let checkYear = currentYear;
   let checkMonth = currentMonth;
-  
+
   // If today is before the 13th, check this month's 13th
   // Otherwise, start from next month
   if (currentDay < 13) {
     // Check this month's 13th
     const thisMonth13th = new Date(checkYear, checkMonth, 13);
-    const daysDiff = Math.ceil((thisMonth13th.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
+    const daysDiff = Math.ceil(
+      (thisMonth13th.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24)
+    );
     if (daysDiff >= minDays) {
       return thisMonth13th;
     }
   }
-  
+
   // Move to next month
   checkMonth += 1;
   if (checkMonth > 11) {
     checkMonth = 0;
     checkYear += 1;
   }
-  
+
   // Check up to 12 months ahead
   for (let i = 0; i < 12; i++) {
     const next13th = new Date(checkYear, checkMonth, 13);
     const daysDiff = Math.ceil((next13th.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
-    
+
     if (daysDiff >= minDays) {
       return next13th;
     }
-    
+
     // Move to next month
     checkMonth += 1;
     if (checkMonth > 11) {
@@ -103,7 +105,7 @@ function getNext13thOfMonth(fromDate, minDays) {
       checkYear += 1;
     }
   }
-  
+
   return null;
 }
 
@@ -156,7 +158,7 @@ export async function scheduleAllNotifications() {
     // Get today's Mayan date
     const todayMayan = getTodayMayanDateSync();
     if (!todayMayan) {
-      console.error('Could not get today\'s Mayan date');
+      console.error("Could not get today's Mayan date");
       return;
     }
 
@@ -164,12 +166,12 @@ export async function scheduleAllNotifications() {
     let currentMayanDate = { ...todayMayan };
     const today = new Date();
     const now = new Date();
-    
+
     for (let dayOffset = 0; dayOffset < NOTIFICATION_CONFIG.daysAhead; dayOffset++) {
       // Calculate future date
       const futureDate = new Date(today);
       futureDate.setDate(today.getDate() + dayOffset);
-      
+
       // Calculate notification times for this date
       const morningDateTime = new Date(futureDate);
       morningDateTime.setHours(morningTime.hour, morningTime.minute, 0, 0);
@@ -178,7 +180,7 @@ export async function scheduleAllNotifications() {
 
       // Get day data for this Mayan date
       const dayData = await getDayData(currentMayanDate);
-      
+
       if (dayData && dayData.energy_of_the_day && dayData.energy_of_the_day.combined_energy) {
         const energyTitle = dayData.energy_of_the_day.combined_energy.title;
         const chapterNum = dayData.number;
@@ -190,13 +192,17 @@ export async function scheduleAllNotifications() {
             currentMayanDate,
             energyTitle
           );
-          
+
           if (morningMessage) {
             await Notifications.scheduleNotificationAsync({
               content: {
                 title: 'Daily Energy',
                 body: morningMessage,
                 sound: true,
+                data: {
+                  notificationType: 'morning',
+                  mayanDate: JSON.stringify(currentMayanDate),
+                },
               },
               trigger: {
                 type: 'date',
@@ -210,20 +216,25 @@ export async function scheduleAllNotifications() {
         if (eveningEnabled === 'true' && now < eveningDateTime) {
           // Calculate next day's nawal for transition message
           const nextMayanDate = incrementMayanDate(currentMayanDate.tone, currentMayanDate.sign);
-          
+
           const eveningMessage = getRandomMessage(
             NOTIFICATION_CONFIG.messages.evening,
             chapterNum,
             nextMayanDate.sign,
             chapterNum
           );
-          
+
           if (eveningMessage) {
             await Notifications.scheduleNotificationAsync({
               content: {
                 title: 'Evening Reflection',
                 body: eveningMessage,
                 sound: true,
+                data: {
+                  notificationType: 'evening',
+                  mayanDate: JSON.stringify(currentMayanDate),
+                  chapterNum: chapterNum,
+                },
               },
               trigger: {
                 type: 'date',
@@ -243,20 +254,25 @@ export async function scheduleAllNotifications() {
     if (first13th) {
       const first13thMayan = convertDateToMayan(first13th);
       const first13thDayData = await getDayData(first13thMayan);
-      
-      if (first13thDayData && first13thDayData.energy_of_the_day && first13thDayData.energy_of_the_day.combined_energy) {
+
+      if (
+        first13thDayData &&
+        first13thDayData.energy_of_the_day &&
+        first13thDayData.energy_of_the_day.combined_energy
+      ) {
         const energyTitle = first13thDayData.energy_of_the_day.combined_energy.title;
-        const missYouMessage = getRandomMessage(
-          NOTIFICATION_CONFIG.messages.missYou,
-          energyTitle
-        );
-        
+        const missYouMessage = getRandomMessage(NOTIFICATION_CONFIG.messages.missYou, energyTitle);
+
         if (missYouMessage) {
           await Notifications.scheduleNotificationAsync({
             content: {
               title: 'We Miss You',
               body: missYouMessage,
               sound: true,
+              data: {
+                notificationType: 'missYou',
+                mayanDate: JSON.stringify(first13thMayan),
+              },
             },
             trigger: {
               type: 'date',
@@ -277,20 +293,28 @@ export async function scheduleAllNotifications() {
       if (second13th) {
         const second13thMayan = convertDateToMayan(second13th);
         const second13thDayData = await getDayData(second13thMayan);
-        
-        if (second13thDayData && second13thDayData.energy_of_the_day && second13thDayData.energy_of_the_day.combined_energy) {
+
+        if (
+          second13thDayData &&
+          second13thDayData.energy_of_the_day &&
+          second13thDayData.energy_of_the_day.combined_energy
+        ) {
           const energyTitle = second13thDayData.energy_of_the_day.combined_energy.title;
           const missYouMessage = getRandomMessage(
             NOTIFICATION_CONFIG.messages.missYou,
             energyTitle
           );
-          
+
           if (missYouMessage) {
             await Notifications.scheduleNotificationAsync({
               content: {
                 title: 'We Miss You',
                 body: missYouMessage,
                 sound: true,
+                data: {
+                  notificationType: 'missYou',
+                  mayanDate: JSON.stringify(second13thMayan),
+                },
               },
               trigger: {
                 type: 'date',
@@ -353,10 +377,12 @@ export async function testNotification() {
     });
 
     console.log('Test notification scheduled for 5 seconds from now');
-    return { success: true, message: 'Test notification scheduled! Check your device in 5 seconds.' };
+    return {
+      success: true,
+      message: 'Test notification scheduled! Check your device in 5 seconds.',
+    };
   } catch (error) {
     console.error('Error scheduling test notification:', error);
     return { success: false, error: error.message };
   }
 }
-
