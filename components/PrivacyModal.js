@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Modal, Animated } from 'react-native';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
+import { PRIVACY_POLICY_DATA, getFormattedLastUpdated } from '../utils/privacyPolicyData';
 
 export default function PrivacyModal({ visible, onClose }) {
   const [isClosing, setIsClosing] = useState(false);
@@ -67,67 +68,28 @@ export default function PrivacyModal({ visible, onClose }) {
 
           <ScrollView style={styles.modalScrollView} showsVerticalScrollIndicator={false}>
             <View style={styles.modalBody}>
-              <Text style={styles.lastUpdated}>Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</Text>
+              <Text style={styles.lastUpdated}>Last Updated: {getFormattedLastUpdated()}</Text>
 
-              <Text style={styles.sectionTitle}>1. Introduction</Text>
-              <Text style={styles.bodyText}>
-                Welcome to 13-Day Stories. We are committed to protecting your privacy and ensuring you have a positive experience on our app. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application.
-              </Text>
-
-              <Text style={styles.sectionTitle}>2. Information We Collect</Text>
-              <Text style={styles.bodyText}>
-                We collect minimal information necessary to provide you with personalized content:
-              </Text>
-              <Text style={styles.listItem}>• Birthday information (month, day, year) - used to calculate your Mayan calendar sign</Text>
-              <Text style={styles.listItem}>• Notification preferences - stored locally on your device</Text>
-              <Text style={styles.bodyText}>
-                All data is stored locally on your device using secure storage. We do not collect, transmit, or store your personal information on our servers.
-              </Text>
-
-              <Text style={styles.sectionTitle}>3. How We Use Your Information</Text>
-              <Text style={styles.bodyText}>
-                The information we collect is used solely to:
-              </Text>
-              <Text style={styles.listItem}>• Calculate and display your personalized Mayan calendar readings</Text>
-              <Text style={styles.listItem}>• Send you daily notification reminders (if enabled)</Text>
-              <Text style={styles.listItem}>• Improve your app experience</Text>
-
-              <Text style={styles.sectionTitle}>4. Data Storage and Security</Text>
-              <Text style={styles.bodyText}>
-                All your personal data, including your birthday and notification preferences, is stored locally on your device using secure local storage. We do not have access to this information, and it is never transmitted to our servers or third parties.
-              </Text>
-              <Text style={styles.bodyText}>
-                You can clear all stored data at any time through the Settings > Data & Storage menu.
-              </Text>
-
-              <Text style={styles.sectionTitle}>5. Third-Party Services</Text>
-              <Text style={styles.bodyText}>
-                Our app may use third-party services for analytics and app functionality. These services may collect information used to identify you. We do not share your personal information with third parties except as necessary to provide our services.
-              </Text>
-
-              <Text style={styles.sectionTitle}>6. Children's Privacy</Text>
-              <Text style={styles.bodyText}>
-                Our app is not intended for children under the age of 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us so we can delete such information.
-              </Text>
-
-              <Text style={styles.sectionTitle}>7. Your Rights</Text>
-              <Text style={styles.bodyText}>
-                You have the right to:
-              </Text>
-              <Text style={styles.listItem}>• Access your personal data stored in the app</Text>
-              <Text style={styles.listItem}>• Delete your personal data at any time through the app settings</Text>
-              <Text style={styles.listItem}>• Opt out of notifications at any time</Text>
-              <Text style={styles.listItem}>• Request information about what data is stored on your device</Text>
-
-              <Text style={styles.sectionTitle}>8. Changes to This Privacy Policy</Text>
-              <Text style={styles.bodyText}>
-                We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy in the app and updating the "Last Updated" date. You are advised to review this Privacy Policy periodically for any changes.
-              </Text>
-
-              <Text style={styles.sectionTitle}>9. Contact Us</Text>
-              <Text style={styles.bodyText}>
-                If you have any questions about this Privacy Policy, please contact us through the app's support channels or visit our website.
-              </Text>
+              {PRIVACY_POLICY_DATA.sections.map((section, index) => (
+                <View key={index}>
+                  <Text style={styles.sectionTitle}>{section.title}</Text>
+                  {section.content.map((paragraph, pIndex) => (
+                    <Text key={pIndex} style={styles.bodyText}>
+                      {paragraph}
+                    </Text>
+                  ))}
+                  {section.listItems && section.listItems.map((item, itemIndex) => (
+                    <Text key={itemIndex} style={styles.listItem}>
+                      • {item}
+                    </Text>
+                  ))}
+                  {section.additionalContent && section.additionalContent.map((paragraph, pIndex) => (
+                    <Text key={`additional-${pIndex}`} style={styles.bodyText}>
+                      {paragraph}
+                    </Text>
+                  ))}
+                </View>
+              ))}
 
               <View style={styles.spacer} />
             </View>

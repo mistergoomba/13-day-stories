@@ -50,6 +50,17 @@ try {
     process.exit(1);
   }
 
+  // Copy privacy policy page
+  const privacyPagePath = path.join(__dirname, '..', 'vercel', 'privacy.html');
+  const distPrivacyPath = path.join(__dirname, '..', 'dist', 'privacy.html');
+  
+  if (fs.existsSync(privacyPagePath)) {
+    fs.copyFileSync(privacyPagePath, distPrivacyPath);
+    console.log('✓ Privacy policy page copied successfully');
+  } else {
+    console.warn(`Warning: Privacy policy page not found at ${privacyPagePath}`);
+  }
+
   console.log('\nBuild completed successfully!');
   console.log('✓ Assets are served from Cloudflare R2 CDN (cdn.13daystories.com)');
   console.log('✓ /cdn, /data, and /images-hd folders are excluded from builds');
