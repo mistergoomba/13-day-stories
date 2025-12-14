@@ -18,7 +18,11 @@
     "generate:birthdays": "node scripts/insert-birthdays.js",
     "generate:data": "node scripts/generate-data.js",
     "generate:privacy": "node scripts/generate-privacy-html.js",
-    "upload:cdn": "node scripts/upload-to-r2.js"
+    "upload:cdn": "node scripts/upload-to-r2.js",
+    "logs:android": "adb logcat | grep -E '(ReactNative|Expo|AndroidRuntime|FATAL)'",
+    "logs:android:all": "adb logcat",
+    "logs:android:clear": "adb logcat -c",
+    "logs:expo": "npx expo start --no-dev --minify"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",
