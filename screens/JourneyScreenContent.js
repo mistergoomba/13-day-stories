@@ -127,7 +127,8 @@ function DayDetailView({
   }
 
   // Split chapter text by paragraphs (\n\n)
-  const paragraphs = dayData.chapter.split(/\n\n/).filter((p) => p.trim().length > 0);
+  const chapterText = dayData.chapter || '';
+  const paragraphs = chapterText.split(/\n\n/).filter((p) => p.trim().length > 0);
 
   // Split paragraphs into three groups for the new structure
   // Group 1: First 2 paragraphs (before first image)

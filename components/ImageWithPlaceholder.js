@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    backgroundColor: colors.background || '#12091A',
+    backgroundColor: colors.bg || '#12091A',
   },
   image: {
     position: 'absolute',
@@ -126,6 +126,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    backgroundColor: colors.background || '#12091A',
+    backgroundColor: colors.bg || '#12091A',
   },
 });

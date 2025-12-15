@@ -25,10 +25,11 @@ const USE_TEST_ADS = __DEV__;
 export const initialize = async () => {
   try {
     const appId = Platform.OS === 'ios' ? ADMOB_APP_ID_IOS : ADMOB_APP_ID_ANDROID;
-    await mobileAds().initialize();
+    await mobileAds().initialize(appId);
     console.log('AdMob initialized with App ID:', appId);
   } catch (error) {
     console.error('Error initializing AdMob:', error);
+    // Don't throw - allow app to continue without ads
   }
 };
 
@@ -52,4 +53,3 @@ export const shouldShowAds = async () => {
   const premium = await isPremium();
   return !premium;
 };
-

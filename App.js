@@ -24,6 +24,7 @@ import {
 } from './utils/getActualDate';
 import { scheduleAllNotifications } from './utils/notificationScheduler';
 import colors from './theme/colors';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // Lazy load notifications module
 let Notifications = null;
@@ -157,11 +158,17 @@ function AppContent() {
 
   // Initialize AdMob and IAP on mount
   useEffect(() => {
-    // Initialize AdMob
-    initializeAdMob();
+    // Initialize AdMob with error handling
+    initializeAdMob().catch((error) => {
+      console.error('Failed to initialize AdMob:', error);
+      // Don't crash the app if AdMob fails
+    });
 
-    // Initialize IAP
-    initializeIAP();
+    // Initialize IAP with error handling
+    initializeIAP().catch((error) => {
+      console.error('Failed to initialize IAP:', error);
+      // Don't crash the app if IAP fails
+    });
 
     // Cleanup IAP listeners on unmount
     return () => {
@@ -479,13 +486,26 @@ export default function App() {
   }, [fontError]);
 
   if (!fontsLoaded) {
-    return null; // Or a loading screen
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: colors.bg,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        {/* Loading screen - fonts are loading */}
+      </View>
+    );
   }
 
   return (
-    <SafeAreaProvider>
-      <AppContent />
-    </SafeAreaProvider>
+    <ErrorBoundary>
+      <SafeAreaProvider>
+        <AppContent />
+      </SafeAreaProvider>
+    </ErrorBoundary>
   );
 }
 

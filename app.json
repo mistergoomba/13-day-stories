@@ -18,6 +18,13 @@
           "color": "#12091A",
           "sounds": []
         }
+      ],
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-8659681403454349~6082558501",
+          "iosAppId": "ca-app-pub-8659681403454349~4462355075"
+        }
       ]
     ],
     "ios": {
