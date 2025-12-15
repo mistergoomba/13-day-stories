@@ -58,7 +58,7 @@ function DayDetailView({
     const loadData = async () => {
       try {
         const [day, colors, prev, next, trecena] = await Promise.all([
-          getDayData(mayanDate),
+          getDayData(mayanDate, ['story_primary', 'story_wide_1', 'story_wide_2']), // Priority: all story images
           getBackgroundColors(mayanDate, 'story_primary'),
           getPreviousDay(mayanDate),
           getNextDay(mayanDate),
@@ -294,7 +294,7 @@ function DayDetailView({
           <View style={styles.contentSection}>
             <SharePrompt
               microCopy="Don't walk the path alone."
-              buttonText="Invite to the Journey"
+              buttonText='Invite to the Journey'
               onShare={handleShare}
             />
           </View>
@@ -315,7 +315,8 @@ function DayDetailView({
                       !canGoPrevious && styles.chapterLinkTextDisabled,
                     ]}
                   >
-                    ← Chapter {previousDay?.tone || dayNumber - 1}
+                    <Text style={styles.chapterArrow}>←</Text> Chapter{' '}
+                    {previousDay?.tone || dayNumber - 1}
                   </Text>
                 </Pressable>
                 <View style={styles.iconCircle}>
@@ -343,11 +344,16 @@ function DayDetailView({
                     />
                   </Svg>
                 </View>
-                <Pressable onPress={handleNextDay} disabled={!canGoNext} style={styles.chapterLink}>
+                <Pressable
+                  onPress={handleNextDay}
+                  disabled={!canGoNext}
+                  style={[styles.chapterLink, !canGoNext && styles.chapterLinkHidden]}
+                >
                   <Text
                     style={[styles.chapterLinkText, !canGoNext && styles.chapterLinkTextDisabled]}
                   >
-                    Chapter {nextDay?.tone || dayNumber + 1} →
+                    Chapter {nextDay?.tone || dayNumber + 1}{' '}
+                    <Text style={styles.chapterArrow}>→</Text>
                   </Text>
                 </Pressable>
               </View>
@@ -870,11 +876,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
+  chapterLinkHidden: {
+    opacity: 0,
+  },
   chapterLinkText: {
     ...type.body,
     color: colors.text,
     fontSize: 16,
     fontWeight: '500',
+  },
+  chapterArrow: {
+    fontSize: 24,
+    fontWeight: '600',
   },
   chapterLinkTextDisabled: {
     color: colors.textDim,

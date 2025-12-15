@@ -409,10 +409,13 @@ export function getTodayMayanDateSync() {
 /**
  * Get day data for a specific Mayan date
  * Loads trecena data (cached), finds day by tone, returns data with image paths
+ * Priority images load immediately, other images lazy load in background
  * @param {Object} mayanDate - Mayan date object with { tone, sign, trecena, formatted }
+ * @param {string|string[]} [priorityImageTypes] - Image type(s) to load immediately (default: 'horoscope')
+ *   Can be a single string or array of strings for multiple priority images
  * @returns {Promise<Object|null>} Day data object (without image_prompts, with image paths)
  */
-export async function getDayData(mayanDate) {
+export async function getDayData(mayanDate, priorityImageTypes = 'horoscope') {
   if (!mayanDate || !mayanDate.tone || !mayanDate.trecena) {
     console.error('Invalid mayanDate object:', mayanDate);
     return null;
@@ -437,27 +440,64 @@ export async function getDayData(mayanDate) {
   // Create day data object with image paths (omit image_prompts)
   const { image_prompts, ...dayDataWithoutPrompts } = dayData;
 
-  // Get image paths (async - cache images, fetch in parallel for better performance)
-  const [horoscope, affirmation, meditation, birthday, story_primary, story_wide_1, story_wide_2] =
-    await Promise.all([
-      getImagePath(trecenaKey, mayanDate.tone, 'horoscope'),
-      getImagePath(trecenaKey, mayanDate.tone, 'affirmation'),
-      getImagePath(trecenaKey, mayanDate.tone, 'meditation'),
-      getImagePath(trecenaKey, mayanDate.tone, 'birthday'),
-      getImagePath(trecenaKey, mayanDate.tone, 'story_primary'),
-      getImagePath(trecenaKey, mayanDate.tone, 'story_wide_1'),
-      getImagePath(trecenaKey, mayanDate.tone, 'story_wide_2'),
-    ]);
+  // Normalize priorityImageTypes to array
+  const priorityTypes = Array.isArray(priorityImageTypes)
+    ? priorityImageTypes
+    : [priorityImageTypes];
 
+  // Initialize image paths
   const imagePaths = {
-    horoscope,
-    affirmation,
-    meditation,
-    birthday,
-    story_primary,
-    story_wide_1,
-    story_wide_2,
+    horoscope: null,
+    affirmation: null,
+    birthday: null,
+    story_primary: null,
+    story_wide_1: null,
+    story_wide_2: null,
   };
+
+  // Load priority images immediately (blocks until all loaded)
+  const priorityImagePromises = priorityTypes.map((imageType) =>
+    getImagePath(trecenaKey, mayanDate.tone, imageType)
+  );
+  const priorityImages = await Promise.all(priorityImagePromises);
+
+  // Set priority images
+  priorityTypes.forEach((imageType, index) => {
+    imagePaths[imageType] = priorityImages[index];
+  });
+
+  // Lazy load other images in background (don't await - return immediately)
+  // Images will be cached and available when components need them
+  const imageTypes = [
+    'horoscope',
+    'affirmation',
+    'birthday',
+    'story_primary',
+    'story_wide_1',
+    'story_wide_2',
+  ];
+  const imagesToLoad = imageTypes.filter((type) => !priorityTypes.includes(type));
+
+  // Start loading other images in parallel (fire and forget)
+  Promise.all(
+    imagesToLoad.map(async (imageType) => {
+      try {
+        return await getImagePath(trecenaKey, mayanDate.tone, imageType);
+      } catch (error) {
+        console.warn(`Failed to lazy load ${imageType} image:`, error);
+        return null;
+      }
+    })
+  )
+    .then((loadedImages) => {
+      // Update imagePaths when loaded (images are cached, so getImagePath will return them quickly)
+      imagesToLoad.forEach((imageType, index) => {
+        imagePaths[imageType] = loadedImages[index];
+      });
+    })
+    .catch((error) => {
+      console.warn('Error during lazy image loading:', error);
+    });
 
   return {
     ...dayDataWithoutPrompts,

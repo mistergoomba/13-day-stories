@@ -64,7 +64,7 @@ export default function BirthdayScreenContent({
         setMayanDate(mayan);
 
         const [day, colors] = await Promise.all([
-          getDayData(mayan),
+          getDayData(mayan, 'birthday'), // Priority: birthday image
           getBackgroundColors(mayan, 'birthday'),
         ]);
 

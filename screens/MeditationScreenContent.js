@@ -38,7 +38,7 @@ export default function MeditationScreenContent({
     const loadData = async () => {
       try {
         const [day, colors] = await Promise.all([
-          getDayData(todayMayan),
+          getDayData(todayMayan, 'affirmation'), // Priority: affirmation image
           getBackgroundColors(todayMayan, 'affirmation'),
         ]);
 
@@ -121,8 +121,8 @@ export default function MeditationScreenContent({
           {/* Share Prompt */}
           <View style={styles.contentSection}>
             <SharePrompt
-              microCopy="Someone needs to hear this today."
-              buttonText="Share the Light"
+              microCopy='Someone needs to hear this today.'
+              buttonText='Share the Light'
               onShare={handleShare}
             />
           </View>
