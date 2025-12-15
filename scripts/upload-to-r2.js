@@ -52,21 +52,23 @@ async function main() {
   // Get all files
   console.log('\n📁 Scanning files...');
   let allFiles = getAllFiles(CDN_DIR);
-  
+
   // TESTING HACK: Only upload trecena-ajpu for testing
   // TODO: Remove this filter when uploads are working correctly
   const TEST_MODE = false; // Set to false to upload all files
   const TEST_TRECENA = 'trecena-ajpu';
-  
+
   if (TEST_MODE) {
     const originalCount = allFiles.length;
-    allFiles = allFiles.filter(file => {
+    allFiles = allFiles.filter((file) => {
       const relativePath = path.relative(CDN_DIR, file).replace(/\\/g, '/');
       return relativePath.startsWith(TEST_TRECENA + '/');
     });
-    console.log(`⚠️  TEST MODE: Only uploading ${TEST_TRECENA} (${allFiles.length} of ${originalCount} files)\n`);
+    console.log(
+      `⚠️  TEST MODE: Only uploading ${TEST_TRECENA} (${allFiles.length} of ${originalCount} files)\n`
+    );
   }
-  
+
   console.log(`Found ${allFiles.length} files to upload\n`);
 
   if (allFiles.length === 0) {
@@ -143,4 +145,3 @@ main().catch((error) => {
   console.error('Fatal error:', error);
   process.exit(1);
 });
-

@@ -205,17 +205,17 @@ function createWatermarkSVG(textColor, strokeColor, width, height) {
   const fontSize = Math.round(width * 0.04); // 4% of image width
   const padding = Math.round(width * 0.03); // 3% padding
   const strokeWidth = Math.round(fontSize * 0.15); // 15% of font size for stroke
-  
+
   // Calculate text position (bottom right)
   const x = width - padding;
   const y = height - padding;
-  
+
   // Try to get font data URI
   const fontDataURI = getFontDataURI();
-  
+
   // Build SVG with optional embedded font
   let svg = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">`;
-  
+
   // Embed font if available
   if (fontDataURI) {
     svg += `
@@ -223,12 +223,14 @@ function createWatermarkSVG(textColor, strokeColor, width, height) {
       <style>
         @font-face {
           font-family: 'Bromolek';
-          src: url('${fontDataURI}') format('${FONT_PATH.endsWith('.ttf') ? 'truetype' : 'opentype'}');
+          src: url('${fontDataURI}') format('${
+      FONT_PATH.endsWith('.ttf') ? 'truetype' : 'opentype'
+    }');
         }
       </style>
     </defs>`;
   }
-  
+
   // Add text with stroke and fill
   svg += `
     <text
@@ -244,7 +246,7 @@ function createWatermarkSVG(textColor, strokeColor, width, height) {
       style="font-weight: normal; paint-order: stroke fill;"
     >@13DayStories</text>
   </svg>`;
-  
+
   return Buffer.from(svg);
 }
 
@@ -266,7 +268,9 @@ async function convertImageToJPEG(pngPath, outputPath, extractedColors) {
         return true;
       } else {
         // Source is newer, need to reconvert
-        console.log(`↻ Source updated, reconverting JPEG: ${path.relative(DATA_IMAGES_DIR, pngPath)}`);
+        console.log(
+          `↻ Source updated, reconverting JPEG: ${path.relative(DATA_IMAGES_DIR, pngPath)}`
+        );
       }
     } catch (error) {
       // If we can't check stats, proceed with conversion
@@ -442,7 +446,7 @@ async function processDirectory(dirPath, trecenaName, dayNumber, pool, trecenaId
       const needsJPEG = shouldGenerateJPEG(basename);
       const jpegOutputPath = needsJPEG ? path.join(outputDir, `${basename}.jpg`) : null;
       const jpegExists = jpegOutputPath ? fs.existsSync(jpegOutputPath) : true;
-      
+
       // Check if we need colors from cache/db first (for JPEG generation)
       if (needsJPEG && !jpegExists && !extractedColors) {
         // Try to get colors from in-memory cache or database
@@ -450,16 +454,17 @@ async function processDirectory(dirPath, trecenaName, dayNumber, pool, trecenaId
         if (dayColors && dayColors[basename]) {
           // Reconstruct color array from stored colors (darkest to lightest)
           const colorData = dayColors[basename];
-          extractedColors = [
-            colorData.primary,
-            colorData.secondary,
-            colorData.accent,
-          ].filter(Boolean);
+          extractedColors = [colorData.primary, colorData.secondary, colorData.accent].filter(
+            Boolean
+          );
         }
       }
-      
+
       // Extract colors if needed (WebP doesn't exist OR JPEG needs colors and we don't have them)
-      if (IMAGE_TYPES.includes(basename) && (!webpExists || (needsJPEG && !jpegExists && !extractedColors))) {
+      if (
+        IMAGE_TYPES.includes(basename) &&
+        (!webpExists || (needsJPEG && !jpegExists && !extractedColors))
+      ) {
         extractedColors = await extractDominantColors(fullPath, 3);
         if (extractedColors && extractedColors.length >= 2) {
           // Initialize structure if needed
@@ -684,6 +689,8 @@ async function transformTrecenaData(trecenaData, trecenaName, pool) {
  * Main function
  */
 async function main() {
+  const runStart = new Date();
+
   console.log('Starting data generation...\n');
   console.log(`Source images: ${DATA_IMAGES_DIR}`);
   console.log(`Output directory: ${API_DIR}\n`);
@@ -789,6 +796,12 @@ async function main() {
     if (stats.failed > 0) {
       process.exit(1);
     }
+
+    // Optional: upload only files generated/updated in this run
+    const shouldUpload = process.argv.includes('--upload');
+    if (shouldUpload) {
+      await uploadGeneratedFiles(runStart);
+    }
   } catch (error) {
     console.error('Fatal error:', error);
     process.exit(1);
@@ -802,3 +815,109 @@ main().catch((error) => {
   console.error('Fatal error:', error);
   process.exit(1);
 });
+
+/**
+ * Upload only files generated or updated during this run to Cloudflare R2.
+ * A file is considered \"generated\" if its mtime is >= runStart.
+ */
+async function uploadGeneratedFiles(runStart) {
+  const {
+    CDN_DIR,
+    ensureWrangler,
+    checkLogin,
+    promptLogin,
+    getAllFiles,
+    getRelativePath,
+    uploadFile,
+  } = require('./r2-upload-helpers');
+
+  console.log('\n🚀 Uploading newly generated CDN assets to Cloudflare R2\n');
+
+  if (!fs.existsSync(CDN_DIR)) {
+    console.error(`✗ CDN directory not found: ${CDN_DIR}`);
+    console.error('Nothing to upload.');
+    return;
+  }
+
+  const wranglerInstalled = await ensureWrangler();
+  if (!wranglerInstalled) {
+    console.error('✗ Cannot upload without Wrangler CLI');
+    return;
+  }
+
+  if (!checkLogin()) {
+    console.log('⚠ Not logged in to Cloudflare');
+    const loggedIn = await promptLogin();
+    if (!loggedIn) {
+      console.error('✗ Cloudflare login required for upload');
+      return;
+    }
+  } else {
+    console.log('✓ Logged in to Cloudflare');
+  }
+
+  console.log('\n📁 Scanning CDN directory for files updated this run...');
+  const allFiles = getAllFiles(CDN_DIR);
+  const generatedFiles = allFiles.filter((file) => {
+    const stat = fs.statSync(file);
+    return stat.mtime >= runStart;
+  });
+
+  console.log(`Found ${generatedFiles.length} file(s) modified during this run\n`);
+
+  if (generatedFiles.length === 0) {
+    console.log('No newly generated files to upload.');
+    return;
+  }
+
+  // Test upload first file to verify configuration
+  const testFile = generatedFiles[0];
+  const testRelativePath = getRelativePath(testFile);
+  console.log(`🧪 Testing upload with first file: ${testRelativePath}`);
+  const testResult = await uploadFile(testFile);
+  if (!testResult.success) {
+    console.log(`✗ Test upload FAILED for ${testRelativePath}`);
+    console.log(`   Error: ${testResult.error}`);
+    console.log('\n⚠️  Stopping - fix the upload issue before continuing');
+    return;
+  }
+
+  console.log(`✓ Test upload succeeded for ${testRelativePath}`);
+  console.log('   Continuing with remaining files...\n');
+
+  let successCount = 0;
+  let failCount = 0;
+  const failedFiles = [];
+
+  for (let i = 0; i < generatedFiles.length; i++) {
+    const file = generatedFiles[i];
+    const relativePath = getRelativePath(file);
+    const progress = `[${i + 1}/${generatedFiles.length}]`;
+
+    process.stdout.write(`${progress} ${relativePath}... `);
+
+    const result = await uploadFile(file);
+    if (result.success) {
+      console.log('✓');
+      successCount++;
+    } else {
+      console.log('✗');
+      console.error(`  Error: ${result.error}`);
+      failCount++;
+      failedFiles.push(relativePath);
+    }
+  }
+
+  console.log('\n' + '='.repeat(60));
+  console.log('Selective Upload Summary:');
+  console.log('='.repeat(60));
+  console.log(`✓ Successfully uploaded: ${successCount}`);
+  console.log(`✗ Failed: ${failCount}`);
+
+  if (failedFiles.length > 0) {
+    console.log('\nFailed files:');
+    failedFiles.forEach((file) => console.log(`  - ${file}`));
+  }
+
+  console.log('\n(Only files created or updated in this run were considered for upload.)');
+}
