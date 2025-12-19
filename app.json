@@ -35,7 +35,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#12091A"
       },
-      "package": "com.mistergoomba.x13daystories"
+      "package": "com.mistergoomba.x13daystories",
+      "permissions": [],
+      "blockedPermissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "extra": {
       "easterEgg": false,
