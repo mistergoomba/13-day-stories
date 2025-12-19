@@ -25,7 +25,8 @@
           "androidAppId": "ca-app-pub-8659681403454349~6082558501",
           "iosAppId": "ca-app-pub-8659681403454349~4462355075"
         }
-      ]
+      ],
+      "./plugins/withRemoveStoragePermissions.js"
     ],
     "ios": {
       "supportsTablet": false
@@ -36,11 +37,7 @@
         "backgroundColor": "#12091A"
       },
       "package": "com.mistergoomba.x13daystories",
-      "permissions": [],
-      "blockedPermissions": [
-        "android.permission.READ_EXTERNAL_STORAGE",
-        "android.permission.WRITE_EXTERNAL_STORAGE"
-      ]
+      "permissions": []
     },
     "extra": {
       "easterEgg": false,
