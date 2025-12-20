@@ -16,7 +16,7 @@
     "build:android:dev": "eas build --platform android --profile development",
     "generate": "npm run generate:birthdays && npm run generate:data",
     "generate:birthdays": "node scripts/insert-birthdays.js",
-    "generate:data": "node scripts/generate-data.js",
+    "generate:data": "node scripts/generate-data.js --upload",
     "generate:privacy": "node scripts/generate-privacy-html.js",
     "upload:cdn": "node scripts/upload-to-r2.js",
     "logs:android": "adb logcat | grep -E '(ReactNative|Expo|AndroidRuntime|FATAL)'",

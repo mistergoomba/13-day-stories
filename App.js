@@ -25,6 +25,7 @@ import {
 import { scheduleAllNotifications } from './utils/notificationScheduler';
 import colors from './theme/colors';
 import ErrorBoundary from './components/ErrorBoundary';
+import FirstLaunchNotificationPrompt from './components/FirstLaunchNotificationPrompt';
 
 // Lazy load notifications module
 let Notifications = null;
@@ -36,6 +37,7 @@ try {
 
 const HAS_OPENED_APP_KEY = '@has_opened_app';
 const BIRTHDAY_DATE_KEY = '@birthday_date';
+const NOTIFICATIONS_ENABLED_KEY = '@notifications_enabled';
 
 // Check if we're in dev mode
 const isDevMode = () => {
@@ -51,6 +53,7 @@ function AppContent() {
   const [resetMeditationTrigger, setResetMeditationTrigger] = useState(0); // Trigger to reset Meditation screen to today
   const [showDevPanel, setShowDevPanel] = useState(false); // Dev-only date picker panel
   const [currentMayanOverride, setCurrentMayanOverride] = useState(null); // Current Mayan override state
+  const [showNotificationPrompt, setShowNotificationPrompt] = useState(false); // First launch notification prompt
   const scrollViewRef = useRef(null);
   const meditationScrollViewRef = useRef(null);
 
@@ -115,7 +118,7 @@ function AppContent() {
     saveBirthday();
   }, [birthdayDate]);
 
-  // Check if first time opening app
+  // Check if first time opening app and show notification prompt if needed
   useEffect(() => {
     const checkFirstTime = async () => {
       try {
@@ -125,6 +128,16 @@ function AppContent() {
           setCurrentView('Home');
           // Mark that app has been opened
           await AsyncStorage.setItem(HAS_OPENED_APP_KEY, 'true');
+          
+          // Check if notifications are already enabled
+          // If not, show the notification prompt
+          const notificationsEnabled = await AsyncStorage.getItem(NOTIFICATIONS_ENABLED_KEY);
+          if (notificationsEnabled !== 'true') {
+            // Small delay to let the Home screen render first
+            setTimeout(() => {
+              setShowNotificationPrompt(true);
+            }, 500);
+          }
         } else {
           // Not first time - show Today
           setCurrentView('Today');
@@ -465,6 +478,16 @@ function AppContent() {
           initialNawal={currentMayanOverride?.nawal}
         />
       )}
+
+      {/* First Launch Notification Prompt */}
+      <FirstLaunchNotificationPrompt
+        visible={showNotificationPrompt}
+        onComplete={(enabled) => {
+          setShowNotificationPrompt(false);
+          // If notifications were enabled, they're already scheduled
+          // No need to do anything else here
+        }}
+      />
     </View>
   );
 }

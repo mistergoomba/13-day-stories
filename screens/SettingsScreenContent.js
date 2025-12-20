@@ -168,7 +168,7 @@ export default function SettingsScreenContent({
                 <View style={styles.premiumActiveContainer}>
                   <Text style={styles.premiumActiveText}>✓ Premium Active</Text>
                   <Text style={styles.premiumBenefitsText}>
-                    • Ad-free experience{'\n'}• AI Oracle feature (coming soon)
+                    • Ad-free experience
                   </Text>
                 </View>
               </>
@@ -188,7 +188,7 @@ export default function SettingsScreenContent({
                   )}
                 </Pressable>
                 <Text style={styles.premiumBenefitsText}>
-                  • Remove all ads{'\n'}• Unlock AI Oracle feature (coming soon)
+                  • Remove all ads
                 </Text>
                 <Pressable
                   style={styles.restoreButton}

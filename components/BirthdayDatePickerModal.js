@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Modal, Animated, Dimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { mainButton } from '../theme/buttons';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
@@ -27,6 +28,7 @@ export default function BirthdayDatePickerModal({
   title = 'Update Your Birthday',
   buttonText = 'Update Your Birthday',
 }) {
+  const insets = useSafeAreaInsets();
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedYear, setSelectedYear] = useState(null);
@@ -243,7 +245,7 @@ export default function BirthdayDatePickerModal({
         >
           <Pressable style={styles.pickerModalOverlay} onPress={() => setShowMonthPicker(false)}>
             <View style={styles.pickerModalContent}>
-              <ScrollView>
+              <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 40 }}>
                 {months.map((month, index) => (
                   <Pressable
                     key={index}
@@ -278,7 +280,7 @@ export default function BirthdayDatePickerModal({
         >
           <Pressable style={styles.pickerModalOverlay} onPress={() => setShowDayPicker(false)}>
             <View style={styles.pickerModalContent}>
-              <ScrollView>
+              <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 40 }}>
                 {getDaysArray().map((day) => (
                   <Pressable
                     key={day}
@@ -305,7 +307,7 @@ export default function BirthdayDatePickerModal({
         >
           <Pressable style={styles.pickerModalOverlay} onPress={() => setShowYearPicker(false)}>
             <View style={styles.pickerModalContent}>
-              <ScrollView>
+              <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 40 }}>
                 {getYearsArray().map((year) => (
                   <Pressable
                     key={year}

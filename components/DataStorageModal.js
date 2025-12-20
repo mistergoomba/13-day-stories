@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Modal, Animated, Alert } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
@@ -11,6 +12,7 @@ const NOTIFICATIONS_ENABLED_KEY = '@notifications_enabled';
 const NOTIFICATION_TIME_KEY = '@notification_time';
 
 export default function DataStorageModal({ visible, onClose, onDataCleared }) {
+  const insets = useSafeAreaInsets();
   const [isClosing, setIsClosing] = useState(false);
   const slideAnim = useRef(new Animated.Value(0)).current;
 
@@ -138,7 +140,11 @@ export default function DataStorageModal({ visible, onClose, onDataCleared }) {
             </Pressable>
           </View>
 
-          <ScrollView style={styles.modalScrollView} showsVerticalScrollIndicator={false}>
+          <ScrollView 
+            style={styles.modalScrollView} 
+            contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}
+            showsVerticalScrollIndicator={false}
+          >
             <View style={styles.modalBody}>
               <Text style={styles.description}>
                 Manage your app data and storage. Clearing data will remove all stored information including your birthday, notification settings, and cached content.

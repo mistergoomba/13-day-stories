@@ -407,6 +407,40 @@ export function getTodayMayanDateSync() {
 }
 
 /**
+ * Get day data for a specific Mayan date WITHOUT loading images
+ * Used for notification scheduling where images aren't needed
+ * @param {Object} mayanDate - Mayan date object with { tone, sign, trecena, formatted }
+ * @returns {Promise<Object|null>} Day data object (without images)
+ */
+export async function getDayDataWithoutImages(mayanDate) {
+  if (!mayanDate || !mayanDate.tone || !mayanDate.trecena) {
+    console.error('Invalid mayanDate object:', mayanDate);
+    return null;
+  }
+
+  // Get trecena data (cached, async)
+  const trecenaData = await getTrecenaData(mayanDate.trecena);
+  if (!trecenaData) {
+    return null;
+  }
+
+  // Find day by tone (number property)
+  const dayData = trecenaData.days.find((d) => d.number === mayanDate.tone);
+  if (!dayData) {
+    console.warn(`Day with tone ${mayanDate.tone} not found in trecena ${mayanDate.trecena}`);
+    return null;
+  }
+
+  // Create day data object without image paths (omit image_prompts)
+  const { image_prompts, ...dayDataWithoutPrompts } = dayData;
+
+  return {
+    ...dayDataWithoutPrompts,
+    images: null, // No images loaded
+  };
+}
+
+/**
  * Get day data for a specific Mayan date
  * Loads trecena data (cached), finds day by tone, returns data with image paths
  * Priority images load immediately, other images lazy load in background

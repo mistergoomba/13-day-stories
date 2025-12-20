@@ -4,7 +4,7 @@
  */
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getTodayMayanDateSync, incrementMayanDate, getDayData } from './calendarUtils';
+import { getTodayMayanDateSync, incrementMayanDate, getDayDataWithoutImages } from './calendarUtils';
 import { convertDateToMayan } from './calendarUtils';
 import { NOTIFICATION_CONFIG } from './notificationConfig';
 
@@ -178,8 +178,8 @@ export async function scheduleAllNotifications() {
       const eveningDateTime = new Date(futureDate);
       eveningDateTime.setHours(eveningTime.hour, eveningTime.minute, 0, 0);
 
-      // Get day data for this Mayan date
-      const dayData = await getDayData(currentMayanDate);
+      // Get day data for this Mayan date (without images - we only need text data)
+      const dayData = await getDayDataWithoutImages(currentMayanDate);
 
       if (dayData && dayData.energy_of_the_day && dayData.energy_of_the_day.combined_energy) {
         const energyTitle = dayData.energy_of_the_day.combined_energy.title;
@@ -253,7 +253,7 @@ export async function scheduleAllNotifications() {
     const first13th = getNext13thOfMonth(today, NOTIFICATION_CONFIG.minDaysForMissYou);
     if (first13th) {
       const first13thMayan = convertDateToMayan(first13th);
-      const first13thDayData = await getDayData(first13thMayan);
+      const first13thDayData = await getDayDataWithoutImages(first13thMayan);
 
       if (
         first13thDayData &&
@@ -292,7 +292,7 @@ export async function scheduleAllNotifications() {
       const second13th = getNext13thOfMonth(first13th, 1);
       if (second13th) {
         const second13thMayan = convertDateToMayan(second13th);
-        const second13thDayData = await getDayData(second13thMayan);
+        const second13thDayData = await getDayDataWithoutImages(second13thMayan);
 
         if (
           second13thDayData &&

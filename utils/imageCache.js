@@ -108,6 +108,11 @@ export async function getCachedImagePath(trecenaKey, day, imageType, extension =
   return null;
 }
 
+// Track 404s to avoid retrying immediately (cache for 1 hour)
+// Structure: Map<"trecenaKey_day_imageType", timestamp>
+const failedDownloads = new Map();
+const FAILED_DOWNLOAD_CACHE_MS = 60 * 60 * 1000; // 1 hour
+
 /**
  * Download and cache an image
  * @param {string} imageUrl - URL to download from
@@ -124,6 +129,7 @@ export async function downloadAndCacheImage(imageUrl, trecenaKey, day, imageType
   const fileExtension = extension || getFileExtension(imageUrl);
   const cacheKey = getCacheKey(trecenaKey, day, imageType, fileExtension);
   const filePath = getCachedFilePath(cacheKey);
+  const failedKey = `${trecenaKey}_${day}_${imageType}`;
   
   try {
     // Check if already cached and valid
@@ -132,16 +138,38 @@ export async function downloadAndCacheImage(imageUrl, trecenaKey, day, imageType
       return cachedPath;
     }
     
+    // Check if we recently failed to download this image (404)
+    const failedTimestamp = failedDownloads.get(failedKey);
+    if (failedTimestamp) {
+      const now = Date.now();
+      if (now - failedTimestamp < FAILED_DOWNLOAD_CACHE_MS) {
+        // Recently failed, don't retry yet
+        throw new Error(`Download failed with status 404 (cached)`);
+      } else {
+        // Cache expired, remove it and try again
+        failedDownloads.delete(failedKey);
+      }
+    }
+    
     // Download image
     const downloadResult = await FileSystem.downloadAsync(imageUrl, filePath);
     
     if (downloadResult.status === 200) {
+      // Success - remove from failed cache if it was there
+      failedDownloads.delete(failedKey);
       return downloadResult.uri;
+    } else if (downloadResult.status === 404) {
+      // Cache 404 for 1 hour to avoid retrying immediately
+      failedDownloads.set(failedKey, Date.now());
+      throw new Error(`Download failed with status ${downloadResult.status}`);
     } else {
       throw new Error(`Download failed with status ${downloadResult.status}`);
     }
   } catch (error) {
-    console.error('Error downloading and caching image:', error);
+    // Only log error if it's not a cached 404 (to reduce noise)
+    if (!error.message.includes('cached')) {
+      console.error('Error downloading and caching image:', error);
+    }
     throw error;
   }
 }

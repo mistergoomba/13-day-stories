@@ -210,7 +210,7 @@ export default function PersonalScreenContent({
       >
         <Pressable style={styles.modalOverlay} onPress={() => setShowMonthPicker(false)}>
           <View style={styles.modalContent}>
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 40 }}>
               {months.map((month, index) => (
                 <Pressable
                   key={index}
@@ -246,7 +246,7 @@ export default function PersonalScreenContent({
       >
         <Pressable style={styles.modalOverlay} onPress={() => setShowDayPicker(false)}>
           <View style={styles.modalContent}>
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 40 }}>
               {getDaysArray().map((day) => (
                 <Pressable
                   key={day}
@@ -273,7 +273,7 @@ export default function PersonalScreenContent({
       >
         <Pressable style={styles.modalOverlay} onPress={() => setShowYearPicker(false)}>
           <View style={styles.modalContent}>
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 40 }}>
               {getYearsArray().map((year) => (
                 <Pressable
                   key={year}
