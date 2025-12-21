@@ -155,6 +155,7 @@ export default function BirthdayDatePickerModal({
               styles.modalContent,
               {
                 transform: [{ translateY }],
+                paddingBottom: insets.bottom + 20,
               },
             ]}
           >

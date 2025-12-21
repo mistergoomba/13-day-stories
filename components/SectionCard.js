@@ -24,6 +24,10 @@ const styles = StyleSheet.create({
     fontSize: 28,
     marginBottom: 16,
     textAlign: 'center',
+    // Dark shadow/glow for better visibility on lighter backgrounds
+    textShadowColor: 'rgba(0, 0, 0, 0.8)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 8,
     // On Android, remove fontWeight - BlackChancery font doesn't support explicit weights
     ...(Platform.OS === 'android' && { fontWeight: undefined }),
   },

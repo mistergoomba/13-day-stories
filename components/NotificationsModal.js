@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Modal, Animated, Switch, Platform, Alert, Dimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
-import { scheduleAllNotifications, testNotification } from '../utils/notificationScheduler';
+import { scheduleAllNotifications } from '../utils/notificationScheduler';
 import { NOTIFICATION_CONFIG } from '../utils/notificationConfig';
 
 const NOTIFICATIONS_ENABLED_KEY = '@notifications_enabled';
@@ -31,6 +32,7 @@ try {
 }
 
 export default function NotificationsModal({ visible, onClose }) {
+  const insets = useSafeAreaInsets();
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [morningEnabled, setMorningEnabled] = useState(true);
   const [eveningEnabled, setEveningEnabled] = useState(true);
@@ -257,31 +259,6 @@ export default function NotificationsModal({ visible, onClose }) {
     }
   };
 
-  const handleTestNotification = async () => {
-    if (!Notifications) {
-      Alert.alert(
-        'Notifications Not Available',
-        'Notification support is not available in this environment. Please use a development build or production build.',
-        [{ text: 'OK' }]
-      );
-      return;
-    }
-
-    const result = await testNotification();
-    if (result.success) {
-      Alert.alert(
-        'Test Notification Scheduled',
-        result.message,
-        [{ text: 'OK' }]
-      );
-    } else {
-      Alert.alert(
-        'Test Failed',
-        result.error || 'Failed to schedule test notification',
-        [{ text: 'OK' }]
-      );
-    }
-  };
 
   const handleClose = () => {
     if (isClosing) return;
@@ -322,6 +299,7 @@ export default function NotificationsModal({ visible, onClose }) {
             styles.modalContent,
             {
               transform: [{ translateY }],
+              paddingBottom: insets.bottom + 20,
             },
           ]}
         >
@@ -420,21 +398,6 @@ export default function NotificationsModal({ visible, onClose }) {
                 <View style={styles.permissionWarning}>
                   <Text style={styles.permissionWarningText}>
                     Notification permission is required. Please enable it in your device settings.
-                  </Text>
-                </View>
-              )}
-
-              {/* Test Notification Button */}
-              {notificationsEnabled && hasPermission && (
-                <View style={styles.testButtonContainer}>
-                  <Pressable
-                    style={styles.testButton}
-                    onPress={handleTestNotification}
-                  >
-                    <Text style={styles.testButtonText}>🧪 Send Test Notification</Text>
-                  </Pressable>
-                  <Text style={styles.testButtonDescription}>
-                    Sends a test notification in 5 seconds
                   </Text>
                 </View>
               )}
@@ -745,33 +708,6 @@ const styles = StyleSheet.create({
     ...type.body,
     color: colors.textDim,
     fontSize: 14,
-  },
-  testButtonContainer: {
-    marginTop: 24,
-    paddingTop: 24,
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
-  },
-  testButton: {
-    backgroundColor: colors.accent,
-    paddingVertical: 14,
-    paddingHorizontal: 20,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  testButtonText: {
-    ...type.subtitle,
-    color: colors.bg,
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  testButtonDescription: {
-    ...type.body,
-    color: colors.textDim,
-    fontSize: 12,
-    marginTop: 8,
-    textAlign: 'center',
   },
 });
 

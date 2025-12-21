@@ -1,10 +1,12 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Modal, Animated } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Modal, Animated, Dimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
 import { PRIVACY_POLICY_DATA, getFormattedLastUpdated } from '../utils/privacyPolicyData';
 
 export default function PrivacyModal({ visible, onClose }) {
+  const insets = useSafeAreaInsets();
   const [isClosing, setIsClosing] = useState(false);
   const slideAnim = useRef(new Animated.Value(0)).current;
 
@@ -56,6 +58,7 @@ export default function PrivacyModal({ visible, onClose }) {
             styles.modalContent,
             {
               transform: [{ translateY }],
+              paddingBottom: insets.bottom + 20,
             },
           ]}
         >
@@ -100,6 +103,8 @@ export default function PrivacyModal({ visible, onClose }) {
   );
 }
 
+const { height: SCREEN_HEIGHT } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
@@ -113,7 +118,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bg,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    maxHeight: '90%',
+    maxHeight: SCREEN_HEIGHT * 0.8,
+    minHeight: 300,
     paddingTop: 20,
   },
   modalHeader: {
@@ -138,7 +144,7 @@ const styles = StyleSheet.create({
     fontWeight: '300',
   },
   modalScrollView: {
-    flex: 1,
+    maxHeight: SCREEN_HEIGHT * 0.8 - 100,
   },
   modalBody: {
     padding: 20,
@@ -177,4 +183,3 @@ const styles = StyleSheet.create({
     height: 20,
   },
 });
-

@@ -1,7 +1,7 @@
 export default {
   bg: '#12091A', // deep plum
-  surface: 'rgba(255,255,255,0.06)',
-  surfaceAlt: 'rgba(255,255,255,0.08)',
+  surface: 'rgba(0,0,0,0.35)', // darker background for better text readability
+  surfaceAlt: 'rgba(0,0,0,0.35)', // same as surface - kept for backwards compatibility
   text: '#F1E7FF',
   textDim: 'rgba(241,231,255,0.7)',
   border: 'rgba(255,255,255,0.12)',

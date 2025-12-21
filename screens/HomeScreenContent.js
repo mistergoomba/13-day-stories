@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle, Path } from 'react-native-svg';
 import colors from '../theme/colors';
 import { type, headerFontFamily } from '../theme/typography';
-import { mainButton, getButtonStyleFromColors } from '../theme/buttons';
+import { homePrimaryButton, homeSecondaryButton } from '../theme/buttons';
 import Card from '../components/Card';
 import SectionCard from '../components/SectionCard';
 import SectionHeader from '../components/SectionHeader';
@@ -34,15 +34,9 @@ export default function HomeScreenContent({
     accent: '#cd95c8',
   };
 
-  // Generate button styles from the extracted colors
-  const buttonStyle = getButtonStyleFromColors(defaultBackgroundColors);
-
-  // Create a lighter button style for secondary buttons
-  const lighterButtonStyle = {
-    ...buttonStyle,
-    backgroundColor: defaultBackgroundColors.secondary,
-    opacity: 0.7,
-  };
+  // Use gold primary button and ghost secondary button for home screen
+  const primaryButtonStyle = homePrimaryButton.button;
+  const secondaryButtonStyle = homeSecondaryButton.button;
 
   return (
     <View style={styles.container}>
@@ -68,42 +62,38 @@ export default function HomeScreenContent({
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           <Card style={{ marginBottom: 50 }}>
             <Text style={[styles.body, { marginBottom: 0 }]}>
-              Welcome to 13-Day Stories, a journey through the sacred cycles of the Mayan calendar.
-              {'\n\n'}
-              This app is deeply influenced by ancient Mayan wisdom—a timekeeping system that has
-              guided indigenous communities for thousands of years. The Mayan calendar is not just a
-              way to mark time, but a sacred framework for understanding the rhythms of life, the
-              cycles of nature, and the patterns that shape our personal and collective journeys.
+              13-Day Stories is an invitation to step out of the linear rush and into the sacred
+              cycles of the Mayan Calendar. Influenced by ancient wisdom, this framework helps you
+              align with the rhythms of nature, understand the "weather" of your soul, and navigate
+              your life with deeper intention.
             </Text>
           </Card>
 
-          <SectionCard headerText='Daily Energy'>
+          <SectionCard headerText='The Energy of Now'>
             <Text style={styles.body}>
-              Every day carries a unique energy, guided by a combination of a number (1-13) and a
-              nawal, or day sign, creating a distinct vibrational quality that offers insight,
-              guidance, and reflection.
+              Just as the weather changes, so does the energetic vibration of each day. By knowing
+              the Day Sign and Tone, you can move with the current rather than against it.
             </Text>
 
             <Pressable
-              style={[buttonStyle, styles.energyButton]}
+              style={[primaryButtonStyle, styles.energyButton]}
               onPress={() => setCurrentView && setCurrentView('Today')}
             >
-              <Text style={styles.energyButtonText}>Read Today's Energy</Text>
+              <Text style={styles.energyButtonText}>Align with Today</Text>
               <Svg width={25} height={25} viewBox='0 0 24 24' fill='none'>
-                <Path d='M8 4L18 12L8 20V4Z' fill={colors.text} />
+                <Path d='M8 4L18 12L8 20V4Z' fill='#2D1B4E' />
               </Svg>
             </Pressable>
           </SectionCard>
 
-          <SectionCard headerText='The 13 Day Cycle'>
+          <SectionCard headerText='The 13-Day Journey'>
             <Text style={styles.body}>
-              A trecena is a 13-day cycle in the Mayan calendar. The energy of the cycle is guided
-              by the nawal sign of the first day. This journey guides you through all 13 days,
-              revealing the story and wisdom that unfolds as the cycle progresses.
+              Life unfolds in waves. This interactive story follows the current "Trecena" (13-day
+              cycle), guiding you through a narrative of growth from seed to harvest.
             </Text>
 
             <Pressable
-              style={[buttonStyle, styles.energyButton]}
+              style={[primaryButtonStyle, styles.energyButton]}
               onPress={() => {
                 if (setSelectedDay && setCurrentView) {
                   const todayMayan = getTodayMayanDateSync();
@@ -114,12 +104,12 @@ export default function HomeScreenContent({
             >
               <Text style={styles.energyButtonText}>Read Today's Chapter</Text>
               <Svg width={25} height={25} viewBox='0 0 24 24' fill='none'>
-                <Path d='M8 4L18 12L8 20V4Z' fill={colors.text} />
+                <Path d='M8 4L18 12L8 20V4Z' fill='#2D1B4E' />
               </Svg>
             </Pressable>
 
             <Pressable
-              style={[lighterButtonStyle, styles.secondaryStoryButton]}
+              style={[secondaryButtonStyle, styles.secondaryStoryButton]}
               onPress={() => {
                 if (setSelectedDay && setCurrentView) {
                   setSelectedDay(null);
@@ -130,25 +120,23 @@ export default function HomeScreenContent({
                 }
               }}
             >
-              <Text style={styles.secondaryStoryButtonText}>Read From the Start</Text>
+              <Text style={styles.secondaryStoryButtonText}>Start from Day 1</Text>
             </Pressable>
           </SectionCard>
 
-          <SectionCard headerText='Find Your Mayan Birthday'>
+          <SectionCard headerText='Your Soul Blueprint'>
             <Text style={styles.body}>
-              Each person has a unique Mayan birthday—the combination of a number (1-13) and a nawal
-              sign that corresponds to your birth date. This combination reveals your personal
-              energy, offering insight into your character, strengths, and the path you walk through
-              life.
+              You were born with a unique energetic signature. Discover your Mayan Birthday to
+              reveal your strengths, your challenges, and the path you were destined to walk.
             </Text>
 
             <Pressable
-              style={[buttonStyle, styles.energyButton]}
+              style={[primaryButtonStyle, styles.energyButton]}
               onPress={() => handlePersonalNavigation && handlePersonalNavigation()}
             >
-              <Text style={styles.energyButtonText}>Convert Your Birth Date</Text>
+              <Text style={styles.energyButtonText}>Reveal My Sign</Text>
               <Svg width={25} height={25} viewBox='0 0 24 24' fill='none'>
-                <Path d='M8 4L18 12L8 20V4Z' fill={colors.text} />
+                <Path d='M8 4L18 12L8 20V4Z' fill='#2D1B4E' />
               </Svg>
             </Pressable>
           </SectionCard>
@@ -213,14 +201,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 16,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
     marginTop: 16,
   },
   energyButtonText: {
     ...type.body,
-    color: colors.text,
+    ...homePrimaryButton.text,
     fontSize: 16,
-    fontWeight: '600',
   },
   storySection: {
     marginTop: 8,
@@ -239,10 +227,12 @@ const styles = StyleSheet.create({
   },
   storyButtonText: {
     ...type.subtitle,
-    ...mainButton.text,
+    color: colors.text,
+    fontWeight: '600',
   },
   secondaryStoryButton: {
-    padding: 16,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
     marginTop: 12,
     marginBottom: 12,
     alignItems: 'center',
@@ -250,6 +240,6 @@ const styles = StyleSheet.create({
   },
   secondaryStoryButtonText: {
     ...type.body,
-    ...mainButton.text,
+    ...homeSecondaryButton.text,
   },
 });

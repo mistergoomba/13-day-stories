@@ -667,12 +667,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   availableDay: {
-    backgroundColor: colors.surfaceAlt,
+    backgroundColor: colors.surface,
     borderColor: colors.border,
   },
   unavailableDay: {
-    backgroundColor: 'rgba(255,255,255,0.02)',
-    borderColor: 'rgba(255,255,255,0.05)',
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    opacity: 0.5, // Dim unavailable days but keep same background color
   },
   todayCard: {
     borderColor: colors.accent,

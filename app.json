@@ -37,6 +37,7 @@
         "backgroundColor": "#12091A"
       },
       "package": "com.mistergoomba.x13daystories",
+      "versionCode": 2,
       "permissions": []
     },
     "extra": {
