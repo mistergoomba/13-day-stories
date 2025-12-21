@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Pressable, Modal } from 'react-nati
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
-import { mainButton } from '../theme/buttons';
+import { mainButton, homePrimaryButton } from '../theme/buttons';
 import Card from '../components/Card';
 import SectionCard from '../components/SectionCard';
 import SimpleHeader from '../components/SimpleHeader';
@@ -69,7 +69,7 @@ export default function PersonalScreenContent({
   };
 
   const handleFindBirthday = () => {
-    if (!selectedMonth || selectedDay === null || !selectedYear) {
+    if (selectedMonth === null || selectedDay === null || selectedYear === null) {
       // Show error or validation message
       return;
     }
@@ -115,86 +115,75 @@ export default function PersonalScreenContent({
 
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
           <View style={styles.contentSection}>
-            {/* Date Picker */}
+            {/* Date Picker - The Altar of Time */}
             <View style={styles.datePickerContainer}>
-              <View style={styles.datePickerRow}>
+              {/* Mystical Icon */}
+              <Text style={styles.mysticalIcon}>✦</Text>
+
+              {/* Connected Date Input Container */}
+              <View style={styles.dateInputContainer}>
                 {/* Month Picker */}
-                <Pressable
-                  style={[styles.datePickerButton, !selectedMonth && styles.datePickerButtonEmpty]}
-                  onPress={() => setShowMonthPicker(true)}
-                >
-                  <Text
-                    style={[
-                      styles.datePickerButtonText,
-                      !selectedMonth && styles.datePickerButtonTextEmpty,
-                    ]}
-                  >
-                    {selectedMonth !== null ? months[selectedMonth] : 'Month'}
+                <Pressable style={styles.dateInputSegment} onPress={() => setShowMonthPicker(true)}>
+                  <Text style={styles.dateInputLabel}>Month</Text>
+                  <Text style={styles.dateInputValue}>
+                    {selectedMonth !== null ? months[selectedMonth] : '—'}
                   </Text>
                 </Pressable>
+
+                {/* Vertical Divider */}
+                <View style={styles.dateInputDivider} />
 
                 {/* Day Picker */}
-                <Pressable
-                  style={[
-                    styles.datePickerButton,
-                    selectedDay === null && styles.datePickerButtonEmpty,
-                  ]}
-                  onPress={() => setShowDayPicker(true)}
-                >
-                  <Text
-                    style={[
-                      styles.datePickerButtonText,
-                      selectedDay === null && styles.datePickerButtonTextEmpty,
-                    ]}
-                  >
-                    {selectedDay !== null ? selectedDay : 'Day'}
+                <Pressable style={styles.dateInputSegment} onPress={() => setShowDayPicker(true)}>
+                  <Text style={styles.dateInputLabel}>Day</Text>
+                  <Text style={styles.dateInputValue}>
+                    {selectedDay !== null ? selectedDay : '—'}
                   </Text>
                 </Pressable>
 
+                {/* Vertical Divider */}
+                <View style={styles.dateInputDivider} />
+
                 {/* Year Picker */}
-                <Pressable
-                  style={[styles.datePickerButton, !selectedYear && styles.datePickerButtonEmpty]}
-                  onPress={() => setShowYearPicker(true)}
-                >
-                  <Text
-                    style={[
-                      styles.datePickerButtonText,
-                      !selectedYear && styles.datePickerButtonTextEmpty,
-                    ]}
-                  >
-                    {selectedYear || 'Year'}
-                  </Text>
+                <Pressable style={styles.dateInputSegment} onPress={() => setShowYearPicker(true)}>
+                  <Text style={styles.dateInputLabel}>Year</Text>
+                  <Text style={styles.dateInputValue}>{selectedYear || '—'}</Text>
                 </Pressable>
               </View>
 
-              {/* Find Birthday Button */}
+              {/* Reveal Button */}
               <Pressable
-                style={[styles.findButton, !isDateValid && styles.findButtonDisabled]}
+                style={styles.revealButton}
                 onPress={handleFindBirthday}
                 disabled={!isDateValid}
               >
-                <Text
-                  style={[styles.findButtonText, !isDateValid && styles.findButtonTextDisabled]}
-                >
-                  Find Your Mayan Birthday
-                </Text>
+                <Text style={styles.revealButtonText}>Reveal My Sign</Text>
               </Pressable>
             </View>
 
-            <SectionCard headerText='Find Your Mayan Birthday'>
+            <SectionCard headerText='Your Cosmic Origin'>
               <Text style={styles.introText}>
-                The Mayan calendar is a sacred 260-day cycle that combines 13 tones (numbers 1-13)
-                with 20 day signs (nawales). Each day represents a unique combination of tone and
-                sign, creating a distinct energetic quality.
+                You were not born at a random moment. You arrived on a day with a specific energy, a
+                "Nawal" that has influenced your character, your strengths, and your path since your
+                first breath. Enter your date of birth to discover the ancient sign that guides your
+                spirit.
               </Text>
+            </SectionCard>
+
+            <SectionCard headerText='What is a Mayan Birthday?'>
               <Text style={styles.introText}>
-                The tones cycle from 1 to 13, while the signs cycle through 20 different nawales.
-                Together, they create a complete cycle of 260 days. Each 13-day period is called a
-                trecena, named after the sign on Day 1.
-              </Text>
-              <Text style={styles.introText}>
-                Enter your birthday above to discover your Mayan calendar day sign and receive
-                personalized insights based on your birth energy.
+                Unlike the 365-day calendar we use to track the seasons, the Tzolkin (Sacred
+                Calendar) is a 260-day cycle that tracks the rhythm of creation itself. It is not
+                just about time; it is about energy.
+                {'\n\n'}
+                Your Mayan Sign is composed of two parts:
+                {'\n\n'}• The Number (1-13): This represents your "tone" or potential—how you
+                express power and intent.
+                {'\n\n'}• The Nawal (Day Sign): One of 20 ancient archetypes (like the Rabbit, the
+                Storm, or the Seed) that represents your character and spirit animal.
+                {'\n\n'}
+                Together, they form your Galactic Signature—a map of your soul’s purpose, your
+                innate strengths, and the challenges you are here to master.
               </Text>
             </SectionCard>
           </View>
@@ -335,50 +324,78 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   datePickerContainer: {
-    marginTop: 24,
     marginBottom: 24,
+    alignItems: 'center',
   },
-  datePickerRow: {
+  mysticalIcon: {
+    fontSize: 32,
+    color: 'rgba(249, 228, 183, 0.6)',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  dateInputContainer: {
     flexDirection: 'row',
-    gap: 12,
+    width: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    borderRadius: 12,
+    borderWidth: 1.5,
+    borderColor: 'rgba(249, 228, 183, 0.25)',
+    overflow: 'hidden',
     marginBottom: 24,
+    minHeight: 80,
   },
-  datePickerButton: {
-    ...mainButton.button,
+  dateInputSegment: {
     flex: 1,
-    padding: 18,
+    padding: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 60,
   },
-  datePickerButtonEmpty: {
-    // No opacity change - buttons should always look enabled
+  dateInputDivider: {
+    width: 1,
+    backgroundColor: 'rgba(249, 228, 183, 0.2)',
+    marginVertical: 12,
   },
-  datePickerButtonText: {
+  dateInputLabel: {
+    ...type.body,
+    fontSize: 11,
+    color: 'rgba(249, 228, 183, 0.6)',
+    marginBottom: 6,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  dateInputValue: {
     ...type.subtitle,
-    ...mainButton.text,
-    fontSize: 16,
+    fontSize: 20,
+    fontWeight: '600',
+    color: colors.text,
+    textAlign: 'center',
   },
-  datePickerButtonTextEmpty: {
-    color: colors.textDim,
+  dateInputValueEmpty: {
+    color: 'rgba(249, 228, 183, 0.4)',
+    fontSize: 18,
   },
-  findButton: {
-    ...mainButton.button,
+  revealButton: {
+    ...homePrimaryButton.button,
     padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
+    marginBottom: 24,
   },
-  findButtonDisabled: {
-    opacity: 0.5,
+  revealButtonActive: {
+    opacity: 1,
   },
-  findButtonText: {
+  revealButtonDisabled: {
+    opacity: 0.4,
+  },
+  revealButtonText: {
     ...type.subtitle,
-    ...mainButton.text,
+    ...homePrimaryButton.text,
     fontSize: 18,
     fontWeight: '600',
   },
-  findButtonTextDisabled: {
-    color: colors.textDim,
+  revealButtonTextDisabled: {
+    color: 'rgba(45, 27, 78, 0.5)',
   },
   modalOverlay: {
     flex: 1,

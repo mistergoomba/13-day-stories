@@ -500,38 +500,44 @@ export async function getDayData(mayanDate, priorityImageTypes = 'horoscope') {
     imagePaths[imageType] = priorityImages[index];
   });
 
-  // Lazy load other images in background (don't await - return immediately)
-  // Images will be cached and available when components need them
-  const imageTypes = [
-    'horoscope',
-    'affirmation',
-    'birthday',
-    'story_primary',
-    'story_wide_1',
-    'story_wide_2',
-  ];
-  const imagesToLoad = imageTypes.filter((type) => !priorityTypes.includes(type));
+  // Only lazy load other images if we're NOT in birthday-only mode
+  // When priorityImageTypes is 'birthday', we only need the birthday image
+  const isBirthdayOnly = priorityTypes.length === 1 && priorityTypes[0] === 'birthday';
+  
+  if (!isBirthdayOnly) {
+    // Lazy load other images in background (don't await - return immediately)
+    // Images will be cached and available when components need them
+    const imageTypes = [
+      'horoscope',
+      'affirmation',
+      'birthday',
+      'story_primary',
+      'story_wide_1',
+      'story_wide_2',
+    ];
+    const imagesToLoad = imageTypes.filter((type) => !priorityTypes.includes(type));
 
-  // Start loading other images in parallel (fire and forget)
-  Promise.all(
-    imagesToLoad.map(async (imageType) => {
-      try {
-        return await getImagePath(trecenaKey, mayanDate.tone, imageType);
-      } catch (error) {
-        console.warn(`Failed to lazy load ${imageType} image:`, error);
-        return null;
-      }
-    })
-  )
-    .then((loadedImages) => {
-      // Update imagePaths when loaded (images are cached, so getImagePath will return them quickly)
-      imagesToLoad.forEach((imageType, index) => {
-        imagePaths[imageType] = loadedImages[index];
+    // Start loading other images in parallel (fire and forget)
+    Promise.all(
+      imagesToLoad.map(async (imageType) => {
+        try {
+          return await getImagePath(trecenaKey, mayanDate.tone, imageType);
+        } catch (error) {
+          console.warn(`Failed to lazy load ${imageType} image:`, error);
+          return null;
+        }
+      })
+    )
+      .then((loadedImages) => {
+        // Update imagePaths when loaded (images are cached, so getImagePath will return them quickly)
+        imagesToLoad.forEach((imageType, index) => {
+          imagePaths[imageType] = loadedImages[index];
+        });
+      })
+      .catch((error) => {
+        console.warn('Error during lazy image loading:', error);
       });
-    })
-    .catch((error) => {
-      console.warn('Error during lazy image loading:', error);
-    });
+  }
 
   return {
     ...dayDataWithoutPrompts,

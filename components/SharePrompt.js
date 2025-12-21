@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Platform } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
@@ -7,7 +7,7 @@ import { type } from '../theme/typography';
 /**
  * SharePrompt Component
  * Displays micro-copy text and a share button to encourage sharing
- * 
+ *
  * @param {string} microCopy - The psychological trigger text above the button
  * @param {string} buttonText - The action button text
  * @param {Function} onShare - Function to call when share button is pressed
@@ -21,7 +21,7 @@ export default function SharePrompt({ microCopy, buttonText, onShare }) {
     <View style={styles.container}>
       {/* Micro-copy text */}
       <Text style={styles.microCopy}>{microCopy}</Text>
-      
+
       {/* Share button */}
       <Pressable onPress={onShare} style={styles.shareButton}>
         <Svg width={20} height={20} viewBox='0 0 24 24' fill='none' style={styles.shareIcon}>
@@ -47,11 +47,16 @@ const styles = StyleSheet.create({
   },
   microCopy: {
     ...type.body,
-    color: colors.textDim,
+    color: colors.text,
     fontSize: 14,
     textAlign: 'center',
     marginBottom: 12,
     lineHeight: 20,
+    fontWeight: '800',
+    // Dark shadow/glow for better visibility and pop
+    textShadowColor: 'rgba(0, 0, 0, 0.8)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 8,
   },
   shareButton: {
     flexDirection: 'row',
@@ -62,6 +67,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     borderRadius: 12,
     minWidth: 160,
+    // Dark outer glow/shadow to help button pop
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.6,
+    shadowRadius: 12,
+    elevation: 8,
   },
   shareIcon: {
     marginRight: 8,
@@ -73,4 +84,3 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
-

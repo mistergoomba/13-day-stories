@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { View, Text, StyleSheet, Pressable, Dimensions, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Dimensions, ScrollView, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Rect, Path } from 'react-native-svg';
 import Card from '../components/Card';
+import SectionCard from '../components/SectionCard';
 import SimpleHeader from '../components/SimpleHeader';
 import DynamicBackground from '../components/DynamicBackground';
 import ImageWithPlaceholder from '../components/ImageWithPlaceholder';
@@ -20,7 +21,7 @@ import {
   getBackgroundColors,
   getTrecenaData,
 } from '../utils/calendarUtils';
-import { getButtonStyleFromColors } from '../theme/buttons';
+import { getButtonStyleFromColors, homePrimaryButton } from '../theme/buttons';
 import { shareStoryChapter } from '../utils/shareUtils';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -205,43 +206,15 @@ function DayDetailView({
             source={dayData?.images?.story_primary}
             type='square'
             flushTop={true}
+            flushBottom={true}
           />
 
           {/* Chapter Header */}
           <View style={[styles.contentSection, styles.contentSectionBeforeImage]}>
-            <View style={styles.chapterTitleRow}>
-              <Text style={styles.chapterTitle}>Chapter {dayNumber}</Text>
-              <Pressable
-                onPress={onBack}
-                style={[
-                  styles.fullStoryButton,
-                  storyPrimaryColors && getButtonStyleFromColors(storyPrimaryColors),
-                ]}
-              >
-                <Svg
-                  width={16}
-                  height={16}
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  style={styles.fullStoryIcon}
-                >
-                  {/* Bulleted list icon - 4 rows with bullets and lines */}
-                  {/* Row 1 */}
-                  <Rect x='3' y='5' width='3' height='3' fill={colors.accent} />
-                  <Rect x='8' y='6' width='11' height='1.5' fill={colors.accent} />
-                  {/* Row 2 */}
-                  <Rect x='3' y='9' width='3' height='3' fill={colors.accent} />
-                  <Rect x='8' y='10' width='11' height='1.5' fill={colors.accent} />
-                  {/* Row 3 */}
-                  <Rect x='3' y='13' width='3' height='3' fill={colors.accent} />
-                  <Rect x='8' y='14' width='11' height='1.5' fill={colors.accent} />
-                  {/* Row 4 */}
-                  <Rect x='3' y='17' width='3' height='3' fill={colors.accent} />
-                  <Rect x='8' y='18' width='11' height='1.5' fill={colors.accent} />
-                </Svg>
-                <Text style={styles.fullStoryText}>Full story</Text>
-              </Pressable>
-            </View>
+            <Text style={styles.chapterNumber}>Chapter {dayNumber}</Text>
+            <Text style={styles.chapterTitle}>
+              {dayData.energy_of_the_day?.combined_energy?.title || `Chapter ${dayNumber}`}
+            </Text>
 
             {/* Chapter Text - Block 1 (before first image) */}
             <Card style={styles.cardBeforeImage}>
@@ -320,31 +293,23 @@ function DayDetailView({
                     {previousDay?.tone || dayNumber - 1}
                   </Text>
                 </Pressable>
-                <View style={styles.iconCircle}>
+                <Pressable onPress={handleFullStory} style={styles.iconCircle}>
                   <Svg width={24} height={24} viewBox='0 0 24 24' fill='none'>
-                    {/* Left page, angled */}
-                    <Path
-                      d='M4 12.5L11.5 14V22L4 21.5V12.5Z'
-                      stroke='currentColor'
-                      strokeWidth={2}
-                      strokeLinejoin='round'
-                    />
-                    {/* Right page, angled */}
-                    <Path
-                      d='M20 12.5L12.5 14V22L20 21.5V12.5Z'
-                      stroke='currentColor'
-                      strokeWidth={2}
-                      strokeLinejoin='round'
-                    />
-                    {/* Heart floating above the book */}
-                    <Path
-                      d='M8 3C8 1.7 9.1 0.6 10.5 0.6C11.2 0.6 11.9 1 12.3 1.6C12.7 1 13.4 0.6 14.1 0.6C15.5 0.6 16.6 1.7 16.6 3C16.6 5.2 14.7 6.8 12.3 8.4C9.9 6.8 8 5.2 8 3Z'
-                      stroke='currentColor'
-                      strokeWidth={2}
-                      strokeLinejoin='round'
-                    />
+                    {/* Bulleted list icon - 4 rows with bullets and lines */}
+                    {/* Row 1 */}
+                    <Rect x='3' y='5' width='3' height='3' fill={colors.accent} />
+                    <Rect x='8' y='6' width='11' height='1.5' fill={colors.accent} />
+                    {/* Row 2 */}
+                    <Rect x='3' y='9' width='3' height='3' fill={colors.accent} />
+                    <Rect x='8' y='10' width='11' height='1.5' fill={colors.accent} />
+                    {/* Row 3 */}
+                    <Rect x='3' y='13' width='3' height='3' fill={colors.accent} />
+                    <Rect x='8' y='14' width='11' height='1.5' fill={colors.accent} />
+                    {/* Row 4 */}
+                    <Rect x='3' y='17' width='3' height='3' fill={colors.accent} />
+                    <Rect x='8' y='18' width='11' height='1.5' fill={colors.accent} />
                   </Svg>
-                </View>
+                </Pressable>
                 <Pressable
                   onPress={handleNextDay}
                   disabled={!canGoNext}
@@ -391,6 +356,7 @@ export default function JourneyScreenContent({
   const [allDays, setAllDays] = useState([]);
   const [trecenaData, setTrecenaData] = useState(null);
   const [prologueExpanded, setPrologueExpanded] = useState(false);
+  const [trecenaExpanded, setTrecenaExpanded] = useState(false);
   const [loading, setLoading] = useState(true);
 
   // Load trecena data - reload when todayMayan changes (via resetToTodayTrigger)
@@ -521,19 +487,30 @@ export default function JourneyScreenContent({
           </View>
         ) : (
           <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-            <View style={styles.contentSection}>
-              <Card>
-                <Text style={styles.trecenaTitle}>{trecenaData.trecena} Trecena</Text>
-                <Text style={styles.trecenaSubtitle}>
+            {/* Trecena Section */}
+            <View style={[styles.contentSection, styles.firstSection]}>
+              <SectionCard headerText={`${trecenaData.trecena} Trecena`}>
+                <Text
+                  style={styles.trecenaSubtitle}
+                  numberOfLines={trecenaExpanded ? undefined : 3}
+                  ellipsizeMode='tail'
+                >
                   {trecenaData.days[0]?.energy_of_the_day?.nawal?.content || ''}
                 </Text>
-              </Card>
+                <Pressable
+                  style={styles.readMoreButton}
+                  onPress={() => setTrecenaExpanded(!trecenaExpanded)}
+                >
+                  <Text style={styles.readMoreText}>
+                    {trecenaExpanded ? 'Read less' : 'Read more'}
+                  </Text>
+                </Pressable>
+              </SectionCard>
             </View>
 
             {/* Prologue Section */}
             <View style={styles.contentSection}>
-              <Card>
-                <Text style={styles.sectionTitle}>Prologue</Text>
+              <SectionCard headerText='Prologue'>
                 <Text
                   style={styles.prologueText}
                   numberOfLines={prologueExpanded ? undefined : 2}
@@ -549,52 +526,110 @@ export default function JourneyScreenContent({
                     {prologueExpanded ? 'Read less' : 'Read more'}
                   </Text>
                 </Pressable>
-              </Card>
+              </SectionCard>
             </View>
 
-            {/* Days List */}
+            {/* Days List - Timeline View */}
             <View style={styles.contentSection}>
-              <Card>
-                <Text style={styles.sectionTitle}>Chapters</Text>
-                {allDays.map((day) => {
-                  const dayMayanDate = { ...todayMayan, tone: day.number };
-                  const available = isDayAvailable(dayMayanDate);
-                  const isToday = day.number === todayMayan.tone;
+              <SectionCard headerText='Chapters'>
+                <View style={styles.timelineContainer}>
+                  {/* Vertical Timeline Line */}
+                  <View style={styles.timelineLine} />
 
-                  return (
-                    <Pressable
-                      key={day.day}
-                      style={[
-                        styles.dayCard,
-                        available ? styles.availableDay : styles.unavailableDay,
-                        isToday && styles.todayCard,
-                      ]}
-                      onPress={() => available && setSelectedDay(dayMayanDate)}
-                      disabled={!available}
-                    >
-                      <View style={styles.dayCardHeader}>
-                        <Text
+                  {allDays.map((day, index) => {
+                    const dayMayanDate = { ...todayMayan, tone: day.number };
+                    const available = isDayAvailable(dayMayanDate);
+                    const isToday = day.number === todayMayan.tone;
+                    const isPast = available && day.number < todayMayan.tone;
+                    const isFuture = !available || day.number > todayMayan.tone;
+
+                    return (
+                      <View key={day.day} style={styles.timelineItem}>
+                        {/* Timeline Node */}
+                        <View style={styles.timelineNodeContainer}>
+                          {isPast ? (
+                            <View style={styles.timelineNodePast}>
+                              <Svg width={16} height={16} viewBox='0 0 24 24' fill='none'>
+                                <Path
+                                  d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z'
+                                  fill={colors.accent}
+                                />
+                              </Svg>
+                            </View>
+                          ) : isToday ? (
+                            <View style={styles.timelineNodeActive}>
+                              <View style={styles.timelineNodeActiveInner} />
+                            </View>
+                          ) : (
+                            <View style={styles.timelineNodeFuture}>
+                              <Svg width={16} height={16} viewBox='0 0 24 24' fill='none'>
+                                <Path
+                                  d='M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z'
+                                  fill={colors.textDim}
+                                  fillOpacity={0.5}
+                                />
+                              </Svg>
+                            </View>
+                          )}
+                        </View>
+
+                        {/* Chapter Card */}
+                        <Pressable
                           style={[
-                            styles.dayNumber,
-                            available ? styles.availableText : styles.unavailableText,
-                            isToday && styles.todayText,
+                            styles.dayCard,
+                            isPast && styles.pastDay,
+                            isToday && styles.todayCard,
+                            isFuture && styles.futureDay,
                           ]}
+                          onPress={() => available && setSelectedDay(dayMayanDate)}
+                          disabled={!available}
                         >
-                          Chapter {day.day}
-                        </Text>
-                        <Text
-                          style={[
-                            styles.dayNawal,
-                            available ? styles.availableText : styles.unavailableText,
-                          ]}
-                        >
-                          {day.nawal} {day.number}
-                        </Text>
+                          <View style={styles.dayCardContent}>
+                            <View style={styles.dayCardLeft}>
+                              <Text
+                                style={[styles.dayNumberLarge, isToday && styles.todayNumberText]}
+                              >
+                                {day.number}
+                              </Text>
+                            </View>
+                            <View style={styles.dayCardMiddle}>
+                              <Text
+                                style={[
+                                  styles.dayNawalName,
+                                  isToday && styles.todayNawalText,
+                                  isFuture && styles.futureText,
+                                ]}
+                              >
+                                {day.energy_of_the_day?.combined_energy?.title || day.nawal}
+                              </Text>
+                            </View>
+                            <View style={styles.dayCardRight}>
+                              {isPast && (
+                                <Svg width={20} height={20} viewBox='0 0 24 24' fill='none'>
+                                  <Path
+                                    d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z'
+                                    fill={colors.accent}
+                                    fillOpacity={0.7}
+                                  />
+                                </Svg>
+                              )}
+                              {isFuture && (
+                                <Svg width={20} height={20} viewBox='0 0 24 24' fill='none'>
+                                  <Path
+                                    d='M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z'
+                                    fill={colors.textDim}
+                                    fillOpacity={0.5}
+                                  />
+                                </Svg>
+                              )}
+                            </View>
+                          </View>
+                        </Pressable>
                       </View>
-                    </Pressable>
-                  );
-                })}
-              </Card>
+                    );
+                  })}
+                </View>
+              </SectionCard>
             </View>
           </View>
         )}
@@ -623,22 +658,37 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 20,
   },
+  firstSection: {
+    paddingTop: 20,
+  },
   contentSectionBeforeImage: {
     paddingBottom: 0,
   },
   cardBeforeImage: {
     marginBottom: 0,
   },
+  trecenaHeader: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 16,
+  },
+  trecenaHeaderContent: {
+    flex: 1,
+  },
+  trecenaIconContainer: {
+    paddingTop: 4,
+  },
   trecenaTitle: {
     ...type.title,
     color: colors.text,
-    textAlign: 'center',
+    textAlign: 'left',
     marginBottom: 4,
   },
   trecenaSubtitle: {
     ...type.body,
     color: colors.textDim,
-    textAlign: 'center',
+    textAlign: 'left',
+    lineHeight: 24,
   },
   sectionTitle: {
     ...type.subtitle,
@@ -660,49 +710,134 @@ const styles = StyleSheet.create({
     color: colors.accent,
     fontWeight: '600',
   },
-  dayCard: {
-    padding: 16,
+  timelineContainer: {
+    position: 'relative',
+    paddingLeft: 24,
+    marginTop: 8,
+  },
+  timelineLine: {
+    position: 'absolute',
+    left: 11,
+    top: 0,
+    width: 2,
+    backgroundColor: colors.border,
+    opacity: 0.3,
+    // Height will be calculated dynamically - using a large value to cover all chapters
+    // (13 chapters * ~100px each = ~1300px, adding buffer)
+    height: 1500,
+  },
+  timelineItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 12,
-    borderRadius: 12,
-    borderWidth: 1,
+    position: 'relative',
   },
-  availableDay: {
+  timelineNodeContainer: {
+    position: 'absolute',
+    left: -24,
+    width: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1,
+  },
+  timelineNodePast: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
     backgroundColor: colors.surface,
-    borderColor: colors.border,
-  },
-  unavailableDay: {
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    opacity: 0.5, // Dim unavailable days but keep same background color
-  },
-  todayCard: {
+    borderWidth: 2,
     borderColor: colors.accent,
-    shadowColor: colors.glow,
-    shadowOpacity: 0.8,
-    shadowRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  timelineNodeActive: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: homePrimaryButton.button.backgroundColor,
+    borderWidth: 3,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: homePrimaryButton.button.backgroundColor,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.5,
+    shadowRadius: 8,
     elevation: 5,
   },
-  dayCardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  timelineNodeActiveInner: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: '#2D1B4E',
+  },
+  timelineNodeFuture: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    borderColor: colors.border,
+    opacity: 0.5,
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  dayNumber: {
-    ...type.subtitle,
+  dayCard: {
+    flex: 1,
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    marginLeft: 8,
+  },
+  pastDay: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    opacity: 0.6,
+  },
+  todayCard: {
+    ...homePrimaryButton.button,
+    borderWidth: 1,
+  },
+  futureDay: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    opacity: 0.5,
+  },
+  dayCardContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  dayCardLeft: {
+    minWidth: 40,
+  },
+  dayNumberLarge: {
+    ...type.title,
+    fontSize: 32,
     fontWeight: '700',
+    color: colors.text,
   },
-  dayNawal: {
-    ...type.body,
+  dayCardMiddle: {
+    flex: 1,
+  },
+  dayNawalName: {
+    ...type.subtitle,
     fontWeight: '600',
-  },
-  availableText: {
     color: colors.text,
   },
-  unavailableText: {
+  dayCardRight: {
+    width: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  todayNumberText: {
+    color: '#2D1B4E',
+  },
+  todayNawalText: {
+    color: '#2D1B4E',
+  },
+  futureText: {
     color: 'rgba(255,255,255,0.3)',
-  },
-  todayText: {
-    color: colors.text,
   },
   // Detail view styles
   navigationHeader: {
@@ -762,19 +897,33 @@ const styles = StyleSheet.create({
     marginVertical: 24,
     opacity: 0.3,
   },
-  chapterTitleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+  chapterNumber: {
+    ...type.body,
+    color: colors.text,
+    fontSize: 14,
+    textAlign: 'center',
     marginTop: 16,
-    marginBottom: 16,
+    marginBottom: 4,
+    lineHeight: 20,
+    fontWeight: '800',
+    // Dark shadow/glow for better visibility on lighter backgrounds
+    textShadowColor: 'rgba(0, 0, 0, 0.8)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 8,
   },
   chapterTitle: {
     ...type.title,
     fontFamily: headerFontFamily,
     color: colors.text,
     fontSize: 28,
-    flex: 1,
+    marginBottom: 16,
+    textAlign: 'center',
+    // Dark shadow/glow for better visibility on lighter backgrounds
+    textShadowColor: 'rgba(0, 0, 0, 0.8)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 8,
+    // On Android, remove fontWeight - BlackChancery font doesn't support explicit weights
+    ...(Platform.OS === 'android' && { fontWeight: undefined }),
   },
   journeyIconButton: {
     padding: 8,

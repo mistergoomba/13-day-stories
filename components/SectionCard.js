@@ -15,7 +15,7 @@ export default function SectionCard({ headerText, children, style }) {
 
 const styles = StyleSheet.create({
   sectionContainer: {
-    marginBottom: 50,
+    marginBottom: 20,
   },
   sectionHeader: {
     ...type.title,

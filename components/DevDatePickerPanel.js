@@ -142,7 +142,7 @@ export default function DevDatePickerPanel({
   };
 
   const handleDateSave = () => {
-    if (!selectedMonth || selectedDay === null || !selectedYear) {
+    if (selectedMonth === null || selectedDay === null || selectedYear === null) {
       return;
     }
 
@@ -241,49 +241,28 @@ export default function DevDatePickerPanel({
 
                 <View style={styles.datePickerRow}>
                   <Pressable
-                    style={[
-                      styles.datePickerButton,
-                      !selectedMonth && styles.datePickerButtonEmpty,
-                    ]}
+                    style={styles.datePickerButton}
                     onPress={() => setShowMonthPicker(true)}
                   >
-                    <Text
-                      style={[
-                        styles.datePickerButtonText,
-                        !selectedMonth && styles.datePickerButtonTextEmpty,
-                      ]}
-                    >
+                    <Text style={styles.datePickerButtonText}>
                       {selectedMonth !== null ? months[selectedMonth] : 'Month'}
                     </Text>
                   </Pressable>
 
                   <Pressable
-                    style={[
-                      styles.datePickerButton,
-                      selectedDay === null && styles.datePickerButtonEmpty,
-                    ]}
+                    style={styles.datePickerButton}
                     onPress={() => setShowDayPicker(true)}
                   >
-                    <Text
-                      style={[
-                        styles.datePickerButtonText,
-                        selectedDay === null && styles.datePickerButtonTextEmpty,
-                      ]}
-                    >
+                    <Text style={styles.datePickerButtonText}>
                       {selectedDay !== null ? selectedDay : 'Day'}
                     </Text>
                   </Pressable>
 
                   <Pressable
-                    style={[styles.datePickerButton, !selectedYear && styles.datePickerButtonEmpty]}
+                    style={styles.datePickerButton}
                     onPress={() => setShowYearPicker(true)}
                   >
-                    <Text
-                      style={[
-                        styles.datePickerButtonText,
-                        !selectedYear && styles.datePickerButtonTextEmpty,
-                      ]}
-                    >
+                    <Text style={styles.datePickerButtonText}>
                       {selectedYear || 'Year'}
                     </Text>
                   </Pressable>
@@ -315,36 +294,20 @@ export default function DevDatePickerPanel({
 
                   {/* Tone Picker */}
                   <Pressable
-                    style={[
-                      styles.datePickerButton,
-                      selectedTone === null && styles.datePickerButtonEmpty,
-                    ]}
+                    style={styles.datePickerButton}
                     onPress={() => setShowTonePickerModal(true)}
                   >
-                    <Text
-                      style={[
-                        styles.datePickerButtonText,
-                        selectedTone === null && styles.datePickerButtonTextEmpty,
-                      ]}
-                    >
+                    <Text style={styles.datePickerButtonText}>
                       {selectedTone !== null ? selectedTone : 'Number'}
                     </Text>
                   </Pressable>
 
                   {/* Nawal Picker */}
                   <Pressable
-                    style={[
-                      styles.datePickerButton,
-                      !selectedNawal && styles.datePickerButtonEmpty,
-                    ]}
+                    style={styles.datePickerButton}
                     onPress={() => setShowNawalPickerModal(true)}
                   >
-                    <Text
-                      style={[
-                        styles.datePickerButtonText,
-                        !selectedNawal && styles.datePickerButtonTextEmpty,
-                      ]}
-                    >
+                    <Text style={styles.datePickerButtonText}>
                       {selectedNawal || 'Nawal'}
                     </Text>
                   </Pressable>

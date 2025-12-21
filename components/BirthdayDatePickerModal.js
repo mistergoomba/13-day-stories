@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Modal, Animated, Dimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { mainButton } from '../theme/buttons';
+import { mainButton, homePrimaryButton } from '../theme/buttons';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
 
@@ -117,7 +117,7 @@ export default function BirthdayDatePickerModal({
   };
 
   const handleSave = () => {
-    if (!selectedMonth || selectedDay === null || !selectedYear) {
+    if (selectedMonth === null || selectedDay === null || selectedYear === null) {
       // Show error or validation message
       return;
     }
@@ -168,70 +168,70 @@ export default function BirthdayDatePickerModal({
 
             <ScrollView style={styles.modalScrollView} showsVerticalScrollIndicator={false}>
               <View style={styles.modalBody}>
-                <Text style={styles.datePickerLabel}>Select Your Birthday</Text>
-                
-                <View style={styles.datePickerRow}>
-                  {/* Month Picker */}
-                  <Pressable
-                    style={[styles.datePickerButton, !selectedMonth && styles.datePickerButtonEmpty]}
-                    onPress={() => setShowMonthPicker(true)}
-                  >
-                    <Text
-                      style={[
-                        styles.datePickerButtonText,
-                        !selectedMonth && styles.datePickerButtonTextEmpty,
-                      ]}
-                    >
-                      {selectedMonth !== null ? months[selectedMonth] : 'Month'}
-                    </Text>
-                  </Pressable>
+                {/* Date Picker - The Altar of Time */}
+                <View style={styles.datePickerContainer}>
+                  {/* Mystical Icon */}
+                  <Text style={styles.mysticalIcon}>✦</Text>
 
-                  {/* Day Picker */}
+                  {/* Connected Date Input Container */}
+                  <View style={styles.dateInputContainer}>
+                    {/* Month Picker */}
+                    <Pressable
+                      style={styles.dateInputSegment}
+                      onPress={() => setShowMonthPicker(true)}
+                    >
+                      <Text style={styles.dateInputLabel}>Month</Text>
+                      <Text style={styles.dateInputValue}>
+                        {selectedMonth !== null ? months[selectedMonth] : '—'}
+                      </Text>
+                    </Pressable>
+
+                    {/* Vertical Divider */}
+                    <View style={styles.dateInputDivider} />
+
+                    {/* Day Picker */}
+                    <Pressable
+                      style={styles.dateInputSegment}
+                      onPress={() => setShowDayPicker(true)}
+                    >
+                      <Text style={styles.dateInputLabel}>Day</Text>
+                      <Text style={styles.dateInputValue}>
+                        {selectedDay !== null ? selectedDay : '—'}
+                      </Text>
+                    </Pressable>
+
+                    {/* Vertical Divider */}
+                    <View style={styles.dateInputDivider} />
+
+                    {/* Year Picker */}
+                    <Pressable
+                      style={styles.dateInputSegment}
+                      onPress={() => setShowYearPicker(true)}
+                    >
+                      <Text style={styles.dateInputLabel}>Year</Text>
+                      <Text style={styles.dateInputValue}>
+                        {selectedYear || '—'}
+                      </Text>
+                    </Pressable>
+                  </View>
+
+                  {/* Save Button */}
                   <Pressable
                     style={[
-                      styles.datePickerButton,
-                      selectedDay === null && styles.datePickerButtonEmpty,
+                      styles.saveButton,
+                      isDateValid && styles.saveButtonActive,
+                      !isDateValid && styles.saveButtonDisabled,
                     ]}
-                    onPress={() => setShowDayPicker(true)}
+                    onPress={handleSave}
+                    disabled={!isDateValid}
                   >
                     <Text
-                      style={[
-                        styles.datePickerButtonText,
-                        selectedDay === null && styles.datePickerButtonTextEmpty,
-                      ]}
+                      style={[styles.saveButtonText, !isDateValid && styles.saveButtonTextDisabled]}
                     >
-                      {selectedDay !== null ? selectedDay : 'Day'}
-                    </Text>
-                  </Pressable>
-
-                  {/* Year Picker */}
-                  <Pressable
-                    style={[styles.datePickerButton, !selectedYear && styles.datePickerButtonEmpty]}
-                    onPress={() => setShowYearPicker(true)}
-                  >
-                    <Text
-                      style={[
-                        styles.datePickerButtonText,
-                        !selectedYear && styles.datePickerButtonTextEmpty,
-                      ]}
-                    >
-                      {selectedYear || 'Year'}
+                      {buttonText}
                     </Text>
                   </Pressable>
                 </View>
-
-                {/* Save Button */}
-                <Pressable
-                  style={[styles.saveButton, !isDateValid && styles.saveButtonDisabled]}
-                  onPress={handleSave}
-                  disabled={!isDateValid}
-                >
-                  <Text
-                    style={[styles.saveButtonText, !isDateValid && styles.saveButtonTextDisabled]}
-                  >
-                    {buttonText}
-                  </Text>
-                </Pressable>
               </View>
             </ScrollView>
           </Animated.View>
@@ -384,54 +384,78 @@ const styles = StyleSheet.create({
   modalBody: {
     padding: 20,
   },
-  datePickerLabel: {
-    ...type.subtitle,
-    color: colors.text,
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 16,
-  },
-  datePickerRow: {
-    flexDirection: 'row',
-    gap: 12,
+  datePickerContainer: {
     marginBottom: 24,
+    alignItems: 'center',
   },
-  datePickerButton: {
-    ...mainButton.button,
+  mysticalIcon: {
+    fontSize: 32,
+    color: 'rgba(249, 228, 183, 0.6)',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  dateInputContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    borderRadius: 12,
+    borderWidth: 1.5,
+    borderColor: 'rgba(249, 228, 183, 0.25)',
+    overflow: 'hidden',
+    marginBottom: 24,
+    minHeight: 80,
+  },
+  dateInputSegment: {
     flex: 1,
-    padding: 18,
+    padding: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 60,
   },
-  datePickerButtonEmpty: {
-    // No opacity change - buttons should always look enabled
+  dateInputDivider: {
+    width: 1,
+    backgroundColor: 'rgba(249, 228, 183, 0.2)',
+    marginVertical: 12,
   },
-  datePickerButtonText: {
+  dateInputLabel: {
+    ...type.body,
+    fontSize: 11,
+    color: 'rgba(249, 228, 183, 0.6)',
+    marginBottom: 6,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  dateInputValue: {
     ...type.subtitle,
-    ...mainButton.text,
-    fontSize: 16,
+    fontSize: 20,
+    fontWeight: '600',
+    color: colors.text,
+    textAlign: 'center',
   },
-  datePickerButtonTextEmpty: {
-    color: colors.textDim,
+  dateInputValueEmpty: {
+    color: 'rgba(249, 228, 183, 0.4)',
+    fontSize: 18,
   },
   saveButton: {
-    ...mainButton.button,
+    ...homePrimaryButton.button,
     padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
+  },
+  saveButtonActive: {
+    opacity: 1,
   },
   saveButtonDisabled: {
-    opacity: 0.5,
+    opacity: 0.4,
   },
   saveButtonText: {
     ...type.subtitle,
-    ...mainButton.text,
+    ...homePrimaryButton.text,
     fontSize: 18,
     fontWeight: '600',
   },
   saveButtonTextDisabled: {
-    color: colors.textDim,
+    color: 'rgba(45, 27, 78, 0.5)',
   },
   pickerModalOverlay: {
     flex: 1,
