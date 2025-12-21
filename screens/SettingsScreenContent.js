@@ -160,50 +160,52 @@ export default function SettingsScreenContent({
         <SimpleHeader title='Settings' onHeaderPress={onHeaderPress} />
 
         <View style={[styles.content, { paddingBottom: bottomPadding }]}>
-          {/* Premium Card */}
-          <Card>
-            <Text style={styles.sectionTitle}>Premium</Text>
-            {isPremiumUser ? (
-              <>
-                <View style={styles.premiumActiveContainer}>
-                  <Text style={styles.premiumActiveText}>✓ Premium Active</Text>
-                  <Text style={styles.premiumBenefitsText}>
-                    • Ad-free experience
-                  </Text>
-                </View>
-              </>
-            ) : (
-              <>
-                <Pressable
-                  style={[mainButton.button, styles.purchaseButton]}
-                  onPress={handlePurchasePremium}
-                  disabled={isPurchasing}
-                >
-                  {isPurchasing ? (
-                    <ActivityIndicator color={colors.text} />
-                  ) : (
-                    <Text style={[mainButton.text, styles.purchaseButtonText]}>
-                      Unlock Premium - {getPremiumPrice()}
+          {/* Premium Card - Only show if IAP product is found or user has premium */}
+          {(premiumProduct || isPremiumUser) && (
+            <Card>
+              <Text style={styles.sectionTitle}>Premium</Text>
+              {isPremiumUser ? (
+                <>
+                  <View style={styles.premiumActiveContainer}>
+                    <Text style={styles.premiumActiveText}>✓ Premium Active</Text>
+                    <Text style={styles.premiumBenefitsText}>
+                      • Ad-free experience
                     </Text>
-                  )}
-                </Pressable>
-                <Text style={styles.premiumBenefitsText}>
-                  • Remove all ads
-                </Text>
-                <Pressable
-                  style={styles.restoreButton}
-                  onPress={handleRestorePurchases}
-                  disabled={isRestoring}
-                >
-                  {isRestoring ? (
-                    <ActivityIndicator color={colors.textDim} size="small" />
-                  ) : (
-                    <Text style={styles.restoreButtonText}>Restore Purchases</Text>
-                  )}
-                </Pressable>
-              </>
-            )}
-          </Card>
+                  </View>
+                </>
+              ) : (
+                <>
+                  <Pressable
+                    style={[mainButton.button, styles.purchaseButton]}
+                    onPress={handlePurchasePremium}
+                    disabled={isPurchasing}
+                  >
+                    {isPurchasing ? (
+                      <ActivityIndicator color={colors.text} />
+                    ) : (
+                      <Text style={[mainButton.text, styles.purchaseButtonText]}>
+                        Unlock Premium - {getPremiumPrice()}
+                      </Text>
+                    )}
+                  </Pressable>
+                  <Text style={styles.premiumBenefitsText}>
+                    • Remove all ads
+                  </Text>
+                  <Pressable
+                    style={styles.restoreButton}
+                    onPress={handleRestorePurchases}
+                    disabled={isRestoring}
+                  >
+                    {isRestoring ? (
+                      <ActivityIndicator color={colors.textDim} size="small" />
+                    ) : (
+                      <Text style={styles.restoreButtonText}>Restore Purchases</Text>
+                    )}
+                  </Pressable>
+                </>
+              )}
+            </Card>
+          )}
 
           <Card>
             <Text style={styles.sectionTitle}>App Preferences</Text>
