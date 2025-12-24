@@ -1,0 +1,6 @@
+name = "13-day-stories"
+compatibility_date = "2024-01-01"
+
+[env.production]
+account_id = "5d3289dcde63231cfa532f6ea54f63a8"
+

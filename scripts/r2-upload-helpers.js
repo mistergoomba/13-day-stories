@@ -123,6 +123,7 @@ async function uploadFile(filePath) {
   const relativePath = getRelativePath(filePath);
   const contentType = getContentType(filePath);
 
+  // Wrangler expects: wrangler r2 object put <bucket>/<object-key> --file <file>
   const objectPath = `${BUCKET_NAME}/${relativePath}`;
 
   const args = [
@@ -134,6 +135,8 @@ async function uploadFile(filePath) {
     filePath,
     '--content-type',
     contentType,
+    '--env',
+    'production',
     '--remote',
   ];
 
@@ -157,9 +160,34 @@ async function uploadFile(filePath) {
       child.on('close', (code) => {
         const allOutput = (stdout + stderr).trim();
 
-        if (allOutput.includes('Upload complete') || allOutput.includes('Creating object')) {
+        // Debug: log the actual output for troubleshooting
+        if (process.env.DEBUG_UPLOAD) {
+          console.log(`\n[DEBUG] Upload result for ${relativePath}:`);
+          console.log(`  Exit code: ${code}`);
+          console.log(`  Stdout: ${stdout}`);
+          console.log(`  Stderr: ${stderr}`);
+          console.log(`  All output: ${allOutput}`);
+        }
+
+        // More strict success detection
+        const successIndicators = [
+          'Upload complete',
+          'Creating object',
+          'uploaded successfully',
+          'successfully uploaded',
+        ];
+        
+        const hasSuccessIndicator = successIndicators.some((indicator) =>
+          allOutput.toLowerCase().includes(indicator.toLowerCase())
+        );
+
+        if (hasSuccessIndicator && code === 0) {
           resolve({ success: true, path: relativePath });
-        } else if (code === 0 && allOutput) {
+        } else if (code === 0 && !allOutput) {
+          // Exit code 0 with no output might be success, but log it
+          if (process.env.DEBUG_UPLOAD) {
+            console.log(`  Warning: Exit code 0 but no output - treating as success`);
+          }
           resolve({ success: true, path: relativePath });
         } else {
           const errorMsg = allOutput || `Process exited with code ${code}`;
