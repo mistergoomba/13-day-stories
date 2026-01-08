@@ -406,22 +406,60 @@ async function convertImageToWebP(pngPath, outputPath) {
 }
 
 /**
- * Update colors in database for a specific day
+ * Get existing colors from database for a specific day
  */
-async function updateDayColors(pool, trecenaId, dayNumber, dayColors) {
+async function getExistingColors(pool, trecenaId, dayNumber) {
+  const query = `
+    SELECT colors
+    FROM days
+    WHERE trecena_id = $1 AND day = $2
+  `;
+  const result = await pool.query(query, [trecenaId, dayNumber]);
+  if (result.rows.length > 0 && result.rows[0].colors) {
+    return result.rows[0].colors;
+  }
+  return {};
+}
+
+/**
+ * Update colors in database for a specific day (merges with existing colors)
+ */
+async function updateDayColors(pool, trecenaId, dayNumber, newDayColors) {
+  // Get existing colors from database
+  const existingColors = await getExistingColors(pool, trecenaId, dayNumber);
+  
+  // Merge: existing colors are preserved, new colors override
+  const mergedColors = { ...existingColors, ...newDayColors };
+  
   const query = `
     UPDATE days
     SET colors = $1, updated_at = NOW()
     WHERE trecena_id = $2 AND day = $3
   `;
 
-  await pool.query(query, [JSON.stringify(dayColors), trecenaId, dayNumber]);
+  await pool.query(query, [JSON.stringify(mergedColors), trecenaId, dayNumber]);
 }
 
 /**
  * Process all PNG files in a directory recursively
  */
 async function processDirectory(dirPath, trecenaName, dayNumber, pool, trecenaId) {
+  // Load existing colors from database first to preserve them
+  if (pool && trecenaId) {
+    const existingColors = await getExistingColors(pool, trecenaId, dayNumber);
+    if (Object.keys(existingColors).length > 0) {
+      // Initialize structure if needed
+      if (!colors[trecenaName]) {
+        colors[trecenaName] = {};
+      }
+      if (!colors[trecenaName][dayNumber]) {
+        colors[trecenaName][dayNumber] = {};
+      }
+      // Merge existing colors into in-memory cache
+      colors[trecenaName][dayNumber] = { ...colors[trecenaName][dayNumber], ...existingColors };
+    }
+  }
+
   const entries = fs.readdirSync(dirPath, { withFileTypes: true });
 
   for (const entry of entries) {

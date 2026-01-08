@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Svg, { Path } from 'react-native-svg';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
@@ -14,6 +15,7 @@ import { getTodayMayanDateSync, getDayData, getBackgroundColors } from '../utils
 import { getActualDateSync } from '../utils/getActualDate';
 import { getButtonStyleFromColors } from '../theme/buttons';
 import { shareHoroscope } from '../utils/shareUtils';
+import { hasViewedTodayTab, markTodayTabViewed } from '../utils/notificationPromptManager';
 
 export default function TodayScreenContent({
   setCurrentView,
@@ -22,6 +24,7 @@ export default function TodayScreenContent({
   onPersonalPress,
   onHeaderPress,
   resetToTodayTrigger,
+  onShowNotificationPrompt,
 }) {
   const insets = useSafeAreaInsets();
   const [dayData, setDayData] = useState(null);
@@ -31,6 +34,41 @@ export default function TodayScreenContent({
     accent: '#6E45CF',
   });
   const [loading, setLoading] = useState(true);
+
+  // Track first time viewing Today tab and trigger notification prompt after 60 seconds
+  useEffect(() => {
+    let timer = null;
+    
+    const checkFirstView = async () => {
+      try {
+        const hasViewed = await hasViewedTodayTab();
+        if (!hasViewed) {
+          // Mark as viewed
+          await markTodayTabViewed();
+          
+          // Check if notifications are enabled - if not, show prompt after 60 seconds
+          const notificationsEnabled = await AsyncStorage.getItem('@notifications_enabled');
+          
+          if (notificationsEnabled !== 'true' && onShowNotificationPrompt) {
+            // Set timer for 60 seconds
+            timer = setTimeout(() => {
+              onShowNotificationPrompt();
+            }, 60000); // 60 seconds
+          }
+        }
+      } catch (error) {
+        console.error('Error checking first Today view:', error);
+      }
+    };
+    
+    checkFirstView();
+    
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [onShowNotificationPrompt]);
 
   // Load today's data - recalculate when reset trigger changes
   useEffect(() => {

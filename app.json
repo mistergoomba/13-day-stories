@@ -26,7 +26,8 @@
           "iosAppId": "ca-app-pub-8659681403454349~4462355075"
         }
       ],
-      "./plugins/withRemoveStoragePermissions.js"
+      "./plugins/withRemoveStoragePermissions.js",
+      "./plugins/withDisableBackup.js"
     ],
     "ios": {
       "supportsTablet": false
@@ -37,7 +38,7 @@
         "backgroundColor": "#12091A"
       },
       "package": "com.mistergoomba.x13daystories",
-      "versionCode": 3,
+      "versionCode": 4,
       "permissions": []
     },
     "extra": {

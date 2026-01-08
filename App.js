@@ -23,6 +23,7 @@ import {
   getDevMayanOverride,
 } from './utils/getActualDate';
 import { scheduleAllNotifications } from './utils/notificationScheduler';
+import { incrementAppOpenCount, shouldShowNotificationPrompt } from './utils/notificationPromptManager';
 import colors from './theme/colors';
 import ErrorBoundary from './components/ErrorBoundary';
 import FirstLaunchNotificationPrompt from './components/FirstLaunchNotificationPrompt';
@@ -118,7 +119,7 @@ function AppContent() {
     saveBirthday();
   }, [birthdayDate]);
 
-  // Check if first time opening app and show notification prompt if needed
+  // Check if first time opening app and track app opens
   useEffect(() => {
     const checkFirstTime = async () => {
       try {
@@ -128,20 +129,13 @@ function AppContent() {
           setCurrentView('Home');
           // Mark that app has been opened
           await AsyncStorage.setItem(HAS_OPENED_APP_KEY, 'true');
-          
-          // Check if notifications are already enabled
-          // If not, show the notification prompt
-          const notificationsEnabled = await AsyncStorage.getItem(NOTIFICATIONS_ENABLED_KEY);
-          if (notificationsEnabled !== 'true') {
-            // Small delay to let the Home screen render first
-            setTimeout(() => {
-              setShowNotificationPrompt(true);
-            }, 500);
-          }
         } else {
           // Not first time - show Today
           setCurrentView('Today');
         }
+        
+        // Increment app open count (for third attempt logic)
+        await incrementAppOpenCount();
       } catch (error) {
         console.error('Error checking first time:', error);
         // Default to Today on error
@@ -161,6 +155,8 @@ function AppContent() {
     const subscription = AppState.addEventListener('change', (nextAppState) => {
       if (nextAppState === 'active') {
         scheduleAllNotifications();
+        // Check if we should show notification prompt when app becomes active
+        checkAndShowNotificationPrompt();
       }
     });
 
@@ -168,6 +164,18 @@ function AppContent() {
       subscription?.remove();
     };
   }, []);
+
+  // Check if notification prompt should be shown (for retry attempts)
+  const checkAndShowNotificationPrompt = async () => {
+    try {
+      const { shouldShow } = await shouldShowNotificationPrompt();
+      if (shouldShow) {
+        setShowNotificationPrompt(true);
+      }
+    } catch (error) {
+      console.error('Error checking notification prompt:', error);
+    }
+  };
 
   // Initialize AdMob and IAP on mount
   useEffect(() => {
@@ -396,6 +404,7 @@ function AppContent() {
             resetToTodayTrigger={resetToTodayTrigger}
             onPersonalPress={handlePersonalNavigation}
             onHeaderPress={isDevMode() ? handleDevHeaderPress : undefined}
+            onShowNotificationPrompt={() => setShowNotificationPrompt(true)}
           />
         ) : currentView === 'Meditation' ? (
           <MeditationScreenContent
@@ -482,10 +491,10 @@ function AppContent() {
       {/* First Launch Notification Prompt */}
       <FirstLaunchNotificationPrompt
         visible={showNotificationPrompt}
-        onComplete={(enabled) => {
+        onComplete={async (enabled) => {
           setShowNotificationPrompt(false);
           // If notifications were enabled, they're already scheduled
-          // No need to do anything else here
+          // If dismissed, recordDismissal is already called in handleMaybeLater
         }}
       />
     </View>

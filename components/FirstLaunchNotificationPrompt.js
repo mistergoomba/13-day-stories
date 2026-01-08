@@ -1,11 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, Modal, Animated, Pressable, ActivityIndicator, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Modal,
+  Animated,
+  Pressable,
+  ActivityIndicator,
+  Alert,
+  Image,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
 import { mainButton } from '../theme/buttons';
 import { scheduleAllNotifications } from '../utils/notificationScheduler';
 import { NOTIFICATION_CONFIG } from '../utils/notificationConfig';
+import { recordDismissal } from '../utils/notificationPromptManager';
 
 const NOTIFICATIONS_ENABLED_KEY = '@notifications_enabled';
 const MORNING_ENABLED_KEY = '@morning_notifications_enabled';
@@ -51,7 +62,7 @@ export default function FirstLaunchNotificationPrompt({ visible, onComplete }) {
 
   const handleEnableNotifications = async () => {
     if (isProcessing) return;
-    
+
     setIsProcessing(true);
 
     try {
@@ -60,26 +71,37 @@ export default function FirstLaunchNotificationPrompt({ visible, onComplete }) {
         Alert.alert(
           'Notifications Not Available',
           'Notification support is not available in this environment.',
-          [{ text: 'OK', onPress: () => {
-            setIsProcessing(false);
-            onComplete(false);
-          }}]
+          [
+            {
+              text: 'OK',
+              onPress: () => {
+                setIsProcessing(false);
+                onComplete(false);
+              },
+            },
+          ]
         );
         return;
       }
 
       // Request permission
       const { status } = await Notifications.requestPermissionsAsync();
-      
+
       if (status === 'granted') {
         // Set notification defaults
         await AsyncStorage.setItem(NOTIFICATIONS_ENABLED_KEY, 'true');
         await AsyncStorage.setItem(MORNING_ENABLED_KEY, 'true');
         await AsyncStorage.setItem(EVENING_ENABLED_KEY, 'true');
-        
+
         // Set default times
-        const morningTime = `${String(NOTIFICATION_CONFIG.defaultMorningTime.hour).padStart(2, '0')}:${String(NOTIFICATION_CONFIG.defaultMorningTime.minute).padStart(2, '0')}`;
-        const eveningTime = `${String(NOTIFICATION_CONFIG.defaultEveningTime.hour).padStart(2, '0')}:${String(NOTIFICATION_CONFIG.defaultEveningTime.minute).padStart(2, '0')}`;
+        const morningTime = `${String(NOTIFICATION_CONFIG.defaultMorningTime.hour).padStart(
+          2,
+          '0'
+        )}:${String(NOTIFICATION_CONFIG.defaultMorningTime.minute).padStart(2, '0')}`;
+        const eveningTime = `${String(NOTIFICATION_CONFIG.defaultEveningTime.hour).padStart(
+          2,
+          '0'
+        )}:${String(NOTIFICATION_CONFIG.defaultEveningTime.minute).padStart(2, '0')}`;
         await AsyncStorage.setItem(MORNING_TIME_KEY, morningTime);
         await AsyncStorage.setItem(EVENING_TIME_KEY, eveningTime);
 
@@ -93,27 +115,35 @@ export default function FirstLaunchNotificationPrompt({ visible, onComplete }) {
         Alert.alert(
           'Permission Required',
           'To receive daily reminders, please enable notifications in your device settings.',
-          [{ text: 'OK', onPress: () => {
-            setIsProcessing(false);
-            onComplete(false);
-          }}]
+          [
+            {
+              text: 'OK',
+              onPress: () => {
+                setIsProcessing(false);
+                onComplete(false);
+              },
+            },
+          ]
         );
       }
     } catch (error) {
       console.error('Error enabling notifications:', error);
-      Alert.alert(
-        'Error',
-        'Failed to enable notifications. Please try again later.',
-        [{ text: 'OK', onPress: () => {
-          setIsProcessing(false);
-          onComplete(false);
-        }}]
-      );
+      Alert.alert('Error', 'Failed to enable notifications. Please try again later.', [
+        {
+          text: 'OK',
+          onPress: () => {
+            setIsProcessing(false);
+            onComplete(false);
+          },
+        },
+      ]);
     }
   };
 
-  const handleMaybeLater = () => {
+  const handleMaybeLater = async () => {
     if (isProcessing) return;
+    // Record dismissal for retry logic
+    await recordDismissal();
     onComplete(false);
   };
 
@@ -123,7 +153,7 @@ export default function FirstLaunchNotificationPrompt({ visible, onComplete }) {
     <Modal
       visible={visible}
       transparent={true}
-      animationType="none"
+      animationType='none'
       onRequestClose={() => {}} // Prevent closing with back button
     >
       <Animated.View
@@ -143,34 +173,45 @@ export default function FirstLaunchNotificationPrompt({ visible, onComplete }) {
           ]}
         >
           <View style={styles.header}>
-            <Text style={styles.icon}>🔔</Text>
-            <Text style={styles.title}>Stay Connected</Text>
+            <Image source={require('../assets/book-icon.png')} style={styles.icon} />
+            <Text style={styles.title}>Your Daily Spirit Guide</Text>
           </View>
 
           <View style={styles.body}>
             <Text style={styles.description}>
-              Get daily reminders to check your Mayan calendar reading and continue your 13-day journey.
+              Let the wisdom of the Mayan Calendar guide your morning intention and evening
+              reflection.
             </Text>
 
             <View style={styles.benefitsList}>
               <View style={styles.benefitItem}>
-                <Text style={styles.benefitBullet}>•</Text>
-                <Text style={styles.benefitText}>Morning reminders with your daily energy</Text>
+                <Text style={styles.benefitBullet}>☀️</Text>
+                <Text style={styles.benefitText}>
+                  Morning Alignment: Receive your Daily Energy & Meditation.
+                </Text>
               </View>
               <View style={styles.benefitItem}>
-                <Text style={styles.benefitBullet}>•</Text>
-                <Text style={styles.benefitText}>Evening reminders to read the next chapter</Text>
+                <Text style={styles.benefitBullet}>🌙</Text>
+                <Text style={styles.benefitText}>
+                  Evening Wisdom: Close your day with the evolving 13-Day Story.
+                </Text>
               </View>
               <View style={styles.benefitItem}>
-                <Text style={styles.benefitBullet}>•</Text>
-                <Text style={styles.benefitText}>Never miss a day in your cycle</Text>
+                <Text style={styles.benefitBullet}>✨</Text>
+                <Text style={styles.benefitText}>
+                  Stay Tuned: Never miss a shift in the cosmic energy.
+                </Text>
               </View>
             </View>
           </View>
 
           <View style={styles.buttons}>
             <Pressable
-              style={[mainButton.button, styles.enableButton, isProcessing && styles.buttonDisabled]}
+              style={[
+                mainButton.button,
+                styles.enableButton,
+                isProcessing && styles.buttonDisabled,
+              ]}
               onPress={handleEnableNotifications}
               disabled={isProcessing}
             >
@@ -178,7 +219,7 @@ export default function FirstLaunchNotificationPrompt({ visible, onComplete }) {
                 <ActivityIndicator color={colors.text} />
               ) : (
                 <Text style={[mainButton.text, styles.enableButtonText]}>
-                  Enable Notifications
+                  Connect to the Energy
                 </Text>
               )}
             </Pressable>
@@ -219,8 +260,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   icon: {
-    fontSize: 48,
+    width: 128,
+    height: 100,
     marginBottom: 16,
+    resizeMode: 'contain',
   },
   title: {
     ...type.title,
@@ -250,10 +293,8 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   benefitBullet: {
-    ...type.body,
-    color: colors.accent,
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: 20,
+    lineHeight: 22,
   },
   benefitText: {
     ...type.body,
@@ -289,4 +330,3 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
 });
-

@@ -6,10 +6,8 @@ import colors from '../theme/colors';
 import { type } from '../theme/typography';
 import { mainButton } from '../theme/buttons';
 
-const HAS_OPENED_APP_KEY = '@has_opened_app';
-const BIRTHDAY_DATE_KEY = '@birthday_date';
-const NOTIFICATIONS_ENABLED_KEY = '@notifications_enabled';
-const NOTIFICATION_TIME_KEY = '@notification_time';
+// All app data keys use the '@' prefix, so we delete all keys starting with '@'
+// This ensures we don't miss any keys, including future ones
 
 export default function DataStorageModal({ visible, onClose, onDataCleared }) {
   const insets = useSafeAreaInsets();
@@ -61,17 +59,9 @@ export default function DataStorageModal({ visible, onClose, onDataCleared }) {
               // Get all keys
               const allKeys = await AsyncStorage.getAllKeys();
               
-              // Filter to only app data keys (keep system keys if any)
-              const appKeys = allKeys.filter(key => 
-                key.startsWith('@') && 
-                (key === HAS_OPENED_APP_KEY ||
-                 key === BIRTHDAY_DATE_KEY ||
-                 key === NOTIFICATIONS_ENABLED_KEY ||
-                 key === NOTIFICATION_TIME_KEY ||
-                 key.startsWith('@today_') ||
-                 key.startsWith('@trecena_') ||
-                 key.startsWith('@image_'))
-              );
+              // Delete ALL keys that start with '@' (all our app keys use this prefix)
+              // This ensures we don't miss any keys, including future ones
+              const appKeys = allKeys.filter(key => key.startsWith('@'));
 
               // Remove all app data keys
               await AsyncStorage.multiRemove(appKeys);

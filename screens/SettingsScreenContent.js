@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Alert, ActivityIndicator, AppState } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+  Alert,
+  ActivityIndicator,
+  AppState,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Card from '../components/Card';
 import SimpleHeader from '../components/SimpleHeader';
@@ -12,6 +21,7 @@ import TermsOfServiceModal from '../components/TermsOfServiceModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { isPremium } from '../utils/premiumManager';
 import { getProducts, purchaseLifetimePremium, restorePurchases } from '../utils/iapManager';
+import { isPermanentlyDismissed } from '../utils/notificationPromptManager';
 import colors from '../theme/colors';
 import { type } from '../theme/typography';
 import { mainButton } from '../theme/buttons';
@@ -51,6 +61,10 @@ export default function SettingsScreenContent({
   const [isRestoring, setIsRestoring] = useState(false);
   const [isPurchasing, setIsPurchasing] = useState(false);
 
+  // Notification prompt state
+  const [showPermanentNotificationCard, setShowPermanentNotificationCard] = useState(false);
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+
   // Check premium status and fetch product info on mount
   useEffect(() => {
     const checkPremiumStatus = async () => {
@@ -69,8 +83,17 @@ export default function SettingsScreenContent({
       }
     };
 
+    const checkNotificationState = async () => {
+      const permanentlyDismissed = await isPermanentlyDismissed();
+      const enabled = await AsyncStorage.getItem('@notifications_enabled');
+      setNotificationsEnabled(enabled === 'true');
+      // Show card if permanently dismissed and notifications not enabled
+      setShowPermanentNotificationCard(permanentlyDismissed && enabled !== 'true');
+    };
+
     checkPremiumStatus();
     fetchProductInfo();
+    checkNotificationState();
   }, []);
 
   // Re-check premium status when app comes to foreground
@@ -98,6 +121,10 @@ export default function SettingsScreenContent({
     // Reset birthday date in parent component
     if (setBirthdayDate) {
       setBirthdayDate(null);
+    }
+    // Navigate to Home screen after clearing data
+    if (setCurrentView) {
+      setCurrentView('Home');
     }
   };
 
@@ -168,9 +195,7 @@ export default function SettingsScreenContent({
                 <>
                   <View style={styles.premiumActiveContainer}>
                     <Text style={styles.premiumActiveText}>✓ Premium Active</Text>
-                    <Text style={styles.premiumBenefitsText}>
-                      • Ad-free experience
-                    </Text>
+                    <Text style={styles.premiumBenefitsText}>• Ad-free experience</Text>
                   </View>
                 </>
               ) : (
@@ -188,22 +213,40 @@ export default function SettingsScreenContent({
                       </Text>
                     )}
                   </Pressable>
-                  <Text style={styles.premiumBenefitsText}>
-                    • Remove all ads
-                  </Text>
+                  <Text style={styles.premiumBenefitsText}>• Remove all ads</Text>
                   <Pressable
                     style={styles.restoreButton}
                     onPress={handleRestorePurchases}
                     disabled={isRestoring}
                   >
                     {isRestoring ? (
-                      <ActivityIndicator color={colors.textDim} size="small" />
+                      <ActivityIndicator color={colors.textDim} size='small' />
                     ) : (
                       <Text style={styles.restoreButtonText}>Restore Purchases</Text>
                     )}
                   </Pressable>
                 </>
               )}
+            </Card>
+          )}
+
+          {/* Permanent Notification Card - shown after 3 dismissals */}
+          {showPermanentNotificationCard && (
+            <Card>
+              <View style={styles.notificationCard}>
+                <Text style={styles.notificationCardTitle}>Turn on Notifications</Text>
+                <Text style={styles.notificationCardText}>
+                  Stay connected with daily energy guidance and evening story reminders.
+                </Text>
+                <Pressable
+                  style={[mainButton.button, styles.notificationCardButton]}
+                  onPress={() => setShowNotificationsModal(true)}
+                >
+                  <Text style={[mainButton.text, styles.notificationCardButtonText]}>
+                    Enable Notifications
+                  </Text>
+                </Pressable>
+              </View>
             </Card>
           )}
 
@@ -331,5 +374,29 @@ const styles = StyleSheet.create({
     color: colors.textDim,
     fontSize: 14,
     textDecorationLine: 'underline',
+  },
+  notificationCard: {
+    padding: 4,
+  },
+  notificationCardTitle: {
+    ...type.subtitle,
+    color: colors.text,
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 8,
+  },
+  notificationCardText: {
+    ...type.body,
+    color: colors.textDim,
+    fontSize: 14,
+    lineHeight: 20,
+    marginBottom: 16,
+  },
+  notificationCardButton: {
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+  },
+  notificationCardButtonText: {
+    fontSize: 15,
   },
 });
