@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 const { getPool, closePool } = require('../database/connection');
+const { normalizeTrecenaName } = require('../database/normalize');
 
 const DATA_IMAGES_DIR = path.join(__dirname, '..', 'images-hd');
 const API_DIR = path.join(__dirname, '..', 'cdn');
@@ -548,14 +549,7 @@ async function processDirectory(dirPath, trecenaName, dayNumber, pool, trecenaId
   }
 }
 
-/**
- * Normalize trecena name to database key format
- * Strips all non-letter characters and converts to lowercase
- */
-function normalizeTrecenaName(trecenaName) {
-  if (!trecenaName) return null;
-  return trecenaName.replace(/[^a-zA-Z]/g, '').toLowerCase();
-}
+const { normalizeTrecenaName } = require('../database/normalize');
 
 /**
  * Load trecena data from PostgreSQL database

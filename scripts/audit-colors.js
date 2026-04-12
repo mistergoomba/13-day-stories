@@ -8,6 +8,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { normalizeTrecenaName } = require('../database/normalize');
 const sharp = require('sharp');
 const { getPool, closePool } = require('../database/connection');
 
@@ -146,13 +147,7 @@ function rgbToHex(r, g, b) {
   );
 }
 
-/**
- * Normalize trecena name to database key format
- */
-function normalizeTrecenaName(trecenaName) {
-  if (!trecenaName) return null;
-  return trecenaName.replace(/[^a-zA-Z]/g, '').toLowerCase();
-}
+const { normalizeTrecenaName } = require('../database/normalize');
 
 /**
  * Process all WebP files in a trecena directory

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const fs = require('fs');
 const path = require('path');
 const { getPool, closePool } = require('../database/connection');
@@ -6,80 +8,29 @@ const { normalizeTrecenaName } = require('../database/normalize');
 const INPUT_DIR = path.join(__dirname, '..', 'database', 'input');
 
 /**
- * Extract trecena name from filename (e.g., "birthdays-aj.json" -> "aj")
+ * Extract trecena name from filename (e.g., "trecena-story-qanil.json" -> "qanil")
  */
 function extractTrecenaFromFilename(filename) {
-  const match = filename.match(/^birthdays-(.+)\.json$/);
+  const match = filename.match(/^trecena-story-(.+)\.json$/);
   if (!match) {
-    throw new Error(`Invalid filename format: ${filename}. Expected format: birthdays-*.json`);
+    throw new Error(`Invalid filename format: ${filename}. Expected format: trecena-story-*.json`);
   }
   return match[1];
 }
 
 /**
- * Extract nawal name from image_prompts.birthday field
- * Pattern: "Mayan glyph for Aj (Cornstalk/Cane)" -> "Aj"
+ * Process a single trecena story JSON file
  */
-function extractNawalFromImagePrompt(birthdayPrompt) {
-  if (!birthdayPrompt || typeof birthdayPrompt !== 'string') {
-    return null;
-  }
-
-  // Try to extract from "Mayan glyph for [Nawal] (description)"
-  const match = birthdayPrompt.match(/Mayan glyph for ([A-Za-z' ]+?)\s*\(/);
-  if (match && match[1]) {
-    return match[1].trim();
-  }
-
-  // Fallback: try to find nawal name in the content
-  // This is a less reliable method but can work as fallback
-  const nawalNames = [
-    'Aj',
-    'Ix',
-    "Tz'ikin",
-    'Ajmaq',
-    "No'j",
-    'Tijax',
-    'Kawoq',
-    'Ajpu',
-    'Imox',
-    "Iq'",
-    "Aq'ab'al",
-    "K'at",
-    'Kan',
-    'Kej',
-    'E',
-    'Batz',
-    'Toj',
-    'Qanil',
-    'Tzi',
-    'Tzikin',
-    'Kame',
-    'Aqabal',
-  ];
-
-  for (const nawal of nawalNames) {
-    if (birthdayPrompt.includes(`glyph for ${nawal}`) || birthdayPrompt.includes(`for ${nawal} `)) {
-      return nawal;
-    }
-  }
-
-  return null;
-}
-
-/**
- * Process a single birthdays JSON file
- */
-async function processBirthdaysFile(pool, filePath) {
+async function processStoryFile(pool, filePath) {
   const filename = path.basename(filePath);
   console.log(`\n${'='.repeat(60)}`);
   console.log(`Processing ${filename}...`);
   console.log('='.repeat(60));
 
   // Extract trecena name from filename
-  let trecenaName;
+  let trecenaNameFromFile;
   try {
-    trecenaName = extractTrecenaFromFilename(filename);
+    trecenaNameFromFile = extractTrecenaFromFilename(filename);
   } catch (error) {
     console.error(`❌ Error: ${error.message}`);
     return { success: false, error: error.message };
@@ -106,30 +57,55 @@ async function processBirthdaysFile(pool, filePath) {
     return { success: false, error: `Expected 13 days, found ${jsonData.days.length}` };
   }
 
-  // Look up trecena in database
-  const normalizedTrecenaName = normalizeTrecenaName(trecenaName);
-  const trecenaQuery = `
-    SELECT id, name, display_name
-    FROM trecenas
-    WHERE name = $1
+  // Extract trecena info (handle both object and string formats)
+  let displayName;
+  if (typeof jsonData.trecena === 'string') {
+    displayName = jsonData.trecena;
+  } else if (jsonData.trecena && typeof jsonData.trecena === 'object') {
+    displayName = jsonData.trecena.title || jsonData.trecena.nawal || jsonData.trecena.name || 'Unknown';
+  } else {
+    displayName = 'Unknown';
+  }
+  const normalizedName = normalizeTrecenaName(displayName);
+
+  // Extract prologue and epilogue (handle both structures)
+  const prologue = jsonData.prologue?.content || jsonData.prologue || '';
+  const epilogue = jsonData.epilogue?.content || jsonData.epilogue || '';
+
+  console.log(`\nTrecena Info:`);
+  console.log(`  Display Name: "${displayName}"`);
+  console.log(`  Normalized Name: "${normalizedName}"`);
+  console.log(`  Prologue: ${prologue.length} characters`);
+  console.log(`  Epilogue: ${epilogue.length} characters`);
+
+  // Insert or update trecena
+  const insertTrecenaQuery = `
+    INSERT INTO trecenas (name, display_name, prologue, epilogue, updated_at)
+    VALUES ($1, $2, $3, $4, NOW())
+    ON CONFLICT (name) 
+    DO UPDATE SET
+      display_name = EXCLUDED.display_name,
+      prologue = EXCLUDED.prologue,
+      epilogue = EXCLUDED.epilogue,
+      updated_at = NOW()
+    RETURNING id
   `;
 
   let trecenaResult;
   try {
-    trecenaResult = await pool.query(trecenaQuery, [normalizedTrecenaName]);
+    trecenaResult = await pool.query(insertTrecenaQuery, [
+      normalizedName,
+      displayName,
+      prologue,
+      epilogue,
+    ]);
   } catch (error) {
-    console.error(`❌ Database error: ${error.message}`);
+    console.error(`❌ Database error inserting trecena: ${error.message}`);
     return { success: false, error: `Database error: ${error.message}` };
   }
 
-  if (trecenaResult.rows.length === 0) {
-    const errorMsg = `Trecena '${trecenaName}' not found in database. Please ensure the trecena exists before inserting birthday data.`;
-    console.error(`❌ Error: ${errorMsg}`);
-    throw new Error(errorMsg);
-  }
-
-  const trecenaRow = trecenaResult.rows[0];
-  console.log(`✓ Found trecena: ${trecenaRow.display_name} (id: ${trecenaRow.id})`);
+  const trecenaId = trecenaResult.rows[0].id;
+  console.log(`✓ Trecena inserted/updated: ID ${trecenaId}`);
 
   // Process each day
   let successCount = 0;
@@ -138,96 +114,64 @@ async function processBirthdaysFile(pool, filePath) {
 
   for (const dayData of jsonData.days) {
     try {
-      // Handle both day_index (0-12) and day_number (1-13) formats
-      let day;
-      let number;
+      // Handle day_number field
+      const day = dayData.day_number || dayData.day || dayData.day_index + 1;
+      const number = day;
 
-      if (dayData.day_number !== undefined) {
-        // New format: day_number is already 1-13
-        day = dayData.day_number;
-        number = dayData.day_number;
-      } else if (dayData.day_index !== undefined) {
-        // Old format: day_index is 0-12, convert to 1-13
-        day = dayData.day_index + 1;
-        number = dayData.day_index + 1;
-      } else {
-        throw new Error('Day data must have either day_number (1-13) or day_index (0-12)');
+      if (!day || day < 1 || day > 13) {
+        throw new Error(`Invalid day number: ${day}. Must be 1-13.`);
       }
 
-      // Extract nawal from image_prompts.birthday
-      const birthdayPrompt = dayData.image_prompts?.birthday;
-      const nawal = extractNawalFromImagePrompt(birthdayPrompt);
-
+      // Extract nawal
+      const nawal = dayData.nawal || null;
       if (!nawal) {
-        const error = `Day ${day}: Could not extract nawal name from image_prompts.birthday`;
-        console.error(`⚠ ${error}`);
-        errors.push(error);
-        errorCount++;
-        continue;
+        console.warn(`⚠ Day ${day}: No nawal specified`);
       }
 
-      // Prepare JSONB data
-      const energyOfTheDay = JSON.stringify(dayData.energy_of_the_day || {});
-      const birthday = JSON.stringify(dayData.birthday || {});
+      // Extract chapter
+      const chapter = dayData.chapter || '';
 
-      // Insert or update day data (no longer includes image_prompts)
+      // Insert or update day data
       const insertDayQuery = `
-        INSERT INTO days (trecena_id, day, number, nawal, energy_of_the_day, birthday)
-        VALUES ($1, $2, $3, $4, $5::jsonb, $6::jsonb)
+        INSERT INTO days (trecena_id, day, number, nawal, chapter, updated_at)
+        VALUES ($1, $2, $3, $4, $5, NOW())
         ON CONFLICT (trecena_id, day) 
         DO UPDATE SET
           number = EXCLUDED.number,
           nawal = EXCLUDED.nawal,
-          energy_of_the_day = EXCLUDED.energy_of_the_day,
-          birthday = EXCLUDED.birthday,
+          chapter = EXCLUDED.chapter,
           updated_at = NOW()
         RETURNING id
       `;
 
       const dayResult = await pool.query(insertDayQuery, [
-        trecenaRow.id,
+        trecenaId,
         day,
         number,
         nawal,
-        energyOfTheDay,
-        birthday,
+        chapter,
       ]);
 
       const dayId = dayResult.rows[0].id;
 
       // Insert or update image_prompts in separate table
-      // Extract image prompt fields from dayData.image_prompts
       const imagePrompts = dayData.image_prompts || {};
       const storyPrimary = imagePrompts.story_primary || null;
       const storyWide1 = imagePrompts.story_wide_1 || null;
       const storyWide2 = imagePrompts.story_wide_2 || null;
-      const horoscopePrompt = imagePrompts.horoscope || null;
-      const affirmationPrompt = imagePrompts.affirmation || null;
-      // birthdayPrompt was already extracted above for nawal extraction
 
       // Only insert/update if we have at least one prompt
-      if (
-        storyPrimary ||
-        storyWide1 ||
-        storyWide2 ||
-        horoscopePrompt ||
-        affirmationPrompt ||
-        birthdayPrompt
-      ) {
+      if (storyPrimary || storyWide1 || storyWide2) {
         const insertImagePromptsQuery = `
           INSERT INTO image_prompts (
-            day_id, story_primary, story_wide_1, story_wide_2,
-            horoscope, affirmation, birthday, updated_at
+            day_id, story_primary, story_wide_1, story_wide_2, updated_at
           )
-          VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
+          VALUES ($1, $2, $3, $4, NOW())
           ON CONFLICT (day_id)
           DO UPDATE SET
             story_primary = COALESCE(EXCLUDED.story_primary, image_prompts.story_primary),
             story_wide_1 = COALESCE(EXCLUDED.story_wide_1, image_prompts.story_wide_1),
             story_wide_2 = COALESCE(EXCLUDED.story_wide_2, image_prompts.story_wide_2),
-            horoscope = COALESCE(EXCLUDED.horoscope, image_prompts.horoscope),
-            affirmation = COALESCE(EXCLUDED.affirmation, image_prompts.affirmation),
-            birthday = COALESCE(EXCLUDED.birthday, image_prompts.birthday),
             updated_at = NOW()
         `;
 
@@ -236,18 +180,15 @@ async function processBirthdaysFile(pool, filePath) {
           storyPrimary,
           storyWide1,
           storyWide2,
-          horoscopePrompt,
-          affirmationPrompt,
-          birthdayPrompt || null,
         ]);
       }
 
       successCount++;
+      console.log(`  ✓ Day ${day}: ${nawal || 'no nawal'} - Chapter: ${chapter.length} chars, Prompts: ${(storyPrimary ? 1 : 0) + (storyWide1 ? 1 : 0) + (storyWide2 ? 1 : 0)}`);
     } catch (error) {
-      const dayNum =
-        dayData.day_number || (dayData.day_index !== undefined ? dayData.day_index + 1 : '?');
+      const dayNum = dayData.day_number || dayData.day || '?';
       const errorMsg = `Day ${dayNum}: ${error.message}`;
-      console.error(`❌ ${errorMsg}`);
+      console.error(`  ❌ ${errorMsg}`);
       errors.push(errorMsg);
       errorCount++;
     }
@@ -260,7 +201,8 @@ async function processBirthdaysFile(pool, filePath) {
 
   return {
     success: errorCount === 0,
-    trecena: trecenaRow.display_name,
+    trecena: displayName,
+    trecenaId,
     successCount,
     errorCount,
     errors,
@@ -271,7 +213,7 @@ async function processBirthdaysFile(pool, filePath) {
  * Main function
  */
 async function main() {
-  console.log('Starting birthday data insertion...\n');
+  console.log('Starting trecena story data insertion...\n');
   console.log(`Input directory: ${INPUT_DIR}\n`);
 
   // Check if input directory exists
@@ -280,15 +222,15 @@ async function main() {
     process.exit(1);
   }
 
-  // Find all birthdays-*.json files
+  // Find all trecena-story-*.json files
   const files = fs
     .readdirSync(INPUT_DIR)
-    .filter((file) => file.startsWith('birthdays-') && file.endsWith('.json'))
+    .filter((file) => file.startsWith('trecena-story-') && file.endsWith('.json'))
     .map((file) => path.join(INPUT_DIR, file))
     .sort();
 
   if (files.length === 0) {
-    console.log('No birthdays-*.json files found in input directory.');
+    console.log('No trecena-story-*.json files found in input directory.');
     return;
   }
 
@@ -306,7 +248,7 @@ async function main() {
     // Process each file
     for (const filePath of files) {
       try {
-        const result = await processBirthdaysFile(pool, filePath);
+        const result = await processStoryFile(pool, filePath);
         results.push(result);
         if (result.success) {
           totalSuccess++;
@@ -314,7 +256,7 @@ async function main() {
           totalErrors++;
         }
       } catch (error) {
-        // Fatal error (like trecena not found) - stop immediately
+        // Fatal error - stop immediately
         console.error(`\n❌ Fatal error processing ${path.basename(filePath)}: ${error.message}`);
         console.error('Stopping execution.');
         process.exit(1);
@@ -335,6 +277,7 @@ async function main() {
         console.log(`  - ${result.trecena}: ${result.successCount} days inserted/updated`);
         if (result.errorCount > 0) {
           console.log(`    ⚠ ${result.errorCount} errors`);
+          result.errors.forEach((err) => console.log(`      - ${err}`));
         }
       }
     });
