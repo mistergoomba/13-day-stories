@@ -549,8 +549,6 @@ async function processDirectory(dirPath, trecenaName, dayNumber, pool, trecenaId
   }
 }
 
-const { normalizeTrecenaName } = require('../database/normalize');
-
 /**
  * Load trecena data from PostgreSQL database
  */
