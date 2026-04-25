@@ -25,7 +25,6 @@ CREATE TABLE IF NOT EXISTS days (
   meditation TEXT,
   energy_of_the_day JSONB,
   birthday JSONB,
-  image_prompts JSONB, -- TODO: Remove after running migrate-image-prompts.js migration
   colors JSONB,
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW(),
